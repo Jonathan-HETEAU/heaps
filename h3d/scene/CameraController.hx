@@ -1,29 +1,89 @@
 package h3d.scene;
 
+/**
+	Base class of the mouse/keyboard camera controllers. Add a controller to the scene to drive `Scene.camera`:
+	it listens to the scene events and moves the camera smoothly towards the wanted position every frame.
+
+	The camera position is expressed in spherical coordinates around `target`: `distance`, `theta` (horizontal angle)
+	and `phi` (vertical angle, from the Z axis). Use `set` to change them and `loadFromCamera` to start from the
+	current camera.
+	See `OrbitCameraController` and `FPSCameraController`.
+**/
 abstract class CameraController extends h3d.scene.Object {
+	/**
+		The current distance between the camera and its target.
+	**/
 	public var distance(get, never) : Float;
 	inline function get_distance() return curPos.x / curOffset.w;
+	/**
+		The distance the camera is moving to.
+	**/
 	public var targetDistance(get, never) : Float;
 	inline function get_targetDistance() return targetPos.x / targetOffset.w;
+	/**
+		The current horizontal angle of the camera around the target, in radians.
+	**/
 	public var theta(get, never) : Float;
 	inline function get_theta() return curPos.y;
+	/**
+		The current vertical angle of the camera, in radians, from `0` (looking down from above) to `PI` (looking up from below).
+	**/
 	public var phi(get, never) : Float;
 	inline function get_phi() return curPos.z;
+	/**
+		The current vertical field of view, in degrees.
+	**/
 	public var fovY(get, never) : Float;
 	inline function get_fovY() return curOffset.w;
+	/**
+		The current position the camera is looking at.
+	**/
 	public var target(get, never) : h3d.col.Point;
 	inline function get_target() return curOffset.toVector();
 
+	/**
+		The minimum distance reachable by zooming.
+	**/
 	public var minDistance : Float = 0.1;
+	/**
+		The maximum distance reachable by zooming.
+	**/
 	public var maxDistance : Float = 1e20;
+	/**
+		If `true`, the mouse wheel changes the distance to the target. Otherwise it moves the camera forward and backward.
+	**/
 	public var enableZoom = true;
+	/**
+		The distance multiplier applied for each mouse wheel step.
+	**/
 	public var zoomAmount = 1.15;
+	/**
+		The inertia damping of rotations, between `0` (rotation keeps going) and `1` (stops immediately).
+	**/
 	public var friction = 0.4;
+	/**
+		The rotation speed multiplier.
+	**/
 	public var rotateSpeed = 1.;
+	/**
+		The panning speed multiplier.
+	**/
 	public var panSpeed = 1.;
+	/**
+		The smoothing of the camera movement, between `0` (immediate) and `1` (never reaches the target).
+	**/
 	public var smooth = 0.6;
+	/**
+		If `false`, the camera `zNear` and `zFar` are adjusted to the distance to the target.
+	**/
 	public var lockZPlanes = false;
+	/**
+		The vertical field of view, in degrees, applied by `OrbitCameraController` and `FPSCameraController` every frame.
+	**/
 	public var wantedFOV = 60.0;
+	/**
+		The speed of the keyboard movements.
+	**/
 	public var moveSpeed = 1.0;
 
 	var scene : h3d.scene.Scene;
@@ -43,6 +103,10 @@ abstract class CameraController extends h3d.scene.Object {
 	var pushTime : Float;
 	var startPush : h2d.col.Point;
 
+	/**
+		Creates a controller. It must be added to the scene (directly or through `parent`) to control its camera.
+		@param distance The initial distance to the target.
+	**/
 	public function new(?distance: Float, ?parent : h3d.scene.Object) {
 		super(parent);
 		set(distance);
@@ -50,10 +114,16 @@ abstract class CameraController extends h3d.scene.Object {
 		curOffset.load(targetOffset);
 	}
 
+	/**
+		Returns the available controller classes (used by editors to let the user pick one).
+	**/
 	public static function getCameraControllersClass() : Array<Class<h3d.scene.CameraController>>{
 		return [OrbitCameraController, FPSCameraController];
 	}
 
+	/**
+		Returns the index of the class of `ctrl` in `getCameraControllersClass()`, or `-1`.
+	**/
 	public static function getCameraControllerClassIdx(ctrl : h3d.scene.CameraController) {
 		return h3d.scene.CameraController.getCameraControllersClass().indexOf(Type.getClass(ctrl));
 	}
@@ -262,13 +332,36 @@ abstract class CameraController extends h3d.scene.Object {
 
 	}
 
+	/**
+		Called for each scene event before the controller handles it. Set `e.propagate = false` to prevent the controller
+		from handling the event.
+	**/
 	public dynamic function onCustomEvent(e: hxd.Event) {}
+	/**
+		Called when the user clicks (presses and releases quickly without moving) with the button used to move the camera.
+	**/
 	public dynamic function onClick( e : hxd.Event ) {}
 }
 
+/**
+	A camera controller orbiting around a target, as in 3D editors:
+	- right button drag: pans the target;
+	- middle button drag (or Alt + left button drag): rotates around the target;
+	- mouse wheel: zooms (see `enableZoom`);
+	- arrow keys, WASD or ZQSD while dragging: move the target horizontally.
+
+	```haxe
+	new h3d.scene.CameraController.OrbitCameraController(s3d).loadFromCamera();
+	```
+**/
 class OrbitCameraController extends CameraController {
 	var moveCount = 0;
 
+	/**
+		Creates an orbit controller.
+		@param distance The initial distance to the target.
+		@param parent The parent object, usually the scene.
+	**/
 	public function new(?distance: Float, ?parent : h3d.scene.Object) {
 		super(distance, parent);
 		name = "OrbitCameraController";
@@ -368,11 +461,32 @@ class OrbitCameraController extends CameraController {
 	}
 }
 
+/**
+	A free flying "first person" camera controller:
+	- right button drag: looks around;
+	- while holding the right or middle button: arrow keys or ZQSD move forward/backward/sideways (W, S and D also work),
+	  A moves down and E moves up;
+	- mouse wheel while holding a button: changes `moveSpeed`.
+**/
 class FPSCameraController extends CameraController {
+	/**
+		The camera near plane distance, applied every frame.
+	**/
 	public var zNear = 0.1;
+	/**
+		The camera far plane distance, applied every frame.
+	**/
 	public var zFar = 10000.0;
+	/**
+		Currently unused.
+	**/
 	public var snapToGround = true;
 
+	/**
+		Creates a first person controller.
+		@param distance The initial distance between the camera and the point it looks at.
+		@param parent The parent object, usually the scene.
+	**/
 	public function new(?distance: Float, ?parent : h3d.scene.Object) {
 		super(distance, parent);
 		name = "FPSCameraController";
