@@ -1,19 +1,46 @@
 package h3d.mat;
 
+/**
+	An area of a `BigTexture` holding one image. Its UV coordinates in the big texture are `du + u * su`, `dv + v * sv`.
+**/
 @:access(h3d.mat.BigTexture)
 class BigTextureElement {
+	/**
+		The big texture containing the area.
+	**/
 	public var t : BigTexture;
 	var q : QuadTree;
+	/**
+		The U offset of the area in the big texture.
+	**/
 	public var du : Float;
+	/**
+		The V offset of the area in the big texture.
+	**/
 	public var dv : Float;
+	/**
+		The U size of the area in the big texture.
+	**/
 	public var su : Float;
+	/**
+		The V size of the area in the big texture.
+	**/
 	public var sv : Float;
 
+	/**
+		The width of the area, in pixels.
+	**/
 	public var width(get, never) : Int;
 	function get_width() { return q.width; }
+	/**
+		The height of the area, in pixels.
+	**/
 	public var height(get, never) : Int;
 	function get_height() { return q.height; }
 
+	/**
+		Creates an area. Use `BigTexture.add` instead.
+	**/
 	public function new(t, q, du, dv, su, sv) {
 		this.t = t;
 		this.q = q;
@@ -23,6 +50,9 @@ class BigTextureElement {
 		this.sv = sv;
 	}
 
+	/**
+		Changes the image of the area. The big texture is rebuilt by its next `BigTexture.done` call.
+	**/
 	public function set(tex : hxd.res.Image) {
 		if( q.texture == tex )
 			return;
@@ -31,6 +61,9 @@ class BigTextureElement {
 		if( tex != null ) tex.watch(t.rebuild);
 	}
 
+	/**
+		Sets an image whose red channel is copied to the alpha channel of the area.
+	**/
 	public function setAlpha(tex : hxd.res.Image) {
 		if( q.alphaChannel == tex )
 			return;
@@ -62,9 +95,20 @@ private class QuadTree {
 	}
 }
 
+/**
+	A texture atlas packing many images in a single square texture, so that objects using different images can be
+	drawn together (used by `h3d.scene.World`). Images are added with `add`, then loaded and uploaded with `done`.
+	Images are reloaded when their file changes.
+**/
 class BigTexture {
 
+	/**
+		An identifier of the big texture, given by its user.
+	**/
 	public var id : Int;
+	/**
+		The GPU texture, uploaded by `done`.
+	**/
 	public var tex : h3d.mat.Texture;
 
 	var loadCount : Int;
@@ -77,6 +121,10 @@ class BigTexture {
 	var lastEvent : Float;
 	var bgColor : Int;
 
+	/**
+		Creates an empty big texture of `size` x `size` pixels.
+		@param bgColor The color (`0xAARRGGBB`) of the free areas.
+	**/
 	public function new(id, size, bgColor = 0xFF8080FF ) {
 		this.id = id;
 		this.size = size;
@@ -90,6 +138,9 @@ class BigTexture {
 		pending = [];
 	}
 
+	/**
+		Releases the texture and pixels.
+	**/
 	public function dispose() {
 		if( tex != null ) {
 			tex.dispose();
@@ -163,6 +214,9 @@ class BigTexture {
 		done();
 	}
 
+	/**
+		Allocates an area for image `t` and returns it, or `null` if there is no space left.
+	**/
 	public function add( t : hxd.res.Image ) {
 		var tsize = t.getSize();
 		var q = allocPos(tsize.width,tsize.height);
@@ -177,6 +231,9 @@ class BigTexture {
 		return e;
 	}
 
+	/**
+		Allocates an empty area of the given size, or returns `null` if there is no space left.
+	**/
 	public function addEmpty( width : Int, height : Int ) {
 		var q = allocPos(width, height);
 		if( q == null )
@@ -281,6 +338,9 @@ class BigTexture {
 	dynamic function onPixelsReady( pixels : hxd.Pixels ) {
 	}
 
+	/**
+		Loads all the images (asynchronously when possible) and uploads the texture.
+	**/
 	public function done() {
 		if( isDone )
 			return;

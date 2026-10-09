@@ -1,19 +1,58 @@
 package h3d.mat;
 
+/**
+	Where a `PbrMaterial` is drawn in the PBR renderer pipeline.
+**/
 enum abstract PbrMode(String) {
+	/**
+		Lit by the deferred PBR lighting (the `"default"` pass, or `"alpha"` / `"additive"` depending on the blend mode).
+	**/
 	var PBR = "PBR";
+	/**
+		Drawn after the lighting in the `"forward"` pass, lit by the forward light buffer (for transparent objects).
+	**/
 	var Forward = "Forward";
+	/**
+		Drawn on top of the final image (`"overlay"` pass), unlit.
+	**/
 	var Overlay = "Overlay";
+	/**
+		A volume decal projecting its textures on the G-buffer (`"decal"` or `"emissiveDecal"` pass).
+	**/
 	var Decal = "Decal";
+	/**
+		Unlit, drawn in HDR just before tone mapping (`"beforeTonemapping"` pass).
+	**/
 	var BeforeTonemapping = "BeforeTonemapping";
+	/**
+		Same as `BeforeTonemapping`, in the `"beforeTonemappingDecal"` pass.
+	**/
 	var BeforeTonemappingDecal = "BeforeTonemappingDecal";
+	/**
+		Unlit, drawn after tone mapping (`"afterTonemapping"` pass).
+	**/
 	var AfterTonemapping = "AfterTonemapping";
+	/**
+		Same as `AfterTonemapping`, in the `"afterTonemappingDecal"` pass.
+	**/
 	var AfterTonemappingDecal = "AfterTonemappingDecal";
+	/**
+		Drawn in the `"distortion"` pass, used by distortion effects, without depth write.
+	**/
 	var Distortion = "Distortion";
+	/**
+		Drawn in the decal pass with the material own geometry (no volume projection).
+	**/
 	var DecalPass = "DecalPass";
+	/**
+		Drawn in the `"terrain"` pass, before the other opaque objects.
+	**/
 	var TerrainPass = "TerrainPass";
 }
 
+/**
+	The blend mode of a `PbrMaterial` (see `h3d.mat.BlendMode`).
+**/
 enum abstract PbrBlend(String) {
 	var None = "None";
 	var Alpha = "Alpha";
@@ -23,6 +62,9 @@ enum abstract PbrBlend(String) {
 	var AlphaMultiply = "AlphaMultiply";
 }
 
+/**
+	The depth test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
+**/
 enum abstract PbrDepthTest(String) {
 	var Less = "Less";
 	var LessEqual = "LessEqual";
@@ -34,12 +76,18 @@ enum abstract PbrDepthTest(String) {
 	var NotEqual= "NotEqual";
 }
 
+/**
+	The depth write of a `PbrMaterial`: `Default` writes depth only for opaque blend modes.
+**/
 enum abstract PbrDepthWrite(String) {
 	var Default = "Default";
 	var On = "On";
 	var Off = "Off";
 }
 
+/**
+	A stencil operation of a `PbrMaterial` (see `h3d.mat.Data.StencilOp`).
+**/
 enum abstract PbrStencilOp(String) {
 	var Keep = "Keep";
 	var Zero = "Zero";
@@ -51,6 +99,9 @@ enum abstract PbrStencilOp(String) {
 	var Invert = "Invert";
 }
 
+/**
+	A stencil test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
+**/
 enum abstract PbrStencilCompare(String) {
 	var Always = "Always";
 	var Never = "Never";
@@ -62,6 +113,9 @@ enum abstract PbrStencilCompare(String) {
 	var LessEqual = "LessEqual";
 }
 
+/**
+	The face culling of a `PbrMaterial` (see `h3d.mat.Data.Face`).
+**/
 enum abstract PbrCullingMode(String) {
 	var None = "None";
 	var Back = "Back";
@@ -69,37 +123,118 @@ enum abstract PbrCullingMode(String) {
 	var Both = "Both";
 }
 
+/**
+	The properties of a `PbrMaterial`, stored as `props` and edited in Hide. Call `refreshProps()` after changing them.
+**/
 @:publicFields
 class PbrProps {
+	/**
+		Where the material is drawn in the pipeline.
+	**/
 	var mode : PbrMode = PBR;
+	/**
+		The blend mode.
+	**/
 	var blend : PbrBlend = None;
+	/**
+		Casts and receives shadows.
+	**/
 	var shadows : Bool = true;
+	/**
+		The faces culled.
+	**/
 	var culling : PbrCullingMode = Back;
+	/**
+		The depth test.
+	**/
 	var depthTest : PbrDepthTest = Less;
+	/**
+		The depth write.
+	**/
 	var depthWrite : PbrDepthWrite = Default;
+	/**
+		The channels written: bits 0 to 3 for red, green, blue and alpha.
+	**/
 	var colorMask : Int = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3;
+	/**
+		Discards the pixels whose texture alpha is below the threshold.
+	**/
 	var alphaKill : Bool = false;
+	/**
+		The emissive intensity.
+	**/
 	var emissive : Float = 0.;
+	/**
+		If positive, enables parallax mapping with this depth, using the alpha channel of `specularTexture` as height.
+	**/
 	var parallax : Float = 0.;
+	/**
+		The number of layers used by the parallax mapping.
+	**/
 	var parallaxSteps : Int = h3d.shader.Parallax.MAX_LAYERS;
+	/**
+		Inverts the tangent basis of the parallax mapping.
+	**/
 	var invertBasis : Bool = false;
+	/**
+		Repeats the textures (`Repeat` wrap mode) instead of clamping them.
+	**/
 	var textureWrap : Bool = false;
 
+	/**
+		Enables the stencil test and operations below.
+	**/
 	var enableStencil : Bool = false;
+	/**
+		The stencil test.
+	**/
 	var stencilCompare : PbrStencilCompare = Always;
+	/**
+		The stencil operation when both the stencil and depth tests pass.
+	**/
 	var stencilPassOp : PbrStencilOp = Replace;
+	/**
+		The stencil operation when the stencil test fails.
+	**/
 	var stencilFailOp : PbrStencilOp = Keep;
+	/**
+		The stencil operation when the stencil test passes but the depth test fails.
+	**/
 	var depthFailOp : PbrStencilOp = Keep;
+	/**
+		The stencil reference value.
+	**/
 	var stencilValue : Int = 0;
+	/**
+		The stencil bits written.
+	**/
 	var stencilWriteMask : Int = 0;
+	/**
+		The stencil bits tested.
+	**/
 	var stencilReadMask : Int = 0;
 
 	var __ref : String = null;
 	var __refMode : String = null;
+	/**
+		An optional display name of the properties.
+	**/
 	var name : String = null;
+	/**
+		If set, the pass `layer` (an integer as string): objects of a lower layer are drawn first.
+	**/
 	var drawOrder : String = null;
+	/**
+		Adds a `"depthPrepass"` pass writing the depth before the main pass (for transparent objects needing correct sorting).
+	**/
 	var depthPrepass : Bool = false;
+	/**
+		Flips the normal of back faces, for double sided materials.
+	**/
 	var flipBackFaceNormal : Bool = false;
+	/**
+		The geometry using this material is excluded from the collision data built by the model converter (`hxd.fs.Convert`).
+	**/
 	var ignoreCollide : Bool = false;
 
 	function new() {
@@ -127,6 +262,10 @@ class PbrProps {
 	}
 }
 
+/**
+	The material of the PBR renderer (`MaterialSetup` `PbrMaterialSetup`). Its settings are given by its `PbrProps`
+	(usually loaded from the `materials.props` of the model, see `MaterialDatabase`).
+**/
 class PbrMaterial extends Material {
 
 	override function set_blendMode(b:BlendMode) {

@@ -2,10 +2,22 @@ package h3d.mat;
 import h3d.mat.Data;
 import h3d.mat.Pass;
 
+/**
+	Base class of the materials: a linked list of render passes (`Pass`), each with its own render states and shaders.
+
+	The main pass is drawn in the pass named by its `Pass.name` (for instance `"default"` or `"alpha"`), other passes
+	(such as `"shadow"` or `"depth"`) are drawn when the renderer renders that pass name.
+**/
 class BaseMaterial extends hxd.impl.AnyProps {
 
 	var passes : Pass;
+	/**
+		The material name, usually the one from the model file.
+	**/
 	public var name : String;
+	/**
+		The first pass of the material.
+	**/
 	public var mainPass(get, never) : Pass;
 
 	function new(?shader:hxsl.Shader) {
@@ -13,6 +25,9 @@ class BaseMaterial extends hxd.impl.AnyProps {
 			addPass(new Pass("default",null)).addShader(shader);
 	}
 
+	/**
+		Adds a pass at the end of the pass list and returns it.
+	**/
 	public function addPass<T:Pass>( p : T ) : T {
 		var prev = null, cur = passes;
 		while( cur != null ) {
@@ -27,6 +42,9 @@ class BaseMaterial extends hxd.impl.AnyProps {
 		return p;
 	}
 
+	/**
+		Removes a pass from the pass list. Returns `false` if it was not found.
+	**/
 	public function removePass( p : Pass ) {
 		var prev : Pass = null, cur = passes;
 		while( cur != null ) {
@@ -48,6 +66,9 @@ class BaseMaterial extends hxd.impl.AnyProps {
 		return passes;
 	}
 
+	/**
+		Returns the list of the passes of the material.
+	**/
 	public function getPasses() {
 		var p = passes;
 		var out = [];
@@ -58,6 +79,9 @@ class BaseMaterial extends hxd.impl.AnyProps {
 		return out;
 	}
 
+	/**
+		Returns the pass named `name`, or `null`.
+	**/
 	public function getPass( name : String ) : Pass {
 		var p = passes;
 		while( p != null ) {
@@ -68,6 +92,10 @@ class BaseMaterial extends hxd.impl.AnyProps {
 		return null;
 	}
 
+	/**
+		Returns the pass named `name`, creating it if needed.
+		@param inheritMain If `true`, a created pass shares the shaders of the main pass.
+	**/
 	public function allocPass( name : String, ?inheritMain = true ) : Pass {
 		var p = getPass(name);
 		if( p != null ) return p;
@@ -77,6 +105,9 @@ class BaseMaterial extends hxd.impl.AnyProps {
 		return p;
 	}
 
+	/**
+		Returns a copy of the material (the main pass render states, the name and the properties).
+	**/
 	public function clone( ?m : BaseMaterial ) : BaseMaterial {
 		if( m == null ) m = new BaseMaterial();
 		m.mainPass.load(mainPass);

@@ -1,10 +1,16 @@
 package h3d.mat;
 import h3d.mat.Data;
 
+/**
+	A 3D (volume) texture of `width` x `height` x `depth` pixels.
+**/
 class Texture3D extends Texture {
 
 	var depth : Int;
 
+	/**
+		Creates a 3D texture of `w` x `h` x `d` pixels.
+	**/
 	public function new(w, h, d, ?flags : Array<TextureFlags>, ?format : TextureFormat ) {
 		this.depth = d;
 		if( flags == null ) flags = [];

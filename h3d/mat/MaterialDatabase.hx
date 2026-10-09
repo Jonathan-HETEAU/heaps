@@ -1,9 +1,17 @@
 package h3d.mat;
 
+/**
+	Stores the properties of the materials of models in `materials.props` JSON files, one per resource directory,
+	indexed by material setup name and material name. Used by `MaterialSetup` to load and save the material properties
+	edited in Hide.
+**/
 class MaterialDatabase {
 
 	var db : Map<String,{ v : Dynamic }> = new Map();
 
+	/**
+		Creates an empty database.
+	**/
 	public function new() {
 	}
 
@@ -13,6 +21,9 @@ class MaterialDatabase {
 		return dir == null || dir == "" ? filename : model.entry.directory + "/" + filename;
 	}
 
+	/**
+		Returns the content of the `materials.props` file of the directory of `model` (cached), or an empty object.
+	**/
 	public function getModelData( model : hxd.res.Resource ) {
 		if( model == null )
 			return null;
@@ -51,6 +62,10 @@ class MaterialDatabase {
 		#end
 	}
 
+	/**
+		Returns the saved properties of `material` for `setup`, or `null`. Properties specific to the material model
+		(`name/modelName`) take precedence.
+	**/
 	public function loadMatProps( material : Material, setup : MaterialSetup ) {
 		var p : Dynamic = getModelData(material.model);
 		if( p == null ) return p;
@@ -65,6 +80,10 @@ class MaterialDatabase {
 		return Reflect.field(p, material.name);
 	}
 
+	/**
+		Saves the properties of `material` for `setup` in the `materials.props` file (only on platforms with file system access).
+		Properties equal to the defaults are removed.
+	**/
 	public function saveMatProps( material : Material, setup : MaterialSetup, ?defaultProps : Any ) {
 		var path = ["materials", setup.name, material.name];
 		var root : Dynamic = getModelData(material.model);

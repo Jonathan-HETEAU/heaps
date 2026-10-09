@@ -5,8 +5,19 @@ import h3d.mat.Data;
 #if !macro
 @:build(hxd.impl.BitsBuilder.build())
 #end
+/**
+	A render pass of a material: the render states (culling, depth, blending, stencil, color mask) and the list of shaders
+	used to draw an object in the renderer pass named `name`.
+
+	A material usually has a main pass and optional extra passes (such as `"shadow"`). Extra passes can share the shaders
+	of a parent pass: shaders added to the parent are then used by both.
+**/
 class Pass {
 
+	/**
+		The name of the renderer pass this pass is drawn in, such as `"default"`, `"alpha"`, `"additive"` or `"shadow"`.
+		See `setPassName`.
+	**/
 	public var name(default, null) : String;
 	var flags : Int;
 	var passId : Int;
@@ -19,6 +30,9 @@ class Pass {
 	var shaders : hxsl.ShaderList;
 	var nextPass : Pass;
 
+	/**
+		If `true`, the light system adds the light shaders when drawing this pass.
+	**/
 	@:bits(flags) public var enableLights : Bool;
 	/**
 		Inform the pass system that the parameters will be modified in object draw() command,
@@ -32,29 +46,81 @@ class Pass {
 	**/
 	@:bits(flags) public var isStatic : Bool;
 
+	/**
+		If `true`, the pass is not emitted (the object is not drawn in this pass).
+	**/
 	@:bits(flags) public var culled : Bool;
 
 	@:bits(flags) var batchMode : Bool; // for MeshBatch
 
+	/**
+		The faces which are not drawn (`Back` by default).
+	**/
 	@:bits(bits) public var culling : Face;
+	/**
+		Writes the depth of the drawn pixels (`true` by default).
+	**/
 	@:bits(bits) public var depthWrite : Bool;
+	/**
+		Clamps the depth to the near and far planes instead of clipping (requires driver support).
+	**/
 	@:bits(bits) public var depthClamp : Bool;
+	/**
+		The depth test (`Less` by default): pixels failing it are not drawn.
+	**/
 	@:bits(bits) public var depthTest : Compare;
+	/**
+		The blend factor of the source color. See `setBlendMode` for the common presets.
+	**/
 	@:bits(bits) public var blendSrc : Blend;
+	/**
+		The blend factor of the destination color.
+	**/
 	@:bits(bits) public var blendDst : Blend;
+	/**
+		The blend factor of the source alpha.
+	**/
 	@:bits(bits) public var blendAlphaSrc : Blend;
+	/**
+		The blend factor of the destination alpha.
+	**/
 	@:bits(bits) public var blendAlphaDst : Blend;
+	/**
+		The blend operation of the colors.
+	**/
 	@:bits(bits) public var blendOp : Operation;
+	/**
+		The blend operation of the alpha.
+	**/
 	@:bits(bits) public var blendAlphaOp : Operation;
+	/**
+		Draws the triangles edges only (requires the `Wireframe` driver feature).
+	**/
 	@:bits(bits) public var wireframe : Bool;
+	/**
+		The channels written, as bits: `1` red, `2` green, `4` blue, `8` alpha, repeated every 4 bits for each render
+		target. See `setColorMask`.
+	**/
 	public var colorMask : Int;
+	/**
+		The drawing order of the pass inside its pass name: lower layers are drawn first, before the depth sorting.
+	**/
 	public var layer : Int = 0;
 
+	/**
+		The stencil settings, or `null` to disable the stencil test.
+	**/
 	public var stencil : Stencil;
 
 	// one bit for internal engine usage
 	@:bits(bits) @:noCompletion var reserved : Bool;
 
+	/**
+		Creates a pass with the default render states: back face culling, depth test `Less` with depth write, no blending.
+		@param name The renderer pass name.
+		@param shaders The initial shader list.
+		@param parent An optional parent pass whose shaders are shared.
+	**/
 	public function new(name, ?shaders, ?parent) {
 		this.parentPass = parent;
 		this.shaders = shaders;
@@ -66,6 +132,9 @@ class Pass {
 		colorMask = 15;
 	}
 
+	/**
+		Copies the name and render states of `p` (not the shaders).
+	**/
 	public function load( p : Pass ) {
 		name = p.name;
 		passId = p.passId;
@@ -89,11 +158,17 @@ class Pass {
 		}
 	}
 
+	/**
+		Changes the renderer pass this pass is drawn in.
+	**/
 	public function setPassName( name : String ) {
 		this.name = name;
 		passId = hxsl.Globals.allocID(name);
 	}
 
+	/**
+		Sets the blend factors of the source and destination, for both the colors and the alpha.
+	**/
 	public inline function blend( src, dst ) {
 		this.blendSrc = src;
 		this.blendAlphaSrc = src;
@@ -101,6 +176,9 @@ class Pass {
 		this.blendAlphaDst = dst;
 	}
 
+	/**
+		Sets the blend factors and operations of a common blend mode.
+	**/
 	public function setBlendMode( b : BlendMode ) {
 		blendOp = Add;
 		blendAlphaOp = Add;
@@ -143,16 +221,25 @@ class Pass {
 		}
 	}
 
+	/**
+		Sets the depth write, depth test and depth clamp.
+	**/
 	public function depth( write, test, clamp = false) {
 		this.depthWrite = write;
 		this.depthTest = test;
 		this.depthClamp = clamp;
 	}
 
+	/**
+		Sets the channels written to the render target.
+	**/
 	public function setColorMask(r, g, b, a) {
 		this.colorMask = (r?1:0) | (g?2:0) | (b?4:0) | (a?8:0);
 	}
 
+	/**
+		Writes only the channel `c` (`R`, `G`, `B` or `A`).
+	**/
 	public function setColorChannel( c : hxsl.Channel) {
 		switch( c ) {
 		case R: setColorMask(true, false, false, false);
@@ -163,6 +250,9 @@ class Pass {
 		}
 	}
 
+	/**
+		Adds the channels written to the render target `i` when drawing to several targets.
+	**/
 	public function setColorMaski(r, g, b, a, i) {
 		if ( i > 8 )
 			throw "Color mask i supports 8 Render target";
@@ -171,6 +261,9 @@ class Pass {
 		this.colorMask = this.colorMask | mask;
 	}
 
+	/**
+		Adds a shader to the pass and returns it. Shaders are sorted by priority (see `hxsl.Shader.setPriority`).
+	**/
 	public function addShader<T:hxsl.Shader>(s:T) : T {
 		// throwing an exception will require NG GameServer review
 		if( s == null ) return null;
@@ -219,6 +312,9 @@ class Pass {
 		return -1;
 	}
 
+	/**
+		Removes a shader from the pass. Returns `true` if it was found.
+	**/
 	public function removeShader(s) {
 		var sl = shaders, prev = null;
 		var shaderFound = false;
@@ -252,6 +348,9 @@ class Pass {
 		return shaderFound;
 	}
 
+	/**
+		Removes all the shaders of class `t` from the pass.
+	**/
 	public function removeShaders< T:hxsl.Shader >(t:Class<T>) {
 		var sl = shaders;
 		var prev = null;
@@ -283,6 +382,9 @@ class Pass {
 		}
 	}
 
+	/**
+		Returns the first shader of class `t` of the pass (excluding the shaders of the parent pass), or `null`.
+	**/
 	public function getShader< T:hxsl.Shader >(t:Class<T>) : T {
 		var s = _getShader(t, shaders);
 		return s != null ? s : _getShader(t, selfShaders);
@@ -298,6 +400,9 @@ class Pass {
 		return null;
 	}
 
+	/**
+		Returns the first shader whose name is `name` (excluding the shaders of the parent pass), or `null`.
+	**/
 	public function getShaderByName( name : String ) : hxsl.Shader {
 		var s = _getShaderByName(name, shaders);
 		return s != null ? s : _getShaderByName(name, selfShaders);
@@ -312,6 +417,9 @@ class Pass {
 		return null;
 	}
 
+	/**
+		Returns an iterator on the shaders of the pass (excluding the shaders of the parent pass).
+	**/
 	public inline function getShaders() {
 		return shaders.iterateTo(parentShaders);
 	}
@@ -376,6 +484,10 @@ class Pass {
 	}
 
 	#if !macro
+	/**
+		Returns a copy of the pass, with its render states and shaders.
+		@param parent The parent pass of the copy.
+	**/
 	public function clone( ?parent : Pass ) {
 		var sl = shaders == null ? null : (parent == null ? shaders.clone() : shaders.clone(parentShaders));
 		var p = new Pass(name, sl, parent);
@@ -393,6 +505,9 @@ class Pass {
 		return p;
 	}
 
+	/**
+		Decodes the render state bits of a pass into a list of field names and values (debug).
+	**/
 	public static function bitsToFields( bits : Int ) : Array<{ name : String, value : String }> {
 		static var FACES : Array<h3d.mat.Data.Face> = Type.allEnums(h3d.mat.Data.Face);
 		static var COMPARES : Array<h3d.mat.Data.Compare> = Type.allEnums(h3d.mat.Data.Compare);

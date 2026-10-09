@@ -1,12 +1,22 @@
 package h3d.mat;
 import h3d.mat.Data;
 
+/**
+	A texture whose channels (red, green, blue, alpha) are filled separately from different images, for instance to
+	pack the roughness, metalness and occlusion maps in a single texture.
+**/
 class TextureChannels extends Texture {
 
 	var pixels : hxd.Pixels;
 	var channels : Array<{ r : hxd.res.Image, c : hxd.Pixels.Channel }> = [];
+	/**
+		If `true`, the images are loaded asynchronously when their format allows it.
+	**/
 	public var allowAsync : Bool = true;
 
+	/**
+		Creates a texture of `w` x `h` pixels with empty channels.
+	**/
 	public function new(w, h, ?flags : Array<TextureFlags>, ?format : TextureFormat ) {
 		if( flags == null ) flags = [];
 		flags.push(NoAlloc);
@@ -48,6 +58,10 @@ class TextureChannels extends Texture {
 		}
 	}
 
+	/**
+		Fills the channel `c` with the channel `srcChannel` (by default the same) of image `res`, which must have the
+		same size. The channel is updated when the image file changes.
+	**/
 	public function setResource( c : hxd.Pixels.Channel, res : hxd.res.Image, ?srcChannel : hxd.Pixels.Channel ) {
 		if( srcChannel == null ) srcChannel = c;
 		if( !allowAsync || !res.getFormat().useLoadBitmap )

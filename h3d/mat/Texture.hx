@@ -5,6 +5,19 @@ import h3d.mat.Data;
 #if !macro
 @:build(hxd.impl.BitsBuilder.build())
 #end
+/**
+	A GPU texture: an image sampled by shaders, or a render target.
+
+	Textures are usually created from resources (`hxd.res.Image.toTexture`), from pixels (`fromPixels`), from a color
+	(`fromColor`), or as render targets with the `Target` flag. The GPU memory is managed by `h3d.impl.MemoryManager`:
+	textures not used for a while can be disposed when memory is low, and are reallocated with `realloc` if set.
+
+	```haxe
+	var tex = hxd.Res.grass.toTexture();
+	tex.wrap = Repeat;
+	var target = new h3d.mat.Texture(512, 512, [Target]);
+	```
+**/
 class Texture {
 
 	static var UID = 0;
@@ -19,33 +32,84 @@ class Texture {
 		#else
 			RGBA
 		#end;
+	/**
+		If `true`, mipmapped textures are created with `Linear` mip filtering, otherwise `Nearest`.
+	**/
 	public static var TRILINEAR_FILTERING_ENABLED : Bool = true;
+	/**
+		The wrap mode of new textures.
+	**/
 	public static var DEFAULT_WRAP : Wrap = Clamp;
 
 	var t : h3d.impl.Driver.Texture;
 	var mem : h3d.impl.MemoryManager;
 	var allocPos : hxd.impl.AllocPos;
+	/**
+		A unique identifier of the texture.
+	**/
 	public var id(default, null) : Int;
+	/**
+		The texture name (usually its resource path), used for debugging. See `setName`.
+	**/
 	public var name(default, null) : String;
+	/**
+		The width, in pixels.
+	**/
 	public var width(default, null) : Int;
+	/**
+		The height, in pixels.
+	**/
 	public var height(default, null) : Int;
+	/**
+		The flags given at creation, and some state flags such as `Loading`.
+	**/
 	public var flags(default, null) : haxe.EnumFlags<TextureFlags>;
+	/**
+		The pixel format.
+	**/
 	public var format(default, null) : TextureFormat;
 
 	var lastFrame(default,set) : Int;
 	var bits : Int;
 	var waitLoads : Array<Void -> Void>;
+	/**
+		How the mip levels are sampled (`None` unless the texture is `MipMapped`).
+	**/
 	@:bits(bits) public var mipMap : MipMap;
+	/**
+		How the pixels are interpolated (`Linear` by default).
+	**/
 	@:bits(bits) public var filter : Filter;
+	/**
+		How the texture coordinates outside of `[0, 1]` are handled (`DEFAULT_WRAP` by default).
+	**/
 	@:bits(bits) public var wrap : Wrap;
+	/**
+		For texture arrays: if positive, binds only the layer `slice - 1` as a 2D texture (DirectX 12).
+	**/
 	@:bits(bits, 11) public var slice : Int;
+	/**
+		The number of layers: 6 for cube textures, the number of layers of texture arrays, the depth of 3D textures, 1 otherwise.
+	**/
 	public var layerCount(get, never) : Int;
 	@:bits(bits, 4) var __startingMip : Int;
 	@:bits(bits, 7) var packedLodBias : Int;
 	@:bits(bits, 4) var packedAnisotropicMaxLevel : Int = 15;
+	/**
+		A bias added to the mip level selected when sampling, from -15 to 16: positive values select less detailed levels.
+	**/
 	public var lodBias(get, set) : Float;
+	/**
+		The number of mip levels (1 if the texture is not `MipMapped`).
+	**/
 	public var mipLevels(get, never) : Int;
+	/**
+		The maximum level of anisotropic filtering (1 to 16).
+	**/
 	public var anisotropicMaxLevel(get, set) : Int;
+	/**
+		The most detailed mip level sampled: levels before it are ignored.
+	**/
 	public var startingMip(get,set) : Int;
 	/**
 		The most detailed mip level allocated on the GPU : mip levels before it are not allocated,
@@ -123,6 +187,11 @@ class Texture {
 		return v;
 	}
 
+	/**
+		Creates a texture of `w` x `h` pixels, allocated immediately unless the `NoAlloc` flag is set.
+		@param flags The texture flags, such as `Target`, `MipMapped` or `Cube`.
+		@param format The pixel format (`nativeFormat` by default).
+	**/
 	public function new(w, h, ?flags : Array<TextureFlags>, ?format : TextureFormat ) {
 		if( format == null ) format = nativeFormat;
 		this.id = ++UID;
@@ -161,11 +230,17 @@ class Texture {
 		return flags.has(Cube) ? 6 : 1;
 	}
 
+	/**
+		Allocates the GPU memory of the texture if it is not allocated.
+	**/
 	public function alloc() {
 		if ( t == null )
 			mem.allocTexture(this);
 	}
 
+	/**
+		Tells if the format stores sRGB colors.
+	**/
 	public function isSRGB() {
 		return format.match(SRGB | SRGB_ALPHA);
 	}
@@ -177,6 +252,9 @@ class Texture {
 		}
 	}
 
+	/**
+		Returns a GPU copy of the texture (same size, format and main flags).
+	**/
 	public function clone() {
 		checkAlloc();
 		if( t == null ) throw "Can't clone disposed texture";
@@ -233,15 +311,24 @@ class Texture {
 		return str;
 	}
 
+	/**
+		Sets the texture name, used for debugging.
+	**/
 	public function setName(n) {
 		name = n;
 	}
 
+	/**
+		Tells if the GPU memory is released and cannot be restored with `realloc`.
+	**/
 	public inline function isDisposed() {
 		// realloc unsupported on depth buffers.
 		return t == null && (isDepth() || realloc == null);
 	}
 
+	/**
+		Changes the texture size. The content is lost.
+	**/
 	public function resize(width, height) {
 		dispose();
 		residentMip = 0;
@@ -261,6 +348,10 @@ class Texture {
 			alloc();
 	}
 
+	/**
+		Fills a render target with the given float color.
+		@param layer The layer to clear, or `-1` for all layers.
+	**/
 	public function clearF( r : Float = 0., g : Float = 0., b : Float = 0., a : Float = 0., layer = -1 ) {
 		alloc();
 		if( !flags.has(Target) ) throw "Texture should be target";
@@ -285,6 +376,12 @@ class Texture {
 		}
 	}
 
+	/**
+		Fills the texture with a color.
+		@param color The color, in `0xRRGGBB` format.
+		@param alpha The alpha, from `0` to `1`.
+		@param layer The layer to clear, or `-1` for all layers.
+	**/
 	public function clear( color : Int, alpha = 1., layer = -1 ) {
 		alloc();
 		if( width == 0 || height == 0 ) return;
@@ -336,6 +433,10 @@ class Texture {
 		}
 	}
 
+	/**
+		Releases the GPU memory of the mip levels more detailed than `mip` (texture streaming).
+		Returns `false` if the driver does not support it. Not supported for render targets and depth textures.
+	**/
 	public function setResidentMip( mip : Int ) {
 		if( mip == residentMip )
 			return true;
@@ -368,6 +469,9 @@ class Texture {
 			mem.driver.generateMipMaps(this);
 	}
 
+	/**
+		Uploads the pixels of a bitmap to a mip level and layer. The size must match the mip level size.
+	**/
 	public function uploadBitmap( bmp : hxd.BitmapData, mipLevel = 0, layer = 0 ) {
 		alloc();
 		checkSize(bmp.width, bmp.height, mipLevel);
@@ -376,6 +480,10 @@ class Texture {
 		checkMipMapGen(mipLevel, layer);
 	}
 
+	/**
+		Uploads pixels to a mip level and layer. The size must match the mip level size. Uploading the level 0 of the last
+		layer of a `MipMapped` texture generates the mip levels, unless `ManualMipMapGen` is set.
+	**/
 	public function uploadPixels( pixels : hxd.Pixels, mipLevel = 0, layer = 0 ) {
 		alloc();
 		checkSize(pixels.width, pixels.height, mipLevel);
@@ -384,11 +492,17 @@ class Texture {
 		checkMipMapGen(mipLevel, layer);
 	}
 
+	/**
+		Releases the GPU memory of the texture.
+	**/
 	public function dispose() {
 		if( t != null )
 			mem.deleteTexture(this);
 	}
 
+	/**
+		Tells if the format is a depth format with a stencil.
+	**/
 	public function hasStencil() {
 		return switch( format ) {
 		case Depth24Stencil8, Depth32Stencil8: true;
@@ -396,6 +510,9 @@ class Texture {
 		}
 	}
 
+	/**
+		Tells if the format is a depth format.
+	**/
 	public function isDepth() {
 		return switch( format ) {
 		case Depth16, Depth24, Depth24Stencil8, Depth32, Depth32Stencil8: true;
@@ -403,6 +520,9 @@ class Texture {
 		}
 	}
 
+	/**
+		Returns the bindless handle of the texture (requires a driver supporting bindless textures).
+	**/
 	public function getHandle() : h3d.mat.TextureHandle {
 		return mem.driver.getTextureHandle(this);
 	}
@@ -427,12 +547,19 @@ class Texture {
 		return pix;
 	}
 
+	/**
+		Creates a texture from a bitmap.
+	**/
 	public static function fromBitmap( bmp : hxd.BitmapData ) {
 		var t = new Texture(bmp.width, bmp.height);
 		t.uploadBitmap(bmp);
 		return t;
 	}
 
+	/**
+		Creates a texture from pixels.
+		@param format The texture format (the pixels format by default).
+	**/
 	public static function fromPixels( pixels : hxd.Pixels, ?format ) {
 		var t = new Texture(pixels.width, pixels.height, null, format != null ? format : pixels.format);
 		t.uploadPixels(pixels);
@@ -459,6 +586,9 @@ class Texture {
 
 	#if !macro
 
+	/**
+		Returns a shared `size` x `size` texture with a filled disc of the given color (`0xRRGGBB`).
+	**/
 	public static function genDisc( size : Int, color : Int, ?alpha = 1. ) {
 		return genTexture(0,size,color,alpha);
 	}
@@ -534,6 +664,9 @@ class Texture {
 	static var noiseTextureKeys = new Map<Int,{}>();
 	static var genTextureKeys= new Map<String,{}>();
 
+	/**
+		Returns a shared `size` x `size` texture filled with random values.
+	**/
 	public static function genNoise(size) {
 		var engine = h3d.Engine.getCurrent();
 		var k = noiseTextureKeys.get(size);

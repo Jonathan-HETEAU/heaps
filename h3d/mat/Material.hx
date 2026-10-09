@@ -16,27 +16,82 @@ private typedef DefaultProps = {
 	var light : Bool;
 }
 
+/**
+	The standard material of the 3D meshes, created by `MaterialSetup.current.createMaterial()` or `Material.create`.
+
+	It provides shortcuts to the common settings: `texture`, `normalMap`, `color`, `blendMode`, `shadows`...
+	Shaders can be added to `mainPass` for custom effects.
+
+	```haxe
+	var mat = h3d.mat.Material.create(hxd.Res.wood.toTexture());
+	mat.shadows = true;
+	var mesh = new h3d.scene.Mesh(prim, mat, s3d);
+	```
+**/
 class Material extends BaseMaterial {
 
 	var mshader : h3d.shader.BaseMesh;
 	var normalShader : h3d.shader.NormalMap;
 
+	/**
+		The model resource the material was loaded from, used to store its properties (see `MaterialDatabase`).
+	**/
 	public var model : hxd.res.Resource;
 
+	/**
+		Shortcut to set both `castShadows` and `receiveShadows`. Reads `true` only when both are enabled.
+	**/
 	public var shadows(get, set) : Bool;
+	/**
+		Casts shadows: adds a `"shadow"` pass to the material.
+	**/
 	public var castShadows(default, set) : Bool;
+	/**
+		Receives shadows: adds the shadow shader (`Defaults.shadowShader`) to the main pass.
+	**/
 	public var receiveShadows(default, set) : Bool;
+	/**
+		Marks the shadow pass as static: it is only drawn when the static shadows are computed (see `Scene.computeStatic`).
+	**/
 	public var staticShadows(default, set) : Bool;
 
+	/**
+		The shader applying `texture`, or `null` if there is no texture.
+	**/
 	public var textureShader(default, null) : h3d.shader.Texture;
+	/**
+		The shader applying `specularTexture`, or `null` if there is none.
+	**/
 	public var specularShader(default, null) : h3d.shader.SpecularTexture;
+	/**
+		The diffuse (albedo) texture. Setting it adds or removes the texture shader.
+	**/
 	public var texture(get, set) : h3d.mat.Texture;
+	/**
+		The specular texture. Setting it adds or removes the specular shader.
+	**/
 	public var specularTexture(get, set) : h3d.mat.Texture;
+	/**
+		The normal map texture. Setting it adds or removes the normal map shader (the mesh needs tangents).
+	**/
 	public var normalMap(get,set) : h3d.mat.Texture;
 
+	/**
+		The color multiplied with the texture, `(1, 1, 1, 1)` by default.
+	**/
 	public var color(get, set) : Vector4;
+	/**
+		The specular intensity (forward renderer).
+	**/
 	public var specularAmount(get, set) : Float;
+	/**
+		The specular power: higher values give smaller highlights (forward renderer).
+	**/
 	public var specularPower(get, set) : Float;
+	/**
+		The blend mode of the main pass. It also selects the pass name: `None` draws in `"default"`, `Alpha` in `"alpha"`
+		(sorted back to front) and the additive modes in `"additive"` (without depth write).
+	**/
 	public var blendMode(default, set) : BlendMode;
 
 	function new(?texture) {
@@ -212,10 +267,10 @@ class Material extends BaseMaterial {
 
 	// -- PROPS
 
-	/*
+	/**
 		This is called after a model has been loaded and the material textures setup.
 		It will build the properties for this material, loading them from storage if necessary
-	*/
+	**/
 	public function getDefaultModelProps() : Any {
 		var props : DefaultProps = getDefaultProps();
 		switch( blendMode ) {
@@ -306,9 +361,9 @@ class Material extends BaseMaterial {
 	}
 	#end
 
-	/*
+	/**
 		Shortcut to create a material for the current renderer setup using the specific diffuse texture.
-	*/
+	**/
 	public static function create( ?tex : h3d.mat.Texture ) {
 		var mat = h3d.mat.MaterialSetup.current.createMaterial();
 		mat.texture = tex;

@@ -45,7 +45,7 @@ def scan(path):
                        (not is_type and depth == 1 and ("public" in mods or interface_ctx))
             k = i - 1
             prev_meta = ""
-            while k >= 0 and lines[k].strip().startswith(("@:", "#")):
+            while k >= 0 and lines[k].strip().startswith(("@:", "#")) and not DECL.match(lines[k]):
                 prev_meta += lines[k]
                 k -= 1
             if "override" in mods or any(x in line + prev_meta for x in ("@:noCompletion", "@:dox(hide)")):
@@ -54,7 +54,7 @@ def scan(path):
                 total += 1
                 # doc must end on a previous line, only metadata/blank/conditionals in between
                 j = i - 1
-                while j >= 0 and (not lines[j].strip() or lines[j].strip().startswith(("@:", "#"))):
+                while j >= 0 and (not lines[j].strip() or lines[j].strip().startswith(("@:", "#"))) and not DECL.match(lines[j]):
                     j -= 1
                 if j != last_doc_end:
                     out.append((i + 1, s[:110]))
