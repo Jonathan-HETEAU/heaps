@@ -1,35 +1,114 @@
 package h3d.scene;
 
+/**
+	Bit flags storing the boolean state of an `Object`. Most of them are exposed as properties of `Object`
+	(for instance `FVisible` is `Object.visible`): prefer using these properties.
+**/
 enum abstract ObjectFlags(Int) {
+	/**
+		The transform changed and `absPos` must be recomputed. See `Object.posChanged`.
+	**/
 	public var FPosChanged = 0x01;
+	/**
+		See `Object.visible`.
+	**/
 	public var FVisible = 0x02;
+	/**
+		See `Object.culled`.
+	**/
 	public var FCulled = 0x04;
+	/**
+		See `Object.followPositionOnly`.
+	**/
 	public var FFollowPositionOnly = 0x08;
+	/**
+		See `Object.lightCameraCenter`.
+	**/
 	public var FLightCameraCenter = 0x10;
+	/**
+		The object is part of an allocated scene. See `Object.allocated`.
+	**/
 	public var FAllocated = 0x20;
+	/**
+		See `Object.alwaysSyncAnimation`.
+	**/
 	public var FAlwaysSyncAnimation = 0x40;
+	/**
+		See `Object.inheritCulled`.
+	**/
 	public var FInheritCulled = 0x80;
+	/**
+		See `Object.modelRoot`.
+	**/
 	public var FModelRoot = 0x100;
+	/**
+		See `Object.ignoreBounds`.
+	**/
 	public var FIgnoreBounds = 0x200;
+	/**
+		See `Object.ignoreCollide`.
+	**/
 	public var FIgnoreCollide = 0x400;
+	/**
+		See `Object.ignoreParentTransform`.
+	**/
 	public var FIgnoreParentTransform = 0x800;
+	/**
+		See `Object.cullingColliderInherited`.
+	**/
 	public var FCullingColliderInherited = 0x1000;
+	/**
+		See `Object.fixedPosition`.
+	**/
 	public var FFixedPosition = 0x2000;
+	/**
+		Internal: the absolute position of a `fixedPosition` object has been computed once.
+	**/
 	public var FFixedPositionSynced = 0x4000;
+	/**
+		See `Object.alwaysSync`.
+	**/
 	public var FAlwaysSync = 0x8000;
+	/**
+		See `Object.drawn`.
+	**/
 	public var FDrawn = 0x10000;
+	/**
+		Internal: the object is currently running its `sync`.
+	**/
 	public var FInSync = 0x20000;
+	/**
+		Internal: the transform was modified during `sync`, so `absPos` must be recomputed right after it.
+	**/
 	public var FPosChangedInSync = 0x40000;
+	/**
+		See `Object.forceBounds`.
+	**/
 	public var FForceBounds = 0x80000;
+	/**
+		Creates flags from their integer value.
+	**/
 	public inline function new(value) {
 		this = value;
 	}
+	/**
+		Returns the integer value of the flags.
+	**/
 	public inline function toInt() return this;
+	/**
+		Tells if the flag `f` is set.
+	**/
 	public inline function has(f:ObjectFlags) return this & f.toInt() != 0;
+	/**
+		Sets or clears the flag `f` and returns `b`.
+	**/
 	public inline function set(f:ObjectFlags, b) {
 		if( b ) this |= f.toInt() else this &= ~f.toInt();
 		return b;
 	}
+	/**
+		Returns the list of the flags set, separated by ` | `.
+	**/
 	public inline function toString() {
 		var s = "";
 		if( has(FPosChanged) ) s += " | PosChanged";
@@ -72,6 +151,10 @@ class Object {
 	var flags : ObjectFlags;
 	var lastFrame : Int;
 
+	/**
+		The animation currently played on this object, or `null`. Set by `playAnimation` and `switchToAnimation`,
+		cleared by `stopAnimation`.
+	**/
 	public var currentAnimation(default, null) : h3d.anim.Animation;
 
 	var children : Array<Object>;
@@ -956,10 +1039,10 @@ class Object {
 		this.z = z;
 	}
 
+	static var tmpMat = new h3d.Matrix();
 	/**
 		Set the position, scale and rotation of the object relative to its parent based on the specified transform matrix.
 	**/
-	static var tmpMat = new h3d.Matrix();
 	public function setTransform( mat : h3d.Matrix ) {
 		var s = mat.getScale();
 		this.x = mat.tx;
