@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Debug: draws a black and white checker pattern from the texture coordinates.
+
 ## Constructor
 
 ### new

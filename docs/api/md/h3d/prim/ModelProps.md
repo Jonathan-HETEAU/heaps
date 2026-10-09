@@ -2,6 +2,8 @@
 
 **typedef** · package [`h3d.prim`](README.md) · module `h3d.prim.ModelDatabase` · source [`h3d/prim/ModelDatabase.hx`](../../../../../h3d/prim/ModelDatabase.hx)
 
+The model settings stored in the `model.props` files.
+
 ## Fields
 
 ### lodConfig

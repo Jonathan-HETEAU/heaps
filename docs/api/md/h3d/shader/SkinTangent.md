@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.SkinBase`](SkinBase.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The skinning shader for meshes with tangents (normal maps).
+
 ## Constructor
 
 ### new

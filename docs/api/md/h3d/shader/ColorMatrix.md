@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Transforms the output color by a matrix (see the color methods of `h3d.Matrix`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?m:Array<Float>):Void
 ```
+
+Creates the shader with the 16 values of the matrix `m` (identity by default).
 
 ## Variables
 

@@ -4,6 +4,9 @@
 
 Extends: [`h3d.anim.Transition`](Transition.md) → [`h3d.anim.Animation`](Animation.md)
 
+Plays two animations at once on different parts of a skeleton (for instance the legs from a walk animation and the
+upper body from an attack animation).
+
 ## Constructor
 
 ### new
@@ -12,6 +15,8 @@ Extends: [`h3d.anim.Transition`](Transition.md) → [`h3d.anim.Animation`](Anima
 function new(anim1:Animation, anim2:Animation, objects:Map<String, Bool>):Void
 ```
 
+Creates a blend of two animation instances. See `objectsMap`.
+
 ## Variables
 
 ### objectsMap
@@ -19,6 +24,8 @@ function new(anim1:Animation, anim2:Animation, objects:Map<String, Bool>):Void
 ```haxe
 var objectsMap:Map<String, Bool>
 ```
+
+The objects (or joints) animated by `anim2`: the objects mapped to `true` take `anim2`, the others take `anim1`.
 
 ## Methods
 

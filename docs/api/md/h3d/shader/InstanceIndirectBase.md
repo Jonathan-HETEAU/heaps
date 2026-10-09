@@ -6,6 +6,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
 Subclasses: [`h3d.shader.InstanceIndirect`](InstanceIndirect.md), [`h3d.shader.SubPartInstanceIndirect`](SubPartInstanceIndirect.md)
 
+Base of the compute shaders culling instances and writing indirect draw commands (see `h3d.scene.GPUMeshBatch`).
+
 ## Constructor
 
 ### new

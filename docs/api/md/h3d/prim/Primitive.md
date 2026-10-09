@@ -123,11 +123,15 @@ Returns the number and offset of indexes for the specified material
 function getMaterialIndexStart(material:Int, ?lod:Int = 0):Int
 ```
 
+Returns the first index of the given material group and level of detail.
+
 ### getMaterialIndexCount
 
 ```haxe
 function getMaterialIndexCount(material:Int, ?lod:Int = 0):Int
 ```
+
+Returns the number of indexes of the given material group and level of detail.
 
 ### render
 
@@ -167,8 +171,12 @@ Return the LOD count.
 function screenRatioToLod(screenRatio:Float):Int
 ```
 
+Returns the level of detail to use for an object covering `screenRatio` of the screen (see `h3d.scene.Mesh.screenRatio`).
+
 ### getCullingScreenRatio
 
 ```haxe
 function getCullingScreenRatio():Float
 ```
+
+Returns the screen ratio under which the meshes using this primitive are not drawn at all (`0` to always draw them).

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Debug: makes the output opaque, and with `showAlpha` displays the alpha channel as grey levels.
+
 ## Constructor
 
 ### new

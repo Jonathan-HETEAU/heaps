@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Scalable ambient obscurance: computes a screen space ambient occlusion from the depth and normal textures.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 function new():Void
 ```
 
+Creates the pass.
+
 ## Methods
 
 ### apply
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 function apply(depthTexture:h3d.mat.Texture, normalTexture:h3d.mat.Texture, camera:h3d.Camera):Void
 ```
+
+Renders the ambient occlusion to the current target.
 
 ## Inherited members
 

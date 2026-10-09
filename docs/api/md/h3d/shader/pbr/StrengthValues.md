@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+The strength of each property written by a decal (albedo, normal, PBR properties, emissive), from `0` to `1`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 ```haxe
 function new(?albedoStrength:Float = 1., ?normalStrength:Float = 1., ?pbrStrength:Float = 1., ?emissiveStrength:Float = 1.):Void
 ```
+
+Creates the shader.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Flips the normal of back faces, for double sided lighting.
+
 ## Constructor
 
 ### new

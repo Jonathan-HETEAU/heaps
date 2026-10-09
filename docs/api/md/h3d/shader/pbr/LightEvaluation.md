@@ -6,6 +6,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
 Subclasses: [`h3d.shader.pbr.Light`](Light.md)
 
+Shader functions computing the intensity of the different kinds of PBR lights.
+
 ## Constructor
 
 ### new

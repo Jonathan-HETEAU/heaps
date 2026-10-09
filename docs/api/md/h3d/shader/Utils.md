@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Shader functions applying the bone matrices to points and vectors.
+
 ## Constructor
 
 ### new

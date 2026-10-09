@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Discards the pixels whose alpha is below `threshold`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?threshold:Float = 0.):Void
 ```
+
+Creates the shader.
 
 ## Variables
 

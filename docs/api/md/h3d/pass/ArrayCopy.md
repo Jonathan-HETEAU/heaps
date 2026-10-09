@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Copies a layer of a texture array to a texture.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 ```haxe
 function new():Void
 ```
+
+Creates the pass.
 
 ## Static methods
 
@@ -20,6 +24,8 @@ function new():Void
 static function run(from:h3d.mat.TextureArray, fromLayer:Int, to:h3d.mat.Texture, ?blend:Null<h3d.mat.BlendMode>, ?pass:h3d.mat.Pass, ?layer:Int):Void
 ```
 
+Copies a layer of a texture array using a shared instance.
+
 ## Methods
 
 ### apply
@@ -27,6 +33,8 @@ static function run(from:h3d.mat.TextureArray, fromLayer:Int, to:h3d.mat.Texture
 ```haxe
 function apply(from:h3d.mat.TextureArray, fromLayer:Int, to:Null<h3d.mat.Texture>, ?blend:Null<h3d.mat.BlendMode>, ?customPass:h3d.mat.Pass, ?layer:Int):Void
 ```
+
+Copies the layer `fromLayer` of `from` to the layer `layer` of `to` (or to the current target if `to` is `null`).
 
 ## Inherited members
 

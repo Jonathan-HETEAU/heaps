@@ -14,6 +14,8 @@ This is similar to [Texture] shader but uses a second UV set.
 function new(?tex:hxsl.Texture):Void
 ```
 
+Creates the shader with the texture `tex`.
+
 ## Variables
 
 ### additive

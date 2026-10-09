@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ProjectedShadowMap`](ProjectedShadowMap.md) → [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
+The shadow map of a `h3d.scene.pbr.RectangleLight`: a perspective projection from the light.
+
 ## Constructor
 
 ### new

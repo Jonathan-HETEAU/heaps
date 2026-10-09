@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The base shader of the 2D objects (`h2d.Drawable`): transforms the 2D vertices and applies the texture, color and filters.
+
 ## Constructor
 
 ### new

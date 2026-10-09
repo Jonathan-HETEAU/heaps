@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Compute shader removing from the clusters the lights hidden by the opaque geometry, using the hierarchical depth buffer.
+
 ## Constructor
 
 ### new

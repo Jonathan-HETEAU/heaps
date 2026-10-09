@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.InstanceIndirectBase`](InstanceIndirectBase.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Culls instances and selects their level of detail, writing their indirect draw commands.
+
 ## Constructor
 
 ### new

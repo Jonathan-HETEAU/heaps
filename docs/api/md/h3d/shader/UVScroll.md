@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Scrolls the texture coordinates over time.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?vx:Float = 0., ?vy:Float = 0.):Void
 ```
+
+Creates the shader with a scrolling speed.
 
 ## Variables
 

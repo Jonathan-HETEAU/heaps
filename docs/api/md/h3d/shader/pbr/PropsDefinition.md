@@ -6,6 +6,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
 Subclasses: [`h3d.shader.pbr.Direct`](Direct.md), [`h3d.shader.pbr.Indirect`](Indirect.md)
 
+Declares the PBR surface properties (albedo, normal, metalness, roughness, occlusion, emissive...) shared by the PBR shaders.
+
 ## Constructor
 
 ### new

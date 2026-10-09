@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Shader functions computing gradient noise (`psrdnoise`), to be used by other shaders.
+
 ## Constructor
 
 ### new

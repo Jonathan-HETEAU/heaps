@@ -15,6 +15,9 @@ BigPrimitive allows you to easily create large buffers by spliting the buffers.
 function new(format:hxd.BufferFormat, ?alloc:hxd.impl.Allocator):Void
 ```
 
+Creates an empty primitive with the given vertex format.
+- **param** `alloc` An optional allocator used for the GPU buffers.
+
 ## Variables
 
 ### format
@@ -23,17 +26,24 @@ function new(format:hxd.BufferFormat, ?alloc:hxd.impl.Allocator):Void
 var format(default, null):hxd.BufferFormat
 ```
 
+The vertex format.
+
 ### hasTangents
 
 ```haxe
 var hasTangents:Bool
 ```
 
+Tells that the format contains tangents, so that `addSub` transforms them too.
+
 ### isStatic
 
 ```haxe
 var isStatic:Bool
 ```
+
+If `true`, the temporary buffers are allocated for the maximum size at once (faster for large static geometry).
+Set it to `false` for geometry rebuilt often.
 
 ## Methods
 
@@ -60,17 +70,23 @@ This is similar to addVertexValue for X Y and Z, but will also update the bounds
 inline function addBounds(x:Float, y:Float, z:Float):Void
 ```
 
+Adds a point to the bounds, without adding a vertex.
+
 ### addVertexValue
 
 ```haxe
 inline function addVertexValue(v:hxd.impl.Float32):Void
 ```
 
+Adds a raw value to the current vertex (after a `begin`).
+
 ### addIndex
 
 ```haxe
 inline function addIndex(i:Int):Void
 ```
+
+Adds an index, relative to the first vertex added since the last `begin`.
 
 ### triCount
 
@@ -116,6 +132,8 @@ override function dispose():Void
 ```haxe
 function clear():Void
 ```
+
+Removes all the geometry.
 
 ### add
 

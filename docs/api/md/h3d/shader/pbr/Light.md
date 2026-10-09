@@ -6,6 +6,8 @@ Extends: [`h3d.shader.pbr.LightEvaluation`](LightEvaluation.md) → [`hxsl.Shade
 
 Subclasses: [`h3d.shader.pbr.CapsuleLight`](CapsuleLight.md), [`h3d.shader.pbr.DirLight`](DirLight.md), [`h3d.shader.pbr.PointLight`](PointLight.md), [`h3d.shader.pbr.RectangleLight`](RectangleLight.md), [`h3d.shader.pbr.SpotLight`](SpotLight.md)
 
+Base of the shaders of the PBR lights: outputs the light color and direction used by the lighting shader.
+
 ## Constructor
 
 ### new

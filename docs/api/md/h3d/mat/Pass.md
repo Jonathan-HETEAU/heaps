@@ -10,6 +10,11 @@
 function new(name:String, ?shaders:hxsl.ShaderList, ?parent:Pass):Void
 ```
 
+Creates a pass with the default render states: back face culling, depth test `Less` with depth write, no blending.
+- **param** `name` The renderer pass name.
+- **param** `shaders` The initial shader list.
+- **param** `parent` An optional parent pass whose shaders are shared.
+
 ## Static variables
 
 ### enableLights_bits
@@ -326,6 +331,8 @@ static inline var reserved_mask:Int = 1073741824
 static function bitsToFields(bits:Int):Array<{ value:String, name:String }>
 ```
 
+Decodes the render state bits of a pass into a list of field names and values (debug).
+
 ### getEnableLights
 
 ```haxe
@@ -436,11 +443,16 @@ static inline function getReserved(v:Int):Int
 var name(default, null):String
 ```
 
+The name of the renderer pass this pass is drawn in, such as `"default"`, `"alpha"`, `"additive"` or `"shadow"`.
+See `setPassName`.
+
 ### enableLights
 
 ```haxe
 var enableLights(default, set):Bool
 ```
+
+If `true`, the light system adds the light shaders when drawing this pass.
 
 ### dynamicParameters
 
@@ -466,11 +478,15 @@ when rendering static/dynamic parts.
 var culled(default, set):Bool
 ```
 
+If `true`, the pass is not emitted (the object is not drawn in this pass).
+
 ### culling
 
 ```haxe
 var culling(default, set):Face
 ```
+
+The faces which are not drawn (`Back` by default).
 
 ### depthWrite
 
@@ -478,11 +494,15 @@ var culling(default, set):Face
 var depthWrite(default, set):Bool
 ```
 
+Writes the depth of the drawn pixels (`true` by default).
+
 ### depthClamp
 
 ```haxe
 var depthClamp(default, set):Bool
 ```
+
+Clamps the depth to the near and far planes instead of clipping (requires driver support).
 
 ### depthTest
 
@@ -490,11 +510,15 @@ var depthClamp(default, set):Bool
 var depthTest(default, set):Compare
 ```
 
+The depth test (`Less` by default): pixels failing it are not drawn.
+
 ### blendSrc
 
 ```haxe
 var blendSrc(default, set):Blend
 ```
+
+The blend factor of the source color. See `setBlendMode` for the common presets.
 
 ### blendDst
 
@@ -502,11 +526,15 @@ var blendSrc(default, set):Blend
 var blendDst(default, set):Blend
 ```
 
+The blend factor of the destination color.
+
 ### blendAlphaSrc
 
 ```haxe
 var blendAlphaSrc(default, set):Blend
 ```
+
+The blend factor of the source alpha.
 
 ### blendAlphaDst
 
@@ -514,11 +542,15 @@ var blendAlphaSrc(default, set):Blend
 var blendAlphaDst(default, set):Blend
 ```
 
+The blend factor of the destination alpha.
+
 ### blendOp
 
 ```haxe
 var blendOp(default, set):Operation
 ```
+
+The blend operation of the colors.
 
 ### blendAlphaOp
 
@@ -526,11 +558,15 @@ var blendOp(default, set):Operation
 var blendAlphaOp(default, set):Operation
 ```
 
+The blend operation of the alpha.
+
 ### wireframe
 
 ```haxe
 var wireframe(default, set):Bool
 ```
+
+Draws the triangles edges only (requires the `Wireframe` driver feature).
 
 ### colorMask
 
@@ -538,17 +574,24 @@ var wireframe(default, set):Bool
 var colorMask:Int
 ```
 
+The channels written, as bits: `1` red, `2` green, `4` blue, `8` alpha, repeated every 4 bits for each render
+target. See `setColorMask`.
+
 ### layer
 
 ```haxe
 var layer:Int
 ```
 
+The drawing order of the pass inside its pass name: lower layers are drawn first, before the depth sorting.
+
 ### stencil
 
 ```haxe
 var stencil:Stencil
 ```
+
+The stencil settings, or `null` to disable the stencil test.
 
 ## Methods
 
@@ -558,11 +601,15 @@ var stencil:Stencil
 function load(p:Pass):Void
 ```
 
+Copies the name and render states of `p` (not the shaders).
+
 ### setPassName
 
 ```haxe
 function setPassName(name:String):Void
 ```
+
+Changes the renderer pass this pass is drawn in.
 
 ### blend
 
@@ -570,11 +617,15 @@ function setPassName(name:String):Void
 inline function blend(src:Blend, dst:Blend):Void
 ```
 
+Sets the blend factors of the source and destination, for both the colors and the alpha.
+
 ### setBlendMode
 
 ```haxe
 function setBlendMode(b:BlendMode):Void
 ```
+
+Sets the blend factors and operations of a common blend mode.
 
 ### depth
 
@@ -582,11 +633,15 @@ function setBlendMode(b:BlendMode):Void
 function depth(write:Bool, test:Compare, ?clamp:Bool = false):Void
 ```
 
+Sets the depth write, depth test and depth clamp.
+
 ### setColorMask
 
 ```haxe
 function setColorMask(r:Bool, g:Bool, b:Bool, a:Bool):Void
 ```
+
+Sets the channels written to the render target.
 
 ### setColorChannel
 
@@ -594,11 +649,15 @@ function setColorMask(r:Bool, g:Bool, b:Bool, a:Bool):Void
 function setColorChannel(c:hxsl.Channel):Void
 ```
 
+Writes only the channel `c` (`R`, `G`, `B` or `A`).
+
 ### setColorMaski
 
 ```haxe
 function setColorMaski(r:Bool, g:Bool, b:Bool, a:Bool, i:Int):Void
 ```
+
+Adds the channels written to the render target `i` when drawing to several targets.
 
 ### addShader
 
@@ -606,11 +665,15 @@ function setColorMaski(r:Bool, g:Bool, b:Bool, a:Bool, i:Int):Void
 function addShader(s:addShader.T):addShader.T
 ```
 
+Adds a shader to the pass and returns it. Shaders are sorted by priority (see `hxsl.Shader.setPriority`).
+
 ### removeShader
 
 ```haxe
 function removeShader(s:hxsl.Shader):Bool
 ```
+
+Removes a shader from the pass. Returns `true` if it was found.
 
 ### removeShaders
 
@@ -618,11 +681,15 @@ function removeShader(s:hxsl.Shader):Bool
 function removeShaders(t:Class<removeShaders.T>):Void
 ```
 
+Removes all the shaders of class `t` from the pass.
+
 ### getShader
 
 ```haxe
 function getShader(t:Class<getShader.T>):getShader.T
 ```
+
+Returns the first shader of class `t` of the pass (excluding the shaders of the parent pass), or `null`.
 
 ### getShaderByName
 
@@ -630,14 +697,21 @@ function getShader(t:Class<getShader.T>):getShader.T
 function getShaderByName(name:String):hxsl.Shader
 ```
 
+Returns the first shader whose name is `name` (excluding the shaders of the parent pass), or `null`.
+
 ### getShaders
 
 ```haxe
 inline function getShaders():hxsl._ShaderList.ShaderIterator
 ```
 
+Returns an iterator on the shaders of the pass (excluding the shaders of the parent pass).
+
 ### clone
 
 ```haxe
 function clone(?parent:Pass):Pass
 ```
+
+Returns a copy of the pass, with its render states and shaders.
+- **param** `parent` The parent pass of the copy.

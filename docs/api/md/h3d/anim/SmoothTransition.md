@@ -4,6 +4,8 @@
 
 Extends: [`h3d.anim.Transition`](Transition.md) → [`h3d.anim.Animation`](Animation.md)
 
+Cross-fades from the animation `anim1` to `anim2` over `duration` seconds, both animations playing during the transition.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.anim.Transition`](Transition.md) → [`h3d.anim.Animation`](Anima
 function new(current:Animation, target:Animation, duration:Float):Void
 ```
 
+Creates a transition between two animation instances, over `duration` seconds.
+
 ## Variables
 
 ### blendFactor
@@ -19,6 +23,8 @@ function new(current:Animation, target:Animation, duration:Float):Void
 ```haxe
 var blendFactor:Float
 ```
+
+The transition progress, from `0` (`anim1`) to `1` (`anim2`).
 
 ## Methods
 

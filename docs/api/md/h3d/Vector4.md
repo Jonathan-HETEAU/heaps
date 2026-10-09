@@ -22,11 +22,15 @@ Implicit casts to: `Vector4Impl`
 static inline function fromColor(c:Int, ?scale:Float = 1.0):Vector4
 ```
 
+Creates a color vector from an integer in `0xAARRGGBB` format, with components multiplied by `scale`.
+
 ### fromArray
 
 ```haxe
 static inline function fromArray(a:Array<Float>):Vector4
 ```
+
+Creates a vector from the first components of an array.
 
 ## Methods
 
@@ -36,11 +40,15 @@ static inline function fromArray(a:Array<Float>):Vector4
 inline function sub(v:Vector4):Vector4
 ```
 
+Returns `this - v` (4 components) as a new vector.
+
 ### add
 
 ```haxe
 inline function add(v:Vector4):Vector4
 ```
+
+Returns `this + v` (4 components) as a new vector.
 
 ### transform
 
@@ -48,8 +56,12 @@ inline function add(v:Vector4):Vector4
 inline function transform(m:Matrix):Void
 ```
 
+Transforms the 4 components by the matrix `m`.
+
 ### transformed
 
 ```haxe
 inline function transformed(m:Matrix):Vector4
 ```
+
+Returns a copy of the vector with its 4 components transformed by `m`.

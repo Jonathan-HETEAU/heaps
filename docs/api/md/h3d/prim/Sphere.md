@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A UV sphere centered on the origin, made of `segsW` meridians and `segsH` parallels.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,12 @@ Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPri
 function new(?ray:Float = 1., ?segsW:Int = 8, ?segsH:Int = 6, ?portion:Float = 1.):Void
 ```
 
+Creates a sphere. Call `addNormals()` and `addUVs()` if needed.
+- **param** `ray` The radius.
+- **param** `segsW` The number of horizontal segments.
+- **param** `segsH` The number of vertical segments.
+- **param** `portion` The vertical portion of the sphere built, from the top: `0.5` builds a hemisphere.
+
 ## Static methods
 
 ### defaultUnitSphere
@@ -19,6 +27,8 @@ function new(?ray:Float = 1., ?segsW:Int = 8, ?segsH:Int = 6, ?portion:Float = 1
 ```haxe
 static function defaultUnitSphere():Sphere
 ```
+
+Returns a shared sphere of radius 1 (16x16 segments) with normals and UVs.
 
 ## Methods
 

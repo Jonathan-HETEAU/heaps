@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies a cube texture: sampled with the normal, or with the reflected view direction if `reflection` is set.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(texture:hxsl.Texture, ?reflection:Bool = false):Void
 ```
+
+Creates the shader with the cube `texture`.
 
 ## Variables
 

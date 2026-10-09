@@ -4,6 +4,9 @@
 
 Extends: [`h3d.anim.Animation`](Animation.md)
 
+An animation sampled at a fixed rate, with one keyframe per frame per object, linearly interpolated (quaternions are
+interpolated for rotations). This is the format of the animations loaded from models.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.anim.Animation`](Animation.md)
 ```haxe
 function new(name:String, frame:Int, sampling:Float):Void
 ```
+
+Creates an empty animation of `frame` frames at `sampling` frames per second.
 
 ## Methods
 
@@ -20,11 +25,15 @@ function new(name:String, frame:Int, sampling:Float):Void
 function addCurve(objName:String, frames:Vector<LinearFrame>, hasPos:Bool, hasRot:Bool, hasScale:Bool):Void
 ```
 
+Adds the transform keyframes of the object `objName`.
+
 ### addAlphaCurve
 
 ```haxe
 function addAlphaCurve(objName:String, alphas:Vector<Float>):Void
 ```
+
+Adds the alpha keyframes of the object `objName`.
 
 ### addUVCurve
 
@@ -32,11 +41,15 @@ function addAlphaCurve(objName:String, alphas:Vector<Float>):Void
 function addUVCurve(objName:String, uvs:Vector<Float>):Void
 ```
 
+Adds the UV offset keyframes of the object `objName`.
+
 ### addPropCurve
 
 ```haxe
 function addPropCurve(objName:String, propName:String, values:Vector<Float>):Void
 ```
+
+Adds the keyframes of the custom property `propName` of the object `objName`.
 
 ### getPropValue
 

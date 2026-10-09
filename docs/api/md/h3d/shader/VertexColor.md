@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Multiplies (or adds with `additive`) the output color by the vertex color (RGB).
+
 ## Constructor
 
 ### new

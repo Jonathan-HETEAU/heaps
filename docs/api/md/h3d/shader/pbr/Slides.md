@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Displays the G-buffer channels for debugging (the `Debug` display mode of `h3d.scene.pbr.Renderer`).
+
 ## Constructor
 
 ### new
@@ -19,6 +21,8 @@ function new():Void
 ```haxe
 var mode(get, set):DebugMode
 ```
+
+The channel displayed.
 
 ### shadowMap
 

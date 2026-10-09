@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Builds a mip level of a hierarchical depth buffer, keeping the minimum or maximum depth of each 2x2 block.
+
 ## Constructor
 
 ### new

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies the shadows of a perspective shadow map (see `h3d.pass.ProjectedShadowMap`).
+
 ## Constructor
 
 ### new

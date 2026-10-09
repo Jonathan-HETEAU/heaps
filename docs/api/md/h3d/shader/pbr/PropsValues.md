@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Sets the PBR properties of a material from constant values.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 ```haxe
 function new(?metalness:Float = 0., ?roughness:Float = 1., ?occlusion:Float = 1., ?emissive:Float = 0., ?custom1:Float = 0., ?custom2:Float = 0., ?translucency:Float = 0.):Void
 ```
+
+Creates the shader with the given property values.
 
 ## Variables
 

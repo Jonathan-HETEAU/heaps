@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Multiplies the output color by `color`, blended by `amount`.
+
 ## Constructor
 
 ### new

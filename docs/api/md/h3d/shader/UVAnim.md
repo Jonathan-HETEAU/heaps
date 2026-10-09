@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Animates the texture coordinates through a grid of frames (a sprite sheet).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,11 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(frameDivision:Int, ?totalFrames:Int = -1, ?speed:Float = 1.):Void
 ```
+
+Creates the shader.
+- **param** `frameDivision` The number of frames on each axis of the texture.
+- **param** `totalFrames` The number of frames, or `-1` for all the cells.
+- **param** `speed` The number of frames per second.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.pbr.PropsDefinition`](PropsDefinition.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Computes the direct lighting of a PBR light from the G-buffer.
+
 ## Constructor
 
 ### new

@@ -14,6 +14,8 @@ Wraps a collider so that a ray starting inside it hits it at distance 0, instead
 function new(collider:Collider):Void
 ```
 
+Wraps `collider`.
+
 ## Variables
 
 ### collider
@@ -21,6 +23,8 @@ function new(collider:Collider):Void
 ```haxe
 var collider:Collider
 ```
+
+The wrapped collider.
 
 ## Methods
 
@@ -30,11 +34,16 @@ var collider:Collider
 override function rayIntersection(r:Ray, bestMatch:Bool):Float
 ```
 
+Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+If `bestMatch` is `false`, any intersection can be returned (faster).
+
 ### contains
 
 ```haxe
 override function contains(p:Point):Bool
 ```
+
+Tells if the point `p` is inside the shape.
 
 ### inFrustum
 
@@ -42,11 +51,15 @@ override function contains(p:Point):Bool
 override function inFrustum(f:Frustum, ?m:h3d.Matrix):Bool
 ```
 
+Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+
 ### inSphere
 
 ```haxe
 override function inSphere(s:Sphere):Bool
 ```
+
+Tells if the shape intersects the sphere `s`.
 
 ### dimension
 
@@ -54,17 +67,23 @@ override function inSphere(s:Sphere):Bool
 override function dimension():Float
 ```
 
+Returns the largest size of the shape, used to compare collider sizes.
+
 ### closestPoint
 
 ```haxe
 override function closestPoint(p:Point):Point
 ```
 
+Returns the point of the shape closest to `p`.
+
 ### makeDebugObj
 
 ```haxe
 override function makeDebugObj():h3d.scene.Object
 ```
+
+Creates an object displaying the shape (debug), or `null` if not supported.
 
 ## Inherited members
 

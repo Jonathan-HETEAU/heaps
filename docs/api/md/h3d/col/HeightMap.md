@@ -46,11 +46,15 @@ We will iterate until we have reach the given precision.
 override inline function contains(pt:Point):Bool
 ```
 
+Tells if the point `pt` is under the height map surface.
+
 ### inFrustum
 
 ```haxe
 override function inFrustum(f:Frustum, ?m:h3d.Matrix):Bool
 ```
+
+Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
 
 ### inSphere
 
@@ -58,11 +62,15 @@ override function inFrustum(f:Frustum, ?m:h3d.Matrix):Bool
 override function inSphere(s:Sphere):Bool
 ```
 
+Tells if the shape intersects the sphere `s`.
+
 ### closestPoint
 
 ```haxe
 override function closestPoint(sp:Point):Point
 ```
+
+Returns the point of the shape closest to `p`.
 
 ### rayIntersection
 
@@ -70,11 +78,16 @@ override function closestPoint(sp:Point):Point
 override function rayIntersection(r:Ray, bestMatch:Bool):Float
 ```
 
+Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+If `bestMatch` is `false`, any intersection can be returned (faster).
+
 ### makeDebugObj
 
 ```haxe
 override function makeDebugObj():h3d.scene.Object
 ```
+
+Creates an object displaying the shape (debug), or `null` if not supported.
 
 ## Inherited members
 

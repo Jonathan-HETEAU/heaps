@@ -2,6 +2,8 @@
 
 **class** · package [`h3d.pass`](README.md) · source [`h3d/pass/SortByMaterial.hx`](../../../../../h3d/pass/SortByMaterial.hx)
 
+Sorts draw passes by shader then texture, to minimize the GPU state changes.
+
 ## Constructor
 
 ### new
@@ -10,6 +12,8 @@
 function new():Void
 ```
 
+Creates the sorter.
+
 ## Methods
 
 ### sort
@@ -17,3 +21,5 @@ function new():Void
 ```haxe
 function sort(passes:PassList):Void
 ```
+
+Sorts `passes` by shader then by texture.

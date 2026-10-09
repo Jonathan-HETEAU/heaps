@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Quads`](Quads.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+An open cylinder (without caps) along the Z axis.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,12 @@ Extends: [`h3d.prim.Quads`](Quads.md) → [`h3d.prim.Primitive`](Primitive.md)
 ```haxe
 function new(segs:Int, ?ray:Float = 1.0, ?height:Float = 1.0, ?centered:Bool = false):Void
 ```
+
+Creates a cylinder.
+- **param** `segs` The number of sides.
+- **param** `ray` The radius.
+- **param** `height` The height along Z.
+- **param** `centered` If `true`, the cylinder goes from `-height/2` to `height/2`, otherwise from `0` to `height`.
 
 ## Static methods
 

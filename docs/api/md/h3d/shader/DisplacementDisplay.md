@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Debug: displays the alpha channel of a displacement texture.
+
 ## Constructor
 
 ### new

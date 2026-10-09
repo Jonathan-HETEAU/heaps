@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies an additional transform to the model matrices (used by `h3d.scene.Batcher` with `isRelative`).
+
 ## Constructor
 
 ### new

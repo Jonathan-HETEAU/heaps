@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The shader of `h3d.scene.fwd.PointLight`.
+
 ## Constructor
 
 ### new
@@ -12,7 +14,7 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 function new():Void
 ```
 
-Don't use model normal to calculate light amount
+Creates the shader.
 
 ## Variables
 

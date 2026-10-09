@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Interpolates between two textures (or two layers) into an output texture.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 ```haxe
 function new():Void
 ```
+
+Creates the pass.
 
 ## Static methods
 
@@ -20,6 +24,8 @@ function new():Void
 static function run(tex1:h3d.mat.Texture, tex2:h3d.mat.Texture, t:Float, output:h3d.mat.Texture):Void
 ```
 
+Renders the interpolation between `tex1` and `tex2` into `output` using a shared instance.
+
 ## Methods
 
 ### apply
@@ -27,6 +33,8 @@ static function run(tex1:h3d.mat.Texture, tex2:h3d.mat.Texture, t:Float, output:
 ```haxe
 function apply(tex1:h3d.mat.Texture, tex2:h3d.mat.Texture, t:Float, output:h3d.mat.Texture):Void
 ```
+
+Renders the interpolation between `tex1` and `tex2` (`t` from `0` to `1`) into `output`.
 
 ## Inherited members
 

@@ -2,7 +2,7 @@
 
 > Généré par `tools/docgen/deps.py` (analyse statique, sans compilateur Haxe). Ne pas éditer à la main.
 
-- Modules (fichiers `.hx`) : **554** — lignes : **133300** — packages : **44**
+- Modules (fichiers `.hx`) : **554** — lignes : **139421** — packages : **44**
 - Dépendances module→module : **2779**
 - Cycles de modules (SCC > 1) : **18**
 
@@ -17,20 +17,20 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 | [`h2d.domkit`](modules/h2d.domkit.md) | 4 | 2043 | 1 | h2d, h2d.col, h2d.filter, h3d, h3d.mat, h3d.scene, hxd, hxd.fs, hxd.res | 0 |
 | [`h2d.filter`](modules/h2d.filter.md) | 16 | 1165 | 76 | h2d, h2d.col, h3d, h3d.mat, h3d.pass, h3d.shader, h3d.shader.pbr, hxd | 2 |
 | [`h2d.impl`](modules/h2d.impl.md) | 2 | 316 | 33 | h2d, h3d, h3d.mat | 4 |
-| [`h3d`](modules/h3d.md) | 11 | 3292 | 33 | h2d.col, h2d.impl, h3d.col, h3d.impl, h3d.mat, h3d.scene, hxd, hxd.impl, hxd.res, hxsl | 30 |
-| [`h3d.anim`](modules/h3d.anim.md) | 9 | 2411 | 12 | h2d.col, h3d, h3d.col, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.impl | 5 |
-| [`h3d.col`](modules/h3d.col.md) | 20 | 3236 | 10 | h2d.col, h2d.impl, h3d, h3d.prim, h3d.scene, hxd, hxd.fs, hxd.impl | 13 |
+| [`h3d`](modules/h3d.md) | 11 | 4370 | 370 | h2d.col, h2d.impl, h3d.col, h3d.impl, h3d.mat, h3d.scene, hxd, hxd.impl, hxd.res, hxsl | 30 |
+| [`h3d.anim`](modules/h3d.anim.md) | 9 | 2937 | 181 | h2d.col, h3d, h3d.col, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.impl | 5 |
+| [`h3d.col`](modules/h3d.col.md) | 20 | 4342 | 367 | h2d.col, h2d.impl, h3d, h3d.prim, h3d.scene, hxd, hxd.fs, hxd.impl | 13 |
 | [`h3d.impl`](modules/h3d.impl.md) | 23 | 14091 | 17 | h2d, h2d.col, h3d, h3d.mat, h3d.pass, h3d.scene, h3d.shader, hxd, hxd.impl, hxd.res, hxsl | 9 |
-| [`h3d.mat`](modules/h3d.mat.md) | 17 | 2972 | 32 | h2d, h2d.col, h3d, h3d.col, h3d.impl, h3d.pass, h3d.scene, h3d.scene.fwd, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxd.fs, hxd.impl, hxd.res, hxsl | 16 |
-| [`h3d.mat.noise`](modules/h3d.mat.noise.md) | 1 | 156 | 0 | h3d, h3d.col, h3d.mat, h3d.pass, h3d.shader, hxd, hxsl | 0 |
-| [`h3d.parts`](modules/h3d.parts.md) | 6 | 2024 | 12 | h2d, h3d, h3d.col, h3d.mat, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.impl, hxd.res | 0 |
-| [`h3d.pass`](modules/h3d.pass.md) | 28 | 3081 | 17 | h2d.col, h3d, h3d.col, h3d.impl, h3d.mat, h3d.prim, h3d.scene, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxsl | 8 |
-| [`h3d.prim`](modules/h3d.prim.md) | 23 | 3772 | 30 | h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.scene, h3d.shader, hxd, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.res | 10 |
+| [`h3d.mat`](modules/h3d.mat.md) | 17 | 3886 | 315 | h2d, h2d.col, h3d, h3d.col, h3d.impl, h3d.pass, h3d.scene, h3d.scene.fwd, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxd.fs, hxd.impl, hxd.res, hxsl | 16 |
+| [`h3d.mat.noise`](modules/h3d.mat.noise.md) | 1 | 169 | 4 | h3d, h3d.col, h3d.mat, h3d.pass, h3d.shader, hxd, hxsl | 0 |
+| [`h3d.parts`](modules/h3d.parts.md) | 6 | 2726 | 243 | h2d, h3d, h3d.col, h3d.mat, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.impl, hxd.res | 0 |
+| [`h3d.pass`](modules/h3d.pass.md) | 28 | 3723 | 212 | h2d.col, h3d, h3d.col, h3d.impl, h3d.mat, h3d.prim, h3d.scene, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxsl | 8 |
+| [`h3d.prim`](modules/h3d.prim.md) | 23 | 4415 | 222 | h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.scene, h3d.shader, hxd, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.res | 10 |
 | [`h3d.scene`](modules/h3d.scene.md) | 22 | 10163 | 573 | h2d.col, h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene.pbr, h3d.shader, hxd, hxd.fmt.hmd, hxd.impl, hxd.res, hxsl | 15 |
 | [`h3d.scene.fwd`](modules/h3d.scene.fwd.md) | 5 | 394 | 24 | h3d, h3d.col, h3d.pass, h3d.scene, h3d.shader, hxd, hxsl | 1 |
 | [`h3d.scene.pbr`](modules/h3d.scene.pbr.md) | 11 | 3432 | 122 | h3d, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene, h3d.shader, h3d.shader.pbr, hxd, hxd.res, hxsl | 4 |
-| [`h3d.shader`](modules/h3d.shader.md) | 68 | 3586 | 6 | h3d, h3d.mat, hxd.impl, hxsl | 15 |
-| [`h3d.shader.pbr`](modules/h3d.shader.pbr.md) | 20 | 2555 | 0 | h3d, h3d.shader, hxsl | 4 |
+| [`h3d.shader`](modules/h3d.shader.md) | 68 | 3949 | 124 | h3d, h3d.mat, hxd.impl, hxsl | 15 |
+| [`h3d.shader.pbr`](modules/h3d.shader.pbr.md) | 20 | 2689 | 44 | h3d, h3d.shader, hxsl | 4 |
 | [`hxd`](modules/hxd.md) | 33 | 8440 | 121 | h2d, h3d, h3d.scene, hxd.fmt.pak, hxd.fs, hxd.impl, hxd.res, hxsl | 33 |
 | [`hxd.clipper`](modules/hxd.clipper.md) | 7 | 4068 | 1 | h2d.col, hxd | 1 |
 | [`hxd.earcut`](modules/hxd.earcut.md) | 1 | 598 | 1 | hxd | 2 |
@@ -591,41 +591,41 @@ Ordre topologique (les dépendances d'abord). Les modules entre crochets forment
 |---|---:|---:|---:|
 | [`hxd.Math`](modules/hxd.md#hxdmath) | 139 | 1 | 352 |
 | [`hxsl.Shader`](modules/hxsl.md#hxslshader) | 99 | 8 | 122 |
-| [`h3d.mat.Texture`](modules/h3d.mat.md#h3dmattexture) | 70 | 16 | 575 |
-| [`h3d.Engine`](modules/h3d.md#h3dengine) | 68 | 21 | 469 |
-| [`h3d.Matrix`](modules/h3d.md#h3dmatrix) | 66 | 4 | 963 |
+| [`h3d.mat.Texture`](modules/h3d.mat.md#h3dmattexture) | 70 | 16 | 708 |
+| [`h3d.Engine`](modules/h3d.md#h3dengine) | 68 | 21 | 659 |
+| [`h3d.Matrix`](modules/h3d.md#h3dmatrix) | 66 | 4 | 1233 |
 | [`h2d.Tile`](modules/h2d.md#h2dtile) | 57 | 3 | 445 |
-| [`h3d.Vector`](modules/h3d.md#h3dvector) | 57 | 5 | 340 |
+| [`h3d.Vector`](modules/h3d.md#h3dvector) | 57 | 5 | 502 |
 | [`h3d.scene.Object`](modules/h3d.scene.md#h3dsceneobject) | 49 | 16 | 1190 |
 | [`hxd.BufferFormat`](modules/hxd.md#hxdbufferformat) | 49 | 2 | 565 |
-| [`h3d.col.Point`](modules/h3d.col.md#h3dcolpoint) | 47 | 1 | 3 |
+| [`h3d.col.Point`](modules/h3d.col.md#h3dcolpoint) | 47 | 1 | 6 |
 | [`h2d.RenderContext`](modules/h2d.md#h2drendercontext) | 44 | 21 | 825 |
-| [`h3d.Buffer`](modules/h3d.md#h3dbuffer) | 41 | 7 | 158 |
+| [`h3d.Buffer`](modules/h3d.md#h3dbuffer) | 41 | 7 | 217 |
 | [`h2d.col.Point`](modules/h2d.col.md#h2dcolpoint) | 35 | 4 | 253 |
-| [`h3d.Vector4`](modules/h3d.md#h3dvector4) | 35 | 3 | 345 |
-| [`h3d.col.Bounds`](modules/h3d.col.md#h3dcolbounds) | 34 | 11 | 443 |
+| [`h3d.Vector4`](modules/h3d.md#h3dvector4) | 35 | 3 | 471 |
+| [`h3d.col.Bounds`](modules/h3d.col.md#h3dcolbounds) | 34 | 11 | 606 |
 | [`h2d.Object`](modules/h2d.md#h2dobject) | 33 | 13 | 1133 |
-| [`h3d.col.Collider`](modules/h3d.col.md#h3dcolcollider) | 32 | 6 | 159 |
-| [`h3d.shader.ScreenShader`](modules/h3d.shader.md#h3dshaderscreenshader) | 30 | 1 | 31 |
+| [`h3d.col.Collider`](modules/h3d.col.md#h3dcolcollider) | 32 | 6 | 249 |
+| [`h3d.shader.ScreenShader`](modules/h3d.shader.md#h3dshaderscreenshader) | 30 | 1 | 35 |
 | [`h3d.scene.RenderContext`](modules/h3d.scene.md#h3dscenerendercontext) | 29 | 27 | 544 |
 | [`hxd.FloatBuffer`](modules/hxd.md#hxdfloatbuffer) | 29 | 2 | 118 |
 | [`hxsl.Ast`](modules/hxsl.md#hxslast) | 29 | 3 | 776 |
 | [`h2d.col.Bounds`](modules/h2d.col.md#h2dcolbounds) | 28 | 6 | 425 |
-| [`h3d.pass.ScreenFx`](modules/h3d.pass.md#h3dpassscreenfx) | 26 | 11 | 77 |
+| [`h3d.pass.ScreenFx`](modules/h3d.pass.md#h3dpassscreenfx) | 26 | 11 | 120 |
 | [`hxd.Pixels`](modules/hxd.md#hxdpixels) | 23 | 3 | 780 |
-| [`h3d.col.Sphere`](modules/h3d.col.md#h3dcolsphere) | 22 | 9 | 125 |
-| [`h3d.mat.Data`](modules/h3d.mat.md#h3dmatdata) | 22 | 1 | 147 |
-| [`h3d.mat.Pass`](modules/h3d.mat.md#h3dmatpass) | 22 | 9 | 434 |
+| [`h3d.col.Sphere`](modules/h3d.col.md#h3dcolsphere) | 22 | 9 | 186 |
+| [`h3d.mat.Data`](modules/h3d.mat.md#h3dmatdata) | 22 | 1 | 329 |
+| [`h3d.mat.Pass`](modules/h3d.mat.md#h3dmatpass) | 22 | 9 | 549 |
 | [`hxd.IndexBuffer`](modules/hxd.md#hxdindexbuffer) | 22 | 1 | 75 |
 | [`hxd.Timer`](modules/hxd.md#hxdtimer) | 22 | 1 | 110 |
 | [`hxd.res.Loader`](modules/hxd.res.md#hxdresloader) | 21 | 4 | 67 |
 | [`hxsl.RuntimeShader`](modules/hxsl.md#hxslruntimeshader) | 21 | 4 | 160 |
-| [`h3d.col.Frustum`](modules/h3d.col.md#h3dcolfrustum) | 20 | 7 | 186 |
+| [`h3d.col.Frustum`](modules/h3d.col.md#h3dcolfrustum) | 20 | 7 | 241 |
 | [`hxd.res.Resource`](modules/hxd.res.md#hxdresresource) | 20 | 1 | 32 |
 | [`h3d.scene.Mesh`](modules/h3d.scene.md#h3dscenemesh) | 19 | 12 | 230 |
 | [`hxd.Pad`](modules/hxd.md#hxdpad) | 19 | 1 | 560 |
 | [`h3d.impl.Driver`](modules/h3d.impl.md#h3dimpldriver) | 18 | 21 | 420 |
-| [`h3d.pass.Copy`](modules/h3d.pass.md#h3dpasscopy) | 18 | 7 | 129 |
+| [`h3d.pass.Copy`](modules/h3d.pass.md#h3dpasscopy) | 18 | 7 | 168 |
 | [`hxsl.Globals`](modules/hxsl.md#hxslglobals) | 18 | 2 | 88 |
 | [`hxd.System.js`](modules/hxd.md#hxdsystemjs) | 17 | 4 | 199 |
 | [`hxsl.ShaderList`](modules/hxsl.md#hxslshaderlist) | 17 | 1 | 74 |

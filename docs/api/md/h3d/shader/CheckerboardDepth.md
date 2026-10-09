@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Downsamples a depth texture by taking alternatively the minimum and maximum of each 2x2 block (checkerboard pattern).
+
 ## Constructor
 
 ### new

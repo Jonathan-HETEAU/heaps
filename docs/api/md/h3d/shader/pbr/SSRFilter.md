@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Filters the screen space reflections according to the roughness.
+
 ## Constructor
 
 ### new

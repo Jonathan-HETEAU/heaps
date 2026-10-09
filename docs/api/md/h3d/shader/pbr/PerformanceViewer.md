@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Displays the light count of each pixel with a color gradient (for the `Performance` display mode).
+
 ## Constructor
 
 ### new

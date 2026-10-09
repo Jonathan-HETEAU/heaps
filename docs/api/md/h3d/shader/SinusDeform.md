@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Deforms the texture coordinates with a moving sine wave.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?frequency:Float = 10., ?amplitude:Float = 0.01, ?speed:Float = 1.):Void
 ```
+
+Creates the shader.
 
 ## Variables
 

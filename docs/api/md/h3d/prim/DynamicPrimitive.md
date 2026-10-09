@@ -4,6 +4,9 @@
 
 Extends: [`h3d.prim.Primitive`](Primitive.md)
 
+A primitive whose geometry is rebuilt often (for instance every frame, see `h3d.scene.Trail`): fill the buffers
+returned by `getBuffer` and `getIndexes`, then call `flush` to upload them.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 ```haxe
 function new(format:hxd.BufferFormat):Void
 ```
+
+Creates an empty dynamic primitive with the given vertex format.
 
 ## Variables
 
@@ -36,6 +41,8 @@ Minimum number of elements in index index buffer
 var bounds:h3d.col.Bounds
 ```
 
+The bounds of the geometry, to be updated by the user.
+
 ## Methods
 
 ### getBounds
@@ -50,17 +57,23 @@ override function getBounds():h3d.col.Bounds
 function getBuffer(vertices:Int):hxd.FloatBuffer
 ```
 
+Returns a vertex buffer large enough for `vertices` vertexes, to fill before `flush`.
+
 ### getIndexes
 
 ```haxe
 function getIndexes(count:Int):hxd.IndexBuffer
 ```
 
+Returns an index buffer large enough for `count` indexes, to fill before `flush`.
+
 ### flush
 
 ```haxe
 function flush():Void
 ```
+
+Uploads the vertexes and indexes filled since the last call.
 
 ### dispose
 

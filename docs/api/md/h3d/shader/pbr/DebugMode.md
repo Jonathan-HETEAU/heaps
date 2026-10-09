@@ -2,6 +2,8 @@
 
 **enum abstract** · package [`h3d.shader.pbr`](README.md) · module `h3d.shader.pbr.Slides` · source [`h3d/shader/pbr/Slides.hx`](../../../../../../h3d/shader/pbr/Slides.hx)
 
+The G-buffer channel displayed by the `Debug` display mode of the PBR renderer.
+
 Underlying type: `Int`
 
 ## Values

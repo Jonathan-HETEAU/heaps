@@ -4,6 +4,9 @@
 
 Extends: [`h3d.mat.Material`](Material.md) → [`h3d.mat.BaseMaterial`](BaseMaterial.md) → [`hxd.impl.AnyProps`](../../hxd/impl/AnyProps.md)
 
+The material of the PBR renderer (`MaterialSetup` `PbrMaterialSetup`). Its settings are given by its `PbrProps`
+(usually loaded from the `materials.props` of the model, see `MaterialDatabase`).
+
 ## Constructor
 
 ### new

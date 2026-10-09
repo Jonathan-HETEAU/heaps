@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A capsule centered on the origin: a cylinder of `length` along `axis`, capped by two half spheres of radius `ray`.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,12 @@ Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPri
 function new(?ray:Float = 1., ?length:Float = 1., ?segs:Int = 8, ?axis:Axis = X):Void
 ```
 
+Creates a capsule.
+- **param** `ray` The radius.
+- **param** `length` The length of the cylindrical part.
+- **param** `segs` The number of segments around the axis.
+- **param** `axis` The axis of the capsule.
+
 ## Static methods
 
 ### defaultUnitCapsule
@@ -19,6 +27,8 @@ function new(?ray:Float = 1., ?length:Float = 1., ?segs:Int = 8, ?axis:Axis = X)
 ```haxe
 static function defaultUnitCapsule(?axis:Axis = X):Capsule
 ```
+
+Returns a shared capsule of radius 1 and length 1 along `axis`.
 
 ## Methods
 

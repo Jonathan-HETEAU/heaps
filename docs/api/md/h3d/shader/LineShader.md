@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Draws the quads of `h3d.scene.Graphics` as screen space lines of constant `width` in pixels.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?width:Float = 1.5, ?lengthScale:Float = 1.):Void
 ```
+
+Creates the shader.
 
 ## Variables
 

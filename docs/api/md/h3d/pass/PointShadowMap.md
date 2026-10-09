@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.CubeShadowMap`](CubeShadowMap.md) → [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
+The shadow map of a `h3d.scene.pbr.PointLight`: a cube shadow map rendered from the light position.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.CubeShadowMap`](CubeShadowMap.md) → [`h3d.pass.Shadows`](S
 ```haxe
 function new(light:h3d.scene.Light):Void
 ```
+
+Creates the shadow map of `light`.
 
 ## Methods
 

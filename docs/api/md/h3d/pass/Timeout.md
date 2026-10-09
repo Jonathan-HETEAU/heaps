@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Debug: renders a shader which never ends, to test the GPU timeout (device lost) handling.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 function new():Void
 ```
 
+Creates the pass.
+
 ## Static methods
 
 ### run
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 static function run():Void
 ```
+
+Renders the endless shader using a shared instance.
 
 ## Inherited members
 

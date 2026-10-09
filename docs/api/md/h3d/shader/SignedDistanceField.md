@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Uses a channel of a signed distance field texture as alpha, for sharp shapes at any scale (for instance SDF fonts).
+
 ## Constructor
 
 ### new

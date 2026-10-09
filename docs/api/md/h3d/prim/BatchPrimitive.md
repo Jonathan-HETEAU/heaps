@@ -4,6 +4,9 @@
 
 Extends: [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A primitive packing many models of the same vertex format in a single vertex and index buffer, with the information
+needed by GPU culling and level of detail selection (see `h3d.scene.Batcher` and `h3d.scene.Batcher.BatchLibrary`).
+
 ## Constructor
 
 ### new
@@ -11,6 +14,10 @@ Extends: [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`]
 ```haxe
 function new(format:hxd.BufferFormat, ?isDynamic:Bool = true, ?maxByteSize:Int = -1):Void
 ```
+
+Creates an empty batch primitive.
+- **param** `isDynamic` If `true`, models can be added after the first upload (their data is kept on the CPU).
+- **param** `maxByteSize` The maximum number of bytes uploaded per chunk, or `-1` for no limit.
 
 ## Variables
 
@@ -20,11 +27,15 @@ function new(format:hxd.BufferFormat, ?isDynamic:Bool = true, ?maxByteSize:Int =
 var vertexFormat(default, null):hxd.BufferFormat
 ```
 
+The vertex format of the packed models.
+
 ### subMeshes
 
 ```haxe
 var subMeshes(default, null):Array<SubMesh>
 ```
+
+The packed models.
 
 ### cpuSubMeshInfos
 
@@ -32,11 +43,15 @@ var subMeshes(default, null):Array<SubMesh>
 var cpuSubMeshInfos:Bytes
 ```
 
+The bounding sphere and level of detail info of each model, on the CPU.
+
 ### gpuSubMeshInfos
 
 ```haxe
 var gpuSubMeshInfos:h3d.Buffer
 ```
+
+The bounding sphere and level of detail info of each model, read by the culling compute shader.
 
 ### cpuSubPartInfos
 
@@ -44,11 +59,15 @@ var gpuSubMeshInfos:h3d.Buffer
 var cpuSubPartInfos:Bytes
 ```
 
+The index ranges of each model material and level of detail, on the CPU.
+
 ### gpuSubPartInfos
 
 ```haxe
 var gpuSubPartInfos:h3d.Buffer
 ```
+
+The index ranges of each model material and level of detail, read by the culling compute shader.
 
 ### cpuLodInfos
 
@@ -56,17 +75,23 @@ var gpuSubPartInfos:h3d.Buffer
 var cpuLodInfos:hxd.FloatBuffer
 ```
 
+The level of detail screen ratios, on the CPU.
+
 ### gpuLodInfos
 
 ```haxe
 var gpuLodInfos:h3d.Buffer
 ```
 
+The level of detail screen ratios, read by the culling compute shader.
+
 ### hasLogicNormal
 
 ```haxe
 var hasLogicNormal:Bool
 ```
+
+`true` if a `logicNormal` vertex input was added (see `addLogicNormal`).
 
 ## Methods
 
@@ -76,17 +101,23 @@ var hasLogicNormal:Bool
 function addModel(model:MeshPrimitive):Int
 ```
 
+Adds a model (if not already added) and returns its sub mesh index.
+
 ### addLogicNormal
 
 ```haxe
 function addLogicNormal():Void
 ```
 
+Adds a `logicNormal` vertex input holding the original normals of the models.
+
 ### getSubMeshID
 
 ```haxe
 function getSubMeshID(model:MeshPrimitive):Int
 ```
+
+Returns the sub mesh index of `model`, or `-1`.
 
 ### dispose
 

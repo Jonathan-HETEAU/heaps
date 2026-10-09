@@ -6,6 +6,8 @@ Extends: [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
 Subclasses: [`h3d.pass.CapsuleShadowMap`](CapsuleShadowMap.md), [`h3d.pass.PointShadowMap`](PointShadowMap.md)
 
+Base class of the omnidirectional shadow maps: the shadows are rendered in the 6 faces of a cube texture around the light.
+
 ## Constructor
 
 ### new
@@ -14,6 +16,8 @@ Subclasses: [`h3d.pass.CapsuleShadowMap`](CapsuleShadowMap.md), [`h3d.pass.Point
 function new(light:h3d.scene.Light):Void
 ```
 
+Creates the shadow map of `light`.
+
 ## Variables
 
 ### faceMask
@@ -21,6 +25,8 @@ function new(light:h3d.scene.Light):Void
 ```haxe
 var faceMask(default, null):EnumFlags<CubeFaceFlag>
 ```
+
+The faces which are rendered.
 
 ## Methods
 

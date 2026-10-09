@@ -120,67 +120,67 @@ Each link points to a Markdown page with the full public API of a type: signatur
 
 ## h3d
 
-- [h3d.Buffer](api/md/h3d/Buffer.md)
-- [h3d.BufferFlag](api/md/h3d/BufferFlag.md)
-- [h3d.BufferHandle](api/md/h3d/BufferHandle.md)
-- [h3d.Camera](api/md/h3d/Camera.md)
-- [h3d.ColorAdjust](api/md/h3d/ColorAdjust.md)
-- [h3d.DepthBinding](api/md/h3d/DepthBinding.md)
-- [h3d.Engine](api/md/h3d/Engine.md)
-- [h3d.GPUCounter](api/md/h3d/GPUCounter.md)
-- [h3d.IDrawable](api/md/h3d/IDrawable.md)
-- [h3d.Indexes](api/md/h3d/Indexes.md)
-- [h3d.Matrix](api/md/h3d/Matrix.md)
-- [h3d.MatrixImpl](api/md/h3d/MatrixImpl.md)
-- [h3d.Quat](api/md/h3d/Quat.md)
+- [h3d.Buffer](api/md/h3d/Buffer.md): A GPU buffer: vertex data (with the layout given by `format`), index data, or data read by shaders.
+- [h3d.BufferFlag](api/md/h3d/BufferFlag.md): The flags of a `Buffer`, given at creation.
+- [h3d.BufferHandle](api/md/h3d/BufferHandle.md): A bindless handle of a buffer, allowing shaders to access it without binding it.
+- [h3d.Camera](api/md/h3d/Camera.md): A 3D camera: a position `pos` looking at `target`, with a perspective (or orthographic, see `orthoBounds`) projection.
+- [h3d.ColorAdjust](api/md/h3d/ColorAdjust.md): Color adjustments applied by `Matrix.adjustColor` (and `h2d.Drawable.adjustColor`).
+- [h3d.DepthBinding](api/md/h3d/DepthBinding.md): How the depth buffer is bound when rendering to a target (see `Engine.pushTarget`).
+- [h3d.Engine](api/md/h3d/Engine.md): The 3D engine: it owns the graphics driver and the GPU memory manager, and manages the render targets and the frame.
+- [h3d.GPUCounter](api/md/h3d/GPUCounter.md): A buffer of integer counters written by compute shaders and read back on the CPU.
+- [h3d.IDrawable](api/md/h3d/IDrawable.md): Something which can be rendered by the engine, such as a `h3d.scene.Scene` or a `h2d.Scene` (see `hxd.App`).
+- [h3d.Indexes](api/md/h3d/Indexes.md): A GPU index buffer: the vertex indexes of the triangles of a primitive (16-bit, or 32-bit with `is32`).
+- [h3d.Matrix](api/md/h3d/Matrix.md): A 4x4 transformation matrix.
+- [h3d.MatrixImpl](api/md/h3d/MatrixImpl.md): The implementation of `Matrix`: use `h3d.Matrix` instead.
+- [h3d.Quat](api/md/h3d/Quat.md): A quaternion representing a 3D rotation, used for instance by `h3d.scene.Object` to store its rotation.
 - [h3d.Vector](api/md/h3d/Vector.md): A 3 floats vector.
 - [h3d.Vector4](api/md/h3d/Vector4.md): A 4 floats vector.
 - [h3d.Vector4Impl](api/md/h3d/Vector4Impl.md): A 4 floats vector.
 - [h3d.VectorImpl](api/md/h3d/VectorImpl.md): A 3 floats vector.
-- [h3d.anim.AnimatedObject](api/md/h3d/anim/AnimatedObject.md)
-- [h3d.anim.Animation](api/md/h3d/anim/Animation.md)
+- [h3d.anim.AnimatedObject](api/md/h3d/anim/AnimatedObject.md): An object animated by an `Animation`, identified by name, and its target once the animation is bound.
+- [h3d.anim.Animation](api/md/h3d/anim/Animation.md): Base class of the animations: a set of animated objects (or joints) with keyframes, played on an object tree.
 - [h3d.anim.BlendSpace2D](api/md/h3d/anim/BlendSpace2D.md): Blends multiple animations points placed on a virtual 2d plane
-- [h3d.anim.BlendSpace2DPoint](api/md/h3d/anim/BlendSpace2DPoint.md)
-- [h3d.anim.BlendSpaceObject](api/md/h3d/anim/BlendSpaceObject.md)
-- [h3d.anim.BufferAnimation](api/md/h3d/anim/BufferAnimation.md)
-- [h3d.anim.BufferObject](api/md/h3d/anim/BufferObject.md)
-- [h3d.anim.DataLayout](api/md/h3d/anim/DataLayout.md)
-- [h3d.anim.DynamicJoint](api/md/h3d/anim/DynamicJoint.md)
-- [h3d.anim.Event](api/md/h3d/anim/Event.md)
-- [h3d.anim.Joint](api/md/h3d/anim/Joint.md)
-- [h3d.anim.LinearAnimation](api/md/h3d/anim/LinearAnimation.md)
-- [h3d.anim.LinearFrame](api/md/h3d/anim/LinearFrame.md)
-- [h3d.anim.LinearObject](api/md/h3d/anim/LinearObject.md)
-- [h3d.anim.SimpleBlend](api/md/h3d/anim/SimpleBlend.md)
-- [h3d.anim.Skin](api/md/h3d/anim/Skin.md)
-- [h3d.anim.SmoothTarget](api/md/h3d/anim/SmoothTarget.md)
-- [h3d.anim.SmoothTransition](api/md/h3d/anim/SmoothTransition.md)
-- [h3d.anim.SmoothedObject](api/md/h3d/anim/SmoothedObject.md)
-- [h3d.anim.Transition](api/md/h3d/anim/Transition.md)
-- [h3d.col.Bounds](api/md/h3d/col/Bounds.md)
-- [h3d.col.Capsule](api/md/h3d/col/Capsule.md)
-- [h3d.col.Collider](api/md/h3d/col/Collider.md)
-- [h3d.col.Cylinder](api/md/h3d/col/Cylinder.md)
-- [h3d.col.FPoint](api/md/h3d/col/FPoint.md)
-- [h3d.col.Frustum](api/md/h3d/col/Frustum.md)
-- [h3d.col.GroupCollider](api/md/h3d/col/GroupCollider.md)
+- [h3d.anim.BlendSpace2DPoint](api/md/h3d/anim/BlendSpace2DPoint.md): A point of a `BlendSpace2D`: an animation placed at a position of the blend space.
+- [h3d.anim.BlendSpaceObject](api/md/h3d/anim/BlendSpaceObject.md): An object animated by a `BlendSpace2D`, with the transforms of each point animation.
+- [h3d.anim.BufferAnimation](api/md/h3d/anim/BufferAnimation.md): An animation whose keyframes are stored in a single packed float buffer, as loaded from HMD files.
+- [h3d.anim.BufferObject](api/md/h3d/anim/BufferObject.md): An object animated by a `BufferAnimation`: the layout of its values in the animation data.
+- [h3d.anim.DataLayout](api/md/h3d/anim/DataLayout.md): The values stored per frame for an object of a `BufferAnimation`.
+- [h3d.anim.DynamicJoint](api/md/h3d/anim/DynamicJoint.md): A joint simulated as a spring following its animated position (hair, cloth, tails...).
+- [h3d.anim.Event](api/md/h3d/anim/Event.md): An event of an animation (such as a footstep), triggered when the animation reaches its frame (see `Animation.onEvent`).
+- [h3d.anim.Joint](api/md/h3d/anim/Joint.md): A joint (bone) of a skeleton (`Skin`).
+- [h3d.anim.LinearAnimation](api/md/h3d/anim/LinearAnimation.md): An animation sampled at a fixed rate, with one keyframe per frame per object, linearly interpolated (quaternions are interpolated for rotations).
+- [h3d.anim.LinearFrame](api/md/h3d/anim/LinearFrame.md): A keyframe of a `LinearAnimation`: a position, a rotation quaternion and a scale.
+- [h3d.anim.LinearObject](api/md/h3d/anim/LinearObject.md): An object animated by a `LinearAnimation`: one curve of transforms, alpha, UV offsets or a custom property.
+- [h3d.anim.SimpleBlend](api/md/h3d/anim/SimpleBlend.md): Plays two animations at once on different parts of a skeleton (for instance the legs from a walk animation and the upper body from an attack animation).
+- [h3d.anim.Skin](api/md/h3d/anim/Skin.md): The skeleton and skinning data of a skinned geometry: the joints and, for each vertex, the joints influencing it and their weights.
+- [h3d.anim.SmoothTarget](api/md/h3d/anim/SmoothTarget.md): Smoothly blends from the current pose of the objects to an animation, over `duration` seconds.
+- [h3d.anim.SmoothTransition](api/md/h3d/anim/SmoothTransition.md): Cross-fades from the animation `anim1` to `anim2` over `duration` seconds, both animations playing during the transition.
+- [h3d.anim.SmoothedObject](api/md/h3d/anim/SmoothedObject.md): An object animated by a `SmoothTransition`.
+- [h3d.anim.Transition](api/md/h3d/anim/Transition.md): Base class of the animations combining two animations (`anim1` and `anim2`).
+- [h3d.col.Bounds](api/md/h3d/col/Bounds.md): An axis aligned bounding box (AABB), defined by its minimum and maximum coordinates.
+- [h3d.col.Capsule](api/md/h3d/col/Capsule.md): A capsule collider: the points closer than `r` to the segment `a`-`b`.
+- [h3d.col.Collider](api/md/h3d/col/Collider.md): Base class of the collision shapes, used for picking (see `h3d.scene.Interactive`), culling and simple collision tests.
+- [h3d.col.Cylinder](api/md/h3d/col/Cylinder.md): A cylinder collider of radius `r` between the centers of its two caps `a` and `b`.
+- [h3d.col.FPoint](api/md/h3d/col/FPoint.md): A 3D point stored with 32-bit floats (smaller in memory than `Point`).
+- [h3d.col.Frustum](api/md/h3d/col/Frustum.md): A view frustum (the volume seen by a camera), made of 6 planes, used for culling.
+- [h3d.col.GroupCollider](api/md/h3d/col/GroupCollider.md): A collider made of several colliders: it is hit if any of them is hit.
 - [h3d.col.HeightMap](api/md/h3d/col/HeightMap.md): This is an helper class to define a heightmap-based collider.
-- [h3d.col.IPoint](api/md/h3d/col/IPoint.md)
+- [h3d.col.IPoint](api/md/h3d/col/IPoint.md): A 3D point with integer coordinates.
 - [h3d.col.InsideCollider](api/md/h3d/col/InsideCollider.md): Wraps a collider so that a ray starting inside it hits it at distance 0, instead of missing it.
-- [h3d.col.ObjectCollider](api/md/h3d/col/ObjectCollider.md)
-- [h3d.col.OptimizedCollider](api/md/h3d/col/OptimizedCollider.md)
-- [h3d.col.OrientedBounds](api/md/h3d/col/OrientedBounds.md)
-- [h3d.col.Plane](api/md/h3d/col/Plane.md)
-- [h3d.col.Point](api/md/h3d/col/Point.md)
-- [h3d.col.Polygon](api/md/h3d/col/Polygon.md)
-- [h3d.col.PolygonBuffer](api/md/h3d/col/PolygonBuffer.md)
-- [h3d.col.Ray](api/md/h3d/col/Ray.md)
-- [h3d.col.Seg](api/md/h3d/col/Seg.md)
-- [h3d.col.SkinCollider](api/md/h3d/col/SkinCollider.md)
-- [h3d.col.SkinColliderDebugObj](api/md/h3d/col/SkinColliderDebugObj.md)
-- [h3d.col.Sphere](api/md/h3d/col/Sphere.md)
-- [h3d.col.TransformCollider](api/md/h3d/col/TransformCollider.md)
-- [h3d.col.TriPlane](api/md/h3d/col/TriPlane.md)
+- [h3d.col.ObjectCollider](api/md/h3d/col/ObjectCollider.md): A collider following an object: the shape `collider`, in the object local space, is transformed by the current absolute transform of `obj` for each test.
+- [h3d.col.OptimizedCollider](api/md/h3d/col/OptimizedCollider.md): A collider tested in two steps: the fast shape `a` (usually bounds) first, then the precise shape `b` only if `a` is hit.
+- [h3d.col.OrientedBounds](api/md/h3d/col/OrientedBounds.md): An oriented bounding box (OBB): a box of half sizes `hx`, `hy`, `hz` around a center, with any rotation.
+- [h3d.col.Plane](api/md/h3d/col/Plane.md): A plane of equation `nx * x + ny * y + nz * z = d`, where `(nx, ny, nz)` is its normal.
+- [h3d.col.Point](api/md/h3d/col/Point.md): A 3D point: an alias for `h3d.Vector`.
+- [h3d.col.Polygon](api/md/h3d/col/Polygon.md): A triangle mesh collider (a list of `TriPlane`), precise but slower than simple shapes.
+- [h3d.col.PolygonBuffer](api/md/h3d/col/PolygonBuffer.md): A triangle mesh collider reading its triangles directly from vertex and index buffers (no preprocessing).
+- [h3d.col.Ray](api/md/h3d/col/Ray.md): A ray: an origin and a direction (normalized when created with `fromPoints` or `fromValues`).
+- [h3d.col.Seg](api/md/h3d/col/Seg.md): A segment between two points.
+- [h3d.col.SkinCollider](api/md/h3d/col/SkinCollider.md): A collider following the deformation of a skinned mesh: its triangles are transformed by the current pose of the skin when tested.
+- [h3d.col.SkinColliderDebugObj](api/md/h3d/col/SkinColliderDebugObj.md): The debug display of a `SkinCollider`.
+- [h3d.col.Sphere](api/md/h3d/col/Sphere.md): A sphere collider, defined by its center and radius.
+- [h3d.col.TransformCollider](api/md/h3d/col/TransformCollider.md): A collider whose shape is transformed by a fixed matrix.
+- [h3d.col.TriPlane](api/md/h3d/col/TriPlane.md): A triangle collider, part of a `Polygon` (linked list of triangles).
 - [h3d.impl.AllocStats](api/md/h3d/impl/AllocStats.md)
 - [h3d.impl.Benchmark](api/md/h3d/impl/Benchmark.md)
 - [h3d.impl.CachedPipeline](api/md/h3d/impl/CachedPipeline.md)
@@ -232,132 +232,132 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.impl.UpscalingProvider](api/md/h3d/impl/UpscalingProvider.md)
 - [h3d.impl.UpscalingSettings](api/md/h3d/impl/UpscalingSettings.md)
 - [h3d.impl.VarBinding](api/md/h3d/impl/VarBinding.md)
-- [h3d.mat.BaseMaterial](api/md/h3d/mat/BaseMaterial.md)
-- [h3d.mat.BigTexture](api/md/h3d/mat/BigTexture.md)
-- [h3d.mat.BigTextureElement](api/md/h3d/mat/BigTextureElement.md)
-- [h3d.mat.Blend](api/md/h3d/mat/Blend.md)
-- [h3d.mat.BlendMode](api/md/h3d/mat/BlendMode.md)
-- [h3d.mat.Compare](api/md/h3d/mat/Compare.md)
-- [h3d.mat.Defaults](api/md/h3d/mat/Defaults.md)
-- [h3d.mat.Face](api/md/h3d/mat/Face.md)
-- [h3d.mat.Filter](api/md/h3d/mat/Filter.md)
-- [h3d.mat.Material](api/md/h3d/mat/Material.md)
-- [h3d.mat.MaterialDatabase](api/md/h3d/mat/MaterialDatabase.md)
-- [h3d.mat.MaterialSetup](api/md/h3d/mat/MaterialSetup.md)
-- [h3d.mat.MipMap](api/md/h3d/mat/MipMap.md)
-- [h3d.mat.Operation](api/md/h3d/mat/Operation.md)
+- [h3d.mat.BaseMaterial](api/md/h3d/mat/BaseMaterial.md): Base class of the materials: a linked list of render passes (`Pass`), each with its own render states and shaders.
+- [h3d.mat.BigTexture](api/md/h3d/mat/BigTexture.md): A texture atlas packing many images in a single square texture, so that objects using different images can be drawn together (used by `h3d.scene.World`).
+- [h3d.mat.BigTextureElement](api/md/h3d/mat/BigTextureElement.md): An area of a `BigTexture` holding one image.
+- [h3d.mat.Blend](api/md/h3d/mat/Blend.md): A blend factor: the value the source (pixel being drawn) or destination (pixel in the target) color is multiplied by before being combined (see `Pass.blend`).
+- [h3d.mat.BlendMode](api/md/h3d/mat/BlendMode.md): The blend modes of materials, shared with 2D: see `h2d.BlendMode`.
+- [h3d.mat.Compare](api/md/h3d/mat/Compare.md): A comparison function, used by the depth test (see `Pass.depthTest`) and the stencil test.
+- [h3d.mat.Defaults](api/md/h3d/mat/Defaults.md): Global defaults of the materials.
+- [h3d.mat.Face](api/md/h3d/mat/Face.md): The faces culled by a pass (see `Pass.culling`).
+- [h3d.mat.Filter](api/md/h3d/mat/Filter.md): How the pixels of a texture are interpolated when sampled (see `Texture.filter`).
+- [h3d.mat.Material](api/md/h3d/mat/Material.md): The standard material of the 3D meshes, created by `MaterialSetup.current.createMaterial()` or `Material.create`.
+- [h3d.mat.MaterialDatabase](api/md/h3d/mat/MaterialDatabase.md): Stores the properties of the materials of models in `materials.props` JSON files, one per resource directory, indexed by material setup name and material name.
+- [h3d.mat.MaterialSetup](api/md/h3d/mat/MaterialSetup.md): Defines the rendering setup: which renderer, light system and material class are used by the scenes and models.
+- [h3d.mat.MipMap](api/md/h3d/mat/MipMap.md): How the mip levels of a texture are sampled (see `Texture.mipMap`).
+- [h3d.mat.Operation](api/md/h3d/mat/Operation.md): How the source and destination colors (multiplied by their blend factors) are combined (see `Pass.blendOp`).
 - [h3d.mat.Pass](api/md/h3d/mat/Pass.md)
-- [h3d.mat.PbrBlend](api/md/h3d/mat/PbrBlend.md)
-- [h3d.mat.PbrCullingMode](api/md/h3d/mat/PbrCullingMode.md)
-- [h3d.mat.PbrDepthTest](api/md/h3d/mat/PbrDepthTest.md)
-- [h3d.mat.PbrDepthWrite](api/md/h3d/mat/PbrDepthWrite.md)
-- [h3d.mat.PbrMaterial](api/md/h3d/mat/PbrMaterial.md)
-- [h3d.mat.PbrMaterialSetup](api/md/h3d/mat/PbrMaterialSetup.md)
-- [h3d.mat.PbrMode](api/md/h3d/mat/PbrMode.md)
-- [h3d.mat.PbrProps](api/md/h3d/mat/PbrProps.md)
-- [h3d.mat.PbrStencilCompare](api/md/h3d/mat/PbrStencilCompare.md)
-- [h3d.mat.PbrStencilOp](api/md/h3d/mat/PbrStencilOp.md)
+- [h3d.mat.PbrBlend](api/md/h3d/mat/PbrBlend.md): The blend mode of a `PbrMaterial` (see `h3d.mat.BlendMode`).
+- [h3d.mat.PbrCullingMode](api/md/h3d/mat/PbrCullingMode.md): The face culling of a `PbrMaterial` (see `h3d.mat.Data.Face`).
+- [h3d.mat.PbrDepthTest](api/md/h3d/mat/PbrDepthTest.md): The depth test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
+- [h3d.mat.PbrDepthWrite](api/md/h3d/mat/PbrDepthWrite.md): The depth write of a `PbrMaterial`: `Default` writes depth only for opaque blend modes.
+- [h3d.mat.PbrMaterial](api/md/h3d/mat/PbrMaterial.md): The material of the PBR renderer (`MaterialSetup` `PbrMaterialSetup`).
+- [h3d.mat.PbrMaterialSetup](api/md/h3d/mat/PbrMaterialSetup.md): The material setup of the physically based rendering: it creates `PbrMaterial` materials, the `h3d.scene.pbr.Renderer` renderer and the `h3d.scene.pbr.LightSystem`.
+- [h3d.mat.PbrMode](api/md/h3d/mat/PbrMode.md): Where a `PbrMaterial` is drawn in the PBR renderer pipeline.
+- [h3d.mat.PbrProps](api/md/h3d/mat/PbrProps.md): The properties of a `PbrMaterial`, stored as `props` and edited in Hide.
+- [h3d.mat.PbrStencilCompare](api/md/h3d/mat/PbrStencilCompare.md): A stencil test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
+- [h3d.mat.PbrStencilOp](api/md/h3d/mat/PbrStencilOp.md): A stencil operation of a `PbrMaterial` (see `h3d.mat.Data.StencilOp`).
 - [h3d.mat.Stencil](api/md/h3d/mat/Stencil.md)
-- [h3d.mat.StencilOp](api/md/h3d/mat/StencilOp.md)
+- [h3d.mat.StencilOp](api/md/h3d/mat/StencilOp.md): An operation applied to the stencil buffer value (see `Stencil`).
 - [h3d.mat.Texture](api/md/h3d/mat/Texture.md)
-- [h3d.mat.Texture3D](api/md/h3d/mat/Texture3D.md)
-- [h3d.mat.TextureArray](api/md/h3d/mat/TextureArray.md)
-- [h3d.mat.TextureChannels](api/md/h3d/mat/TextureChannels.md)
-- [h3d.mat.TextureFlags](api/md/h3d/mat/TextureFlags.md)
-- [h3d.mat.TextureFormat](api/md/h3d/mat/TextureFormat.md)
-- [h3d.mat.TextureHandle](api/md/h3d/mat/TextureHandle.md)
-- [h3d.mat.Wrap](api/md/h3d/mat/Wrap.md)
-- [h3d.mat.noise.OctaveShader](api/md/h3d/mat/noise/OctaveShader.md)
-- [h3d.mat.noise.WorleyNoise](api/md/h3d/mat/noise/WorleyNoise.md)
-- [h3d.parts.BlendMode](api/md/h3d/parts/BlendMode.md)
-- [h3d.parts.Collider](api/md/h3d/parts/Collider.md)
-- [h3d.parts.ColorKey](api/md/h3d/parts/ColorKey.md)
-- [h3d.parts.Converge](api/md/h3d/parts/Converge.md)
-- [h3d.parts.Emitter](api/md/h3d/parts/Emitter.md)
-- [h3d.parts.GpuEmitMode](api/md/h3d/parts/GpuEmitMode.md)
-- [h3d.parts.GpuPart](api/md/h3d/parts/GpuPart.md)
-- [h3d.parts.GpuPartGroup](api/md/h3d/parts/GpuPartGroup.md)
-- [h3d.parts.GpuParticles](api/md/h3d/parts/GpuParticles.md)
-- [h3d.parts.GpuSave](api/md/h3d/parts/GpuSave.md)
-- [h3d.parts.GpuSortMode](api/md/h3d/parts/GpuSortMode.md)
-- [h3d.parts.Particle](api/md/h3d/parts/Particle.md)
-- [h3d.parts.Particles](api/md/h3d/parts/Particles.md)
-- [h3d.parts.Randomized](api/md/h3d/parts/Randomized.md)
-- [h3d.parts.Shape](api/md/h3d/parts/Shape.md)
-- [h3d.parts.SortMode](api/md/h3d/parts/SortMode.md)
-- [h3d.parts.State](api/md/h3d/parts/State.md)
-- [h3d.parts.Value](api/md/h3d/parts/Value.md)
-- [h3d.parts.ValueXYZ](api/md/h3d/parts/ValueXYZ.md)
-- [h3d.pass.ArrayCopy](api/md/h3d/pass/ArrayCopy.md)
+- [h3d.mat.Texture3D](api/md/h3d/mat/Texture3D.md): A 3D (volume) texture of `width` x `height` x `depth` pixels.
+- [h3d.mat.TextureArray](api/md/h3d/mat/TextureArray.md): A texture array: several 2D textures (layers) of the same size and format, sampled with a layer index in shaders.
+- [h3d.mat.TextureChannels](api/md/h3d/mat/TextureChannels.md): A texture whose channels (red, green, blue, alpha) are filled separately from different images, for instance to pack the roughness, metalness and occlusion maps in a single texture.
+- [h3d.mat.TextureFlags](api/md/h3d/mat/TextureFlags.md): The flags of a `Texture`, given at creation.
+- [h3d.mat.TextureFormat](api/md/h3d/mat/TextureFormat.md): The pixel format of a texture, see `hxd.PixelFormat`.
+- [h3d.mat.TextureHandle](api/md/h3d/mat/TextureHandle.md): A bindless handle of a texture: an identifier allowing shaders to access the texture without binding it.
+- [h3d.mat.Wrap](api/md/h3d/mat/Wrap.md): How texture coordinates outside of the `[0, 1]` range are handled (see `Texture.wrap`).
+- [h3d.mat.noise.OctaveShader](api/md/h3d/mat/noise/OctaveShader.md): Combines the Worley noise octaves on the GPU (used by `WorleyNoise.generateOctave`).
+- [h3d.mat.noise.WorleyNoise](api/md/h3d/mat/noise/WorleyNoise.md): Generates tiling 3D Worley (cellular) noise textures, used for instance for volumetric clouds or fog.
+- [h3d.parts.BlendMode](api/md/h3d/parts/BlendMode.md): The blend mode of the particles.
+- [h3d.parts.Collider](api/md/h3d/parts/Collider.md): A collision handler for the particles of an `Emitter` (see `Emitter.collider` and `State.collide`).
+- [h3d.parts.ColorKey](api/md/h3d/parts/ColorKey.md): A key of a color gradient: the color at a given time.
+- [h3d.parts.Converge](api/md/h3d/parts/Converge.md): How the range of a `VRandom` value changes over time.
+- [h3d.parts.Emitter](api/md/h3d/parts/Emitter.md): A CPU particle emitter configured by a `State`.
+- [h3d.parts.GpuEmitMode](api/md/h3d/parts/GpuEmitMode.md): The shape the particles of a `GpuPartGroup` are emitted from.
+- [h3d.parts.GpuPart](api/md/h3d/parts/GpuPart.md): The initial state of a particle of a `GpuPartGroup`, computed on the CPU and uploaded once.
+- [h3d.parts.GpuPartGroup](api/md/h3d/parts/GpuPartGroup.md): A group of GPU particles sharing the same settings and material, part of a `GpuParticles`.
+- [h3d.parts.GpuParticles](api/md/h3d/parts/GpuParticles.md): A particle system animated on the GPU: the initial state of each particle is computed once, then the shader computes its position, size and color over time.
+- [h3d.parts.GpuSave](api/md/h3d/parts/GpuSave.md): The serialized form of a `GpuParticles` (see `GpuParticles.save`).
+- [h3d.parts.GpuSortMode](api/md/h3d/parts/GpuSortMode.md): How the particles of a `GpuPartGroup` are sorted.
+- [h3d.parts.Particle](api/md/h3d/parts/Particle.md): A particle of a `Particles` set or an `Emitter`.
+- [h3d.parts.Particles](api/md/h3d/parts/Particles.md): A set of camera facing particles (sprites) drawn in a single draw call.
+- [h3d.parts.Randomized](api/md/h3d/parts/Randomized.md): A source of random numbers for the particle values.
+- [h3d.parts.Shape](api/md/h3d/parts/Shape.md): The volume the particles are emitted from.
+- [h3d.parts.SortMode](api/md/h3d/parts/SortMode.md): The drawing order of the particles.
+- [h3d.parts.State](api/md/h3d/parts/State.md): The settings of a CPU particle emitter (`Emitter`), usually edited in an editor and saved with `haxe.Serializer`.
+- [h3d.parts.Value](api/md/h3d/parts/Value.md): A value of a particle property, evaluated at a time `t` (the fraction of the particle life, or of the emitter loop, from `0` to `1`).
+- [h3d.parts.ValueXYZ](api/md/h3d/parts/ValueXYZ.md): A 3D vector whose components are `Value`s.
+- [h3d.pass.ArrayCopy](api/md/h3d/pass/ArrayCopy.md): Copies a layer of a texture array to a texture.
 - [h3d.pass.Blur](api/md/h3d/pass/Blur.md)
-- [h3d.pass.Border](api/md/h3d/pass/Border.md)
-- [h3d.pass.CapsuleShadowMap](api/md/h3d/pass/CapsuleShadowMap.md)
-- [h3d.pass.CascadeCamera](api/md/h3d/pass/CascadeCamera.md)
-- [h3d.pass.CascadeParams](api/md/h3d/pass/CascadeParams.md)
-- [h3d.pass.CascadeShadowMap](api/md/h3d/pass/CascadeShadowMap.md)
-- [h3d.pass.ColorMatrix](api/md/h3d/pass/ColorMatrix.md)
-- [h3d.pass.ColorMatrixShader](api/md/h3d/pass/ColorMatrixShader.md)
-- [h3d.pass.Copy](api/md/h3d/pass/Copy.md)
-- [h3d.pass.CubeCopy](api/md/h3d/pass/CubeCopy.md)
-- [h3d.pass.CubeFaceFlag](api/md/h3d/pass/CubeFaceFlag.md)
-- [h3d.pass.CubeShadowMap](api/md/h3d/pass/CubeShadowMap.md)
-- [h3d.pass.DefaultShadowMap](api/md/h3d/pass/DefaultShadowMap.md)
-- [h3d.pass.DirShadowMap](api/md/h3d/pass/DirShadowMap.md)
-- [h3d.pass.FXAA](api/md/h3d/pass/FXAA.md)
-- [h3d.pass.Merge](api/md/h3d/pass/Merge.md)
-- [h3d.pass.MergeShader](api/md/h3d/pass/MergeShader.md)
-- [h3d.pass.MipMaps](api/md/h3d/pass/MipMaps.md)
+- [h3d.pass.Border](api/md/h3d/pass/Border.md): Draws a solid frame of `size` pixels along the edges of a `width` x `height` target (used for instance to avoid sampling outside of shadow maps).
+- [h3d.pass.CapsuleShadowMap](api/md/h3d/pass/CapsuleShadowMap.md): The shadow map of a `h3d.scene.pbr.CapsuleLight`: a cube shadow map rendered from the light center.
+- [h3d.pass.CascadeCamera](api/md/h3d/pass/CascadeCamera.md): The shadow camera of a cascade.
+- [h3d.pass.CascadeParams](api/md/h3d/pass/CascadeParams.md): The depth bias settings of a cascade.
+- [h3d.pass.CascadeShadowMap](api/md/h3d/pass/CascadeShadowMap.md): Cascaded shadow maps of a directional light: the view frustum is split in `cascade` ranges of distance, each with its own shadow map, so that near shadows get more resolution than far ones.
+- [h3d.pass.ColorMatrix](api/md/h3d/pass/ColorMatrix.md): Transforms the colors of a texture by a color matrix (see the `color*` methods of `h3d.Matrix`).
+- [h3d.pass.ColorMatrixShader](api/md/h3d/pass/ColorMatrixShader.md): Transforms the colors of a texture by a matrix, with an optional mask.
+- [h3d.pass.Copy](api/md/h3d/pass/Copy.md): Copies a texture to another texture (or to the current target), with an optional blend mode.
+- [h3d.pass.CubeCopy](api/md/h3d/pass/CubeCopy.md): Copies the 6 faces of a cube texture to another cube texture.
+- [h3d.pass.CubeFaceFlag](api/md/h3d/pass/CubeFaceFlag.md): The faces of a cube shadow map.
+- [h3d.pass.CubeShadowMap](api/md/h3d/pass/CubeShadowMap.md): Base class of the omnidirectional shadow maps: the shadows are rendered in the 6 faces of a cube texture around the light.
+- [h3d.pass.DefaultShadowMap](api/md/h3d/pass/DefaultShadowMap.md): The shadow map of the forward renderer (`h3d.scene.fwd.Renderer`): a directional shadow map from the shadow light, exposed to the shaders through the `shadow.*` globals.
+- [h3d.pass.DirShadowMap](api/md/h3d/pass/DirShadowMap.md): The shadow map of a directional light: an orthographic projection from the light covering the visible scene (or the bounds given by `calcShadowBounds`).
+- [h3d.pass.FXAA](api/md/h3d/pass/FXAA.md): Fast approximate anti-aliasing: smooths the edges of an image as a post process.
+- [h3d.pass.Merge](api/md/h3d/pass/Merge.md): Interpolates between two textures (or two layers) into an output texture.
+- [h3d.pass.MergeShader](api/md/h3d/pass/MergeShader.md): Interpolates between two textures.
+- [h3d.pass.MipMaps](api/md/h3d/pass/MipMaps.md): Generates the mip levels of a texture with shaders (each level averages 2x2 pixels of the previous one).
 - [h3d.pass.Outline](api/md/h3d/pass/Outline.md)
-- [h3d.pass.Output](api/md/h3d/pass/Output.md)
-- [h3d.pass.OutputShader](api/md/h3d/pass/OutputShader.md)
-- [h3d.pass.PassList](api/md/h3d/pass/PassList.md)
-- [h3d.pass.PassListIterator](api/md/h3d/pass/PassListIterator.md)
-- [h3d.pass.PassObject](api/md/h3d/pass/PassObject.md)
-- [h3d.pass.PointShadowMap](api/md/h3d/pass/PointShadowMap.md)
-- [h3d.pass.ProjectedShadowMap](api/md/h3d/pass/ProjectedShadowMap.md)
-- [h3d.pass.RectangleShadowMap](api/md/h3d/pass/RectangleShadowMap.md)
-- [h3d.pass.RenderMode](api/md/h3d/pass/RenderMode.md)
-- [h3d.pass.SSR](api/md/h3d/pass/SSR.md)
-- [h3d.pass.ScalableAO](api/md/h3d/pass/ScalableAO.md)
-- [h3d.pass.ScreenFx](api/md/h3d/pass/ScreenFx.md)
-- [h3d.pass.ShadowSamplingKind](api/md/h3d/pass/ShadowSamplingKind.md)
-- [h3d.pass.Shadows](api/md/h3d/pass/Shadows.md)
-- [h3d.pass.SortByMaterial](api/md/h3d/pass/SortByMaterial.md)
-- [h3d.pass.SpotShadowMap](api/md/h3d/pass/SpotShadowMap.md)
-- [h3d.pass.Timeout](api/md/h3d/pass/Timeout.md)
-- [h3d.pass.TimeoutShader](api/md/h3d/pass/TimeoutShader.md)
-- [h3d.prim.Axis](api/md/h3d/prim/Axis.md)
-- [h3d.prim.BatchPrimitive](api/md/h3d/prim/BatchPrimitive.md)
+- [h3d.pass.Output](api/md/h3d/pass/Output.md): A render pass of a renderer: draws a list of object passes (`PassList`) to the current render target, linking each object shaders with the output shader of the pass (which writes the given values, such as `output.colo...
+- [h3d.pass.OutputShader](api/md/h3d/pass/OutputShader.md): Links the shaders of a pass with an output shader writing the given values to the render targets.
+- [h3d.pass.PassList](api/md/h3d/pass/PassList.md): A linked list of `PassObject` to draw, with a list of discarded passes which can be restored.
+- [h3d.pass.PassListIterator](api/md/h3d/pass/PassListIterator.md): An iterator on a `PassList`.
+- [h3d.pass.PassObject](api/md/h3d/pass/PassObject.md): A material pass of an object emitted for the current frame (see `h3d.scene.RenderContext.emitPass`).
+- [h3d.pass.PointShadowMap](api/md/h3d/pass/PointShadowMap.md): The shadow map of a `h3d.scene.pbr.PointLight`: a cube shadow map rendered from the light position.
+- [h3d.pass.ProjectedShadowMap](api/md/h3d/pass/ProjectedShadowMap.md): Base class of the shadow maps rendered with a perspective projection from the light (spot and rectangle lights).
+- [h3d.pass.RectangleShadowMap](api/md/h3d/pass/RectangleShadowMap.md): The shadow map of a `h3d.scene.pbr.RectangleLight`: a perspective projection from the light.
+- [h3d.pass.RenderMode](api/md/h3d/pass/RenderMode.md): How the shadow map of a light is computed.
+- [h3d.pass.SSR](api/md/h3d/pass/SSR.md): Screen space reflections for the PBR renderer: reflections are found by marching rays in the depth buffer, after the forward passes.
+- [h3d.pass.ScalableAO](api/md/h3d/pass/ScalableAO.md): Scalable ambient obscurance: computes a screen space ambient occlusion from the depth and normal textures.
+- [h3d.pass.ScreenFx](api/md/h3d/pass/ScreenFx.md): A full screen pass: renders a quad covering the current target with a screen shader (see `h3d.shader.ScreenShader`).
+- [h3d.pass.ShadowSamplingKind](api/md/h3d/pass/ShadowSamplingKind.md): How the shadow map is sampled when drawing the lit objects.
+- [h3d.pass.Shadows](api/md/h3d/pass/Shadows.md): The shadow map of a light: renders the `"shadow"` pass of the shadow casters from the light point of view, and provides the shader applying the shadows to the lit objects.
+- [h3d.pass.SortByMaterial](api/md/h3d/pass/SortByMaterial.md): Sorts draw passes by shader then texture, to minimize the GPU state changes.
+- [h3d.pass.SpotShadowMap](api/md/h3d/pass/SpotShadowMap.md): The shadow map of a `h3d.scene.pbr.SpotLight`: a perspective projection matching the spot cone.
+- [h3d.pass.Timeout](api/md/h3d/pass/Timeout.md): Debug: renders a shader which never ends, to test the GPU timeout (device lost) handling.
+- [h3d.pass.TimeoutShader](api/md/h3d/pass/TimeoutShader.md): A shader running an endless loop, used to test the GPU timeout handling.
+- [h3d.prim.Axis](api/md/h3d/prim/Axis.md): The axis of a `Capsule`.
+- [h3d.prim.BatchPrimitive](api/md/h3d/prim/BatchPrimitive.md): A primitive packing many models of the same vertex format in a single vertex and index buffer, with the information needed by GPU culling and level of detail selection (see `h3d.scene.Batcher` and `h3d.scene.Batcher.B...
 - [h3d.prim.BigPrimitive](api/md/h3d/prim/BigPrimitive.md): Vertex buffers are limited to 65K vertexes because of the 16-bits limitation of the index buffers.
-- [h3d.prim.Blendshape](api/md/h3d/prim/Blendshape.md)
-- [h3d.prim.BlendshapeInstance](api/md/h3d/prim/BlendshapeInstance.md)
-- [h3d.prim.BytesArray](api/md/h3d/prim/BytesArray.md)
-- [h3d.prim.Capsule](api/md/h3d/prim/Capsule.md)
-- [h3d.prim.ColliderData](api/md/h3d/prim/ColliderData.md)
-- [h3d.prim.Cube](api/md/h3d/prim/Cube.md)
-- [h3d.prim.Cylinder](api/md/h3d/prim/Cylinder.md)
-- [h3d.prim.Disc](api/md/h3d/prim/Disc.md)
-- [h3d.prim.DynamicPrimitive](api/md/h3d/prim/DynamicPrimitive.md)
-- [h3d.prim.GeoSphere](api/md/h3d/prim/GeoSphere.md)
-- [h3d.prim.Grid](api/md/h3d/prim/Grid.md)
-- [h3d.prim.HMDModel](api/md/h3d/prim/HMDModel.md)
-- [h3d.prim.HideProps](api/md/h3d/prim/HideProps.md)
-- [h3d.prim.Instanced](api/md/h3d/prim/Instanced.md)
-- [h3d.prim.MeshPrimitive](api/md/h3d/prim/MeshPrimitive.md)
-- [h3d.prim.ModelCache](api/md/h3d/prim/ModelCache.md)
-- [h3d.prim.ModelDataInput](api/md/h3d/prim/ModelDataInput.md)
-- [h3d.prim.ModelDatabase](api/md/h3d/prim/ModelDatabase.md)
-- [h3d.prim.ModelProps](api/md/h3d/prim/ModelProps.md)
-- [h3d.prim.Plane2D](api/md/h3d/prim/Plane2D.md)
-- [h3d.prim.Polygon](api/md/h3d/prim/Polygon.md)
-- [h3d.prim.PolygonLod](api/md/h3d/prim/PolygonLod.md)
+- [h3d.prim.Blendshape](api/md/h3d/prim/Blendshape.md): The blend shapes (morph targets) of a `HMDModel`: alternative vertex positions and normals that are blended with the base geometry according to weights.
+- [h3d.prim.BlendshapeInstance](api/md/h3d/prim/BlendshapeInstance.md): The blend shape weights of a mesh using a `Blendshape` geometry, applied on the GPU.
+- [h3d.prim.BytesArray](api/md/h3d/prim/BytesArray.md): A growable list of byte chunks, used to accumulate geometry data before uploading it.
+- [h3d.prim.Capsule](api/md/h3d/prim/Capsule.md): A capsule centered on the origin: a cylinder of `length` along `axis`, capped by two half spheres of radius `ray`.
+- [h3d.prim.ColliderData](api/md/h3d/prim/ColliderData.md): The collision shape stored in a HMD model (for instance convex hulls generated by the model converter).
+- [h3d.prim.Cube](api/md/h3d/prim/Cube.md): A box of `x` by `y` by `z` units, from the origin (or centered on it).
+- [h3d.prim.Cylinder](api/md/h3d/prim/Cylinder.md): An open cylinder (without caps) along the Z axis.
+- [h3d.prim.Disc](api/md/h3d/prim/Disc.md): A flat disc (or disc sector) in the XY plane, centered on the origin.
+- [h3d.prim.DynamicPrimitive](api/md/h3d/prim/DynamicPrimitive.md): A primitive whose geometry is rebuilt often (for instance every frame, see `h3d.scene.Trail`): fill the buffers returned by `getBuffer` and `getIndexes`, then call `flush` to upload them.
+- [h3d.prim.GeoSphere](api/md/h3d/prim/GeoSphere.md): A sphere of radius 1 built by subdividing an octahedron: its triangles are more regular than those of `Sphere`.
+- [h3d.prim.Grid](api/md/h3d/prim/Grid.md): A flat grid in the XY plane of `width` x `height` cells, starting at the origin.
+- [h3d.prim.HMDModel](api/md/h3d/prim/HMDModel.md): The primitive of a model geometry loaded from a HMD file (the format FBX and other models are converted to), with its levels of detail, blend shapes and collision data.
+- [h3d.prim.HideProps](api/md/h3d/prim/HideProps.md): The extra properties of a model stored in the `.props` file next to it (edited in Hide).
+- [h3d.prim.Instanced](api/md/h3d/prim/Instanced.md): A primitive drawing many instances of a `MeshPrimitive` in a single draw call (used by `h3d.scene.MeshBatch`).
+- [h3d.prim.MeshPrimitive](api/md/h3d/prim/MeshPrimitive.md): A primitive whose vertex inputs can be spread over several buffers (for instance a base geometry buffer plus an extra buffer of tangents or per-vertex colors added later).
+- [h3d.prim.ModelCache](api/md/h3d/prim/ModelCache.md): Loads and caches models, their textures and animations, so that the same model file is only parsed once.
+- [h3d.prim.ModelDataInput](api/md/h3d/prim/ModelDataInput.md): The model being configured by `ModelDatabase.loadModelProps` and `saveModelProps`.
+- [h3d.prim.ModelDatabase](api/md/h3d/prim/ModelDatabase.md): Stores per-model settings (levels of detail, culling ratio, dynamic bones, collisions) in `model.props` JSON files.
+- [h3d.prim.ModelProps](api/md/h3d/prim/ModelProps.md): The model settings stored in the `model.props` files.
+- [h3d.prim.Plane2D](api/md/h3d/prim/Plane2D.md): A full screen quad (two triangles covering clip space from -1 to 1), used to draw screen passes (see `h3d.pass.ScreenFx`).
+- [h3d.prim.Polygon](api/md/h3d/prim/Polygon.md): A primitive built from arrays of points, with optional indexes, normals, tangents, UVs and colors, kept on the CPU until uploaded.
+- [h3d.prim.PolygonLod](api/md/h3d/prim/PolygonLod.md): A level of detail of a `Polygon`.
 - [h3d.prim.Primitive](api/md/h3d/prim/Primitive.md): h3d.prim.Primitive is the base class for all 3D primitives.
-- [h3d.prim.Quads](api/md/h3d/prim/Quads.md)
-- [h3d.prim.RawPrimitive](api/md/h3d/prim/RawPrimitive.md)
-- [h3d.prim.Sphere](api/md/h3d/prim/Sphere.md)
-- [h3d.prim.SubMesh](api/md/h3d/prim/SubMesh.md)
-- [h3d.prim.SubPart](api/md/h3d/prim/SubPart.md)
-- [h3d.prim.UV](api/md/h3d/prim/UV.md)
+- [h3d.prim.Quads](api/md/h3d/prim/Quads.md): A primitive made of quads (4 points each, drawn as 2 triangles), with optional UVs and normals.
+- [h3d.prim.RawPrimitive](api/md/h3d/prim/RawPrimitive.md): A primitive created from raw vertex data (and optional indexes) in any buffer format.
+- [h3d.prim.Sphere](api/md/h3d/prim/Sphere.md): A UV sphere centered on the origin, made of `segsW` meridians and `segsH` parallels.
+- [h3d.prim.SubMesh](api/md/h3d/prim/SubMesh.md): A model packed in a `BatchPrimitive`.
+- [h3d.prim.SubPart](api/md/h3d/prim/SubPart.md): The index ranges of a material of a `SubMesh`, one per level of detail.
+- [h3d.prim.UV](api/md/h3d/prim/UV.md): A texture coordinate, used by `Polygon`.
 - [h3d.scene.AnimMeshBatch](api/md/h3d/scene/AnimMeshBatch.md): A `MeshBatch` whose instances all follow the animated transform of a source mesh (see `AnimMeshBatcher`).
 - [h3d.scene.AnimMeshBatchShader](api/md/h3d/scene/AnimMeshBatchShader.md): Shader applying the animated transform of the source object to all the instances of an `AnimMeshBatch`.
 - [h3d.scene.AnimMeshBatcher](api/md/h3d/scene/AnimMeshBatcher.md): Draws many copies of an animated object with instancing: one `MeshBatch` is created per mesh of the object, and all the copies play the same animation in sync.
@@ -438,115 +438,115 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.scene.pbr.SkyMode](api/md/h3d/scene/pbr/SkyMode.md): What the PBR renderer displays where no object is drawn.
 - [h3d.scene.pbr.SpotLight](api/md/h3d/scene/pbr/SpotLight.md): A spot light of the PBR renderer: a cone of light along the X axis of the object (see `Object.setDirection`), up to `range`.
 - [h3d.scene.pbr.TonemapMap](api/md/h3d/scene/pbr/TonemapMap.md): The tone mapping operators converting the HDR lighting to displayable colors.
-- [h3d.shader.AlphaChannel](api/md/h3d/shader/AlphaChannel.md)
-- [h3d.shader.AlphaMSDF](api/md/h3d/shader/AlphaMSDF.md)
-- [h3d.shader.AlphaMap](api/md/h3d/shader/AlphaMap.md)
-- [h3d.shader.AlphaMult](api/md/h3d/shader/AlphaMult.md)
-- [h3d.shader.AmbientLight](api/md/h3d/shader/AmbientLight.md)
-- [h3d.shader.AnimatedTexture](api/md/h3d/shader/AnimatedTexture.md)
-- [h3d.shader.ApplyTransformShader](api/md/h3d/shader/ApplyTransformShader.md)
-- [h3d.shader.Base2d](api/md/h3d/shader/Base2d.md)
-- [h3d.shader.BaseMesh](api/md/h3d/shader/BaseMesh.md)
-- [h3d.shader.Blendshape](api/md/h3d/shader/Blendshape.md)
-- [h3d.shader.Bloom](api/md/h3d/shader/Bloom.md)
-- [h3d.shader.Blur](api/md/h3d/shader/Blur.md)
-- [h3d.shader.BufferKind](api/md/h3d/shader/BufferKind.md)
-- [h3d.shader.Buffers](api/md/h3d/shader/Buffers.md)
-- [h3d.shader.CascadeShadow](api/md/h3d/shader/CascadeShadow.md)
-- [h3d.shader.Checker](api/md/h3d/shader/Checker.md)
-- [h3d.shader.CheckerboardDepth](api/md/h3d/shader/CheckerboardDepth.md)
-- [h3d.shader.ColorAdd](api/md/h3d/shader/ColorAdd.md)
-- [h3d.shader.ColorKey](api/md/h3d/shader/ColorKey.md)
-- [h3d.shader.ColorMatrix](api/md/h3d/shader/ColorMatrix.md)
-- [h3d.shader.ColorMult](api/md/h3d/shader/ColorMult.md)
-- [h3d.shader.ColorSpaces](api/md/h3d/shader/ColorSpaces.md)
-- [h3d.shader.CubeMap](api/md/h3d/shader/CubeMap.md)
-- [h3d.shader.CubeMinMaxShader](api/md/h3d/shader/CubeMinMaxShader.md)
-- [h3d.shader.DepthAwareUpsampling](api/md/h3d/shader/DepthAwareUpsampling.md)
-- [h3d.shader.DirLight](api/md/h3d/shader/DirLight.md)
-- [h3d.shader.DirShadow](api/md/h3d/shader/DirShadow.md)
-- [h3d.shader.Displacement](api/md/h3d/shader/Displacement.md)
-- [h3d.shader.DisplacementDisplay](api/md/h3d/shader/DisplacementDisplay.md)
-- [h3d.shader.DistanceFade](api/md/h3d/shader/DistanceFade.md)
-- [h3d.shader.FixedColor](api/md/h3d/shader/FixedColor.md)
-- [h3d.shader.FlipBackFaceNormal](api/md/h3d/shader/FlipBackFaceNormal.md)
-- [h3d.shader.GenTexture](api/md/h3d/shader/GenTexture.md)
-- [h3d.shader.GpuParticle](api/md/h3d/shader/GpuParticle.md)
-- [h3d.shader.HZB](api/md/h3d/shader/HZB.md)
-- [h3d.shader.InstanceIndirect](api/md/h3d/shader/InstanceIndirect.md)
-- [h3d.shader.InstanceIndirectBase](api/md/h3d/shader/InstanceIndirectBase.md)
-- [h3d.shader.KillAlpha](api/md/h3d/shader/KillAlpha.md)
-- [h3d.shader.LineShader](api/md/h3d/shader/LineShader.md)
-- [h3d.shader.LinearShadowDepth](api/md/h3d/shader/LinearShadowDepth.md)
-- [h3d.shader.MinMaxShader](api/md/h3d/shader/MinMaxShader.md)
-- [h3d.shader.NoiseLib](api/md/h3d/shader/NoiseLib.md)
-- [h3d.shader.NormalMap](api/md/h3d/shader/NormalMap.md)
-- [h3d.shader.Outline](api/md/h3d/shader/Outline.md)
-- [h3d.shader.Outline2D](api/md/h3d/shader/Outline2D.md)
-- [h3d.shader.Parallax](api/md/h3d/shader/Parallax.md)
-- [h3d.shader.ParticleShader](api/md/h3d/shader/ParticleShader.md)
-- [h3d.shader.PointLight](api/md/h3d/shader/PointLight.md)
-- [h3d.shader.PointShadow](api/md/h3d/shader/PointShadow.md)
+- [h3d.shader.AlphaChannel](api/md/h3d/shader/AlphaChannel.md): Debug: makes the output opaque, and with `showAlpha` displays the alpha channel as grey levels.
+- [h3d.shader.AlphaMSDF](api/md/h3d/shader/AlphaMSDF.md): Uses a multi-channel signed distance field texture as alpha mask, for sharp shapes at any scale (for instance MSDF fonts).
+- [h3d.shader.AlphaMap](api/md/h3d/shader/AlphaMap.md): Multiplies the alpha by a channel of a texture (blue by default, or alpha with `useAlphaChannel`).
+- [h3d.shader.AlphaMult](api/md/h3d/shader/AlphaMult.md): Multiplies the alpha by `alpha`.
+- [h3d.shader.AmbientLight](api/md/h3d/shader/AmbientLight.md): The ambient light of the forward renderer, combined with the light shaders (see `h3d.scene.fwd.LightSystem`).
+- [h3d.shader.AnimatedTexture](api/md/h3d/shader/AnimatedTexture.md): Plays an animation stored as a grid of frames in a texture (a sprite sheet), optionally blending between frames.
+- [h3d.shader.ApplyTransformShader](api/md/h3d/shader/ApplyTransformShader.md): Applies an additional transform to the model matrices (used by `h3d.scene.Batcher` with `isRelative`).
+- [h3d.shader.Base2d](api/md/h3d/shader/Base2d.md): The base shader of the 2D objects (`h2d.Drawable`): transforms the 2D vertices and applies the texture, color and filters.
+- [h3d.shader.BaseMesh](api/md/h3d/shader/BaseMesh.md): The base shader of the 3D meshes: transforms the vertices by the object and camera matrices, and outputs the color, depth and normal.
+- [h3d.shader.Blendshape](api/md/h3d/shader/Blendshape.md): Applies the blend shapes (morph targets) of a mesh on the GPU (see `h3d.prim.Blendshape`).
+- [h3d.shader.Bloom](api/md/h3d/shader/Bloom.md): Extracts the bright parts of an image (above `power`), for a bloom post process.
+- [h3d.shader.Blur](api/md/h3d/shader/Blur.md): One pass of a separable blur, used by `h3d.pass.Blur`.
+- [h3d.shader.BufferKind](api/md/h3d/shader/BufferKind.md): The kinds of shader data uploaded to the GPU.
+- [h3d.shader.Buffers](api/md/h3d/shader/Buffers.md): The data of the vertex and fragment stages of a shader, filled before a draw call.
+- [h3d.shader.CascadeShadow](api/md/h3d/shader/CascadeShadow.md): Applies the cascaded shadows of a directional light (see `h3d.pass.CascadeShadowMap`).
+- [h3d.shader.Checker](api/md/h3d/shader/Checker.md): Debug: draws a black and white checker pattern from the texture coordinates.
+- [h3d.shader.CheckerboardDepth](api/md/h3d/shader/CheckerboardDepth.md): Downsamples a depth texture by taking alternatively the minimum and maximum of each 2x2 block (checkerboard pattern).
+- [h3d.shader.ColorAdd](api/md/h3d/shader/ColorAdd.md): Adds a color to the output color.
+- [h3d.shader.ColorKey](api/md/h3d/shader/ColorKey.md): Discards the pixels of a given color (color keying).
+- [h3d.shader.ColorMatrix](api/md/h3d/shader/ColorMatrix.md): Transforms the output color by a matrix (see the color methods of `h3d.Matrix`).
+- [h3d.shader.ColorMult](api/md/h3d/shader/ColorMult.md): Multiplies the output color by `color`, blended by `amount`.
+- [h3d.shader.ColorSpaces](api/md/h3d/shader/ColorSpaces.md): Shader functions converting colors between color spaces and packing colors in integers, to be used by other shaders.
+- [h3d.shader.CubeMap](api/md/h3d/shader/CubeMap.md): Applies a cube texture: sampled with the normal, or with the reflected view direction if `reflection` is set.
+- [h3d.shader.CubeMinMaxShader](api/md/h3d/shader/CubeMinMaxShader.md): Outputs the minimum (or maximum with `isMax`) of two cube textures, for a cube face.
+- [h3d.shader.DepthAwareUpsampling](api/md/h3d/shader/DepthAwareUpsampling.md): Upsamples a low resolution image using the depths to avoid bleeding across edges.
+- [h3d.shader.DirLight](api/md/h3d/shader/DirLight.md): The shader of `h3d.scene.fwd.DirLight`.
+- [h3d.shader.DirShadow](api/md/h3d/shader/DirShadow.md): Applies the shadows of a directional shadow map (see `h3d.pass.DirShadowMap`).
+- [h3d.shader.Displacement](api/md/h3d/shader/Displacement.md): Displaces the pixels of a texture according to a normal map (for distortion effects).
+- [h3d.shader.DisplacementDisplay](api/md/h3d/shader/DisplacementDisplay.md): Debug: displays the alpha channel of a displacement texture.
+- [h3d.shader.DistanceFade](api/md/h3d/shader/DistanceFade.md): Fades the objects in near the camera (between `nearMinFade` and `nearMaxFade`) and out far from it (between `farMinFade` and `farMaxFade`).
+- [h3d.shader.FixedColor](api/md/h3d/shader/FixedColor.md): Replaces the output color by a fixed color.
+- [h3d.shader.FlipBackFaceNormal](api/md/h3d/shader/FlipBackFaceNormal.md): Flips the normal of back faces, for double sided lighting.
+- [h3d.shader.GenTexture](api/md/h3d/shader/GenTexture.md): Generates simple textures (a disc, see `h3d.mat.Texture.genDisc`).
+- [h3d.shader.GpuParticle](api/md/h3d/shader/GpuParticle.md): Animates the particles of `h3d.parts.GpuParticles` on the GPU.
+- [h3d.shader.HZB](api/md/h3d/shader/HZB.md): Builds a mip level of a hierarchical depth buffer, keeping the minimum or maximum depth of each 2x2 block.
+- [h3d.shader.InstanceIndirect](api/md/h3d/shader/InstanceIndirect.md): Culls instances and selects their level of detail, writing their indirect draw commands.
+- [h3d.shader.InstanceIndirectBase](api/md/h3d/shader/InstanceIndirectBase.md): Base of the compute shaders culling instances and writing indirect draw commands (see `h3d.scene.GPUMeshBatch`).
+- [h3d.shader.KillAlpha](api/md/h3d/shader/KillAlpha.md): Discards the pixels whose alpha is below `threshold`.
+- [h3d.shader.LineShader](api/md/h3d/shader/LineShader.md): Draws the quads of `h3d.scene.Graphics` as screen space lines of constant `width` in pixels.
+- [h3d.shader.LinearShadowDepth](api/md/h3d/shader/LinearShadowDepth.md): Outputs the distance to the camera divided by its far plane as depth (for omnidirectional shadow maps).
+- [h3d.shader.MinMaxShader](api/md/h3d/shader/MinMaxShader.md): Outputs the minimum (or maximum with `isMax`) of two textures.
+- [h3d.shader.NoiseLib](api/md/h3d/shader/NoiseLib.md): Shader functions computing gradient noise (`psrdnoise`), to be used by other shaders.
+- [h3d.shader.NormalMap](api/md/h3d/shader/NormalMap.md): Applies a tangent space normal map (the mesh needs tangents).
+- [h3d.shader.Outline](api/md/h3d/shader/Outline.md): Draws an outline by inflating the mesh along its normals by `size` (to use in a pass drawn behind the object).
+- [h3d.shader.Outline2D](api/md/h3d/shader/Outline2D.md): Draws an outline around the opaque pixels of a texture (see `h3d.pass.Outline`).
+- [h3d.shader.Parallax](api/md/h3d/shader/Parallax.md): Parallax occlusion mapping: offsets the texture coordinates according to a height map, to simulate relief.
+- [h3d.shader.ParticleShader](api/md/h3d/shader/ParticleShader.md): Expands the particles of `h3d.parts.Particles` into camera facing quads.
+- [h3d.shader.PointLight](api/md/h3d/shader/PointLight.md): The shader of `h3d.scene.fwd.PointLight`.
+- [h3d.shader.PointShadow](api/md/h3d/shader/PointShadow.md): Applies the shadows of a cube shadow map (see `h3d.pass.CubeShadowMap`).
 - [h3d.shader.SAO](api/md/h3d/shader/SAO.md): Screen space ambient occlusion.
-- [h3d.shader.ScreenShader](api/md/h3d/shader/ScreenShader.md)
-- [h3d.shader.ShaderBufferData](api/md/h3d/shader/ShaderBufferData.md)
-- [h3d.shader.ShaderBuffers](api/md/h3d/shader/ShaderBuffers.md)
-- [h3d.shader.Shadow](api/md/h3d/shader/Shadow.md)
-- [h3d.shader.ShadowSampling](api/md/h3d/shader/ShadowSampling.md)
-- [h3d.shader.SignedDistanceField](api/md/h3d/shader/SignedDistanceField.md)
-- [h3d.shader.SinusDeform](api/md/h3d/shader/SinusDeform.md)
-- [h3d.shader.Skin](api/md/h3d/shader/Skin.md)
-- [h3d.shader.SkinBase](api/md/h3d/shader/SkinBase.md)
-- [h3d.shader.SkinTangent](api/md/h3d/shader/SkinTangent.md)
-- [h3d.shader.SpecularTexture](api/md/h3d/shader/SpecularTexture.md)
-- [h3d.shader.SpotShadow](api/md/h3d/shader/SpotShadow.md)
-- [h3d.shader.SubPartInstanceIndirect](api/md/h3d/shader/SubPartInstanceIndirect.md)
-- [h3d.shader.Texture](api/md/h3d/shader/Texture.md)
+- [h3d.shader.ScreenShader](api/md/h3d/shader/ScreenShader.md): Base class of the full screen shaders used with `h3d.pass.ScreenFx`: it provides the `calculatedUV` of each pixel of the screen quad.
+- [h3d.shader.ShaderBufferData](api/md/h3d/shader/ShaderBufferData.md): The float data of a shader stage.
+- [h3d.shader.ShaderBuffers](api/md/h3d/shader/ShaderBuffers.md): The data of a shader stage (vertex or fragment) filled before a draw call.
+- [h3d.shader.Shadow](api/md/h3d/shader/Shadow.md): Receives the shadows of the forward renderer shadow map (see `h3d.pass.DefaultShadowMap` and `h3d.mat.Material.receiveShadows`).
+- [h3d.shader.ShadowSampling](api/md/h3d/shader/ShadowSampling.md): Shader functions sampling shadow maps (hard, ESM or PCF), to be used by the shadow shaders.
+- [h3d.shader.SignedDistanceField](api/md/h3d/shader/SignedDistanceField.md): Uses a channel of a signed distance field texture as alpha, for sharp shapes at any scale (for instance SDF fonts).
+- [h3d.shader.SinusDeform](api/md/h3d/shader/SinusDeform.md): Deforms the texture coordinates with a moving sine wave.
+- [h3d.shader.Skin](api/md/h3d/shader/Skin.md): The skinning shader of `h3d.scene.Skin`: deforms the vertices by up to 4 bones.
+- [h3d.shader.SkinBase](api/md/h3d/shader/SkinBase.md): Base of the skinning shaders: holds the bone matrices.
+- [h3d.shader.SkinTangent](api/md/h3d/shader/SkinTangent.md): The skinning shader for meshes with tangents (normal maps).
+- [h3d.shader.SpecularTexture](api/md/h3d/shader/SpecularTexture.md): Multiplies the specular amount by a texture (see `h3d.mat.Material.specularTexture`).
+- [h3d.shader.SpotShadow](api/md/h3d/shader/SpotShadow.md): Applies the shadows of a perspective shadow map (see `h3d.pass.ProjectedShadowMap`).
+- [h3d.shader.SubPartInstanceIndirect](api/md/h3d/shader/SubPartInstanceIndirect.md): Culls instances of sub meshes and selects their level of detail, writing their indirect draw commands.
+- [h3d.shader.Texture](api/md/h3d/shader/Texture.md): Applies a texture to the output color (see `h3d.mat.Material.texture`).
 - [h3d.shader.Texture2](api/md/h3d/shader/Texture2.md): This is similar to [Texture] shader but uses a second UV set.
-- [h3d.shader.UVAnim](api/md/h3d/shader/UVAnim.md)
-- [h3d.shader.UVDelta](api/md/h3d/shader/UVDelta.md)
-- [h3d.shader.UVScroll](api/md/h3d/shader/UVScroll.md)
-- [h3d.shader.Utils](api/md/h3d/shader/Utils.md)
-- [h3d.shader.VertexColor](api/md/h3d/shader/VertexColor.md)
-- [h3d.shader.VertexColorAlpha](api/md/h3d/shader/VertexColorAlpha.md)
-- [h3d.shader.VertexDensity](api/md/h3d/shader/VertexDensity.md)
-- [h3d.shader.VolumeDecal](api/md/h3d/shader/VolumeDecal.md)
-- [h3d.shader.WhiteAlpha](api/md/h3d/shader/WhiteAlpha.md)
-- [h3d.shader.ZCut](api/md/h3d/shader/ZCut.md)
-- [h3d.shader.pbr.AlphaMask](api/md/h3d/shader/pbr/AlphaMask.md)
-- [h3d.shader.pbr.AlphaMultiply](api/md/h3d/shader/pbr/AlphaMultiply.md)
-- [h3d.shader.pbr.BRDF](api/md/h3d/shader/pbr/BRDF.md)
-- [h3d.shader.pbr.BaseDecal](api/md/h3d/shader/pbr/BaseDecal.md)
-- [h3d.shader.pbr.CapsuleLight](api/md/h3d/shader/pbr/CapsuleLight.md)
-- [h3d.shader.pbr.ClusterCull](api/md/h3d/shader/pbr/ClusterCull.md)
-- [h3d.shader.pbr.ClusterLightOcclusion](api/md/h3d/shader/pbr/ClusterLightOcclusion.md)
-- [h3d.shader.pbr.CubeLod](api/md/h3d/shader/pbr/CubeLod.md)
-- [h3d.shader.pbr.DebugMode](api/md/h3d/shader/pbr/DebugMode.md)
-- [h3d.shader.pbr.DecalOverlay](api/md/h3d/shader/pbr/DecalOverlay.md)
-- [h3d.shader.pbr.DecalPBR](api/md/h3d/shader/pbr/DecalPBR.md)
-- [h3d.shader.pbr.DefaultForward](api/md/h3d/shader/pbr/DefaultForward.md)
-- [h3d.shader.pbr.DirLight](api/md/h3d/shader/pbr/DirLight.md)
-- [h3d.shader.pbr.Direct](api/md/h3d/shader/pbr/Direct.md)
-- [h3d.shader.pbr.Distortion](api/md/h3d/shader/pbr/Distortion.md)
-- [h3d.shader.pbr.GammaCorrect](api/md/h3d/shader/pbr/GammaCorrect.md)
-- [h3d.shader.pbr.Indirect](api/md/h3d/shader/pbr/Indirect.md)
-- [h3d.shader.pbr.Light](api/md/h3d/shader/pbr/Light.md)
-- [h3d.shader.pbr.LightEvaluation](api/md/h3d/shader/pbr/LightEvaluation.md)
-- [h3d.shader.pbr.Performance](api/md/h3d/shader/pbr/Performance.md)
-- [h3d.shader.pbr.PerformanceViewer](api/md/h3d/shader/pbr/PerformanceViewer.md)
-- [h3d.shader.pbr.PointLight](api/md/h3d/shader/pbr/PointLight.md)
-- [h3d.shader.pbr.PropsDefinition](api/md/h3d/shader/pbr/PropsDefinition.md)
-- [h3d.shader.pbr.PropsImport](api/md/h3d/shader/pbr/PropsImport.md)
-- [h3d.shader.pbr.PropsTexture](api/md/h3d/shader/pbr/PropsTexture.md)
-- [h3d.shader.pbr.PropsValues](api/md/h3d/shader/pbr/PropsValues.md)
-- [h3d.shader.pbr.RectangleLight](api/md/h3d/shader/pbr/RectangleLight.md)
-- [h3d.shader.pbr.SSR](api/md/h3d/shader/pbr/SSR.md)
-- [h3d.shader.pbr.SSRFilter](api/md/h3d/shader/pbr/SSRFilter.md)
-- [h3d.shader.pbr.SSRResolve](api/md/h3d/shader/pbr/SSRResolve.md)
-- [h3d.shader.pbr.Slides](api/md/h3d/shader/pbr/Slides.md)
-- [h3d.shader.pbr.SpotLight](api/md/h3d/shader/pbr/SpotLight.md)
-- [h3d.shader.pbr.StrengthValues](api/md/h3d/shader/pbr/StrengthValues.md)
-- [h3d.shader.pbr.ToneMapping](api/md/h3d/shader/pbr/ToneMapping.md)
+- [h3d.shader.UVAnim](api/md/h3d/shader/UVAnim.md): Animates the texture coordinates through a grid of frames (a sprite sheet).
+- [h3d.shader.UVDelta](api/md/h3d/shader/UVDelta.md): Scales and offsets the texture coordinates.
+- [h3d.shader.UVScroll](api/md/h3d/shader/UVScroll.md): Scrolls the texture coordinates over time.
+- [h3d.shader.Utils](api/md/h3d/shader/Utils.md): Shader functions applying the bone matrices to points and vectors.
+- [h3d.shader.VertexColor](api/md/h3d/shader/VertexColor.md): Multiplies (or adds with `additive`) the output color by the vertex color (RGB).
+- [h3d.shader.VertexColorAlpha](api/md/h3d/shader/VertexColorAlpha.md): Multiplies (or adds with `additive`) the output color by the vertex color (RGBA).
+- [h3d.shader.VertexDensity](api/md/h3d/shader/VertexDensity.md): Debug: displays the density of vertices on screen with a color ramp.
+- [h3d.shader.VolumeDecal](api/md/h3d/shader/VolumeDecal.md): Projects a texture on the surfaces inside a box volume (the decal mesh), using the depth buffer.
+- [h3d.shader.WhiteAlpha](api/md/h3d/shader/WhiteAlpha.md): Replaces the texture color by white, keeping its alpha.
+- [h3d.shader.ZCut](api/md/h3d/shader/ZCut.md): Clamps the projected depth between `zMin` and `zMax`.
+- [h3d.shader.pbr.AlphaMask](api/md/h3d/shader/pbr/AlphaMask.md): Makes the sky pixels (without geometry) transparent, for `h3d.scene.pbr.Renderer.enableTransparency`.
+- [h3d.shader.pbr.AlphaMultiply](api/md/h3d/shader/pbr/AlphaMultiply.md): Multiplies the color by the alpha (premultiplied alpha), for the `AlphaMultiply` blend mode.
+- [h3d.shader.pbr.BRDF](api/md/h3d/shader/pbr/BRDF.md): Shader functions of the PBR lighting model (GGX distribution, visibility and Fresnel terms), to be used by the lighting shaders.
+- [h3d.shader.pbr.BaseDecal](api/md/h3d/shader/pbr/BaseDecal.md): Base of the PBR volume decal shaders: reconstructs the position of the surface inside the decal box from the depth.
+- [h3d.shader.pbr.CapsuleLight](api/md/h3d/shader/pbr/CapsuleLight.md): The shader of `h3d.scene.pbr.CapsuleLight`.
+- [h3d.shader.pbr.ClusterCull](api/md/h3d/shader/pbr/ClusterCull.md): Compute shader sorting the lights into the clusters of the view (see `h3d.scene.pbr.LightBuffer`).
+- [h3d.shader.pbr.ClusterLightOcclusion](api/md/h3d/shader/pbr/ClusterLightOcclusion.md): Compute shader removing from the clusters the lights hidden by the opaque geometry, using the hierarchical depth buffer.
+- [h3d.shader.pbr.CubeLod](api/md/h3d/shader/pbr/CubeLod.md): Displays a mip level of a cube texture (used to display the environment as sky).
+- [h3d.shader.pbr.DebugMode](api/md/h3d/shader/pbr/DebugMode.md): The G-buffer channel displayed by the `Debug` display mode of the PBR renderer.
+- [h3d.shader.pbr.DecalOverlay](api/md/h3d/shader/pbr/DecalOverlay.md): A decal drawing a colored texture over the surfaces.
+- [h3d.shader.pbr.DecalPBR](api/md/h3d/shader/pbr/DecalPBR.md): A decal writing albedo, normal and PBR properties into the G-buffer.
+- [h3d.shader.pbr.DefaultForward](api/md/h3d/shader/pbr/DefaultForward.md): Computes the PBR lighting of the objects drawn in the forward passes, from the light buffer (see `h3d.scene.pbr.LightBuffer`).
+- [h3d.shader.pbr.DirLight](api/md/h3d/shader/pbr/DirLight.md): The shader of `h3d.scene.pbr.DirLight`.
+- [h3d.shader.pbr.Direct](api/md/h3d/shader/pbr/Direct.md): Computes the direct lighting of a PBR light from the G-buffer.
+- [h3d.shader.pbr.Distortion](api/md/h3d/shader/pbr/Distortion.md): Applies the distortion texture rendered by the `"distortion"` pass to the image.
+- [h3d.shader.pbr.GammaCorrect](api/md/h3d/shader/pbr/GammaCorrect.md): Converts the color to linear space (approximated by squaring it), for unlit objects drawn in HDR (see `h3d.mat.PbrMaterial` `BeforeTonemapping` mode).
+- [h3d.shader.pbr.Indirect](api/md/h3d/shader/pbr/Indirect.md): Computes the indirect lighting (environment diffuse and specular) and the sky of the PBR renderer.
+- [h3d.shader.pbr.Light](api/md/h3d/shader/pbr/Light.md): Base of the shaders of the PBR lights: outputs the light color and direction used by the lighting shader.
+- [h3d.shader.pbr.LightEvaluation](api/md/h3d/shader/pbr/LightEvaluation.md): Shader functions computing the intensity of the different kinds of PBR lights.
+- [h3d.shader.pbr.Performance](api/md/h3d/shader/pbr/Performance.md): Counts the lights affecting each pixel (for the `Performance` display mode).
+- [h3d.shader.pbr.PerformanceViewer](api/md/h3d/shader/pbr/PerformanceViewer.md): Displays the light count of each pixel with a color gradient (for the `Performance` display mode).
+- [h3d.shader.pbr.PointLight](api/md/h3d/shader/pbr/PointLight.md): The shader of `h3d.scene.pbr.PointLight`.
+- [h3d.shader.pbr.PropsDefinition](api/md/h3d/shader/pbr/PropsDefinition.md): Declares the PBR surface properties (albedo, normal, metalness, roughness, occlusion, emissive...) shared by the PBR shaders.
+- [h3d.shader.pbr.PropsImport](api/md/h3d/shader/pbr/PropsImport.md): Reads the PBR surface properties of the pixel from the G-buffer textures.
+- [h3d.shader.pbr.PropsTexture](api/md/h3d/shader/pbr/PropsTexture.md): Sets the PBR properties from a texture: metalness in red, glossiness in green (roughness is `1 - green²`), occlusion in blue and emissive (multiplied by `emissiveValue`) in alpha.
+- [h3d.shader.pbr.PropsValues](api/md/h3d/shader/pbr/PropsValues.md): Sets the PBR properties of a material from constant values.
+- [h3d.shader.pbr.RectangleLight](api/md/h3d/shader/pbr/RectangleLight.md): The shader of `h3d.scene.pbr.RectangleLight`.
+- [h3d.shader.pbr.SSR](api/md/h3d/shader/pbr/SSR.md): Computes the screen space reflections by marching rays in the depth buffer (see `h3d.pass.SSR`).
+- [h3d.shader.pbr.SSRFilter](api/md/h3d/shader/pbr/SSRFilter.md): Filters the screen space reflections according to the roughness.
+- [h3d.shader.pbr.SSRResolve](api/md/h3d/shader/pbr/SSRResolve.md): Combines the screen space reflections with the lit image.
+- [h3d.shader.pbr.Slides](api/md/h3d/shader/pbr/Slides.md): Displays the G-buffer channels for debugging (the `Debug` display mode of `h3d.scene.pbr.Renderer`).
+- [h3d.shader.pbr.SpotLight](api/md/h3d/shader/pbr/SpotLight.md): The shader of `h3d.scene.pbr.SpotLight`.
+- [h3d.shader.pbr.StrengthValues](api/md/h3d/shader/pbr/StrengthValues.md): The strength of each property written by a decal (albedo, normal, PBR properties, emissive), from `0` to `1`.
+- [h3d.shader.pbr.ToneMapping](api/md/h3d/shader/pbr/ToneMapping.md): Converts the HDR image to displayable colors (exposure, tone mapping operator, gamma).
 
 ## hxd
 

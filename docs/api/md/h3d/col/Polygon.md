@@ -4,6 +4,8 @@
 
 Extends: [`h3d.col.Collider`](Collider.md)
 
+A triangle mesh collider (a list of `TriPlane`), precise but slower than simple shapes.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,9 @@ Extends: [`h3d.col.Collider`](Collider.md)
 ```haxe
 function new(?o:Bool = false):Void
 ```
+
+Creates an empty collider.
+- **param** `o` If `true`, only the front faces of the triangles can be hit.
 
 ## Static methods
 
@@ -20,6 +25,9 @@ function new(?o:Bool = false):Void
 static function fromPolygon2D(p:h2d.col.Polygon, ?z:Float = 0., ?oriented:Bool = true):Polygon
 ```
 
+Creates a flat collider from a 2D polygon placed at height `z`.
+- **param** `oriented` If `true`, only the front side can be hit.
+
 ## Methods
 
 ### addBuffers
@@ -28,11 +36,16 @@ static function fromPolygon2D(p:h2d.col.Polygon, ?z:Float = 0., ?oriented:Bool =
 function addBuffers(vertexes:Vector<hxd.impl.Float32>, indexes:Vector<Int>, ?stride:Int = 3):Void
 ```
 
+Adds the triangles of the given vertex and index buffers.
+- **param** `stride` The number of floats per vertex (the position being the first 3).
+
 ### isConvex
 
 ```haxe
 function isConvex():Null<Bool>
 ```
+
+Tells if the mesh is convex (computed once).
 
 ### clone
 
@@ -40,11 +53,15 @@ function isConvex():Null<Bool>
 function clone():Polygon
 ```
 
+Returns a copy.
+
 ### transform
 
 ```haxe
 function transform(m:h3d.Matrix):Void
 ```
+
+Transforms the triangles by `m`.
 
 ### getPoints
 
@@ -52,11 +69,16 @@ function transform(m:h3d.Matrix):Void
 function getPoints():Array<Point>
 ```
 
+Returns the points of all the triangles.
+
 ### getBounds
 
 ```haxe
 function getBounds(?bnds:Bounds):Bounds
 ```
+
+Returns the bounds of the triangles.
+- **param** `bnds` An optional bounds to add the result to.
 
 ### contains
 
@@ -64,11 +86,16 @@ function getBounds(?bnds:Bounds):Bounds
 override function contains(p:Point):Bool
 ```
 
+Tells if the point `p` is inside the shape.
+
 ### rayIntersection
 
 ```haxe
 override function rayIntersection(r:Ray, bestMatch:Bool):Float
 ```
+
+Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+If `bestMatch` is `false`, any intersection can be returned (faster).
 
 ### inFrustum
 
@@ -76,11 +103,15 @@ override function rayIntersection(r:Ray, bestMatch:Bool):Float
 override function inFrustum(f:Frustum, ?m:h3d.Matrix):Bool
 ```
 
+Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+
 ### inSphere
 
 ```haxe
 override function inSphere(s:Sphere):Bool
 ```
+
+Tells if the shape intersects the sphere `s`.
 
 ### closestPoint
 
@@ -88,17 +119,23 @@ override function inSphere(s:Sphere):Bool
 override function closestPoint(p:Point):Null<h3d.Vector>
 ```
 
+Returns the point of the shape closest to `p`.
+
 ### dimension
 
 ```haxe
 override inline function dimension():Float
 ```
 
+Returns the largest size of the shape, used to compare collider sizes.
+
 ### makeDebugObj
 
 ```haxe
 override function makeDebugObj():h3d.scene.Object
 ```
+
+Creates an object displaying the shape (debug), or `null` if not supported.
 
 ## Inherited members
 

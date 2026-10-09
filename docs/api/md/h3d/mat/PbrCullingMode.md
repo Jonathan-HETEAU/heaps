@@ -2,6 +2,8 @@
 
 **enum abstract** · package [`h3d.mat`](README.md) · module `h3d.mat.PbrMaterial` · source [`h3d/mat/PbrMaterial.hx`](../../../../../h3d/mat/PbrMaterial.hx)
 
+The face culling of a `PbrMaterial` (see `h3d.mat.Data.Face`).
+
 Underlying type: `String`
 
 ## Values

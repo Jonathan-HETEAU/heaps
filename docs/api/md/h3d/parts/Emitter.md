@@ -6,6 +6,8 @@ Extends: [`h3d.parts.Particles`](Particles.md) → [`h3d.scene.Mesh`](../scene/M
 
 Implements: [`h3d.parts.Randomized`](Randomized.md)
 
+A CPU particle emitter configured by a `State`. For large numbers of particles, prefer `GpuParticles`.
+
 ## Constructor
 
 ### new
@@ -13,6 +15,8 @@ Implements: [`h3d.parts.Randomized`](Randomized.md)
 ```haxe
 function new(?state:State, ?parent:h3d.scene.Object):Void
 ```
+
+Creates an emitter with the given settings (the defaults if `null`).
 
 ## Variables
 
@@ -22,11 +26,15 @@ function new(?state:State, ?parent:h3d.scene.Object):Void
 var time(default, null):Float
 ```
 
+The time in the emitter life, from `0` to `1` (looping if `State.loop`).
+
 ### state
 
 ```haxe
 var state(default, null):State
 ```
+
+The emitter settings. See `setState`.
 
 ### speed
 
@@ -34,11 +42,15 @@ var state(default, null):State
 var speed:Float
 ```
 
+The playback speed multiplier.
+
 ### collider
 
 ```haxe
 var collider:Collider
 ```
+
+The collision handler used when `State.collide` is set.
 
 ## Methods
 
@@ -54,11 +66,15 @@ override function clear():Void
 function setState(s:State):Void
 ```
 
+Applies new settings.
+
 ### update
 
 ```haxe
 function update(dt:Float):Void
 ```
+
+Emits and updates the particles for `dt` seconds. Done automatically during sync.
 
 ### rand
 
@@ -66,11 +82,15 @@ function update(dt:Float):Void
 inline function rand():Float
 ```
 
+Returns a random number between `0` and `1`.
+
 ### isActive
 
 ```haxe
 function isActive():Bool
 ```
+
+Tells if the emitter still has particles or will emit more.
 
 ## Inherited members
 

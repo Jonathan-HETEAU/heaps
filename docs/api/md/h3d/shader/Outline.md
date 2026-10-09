@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Draws an outline by inflating the mesh along its normals by `size` (to use in a pass drawn behind the object).
+
 ## Constructor
 
 ### new

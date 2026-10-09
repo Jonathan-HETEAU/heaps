@@ -6,6 +6,8 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 
 Subclasses: [`h3d.prim.Cylinder`](Cylinder.md)
 
+A primitive made of quads (4 points each, drawn as 2 triangles), with optional UVs and normals.
+
 ## Constructor
 
 ### new
@@ -42,17 +44,23 @@ override function vertexCount():Int
 function transform(m:h3d.Matrix):Void
 ```
 
+Transforms the points (and normals) by `m`.
+
 ### translate
 
 ```haxe
 function translate(dx:Float, dy:Float, dz:Float):Void
 ```
 
+Moves the points.
+
 ### scale
 
 ```haxe
 function scale(x:Float, y:Float, z:Float):Void
 ```
+
+Scales the points.
 
 ### addUVs
 
@@ -74,11 +82,15 @@ override function alloc(engine:h3d.Engine):Void
 function addNormals():Void
 ```
 
+Computes per-point normals from the faces.
+
 ### getPoints
 
 ```haxe
 function getPoints():Array<h3d.col.Point>
 ```
+
+Returns the points.
 
 ### render
 

@@ -12,6 +12,10 @@ Subclasses: [`h3d.mat.Texture3D`](Texture3D.md), [`h3d.mat.TextureArray`](Textur
 function new(w:Int, h:Int, ?flags:Array<TextureFlags>, ?format:Null<TextureFormat>):Void
 ```
 
+Creates a texture of `w` x `h` pixels, allocated immediately unless the `NoAlloc` flag is set.
+- **param** `flags` The texture flags, such as `Target`, `MipMapped` or `Cube`.
+- **param** `format` The pixel format (`nativeFormat` by default).
+
 ## Static variables
 
 ### nativeFormat
@@ -28,11 +32,15 @@ The default texture color format
 static var TRILINEAR_FILTERING_ENABLED:Bool
 ```
 
+If `true`, mipmapped textures are created with `Linear` mip filtering, otherwise `Nearest`.
+
 ### DEFAULT_WRAP
 
 ```haxe
 static var DEFAULT_WRAP:Wrap
 ```
+
+The wrap mode of new textures.
 
 ### mipMap_bits
 
@@ -176,11 +184,16 @@ This will return the default depth buffer, which is automatically resized to the
 static function fromBitmap(bmp:hxd.BitmapData):Texture
 ```
 
+Creates a texture from a bitmap.
+
 ### fromPixels
 
 ```haxe
 static function fromPixels(pixels:hxd.Pixels, ?format:TextureFormat):Texture
 ```
+
+Creates a texture from pixels.
+- **param** `format` The texture format (the pixels format by default).
 
 ### fromColor
 
@@ -195,6 +208,8 @@ Creates a 1x1 texture using the RGB color passed as parameter.
 ```haxe
 static function genDisc(size:Int, color:Int, ?alpha:Float = 1.):Texture
 ```
+
+Returns a shared `size` x `size` texture with a filled disc of the given color (`0xRRGGBB`).
 
 ### defaultCubeTexture
 
@@ -217,6 +232,8 @@ Returns a checker texture of size x size, than can be repeated
 ```haxe
 static function genNoise(size:Int):Texture
 ```
+
+Returns a shared `size` x `size` texture filled with random values.
 
 ### getMipMap
 
@@ -268,11 +285,15 @@ static inline function getPackedAnisotropicMaxLevel(v:Int):Int
 var id(default, null):Int
 ```
 
+A unique identifier of the texture.
+
 ### name
 
 ```haxe
 var name(default, null):String
 ```
+
+The texture name (usually its resource path), used for debugging. See `setName`.
 
 ### width
 
@@ -280,11 +301,15 @@ var name(default, null):String
 var width(default, null):Int
 ```
 
+The width, in pixels.
+
 ### height
 
 ```haxe
 var height(default, null):Int
 ```
+
+The height, in pixels.
 
 ### flags
 
@@ -292,11 +317,15 @@ var height(default, null):Int
 var flags(default, null):EnumFlags<TextureFlags>
 ```
 
+The flags given at creation, and some state flags such as `Loading`.
+
 ### format
 
 ```haxe
 var format(default, null):TextureFormat
 ```
+
+The pixel format.
 
 ### mipMap
 
@@ -304,11 +333,15 @@ var format(default, null):TextureFormat
 var mipMap(default, set):MipMap
 ```
 
+How the mip levels are sampled (`None` unless the texture is `MipMapped`).
+
 ### filter
 
 ```haxe
 var filter(default, set):Filter
 ```
+
+How the pixels are interpolated (`Linear` by default).
 
 ### wrap
 
@@ -316,11 +349,15 @@ var filter(default, set):Filter
 var wrap(default, set):Wrap
 ```
 
+How the texture coordinates outside of `[0, 1]` are handled (`DEFAULT_WRAP` by default).
+
 ### slice
 
 ```haxe
 var slice(default, set):Int
 ```
+
+For texture arrays: if positive, binds only the layer `slice - 1` as a 2D texture (DirectX 12).
 
 ### layerCount
 
@@ -328,11 +365,15 @@ var slice(default, set):Int
 var layerCount(get, null):Int
 ```
 
+The number of layers: 6 for cube textures, the number of layers of texture arrays, the depth of 3D textures, 1 otherwise.
+
 ### lodBias
 
 ```haxe
 var lodBias(get, set):Float
 ```
+
+A bias added to the mip level selected when sampling, from -15 to 16: positive values select less detailed levels.
 
 ### mipLevels
 
@@ -340,17 +381,23 @@ var lodBias(get, set):Float
 var mipLevels(get, null):Int
 ```
 
+The number of mip levels (1 if the texture is not `MipMapped`).
+
 ### anisotropicMaxLevel
 
 ```haxe
 var anisotropicMaxLevel(get, set):Int
 ```
 
+The maximum level of anisotropic filtering (1 to 16).
+
 ### startingMip
 
 ```haxe
 var startingMip(get, set):Int
 ```
+
+The most detailed mip level sampled: levels before it are ignored.
 
 ### residentMip
 
@@ -387,17 +434,23 @@ If set to null, depth testing is disabled.
 function alloc():Void
 ```
 
+Allocates the GPU memory of the texture if it is not allocated.
+
 ### isSRGB
 
 ```haxe
 function isSRGB():Bool
 ```
 
+Tells if the format stores sRGB colors.
+
 ### clone
 
 ```haxe
 function clone():Texture
 ```
+
+Returns a GPU copy of the texture (same size, format and main flags).
 
 ### preventAutoDispose
 
@@ -424,11 +477,15 @@ or when loading is complete.
 function setName(n:String):Void
 ```
 
+Sets the texture name, used for debugging.
+
 ### isDisposed
 
 ```haxe
 inline function isDisposed():Bool
 ```
+
+Tells if the GPU memory is released and cannot be restored with `realloc`.
 
 ### resize
 
@@ -436,11 +493,16 @@ inline function isDisposed():Bool
 function resize(width:Int, height:Int):Void
 ```
 
+Changes the texture size. The content is lost.
+
 ### clearF
 
 ```haxe
 function clearF(?r:Float = 0., ?g:Float = 0., ?b:Float = 0., ?a:Float = 0., ?layer:Int = -1):Void
 ```
+
+Fills a render target with the given float color.
+- **param** `layer` The layer to clear, or `-1` for all layers.
 
 ### clear
 
@@ -448,11 +510,19 @@ function clearF(?r:Float = 0., ?g:Float = 0., ?b:Float = 0., ?a:Float = 0., ?lay
 function clear(color:Int, ?alpha:Float = 1., ?layer:Int = -1):Void
 ```
 
+Fills the texture with a color.
+- **param** `color` The color, in `0xRRGGBB` format.
+- **param** `alpha` The alpha, from `0` to `1`.
+- **param** `layer` The layer to clear, or `-1` for all layers.
+
 ### setResidentMip
 
 ```haxe
 function setResidentMip(mip:Int):Bool
 ```
+
+Releases the GPU memory of the mip levels more detailed than `mip` (texture streaming).
+Returns `false` if the driver does not support it. Not supported for render targets and depth textures.
 
 ### uploadBitmap
 
@@ -460,11 +530,16 @@ function setResidentMip(mip:Int):Bool
 function uploadBitmap(bmp:hxd.BitmapData, ?mipLevel:Int = 0, ?layer:Int = 0):Void
 ```
 
+Uploads the pixels of a bitmap to a mip level and layer. The size must match the mip level size.
+
 ### uploadPixels
 
 ```haxe
 function uploadPixels(pixels:hxd.Pixels, ?mipLevel:Int = 0, ?layer:Int = 0):Void
 ```
+
+Uploads pixels to a mip level and layer. The size must match the mip level size. Uploading the level 0 of the last
+layer of a `MipMapped` texture generates the mip levels, unless `ManualMipMapGen` is set.
 
 ### dispose
 
@@ -472,11 +547,15 @@ function uploadPixels(pixels:hxd.Pixels, ?mipLevel:Int = 0, ?layer:Int = 0):Void
 function dispose():Void
 ```
 
+Releases the GPU memory of the texture.
+
 ### hasStencil
 
 ```haxe
 function hasStencil():Bool
 ```
+
+Tells if the format is a depth format with a stencil.
 
 ### isDepth
 
@@ -484,11 +563,15 @@ function hasStencil():Bool
 function isDepth():Bool
 ```
 
+Tells if the format is a depth format.
+
 ### getHandle
 
 ```haxe
 function getHandle():TextureHandle
 ```
+
+Returns the bindless handle of the texture (requires a driver supporting bindless textures).
 
 ### capturePixels
 

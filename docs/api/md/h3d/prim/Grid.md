@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A flat grid in the XY plane of `width` x `height` cells, starting at the origin.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPri
 ```haxe
 function new(width:Int, height:Int, ?cellWidth:Float = 1., ?cellHeight:Float = 1.):Void
 ```
+
+Creates a grid.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new(width:Int, height:Int, ?cellWidth:Float = 1., ?cellHeight:Float = 1
 var width(default, null):Int
 ```
 
+The number of cells along X.
+
 ### height
 
 ```haxe
 var height(default, null):Int
 ```
+
+The number of cells along Y.
 
 ### cellWidth
 
@@ -32,11 +40,15 @@ var height(default, null):Int
 var cellWidth(default, null):Float
 ```
 
+The size of a cell along X.
+
 ### cellHeight
 
 ```haxe
 var cellHeight(default, null):Float
 ```
+
+The size of a cell along Y.
 
 ## Methods
 

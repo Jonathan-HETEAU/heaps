@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Converts the HDR image to displayable colors (exposure, tone mapping operator, gamma). See `h3d.scene.pbr.Renderer.toneMode`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../
 ```haxe
 function new():Void
 ```
+
+Creates the shader.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var exposure(default, set):Float
 ```
 
+The exposure: colors are multiplied by `exp(exposure)`.
+
 ### gamma
 
 ```haxe
 var gamma(default, set):Float
 ```
+
+The gamma of the output (2 by default).
 
 ### hdrTexture
 

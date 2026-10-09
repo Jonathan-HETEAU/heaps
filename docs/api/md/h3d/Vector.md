@@ -20,11 +20,15 @@ Implicit casts to: `VectorImpl`
 static inline function fromColor(c:Int, ?scale:Float = 1.0):Vector
 ```
 
+Creates a color vector from an integer color, with components multiplied by `scale`.
+
 ### fromArray
 
 ```haxe
 static inline function fromArray(a:Array<Float>):Vector
 ```
+
+Creates a vector from the first components of an array.
 
 ## Methods
 
@@ -34,11 +38,15 @@ static inline function fromArray(a:Array<Float>):Vector
 inline function sub(v:Vector):Vector
 ```
 
+Returns `this - v` as a new vector.
+
 ### add
 
 ```haxe
 inline function add(v:Vector):Vector
 ```
+
+Returns `this + v` as a new vector.
 
 ### transform
 
@@ -46,11 +54,15 @@ inline function add(v:Vector):Vector
 inline function transform(m:Matrix):Void
 ```
 
+Transforms the vector by the matrix `m` (as a point: the translation is applied).
+
 ### transformed
 
 ```haxe
 inline function transformed(m:Matrix):Vector
 ```
+
+Returns a copy of the vector transformed by `m` (as a point).
 
 ### toPoint
 
@@ -58,11 +70,15 @@ inline function transformed(m:Matrix):Vector
 inline function toPoint():Vector
 ```
 
+Returns a copy as a point.
+
 ### toVector
 
 ```haxe
 inline function toVector():Vector
 ```
+
+Returns a `Vector` with the X, Y and Z components.
 
 ### scale
 
@@ -70,8 +86,12 @@ inline function toVector():Vector
 inline function scale(v:Float):Void
 ```
 
+Multiplies the components by `f`.
+
 ### scaled
 
 ```haxe
 inline function scaled(v:Float):Vector
 ```
+
+Returns a copy of the vector multiplied by `v`.

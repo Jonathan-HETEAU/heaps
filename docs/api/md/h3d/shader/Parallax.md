@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Parallax occlusion mapping: offsets the texture coordinates according to a height map, to simulate relief.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new():Void
 ```
+
+Creates the shader.
 
 ## Static variables
 
@@ -20,11 +24,15 @@ function new():Void
 static final MIN_LAYERS:Int
 ```
 
+The minimum number of layers sampled.
+
 ### MAX_LAYERS
 
 ```haxe
 static final MAX_LAYERS:Int
 ```
+
+The maximum number of layers sampled.
 
 ## Variables
 

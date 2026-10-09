@@ -4,6 +4,14 @@
 
 Extends: [`h3d.col.Collider`](Collider.md)
 
+An axis aligned bounding box (AABB), defined by its minimum and maximum coordinates.
+Also used as a collider and for culling.
+
+```haxe
+var b = obj.getBounds();
+trace(b.getCenter() + " size " + b.getSize());
+```
+
 ## Constructor
 
 ### new
@@ -11,6 +19,8 @@ Extends: [`h3d.col.Collider`](Collider.md)
 ```haxe
 inline function new():Void
 ```
+
+Creates empty bounds (see `empty`).
 
 ## Static methods
 
@@ -20,11 +30,15 @@ inline function new():Void
 static inline function fromPoints(min:Point, max:Point):Bounds
 ```
 
+Creates bounds from their minimum and maximum points.
+
 ### fromValues
 
 ```haxe
 static inline function fromValues(x:Float, y:Float, z:Float, dx:Float, dy:Float, dz:Float):Bounds
 ```
+
+Creates bounds from a minimum position and a size.
 
 ## Variables
 
@@ -34,11 +48,15 @@ static inline function fromValues(x:Float, y:Float, z:Float, dx:Float, dy:Float,
 var xMin:Float
 ```
 
+The minimum X coordinate.
+
 ### xMax
 
 ```haxe
 var xMax:Float
 ```
+
+The maximum X coordinate.
 
 ### yMin
 
@@ -46,11 +64,15 @@ var xMax:Float
 var yMin:Float
 ```
 
+The minimum Y coordinate.
+
 ### yMax
 
 ```haxe
 var yMax:Float
 ```
+
+The maximum Y coordinate.
 
 ### zMin
 
@@ -58,11 +80,15 @@ var yMax:Float
 var zMin:Float
 ```
 
+The minimum Z coordinate.
+
 ### zMax
 
 ```haxe
 var zMax:Float
 ```
+
+The maximum Z coordinate.
 
 ### xSize
 
@@ -70,17 +96,23 @@ var zMax:Float
 var xSize(get, set):Float
 ```
 
+The size along X. Setting it moves `xMax`.
+
 ### ySize
 
 ```haxe
 var ySize(get, set):Float
 ```
 
+The size along Y. Setting it moves `yMax`.
+
 ### zSize
 
 ```haxe
 var zSize(get, set):Float
 ```
+
+The size along Z. Setting it moves `zMax`.
 
 ## Methods
 
@@ -90,17 +122,24 @@ var zSize(get, set):Float
 override inline function inFrustum(f:Frustum, ?m:h3d.Matrix):Bool
 ```
 
+Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+
 ### inSphere
 
 ```haxe
 override inline function inSphere(s:Sphere):Bool
 ```
 
+Tells if the shape intersects the sphere `s`.
+
 ### rayIntersection
 
 ```haxe
 override inline function rayIntersection(r:Ray, bestMatch:Bool):Float
 ```
+
+Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+If `bestMatch` is `false`, any intersection can be returned (faster).
 
 ### inFrustumDetails
 
@@ -118,11 +157,15 @@ function inFrustumDetails(mvp:h3d.Matrix, ?checkZ:Bool = true):Int
 function transform3x3(m:h3d.Matrix):Void
 ```
 
+Transforms the bounds by the rotation and scale of `m`: the result is the box containing the transformed box.
+
 ### transform
 
 ```haxe
 function transform(m:h3d.Matrix):Void
 ```
+
+Transforms the bounds by `m`: the result is the box containing the transformed box.
 
 ### collide
 
@@ -130,11 +173,15 @@ function transform(m:h3d.Matrix):Void
 inline function collide(b:Bounds):Bool
 ```
 
+Tells if the bounds intersect `b`.
+
 ### contains
 
 ```haxe
 override inline function contains(p:Point):Bool
 ```
+
+Tells if the point `p` is inside the shape.
 
 ### containsBounds
 
@@ -142,11 +189,15 @@ override inline function contains(p:Point):Bool
 inline function containsBounds(b:Bounds):Bool
 ```
 
+Tells if `b` is fully inside the bounds.
+
 ### containsSphere
 
 ```haxe
 inline function containsSphere(s:Sphere):Bool
 ```
+
+Tells if the sphere `s` is fully inside the bounds.
 
 ### add
 
@@ -154,11 +205,15 @@ inline function containsSphere(s:Sphere):Bool
 inline function add(b:Bounds):Void
 ```
 
+Extends the bounds to contain `b`.
+
 ### addTransform
 
 ```haxe
 inline function addTransform(b:Bounds, m:h3d.Matrix):Void
 ```
+
+Extends the bounds to contain `b` transformed by `m`.
 
 ### addPoint
 
@@ -166,11 +221,15 @@ inline function addTransform(b:Bounds, m:h3d.Matrix):Void
 inline function addPoint(p:Point):Void
 ```
 
+Extends the bounds to contain the point `p`.
+
 ### addPos
 
 ```haxe
 inline function addPos(x:Float, y:Float, z:Float):Void
 ```
+
+Extends the bounds to contain the position (`x`, `y`, `z`).
 
 ### addSphere
 
@@ -178,11 +237,15 @@ inline function addPos(x:Float, y:Float, z:Float):Void
 inline function addSphere(s:Sphere):Void
 ```
 
+Extends the bounds to contain the sphere `s`.
+
 ### addSpherePos
 
 ```haxe
 inline function addSpherePos(x:Float, y:Float, z:Float, r:Float):Void
 ```
+
+Extends the bounds to contain the sphere of center (`x`, `y`, `z`) and radius `r`.
 
 ### intersection
 
@@ -190,11 +253,15 @@ inline function addSpherePos(x:Float, y:Float, z:Float, r:Float):Void
 function intersection(a:Bounds, b:Bounds):Void
 ```
 
+Sets the bounds to the intersection of `a` and `b` (empty if they do not intersect).
+
 ### offset
 
 ```haxe
 inline function offset(dx:Float, dy:Float, dz:Float):Void
 ```
+
+Moves the bounds.
 
 ### setMin
 
@@ -202,11 +269,15 @@ inline function offset(dx:Float, dy:Float, dz:Float):Void
 inline function setMin(p:Point):Void
 ```
 
+Sets the minimum coordinates.
+
 ### setMax
 
 ```haxe
 inline function setMax(p:Point):Void
 ```
+
+Sets the maximum coordinates.
 
 ### load
 
@@ -214,11 +285,15 @@ inline function setMax(p:Point):Void
 function load(b:Bounds):Void
 ```
 
+Copies the values of another instance.
+
 ### scalePivot
 
 ```haxe
 inline function scalePivot(v:Float):Void
 ```
+
+Scales the coordinates by `v`, relative to the origin.
 
 ### scaleCenter
 
@@ -226,11 +301,15 @@ inline function scalePivot(v:Float):Void
 function scaleCenter(v:Float):Void
 ```
 
+Scales the size by `v`, relative to the center.
+
 ### getMin
 
 ```haxe
 inline function getMin():h3d.Vector
 ```
+
+Returns the minimum coordinates.
 
 ### getCenter
 
@@ -238,11 +317,15 @@ inline function getMin():h3d.Vector
 inline function getCenter():h3d.Vector
 ```
 
+Returns the center.
+
 ### getSize
 
 ```haxe
 inline function getSize():h3d.Vector
 ```
+
+Returns the size along each axis.
 
 ### getMax
 
@@ -250,11 +333,15 @@ inline function getSize():h3d.Vector
 inline function getMax():h3d.Vector
 ```
 
+Returns the maximum coordinates.
+
 ### getVolume
 
 ```haxe
 inline function getVolume():Float
 ```
+
+Returns the volume.
 
 ### isEmpty
 
@@ -262,11 +349,15 @@ inline function getVolume():Float
 inline function isEmpty():Bool
 ```
 
+Tells if the bounds are empty (a minimum is greater than its maximum).
+
 ### empty
 
 ```haxe
 inline function empty():Void
 ```
+
+Empties the bounds, so that adding a point makes them contain only this point.
 
 ### all
 
@@ -274,11 +365,15 @@ inline function empty():Void
 inline function all():Void
 ```
 
+Makes the bounds cover the whole space.
+
 ### clone
 
 ```haxe
 inline function clone():Bounds
 ```
+
+Returns a copy.
 
 ### toString
 
@@ -286,11 +381,15 @@ inline function clone():Bounds
 function toString():String
 ```
 
+Returns a string representation.
+
 ### toSphere
 
 ```haxe
 inline function toSphere():Sphere
 ```
+
+Returns the sphere containing the bounds.
 
 ### dimension
 
@@ -298,11 +397,15 @@ inline function toSphere():Sphere
 override inline function dimension():Float
 ```
 
+Returns the largest size of the shape, used to compare collider sizes.
+
 ### getBoundingSphereRadius
 
 ```haxe
 inline function getBoundingSphereRadius():Float
 ```
+
+Returns the radius of the sphere containing the bounds (half of the diagonal).
 
 ### getBoundingRadius
 
@@ -310,11 +413,15 @@ inline function getBoundingSphereRadius():Float
 inline function getBoundingRadius():Float
 ```
 
+Returns the radius, around the origin, of the sphere containing the bounds.
+
 ### closestPoint
 
 ```haxe
 override inline function closestPoint(p:Point):h3d.Vector
 ```
+
+Returns the point of the shape closest to `p`.
 
 ### distanceTo
 
@@ -322,11 +429,15 @@ override inline function closestPoint(p:Point):h3d.Vector
 inline function distanceTo(p:Point):Float
 ```
 
+Returns the distance from `p` to the bounds (`0` if inside).
+
 ### makeDebugObj
 
 ```haxe
 override function makeDebugObj():h3d.scene.Object
 ```
+
+Creates an object displaying the shape (debug), or `null` if not supported.
 
 ## Inherited members
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Shader functions converting colors between color spaces and packing colors in integers, to be used by other shaders.
+
 ## Constructor
 
 ### new

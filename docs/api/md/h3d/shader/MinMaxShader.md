@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Outputs the minimum (or maximum with `isMax`) of two textures.
+
 ## Constructor
 
 ### new

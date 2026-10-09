@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Computes the PBR lighting of the objects drawn in the forward passes, from the light buffer (see `h3d.scene.pbr.LightBuffer`).
+
 ## Constructor
 
 ### new

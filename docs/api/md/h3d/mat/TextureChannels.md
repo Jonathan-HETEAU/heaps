@@ -4,6 +4,9 @@
 
 Extends: [`h3d.mat.Texture`](Texture.md)
 
+A texture whose channels (red, green, blue, alpha) are filled separately from different images, for instance to
+pack the roughness, metalness and occlusion maps in a single texture.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.mat.Texture`](Texture.md)
 ```haxe
 function new(w:Int, h:Int, ?flags:Array<TextureFlags>, ?format:Null<TextureFormat>):Void
 ```
+
+Creates a texture of `w` x `h` pixels with empty channels.
 
 ## Variables
 
@@ -20,6 +25,8 @@ function new(w:Int, h:Int, ?flags:Array<TextureFlags>, ?format:Null<TextureForma
 var allowAsync:Bool
 ```
 
+If `true`, the images are loaded asynchronously when their format allows it.
+
 ## Methods
 
 ### setResource
@@ -27,6 +34,9 @@ var allowAsync:Bool
 ```haxe
 function setResource(c:hxd.Channel, res:hxd.res.Image, ?srcChannel:hxd.Channel):Void
 ```
+
+Fills the channel `c` with the channel `srcChannel` (by default the same) of image `res`, which must have the
+same size. The channel is updated when the image file changes.
 
 ## Inherited members
 

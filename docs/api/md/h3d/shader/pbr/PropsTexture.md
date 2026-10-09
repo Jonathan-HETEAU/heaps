@@ -4,6 +4,9 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Sets the PBR properties from a texture: metalness in red, glossiness in green (roughness is `1 - green²`),
+occlusion in blue and emissive (multiplied by `emissiveValue`) in alpha.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 ```haxe
 function new(?t:hxsl.Texture):Void
 ```
+
+Creates the shader with the texture `t`.
 
 ## Variables
 

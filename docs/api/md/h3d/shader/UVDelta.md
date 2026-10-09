@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Scales and offsets the texture coordinates.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?dx:Float = 0., ?dy:Float = 0., ?sx:Float = 1., ?sy:Float = 1.):Void
 ```
+
+Creates the shader with an offset (`dx`, `dy`) and a scale (`sx`, `sy`).
 
 ## Variables
 

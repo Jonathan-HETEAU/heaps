@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Counts the lights affecting each pixel (for the `Performance` display mode).
+
 ## Constructor
 
 ### new

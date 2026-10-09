@@ -4,6 +4,8 @@
 
 Extends: [`h3d.anim.AnimatedObject`](AnimatedObject.md)
 
+An object animated by a `BufferAnimation`: the layout of its values in the animation data.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.anim.AnimatedObject`](AnimatedObject.md)
 ```haxe
 function new(objectName:String, dataOffset:Int):Void
 ```
+
+Creates the object `objectName` whose values start at `dataOffset`.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new(objectName:String, dataOffset:Int):Void
 var layout:EnumFlags<DataLayout>
 ```
 
+The values stored for the object.
+
 ### dataOffset
 
 ```haxe
 var dataOffset:Int
 ```
+
+The offset of the object values in a frame of the animation data.
 
 ### propCurrentValue
 
@@ -32,17 +40,23 @@ var dataOffset:Int
 var propCurrentValue:Float
 ```
 
+The current value of the custom property.
+
 ### propName
 
 ```haxe
 var propName:String
 ```
 
+The name of the custom property, if any.
+
 ### matrix
 
 ```haxe
 var matrix:h3d.Matrix
 ```
+
+The current transform, updated by `sync`.
 
 ## Methods
 
@@ -51,6 +65,8 @@ var matrix:h3d.Matrix
 ```haxe
 function getStride():Int
 ```
+
+Returns the number of floats per frame of the object.
 
 ### clone
 

@@ -4,6 +4,9 @@
 
 Extends: [`h3d.pass.DirShadowMap`](DirShadowMap.md) → [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
+The shadow map of the forward renderer (`h3d.scene.fwd.Renderer`): a directional shadow map from the shadow light,
+exposed to the shaders through the `shadow.*` globals.
+
 ## Constructor
 
 ### new
@@ -12,6 +15,8 @@ Extends: [`h3d.pass.DirShadowMap`](DirShadowMap.md) → [`h3d.pass.Shadows`](Sha
 function new(?size:Int = 1024, ?format:hxd.PixelFormat):Void
 ```
 
+Creates a shadow map of `size` x `size` pixels, in dynamic mode.
+
 ## Variables
 
 ### color
@@ -19,6 +24,8 @@ function new(?size:Int = 1024, ?format:hxd.PixelFormat):Void
 ```haxe
 var color:h3d.Vector
 ```
+
+The color of the shadows (black by default).
 
 ## Methods
 

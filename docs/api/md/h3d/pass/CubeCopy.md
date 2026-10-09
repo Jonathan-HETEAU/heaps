@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Copies the 6 faces of a cube texture to another cube texture.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 ```haxe
 function new():Void
 ```
+
+Creates the pass.
 
 ## Static methods
 
@@ -20,6 +24,8 @@ function new():Void
 static function run(from:h3d.mat.Texture, to:h3d.mat.Texture, ?blend:Null<h3d.mat.BlendMode>, ?mip:Int = 0):Void
 ```
 
+Copies the faces of `from` to `to` using a shared instance (or a direct GPU copy when possible).
+
 ## Methods
 
 ### apply
@@ -27,6 +33,8 @@ static function run(from:h3d.mat.Texture, to:h3d.mat.Texture, ?blend:Null<h3d.ma
 ```haxe
 function apply(from:hxsl.Texture, to:Null<h3d.mat.Texture>, ?blend:Null<h3d.mat.BlendMode>, ?mip:Int = 0):Void
 ```
+
+Copies the faces of `from` to the mip level `mip` of `to`, with an optional blend mode.
 
 ## Inherited members
 

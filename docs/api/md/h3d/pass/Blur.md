@@ -12,6 +12,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 function new(?radius:Float = 1., ?gain:Float = 1., ?linear:Float = 0., ?quality:Float = 1.):Void
 ```
 
+Creates a blur. See `radius`, `gain`, `linear` and `quality`.
+
 ## Variables
 
 ### radius
@@ -52,6 +54,8 @@ Adjust how much quality/speed tradeoff we want (default = 1)
 var additive:Bool
 ```
 
+If `true`, the blurred result is added to the output instead of replacing it.
+
 ## Methods
 
 ### getKernelSize
@@ -60,11 +64,16 @@ var additive:Bool
 function getKernelSize():Int
 ```
 
+Returns the number of samples of each pass.
+
 ### apply
 
 ```haxe
 function apply(ctx:h3d.impl.RenderContext, src:h3d.mat.Texture, ?output:h3d.mat.Texture, ?layer:Int = 0):Void
 ```
+
+Blurs `src` into `output` (or into `src` itself if `output` is `null`).
+- **param** `layer` The layer of `src` to blur.
 
 ## Inherited members
 

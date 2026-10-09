@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../shader/ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+A shader running an endless loop, used to test the GPU timeout handling.
+
 ## Constructor
 
 ### new

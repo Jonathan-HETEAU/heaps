@@ -4,6 +4,9 @@
 
 Extends: [`h3d.anim.Animation`](Animation.md)
 
+Smoothly blends from the current pose of the objects to an animation, over `duration` seconds.
+`onAnimEnd` is called when the blend is complete; the target animation can then be played directly.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.anim.Animation`](Animation.md)
 ```haxe
 function new(target:Animation, ?duration:Float = 0.5):Void
 ```
+
+Creates a blend to `target`, which must be an animation instance.
 
 ## Variables
 
@@ -20,11 +25,15 @@ function new(target:Animation, ?duration:Float = 0.5):Void
 var target:Animation
 ```
 
+The animation instance blended to.
+
 ### blend
 
 ```haxe
 var blend:Float
 ```
+
+The blend progress, from `0` (current pose) to `1` (target).
 
 ### duration
 
@@ -32,17 +41,23 @@ var blend:Float
 var duration:Float
 ```
 
+The duration of the blend, in seconds.
+
 ### ignoreTranslate
 
 ```haxe
 var ignoreTranslate:Bool
 ```
 
+If `true`, the translations of the target are applied directly, only rotations and scales are blended.
+
 ### easing
 
 ```haxe
 var easing:Float
 ```
+
+The easing of the blend (see `hxd.Math.easeFactor`).
 
 ## Methods
 

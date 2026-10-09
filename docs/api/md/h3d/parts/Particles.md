@@ -6,6 +6,9 @@ Extends: [`h3d.scene.Mesh`](../scene/Mesh.md) → [`h3d.scene.Object`](../scene/
 
 Subclasses: [`h3d.parts.Emitter`](Emitter.md)
 
+A set of camera facing particles (sprites) drawn in a single draw call. Particles are added with `alloc` and
+updated by the user (or by an `Emitter`).
+
 ## Constructor
 
 ### new
@@ -13,6 +16,8 @@ Subclasses: [`h3d.parts.Emitter`](Emitter.md)
 ```haxe
 function new(?texture:h3d.mat.Texture, ?parent:h3d.scene.Object):Void
 ```
+
+Creates an empty set of particles using `texture`.
 
 ## Variables
 
@@ -22,11 +27,15 @@ function new(?texture:h3d.mat.Texture, ?parent:h3d.scene.Object):Void
 var frames:Array<h2d.Tile>
 ```
 
+The tiles of the particle texture, selected by `Particle.frame`.
+
 ### count
 
 ```haxe
 var count(default, null):Int
 ```
+
+The number of particles.
 
 ### hasColor
 
@@ -34,11 +43,15 @@ var count(default, null):Int
 var hasColor(default, set):Bool
 ```
 
+Enables the per particle colors.
+
 ### sortMode
 
 ```haxe
 var sortMode:SortMode
 ```
+
+The drawing order of the particles.
 
 ### globalSize
 
@@ -46,11 +59,15 @@ var sortMode:SortMode
 var globalSize:Float
 ```
 
+A size multiplier of all the particles.
+
 ### emitTrail
 
 ```haxe
 var emitTrail:Bool
 ```
+
+Draws the particles as a continuous trail.
 
 ## Methods
 
@@ -68,11 +85,15 @@ Offset all existing particles by the given values.
 function clear():Void
 ```
 
+Removes all the particles.
+
 ### alloc
 
 ```haxe
 function alloc():Null<Particle>
 ```
+
+Adds a white particle at the position of the object and returns it.
 
 ### add
 
@@ -80,11 +101,15 @@ function alloc():Null<Particle>
 function add(p:Null<Particle>):Null<Particle>
 ```
 
+Adds an existing particle and returns it.
+
 ### getParticles
 
 ```haxe
 inline function getParticles():h3d.parts._Particles.ParticleIterator
 ```
+
+Returns an iterator on the particles.
 
 ## Inherited members
 

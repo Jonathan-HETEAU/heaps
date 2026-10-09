@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies the shadows of a cube shadow map (see `h3d.pass.CubeShadowMap`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new():Void
 ```
+
+Creates the shader.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Reads the PBR surface properties of the pixel from the G-buffer textures.
+
 ## Constructor
 
 ### new

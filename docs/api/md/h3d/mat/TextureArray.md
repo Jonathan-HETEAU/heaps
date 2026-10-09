@@ -4,6 +4,8 @@
 
 Extends: [`h3d.mat.Texture`](Texture.md)
 
+A texture array: several 2D textures (layers) of the same size and format, sampled with a layer index in shaders.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.mat.Texture`](Texture.md)
 function new(w:Int, h:Int, layers:Int, ?flags:Array<TextureFlags>, ?format:Null<TextureFormat>):Void
 ```
 
+Creates a texture array of `layers` layers of `w` x `h` pixels.
+
 ## Static methods
 
 ### defaultArrayTexture
@@ -19,6 +23,8 @@ function new(w:Int, h:Int, layers:Int, ?flags:Array<TextureFlags>, ?format:Null<
 ```haxe
 static function defaultArrayTexture():TextureArray
 ```
+
+Returns a shared 1x1 texture array with a single dark grey layer, used when a texture array is missing.
 
 ## Methods
 

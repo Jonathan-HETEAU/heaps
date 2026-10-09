@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Compute shader sorting the lights into the clusters of the view (see `h3d.scene.pbr.LightBuffer`).
+
 ## Constructor
 
 ### new

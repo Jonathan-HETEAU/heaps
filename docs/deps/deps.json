@@ -3668,8 +3668,8 @@
   "h3d.Buffer": {
    "file": "h3d/Buffer.hx",
    "package": "h3d",
-   "lines": 158,
-   "doc_blocks": 5,
+   "lines": 217,
+   "doc_blocks": 23,
    "types": [
     "enum BufferFlag",
     "class Buffer"
@@ -3745,8 +3745,8 @@
   "h3d.BufferHandle": {
    "file": "h3d/BufferHandle.hx",
    "package": "h3d",
-   "lines": 11,
-   "doc_blocks": 0,
+   "lines": 21,
+   "doc_blocks": 3,
    "types": [
     "class BufferHandle"
    ],
@@ -3774,8 +3774,8 @@
   "h3d.Camera": {
    "file": "h3d/Camera.hx",
    "package": "h3d",
-   "lines": 515,
-   "doc_blocks": 15,
+   "lines": 630,
+   "doc_blocks": 48,
    "types": [
     "class Camera"
    ],
@@ -3828,8 +3828,8 @@
   "h3d.Engine": {
    "file": "h3d/Engine.hx",
    "package": "h3d",
-   "lines": 469,
-   "doc_blocks": 1,
+   "lines": 659,
+   "doc_blocks": 56,
    "types": [
     "class TargetTmp",
     "enum DepthBinding",
@@ -3975,8 +3975,8 @@
   "h3d.GPUCounter": {
    "file": "h3d/GPUCounter.hx",
    "package": "h3d",
-   "lines": 50,
-   "doc_blocks": 0,
+   "lines": 74,
+   "doc_blocks": 8,
    "types": [
     "class GPUCounter"
    ],
@@ -4000,8 +4000,8 @@
   "h3d.IDrawable": {
    "file": "h3d/IDrawable.hx",
    "package": "h3d",
-   "lines": 5,
-   "doc_blocks": 0,
+   "lines": 11,
+   "doc_blocks": 2,
    "types": [
     "interface IDrawable"
    ],
@@ -4020,8 +4020,8 @@
   "h3d.Indexes": {
    "file": "h3d/Indexes.hx",
    "package": "h3d",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 54,
+   "doc_blocks": 6,
    "types": [
     "abstract Indexes"
    ],
@@ -4058,8 +4058,8 @@
   "h3d.Matrix": {
    "file": "h3d/Matrix.hx",
    "package": "h3d",
-   "lines": 963,
-   "doc_blocks": 4,
+   "lines": 1233,
+   "doc_blocks": 91,
    "types": [
     "typedef ColorAdjust",
     "class MatrixImpl",
@@ -4153,8 +4153,8 @@
   "h3d.Quat": {
    "file": "h3d/Quat.hx",
    "package": "h3d",
-   "lines": 401,
-   "doc_blocks": 4,
+   "lines": 498,
+   "doc_blocks": 33,
    "types": [
     "class Quat"
    ],
@@ -4193,8 +4193,8 @@
   "h3d.Vector": {
    "file": "h3d/Vector.hx",
    "package": "h3d",
-   "lines": 340,
-   "doc_blocks": 2,
+   "lines": 502,
+   "doc_blocks": 56,
    "types": [
     "class VectorImpl",
     "abstract Vector"
@@ -4281,8 +4281,8 @@
   "h3d.Vector4": {
    "file": "h3d/Vector4.hx",
    "package": "h3d",
-   "lines": 345,
-   "doc_blocks": 2,
+   "lines": 471,
+   "doc_blocks": 44,
    "types": [
     "class Vector4Impl",
     "abstract Vector4"
@@ -4341,8 +4341,8 @@
   "h3d.anim.Animation": {
    "file": "h3d/anim/Animation.hx",
    "package": "h3d.anim",
-   "lines": 375,
-   "doc_blocks": 3,
+   "lines": 497,
+   "doc_blocks": 40,
    "types": [
     "class AnimatedObject",
     "typedef Event",
@@ -4379,8 +4379,8 @@
   "h3d.anim.BlendSpace2D": {
    "file": "h3d/anim/BlendSpace2D.hx",
    "package": "h3d.anim",
-   "lines": 546,
-   "doc_blocks": 8,
+   "lines": 585,
+   "doc_blocks": 21,
    "types": [
     "class BlendSpace2D",
     "class BlendSpace2DPoint",
@@ -4436,8 +4436,8 @@
   "h3d.anim.BufferAnimation": {
    "file": "h3d/anim/BufferAnimation.hx",
    "package": "h3d.anim",
-   "lines": 301,
-   "doc_blocks": 0,
+   "lines": 362,
+   "doc_blocks": 20,
    "types": [
     "enum DataLayout",
     "class BufferObject",
@@ -4488,8 +4488,8 @@
   "h3d.anim.LinearAnimation": {
    "file": "h3d/anim/LinearAnimation.hx",
    "package": "h3d.anim",
-   "lines": 291,
-   "doc_blocks": 0,
+   "lines": 382,
+   "doc_blocks": 30,
    "types": [
     "class LinearFrame",
     "class LinearObject",
@@ -4535,8 +4535,8 @@
   "h3d.anim.SimpleBlend": {
    "file": "h3d/anim/SimpleBlend.hx",
    "package": "h3d.anim",
-   "lines": 51,
-   "doc_blocks": 0,
+   "lines": 61,
+   "doc_blocks": 3,
    "types": [
     "class SimpleBlend"
    ],
@@ -4561,8 +4561,8 @@
   "h3d.anim.Skin": {
    "file": "h3d/anim/Skin.hx",
    "package": "h3d.anim",
-   "lines": 395,
-   "doc_blocks": 1,
+   "lines": 533,
+   "doc_blocks": 46,
    "types": [
     "class Joint",
     "class DynamicJoint",
@@ -4605,8 +4605,8 @@
   "h3d.anim.SmoothTarget": {
    "file": "h3d/anim/SmoothTarget.hx",
    "package": "h3d.anim",
-   "lines": 224,
-   "doc_blocks": 0,
+   "lines": 246,
+   "doc_blocks": 7,
    "types": [
     "class SmoothObject",
     "class SmoothTarget"
@@ -4647,8 +4647,8 @@
   "h3d.anim.SmoothTransition": {
    "file": "h3d/anim/SmoothTransition.hx",
    "package": "h3d.anim",
-   "lines": 152,
-   "doc_blocks": 0,
+   "lines": 182,
+   "doc_blocks": 10,
    "types": [
     "class SmoothedObject",
     "class SmoothTransition"
@@ -4688,8 +4688,8 @@
   "h3d.anim.Transition": {
    "file": "h3d/anim/Transition.hx",
    "package": "h3d.anim",
-   "lines": 76,
-   "doc_blocks": 0,
+   "lines": 89,
+   "doc_blocks": 4,
    "types": [
     "class Transition"
    ],
@@ -4717,8 +4717,8 @@
   "h3d.col.Bounds": {
    "file": "h3d/col/Bounds.hx",
    "package": "h3d.col",
-   "lines": 443,
-   "doc_blocks": 1,
+   "lines": 606,
+   "doc_blocks": 52,
    "types": [
     "class Bounds"
    ],
@@ -4806,8 +4806,8 @@
   "h3d.col.Capsule": {
    "file": "h3d/col/Capsule.hx",
    "package": "h3d.col",
-   "lines": 112,
-   "doc_blocks": 0,
+   "lines": 152,
+   "doc_blocks": 13,
    "types": [
     "class Capsule"
    ],
@@ -4864,8 +4864,8 @@
   "h3d.col.Collider": {
    "file": "h3d/col/Collider.hx",
    "package": "h3d.col",
-   "lines": 159,
-   "doc_blocks": 1,
+   "lines": 249,
+   "doc_blocks": 30,
    "types": [
     "class Collider",
     "class OptimizedCollider",
@@ -4941,8 +4941,8 @@
   "h3d.col.Cylinder": {
    "file": "h3d/col/Cylinder.hx",
    "package": "h3d.col",
-   "lines": 113,
-   "doc_blocks": 0,
+   "lines": 153,
+   "doc_blocks": 13,
    "types": [
     "class Cylinder"
    ],
@@ -4997,8 +4997,8 @@
   "h3d.col.FPoint": {
    "file": "h3d/col/FPoint.hx",
    "package": "h3d.col",
-   "lines": 63,
-   "doc_blocks": 0,
+   "lines": 108,
+   "doc_blocks": 15,
    "types": [
     "class FPoint"
    ],
@@ -5019,8 +5019,8 @@
   "h3d.col.Frustum": {
    "file": "h3d/col/Frustum.hx",
    "package": "h3d.col",
-   "lines": 186,
-   "doc_blocks": 0,
+   "lines": 241,
+   "doc_blocks": 18,
    "types": [
     "class Frustum"
    ],
@@ -5074,8 +5074,8 @@
   "h3d.col.HeightMap": {
    "file": "h3d/col/HeightMap.hx",
    "package": "h3d.col",
-   "lines": 95,
-   "doc_blocks": 4,
+   "lines": 114,
+   "doc_blocks": 10,
    "types": [
     "class HeightMap"
    ],
@@ -5115,8 +5115,8 @@
   "h3d.col.IPoint": {
    "file": "h3d/col/IPoint.hx",
    "package": "h3d.col",
-   "lines": 87,
-   "doc_blocks": 0,
+   "lines": 147,
+   "doc_blocks": 20,
    "types": [
     "class IPoint"
    ],
@@ -5137,8 +5137,8 @@
   "h3d.col.InsideCollider": {
    "file": "h3d/col/InsideCollider.hx",
    "package": "h3d.col",
-   "lines": 48,
-   "doc_blocks": 1,
+   "lines": 76,
+   "doc_blocks": 10,
    "types": [
     "class InsideCollider"
    ],
@@ -5178,8 +5178,8 @@
   "h3d.col.ObjectCollider": {
    "file": "h3d/col/ObjectCollider.hx",
    "package": "h3d.col",
-   "lines": 86,
-   "doc_blocks": 0,
+   "lines": 121,
+   "doc_blocks": 11,
    "types": [
     "class ObjectCollider"
    ],
@@ -5224,8 +5224,8 @@
   "h3d.col.OrientedBounds": {
    "file": "h3d/col/OrientedBounds.hx",
    "package": "h3d.col",
-   "lines": 403,
-   "doc_blocks": 0,
+   "lines": 497,
+   "doc_blocks": 31,
    "types": [
     "class OrientedBounds"
    ],
@@ -5277,8 +5277,8 @@
   "h3d.col.Plane": {
    "file": "h3d/col/Plane.hx",
    "package": "h3d.col",
-   "lines": 146,
-   "doc_blocks": 3,
+   "lines": 209,
+   "doc_blocks": 24,
    "types": [
     "class Plane"
    ],
@@ -5311,8 +5311,8 @@
   "h3d.col.Point": {
    "file": "h3d/col/Point.hx",
    "package": "h3d.col",
-   "lines": 3,
-   "doc_blocks": 0,
+   "lines": 6,
+   "doc_blocks": 1,
    "types": [
     "typedef Point"
    ],
@@ -5375,8 +5375,8 @@
   "h3d.col.Polygon": {
    "file": "h3d/col/Polygon.hx",
    "package": "h3d.col",
-   "lines": 428,
-   "doc_blocks": 0,
+   "lines": 531,
+   "doc_blocks": 32,
    "types": [
     "class TriPlane",
     "class Polygon"
@@ -5442,8 +5442,8 @@
   "h3d.col.PolygonBuffer": {
    "file": "h3d/col/PolygonBuffer.hx",
    "package": "h3d.col",
-   "lines": 257,
-   "doc_blocks": 0,
+   "lines": 302,
+   "doc_blocks": 14,
    "types": [
     "class PolygonBuffer"
    ],
@@ -5515,8 +5515,8 @@
   "h3d.col.Ray": {
    "file": "h3d/col/Ray.hx",
    "package": "h3d.col",
-   "lines": 169,
-   "doc_blocks": 0,
+   "lines": 233,
+   "doc_blocks": 21,
    "types": [
     "class Ray"
    ],
@@ -5564,8 +5564,8 @@
   "h3d.col.Seg": {
    "file": "h3d/col/Seg.hx",
    "package": "h3d.col",
-   "lines": 34,
-   "doc_blocks": 0,
+   "lines": 58,
+   "doc_blocks": 8,
    "types": [
     "class Seg"
    ],
@@ -5586,8 +5586,8 @@
   "h3d.col.SkinCollider": {
    "file": "h3d/col/SkinCollider.hx",
    "package": "h3d.col",
-   "lines": 170,
-   "doc_blocks": 0,
+   "lines": 204,
+   "doc_blocks": 11,
    "types": [
     "class SkinCollider",
     "class SkinColliderDebugObj"
@@ -5645,8 +5645,8 @@
   "h3d.col.Sphere": {
    "file": "h3d/col/Sphere.hx",
    "package": "h3d.col",
-   "lines": 125,
-   "doc_blocks": 0,
+   "lines": 186,
+   "doc_blocks": 20,
    "types": [
     "class Sphere"
    ],
@@ -5715,8 +5715,8 @@
   "h3d.col.TransformCollider": {
    "file": "h3d/col/TransformCollider.hx",
    "package": "h3d.col",
-   "lines": 109,
-   "doc_blocks": 0,
+   "lines": 149,
+   "doc_blocks": 13,
    "types": [
     "class TransformCollider"
    ],
@@ -6948,8 +6948,8 @@
   "h3d.mat.BaseMaterial": {
    "file": "h3d/mat/BaseMaterial.hx",
    "package": "h3d.mat",
-   "lines": 89,
-   "doc_blocks": 0,
+   "lines": 120,
+   "doc_blocks": 9,
    "types": [
     "class BaseMaterial"
    ],
@@ -6985,8 +6985,8 @@
   "h3d.mat.BigTexture": {
    "file": "h3d/mat/BigTexture.hx",
    "package": "h3d.mat",
-   "lines": 313,
-   "doc_blocks": 0,
+   "lines": 373,
+   "doc_blocks": 19,
    "types": [
     "class BigTextureElement",
     "class QuadTree",
@@ -7011,8 +7011,8 @@
   "h3d.mat.BlendMode": {
    "file": "h3d/mat/BlendMode.hx",
    "package": "h3d.mat",
-   "lines": 3,
-   "doc_blocks": 0,
+   "lines": 6,
+   "doc_blocks": 1,
    "types": [
     "typedef BlendMode"
    ],
@@ -7036,8 +7036,8 @@
   "h3d.mat.Data": {
    "file": "h3d/mat/Data.hx",
    "package": "h3d.mat",
-   "lines": 147,
-   "doc_blocks": 16,
+   "lines": 329,
+   "doc_blocks": 76,
    "types": [
     "enum Face",
     "enum Blend",
@@ -7084,8 +7084,8 @@
   "h3d.mat.Defaults": {
    "file": "h3d/mat/Defaults.hx",
    "package": "h3d.mat",
-   "lines": 29,
-   "doc_blocks": 0,
+   "lines": 44,
+   "doc_blocks": 5,
    "types": [
     "class Defaults"
    ],
@@ -7113,8 +7113,8 @@
   "h3d.mat.Material": {
    "file": "h3d/mat/Material.hx",
    "package": "h3d.mat",
-   "lines": 320,
-   "doc_blocks": 0,
+   "lines": 375,
+   "doc_blocks": 17,
    "types": [
     "enum_abstract DefaultKind",
     "typedef DefaultProps",
@@ -7185,8 +7185,8 @@
   "h3d.mat.MaterialDatabase": {
    "file": "h3d/mat/MaterialDatabase.hx",
    "package": "h3d.mat",
-   "lines": 114,
-   "doc_blocks": 0,
+   "lines": 133,
+   "doc_blocks": 5,
    "types": [
     "class MaterialDatabase"
    ],
@@ -7221,8 +7221,8 @@
   "h3d.mat.MaterialSetup": {
    "file": "h3d/mat/MaterialSetup.hx",
    "package": "h3d.mat",
-   "lines": 55,
-   "doc_blocks": 0,
+   "lines": 94,
+   "doc_blocks": 13,
    "types": [
     "class MaterialSetup"
    ],
@@ -7264,8 +7264,8 @@
   "h3d.mat.Pass": {
    "file": "h3d/mat/Pass.hx",
    "package": "h3d.mat",
-   "lines": 434,
-   "doc_blocks": 3,
+   "lines": 549,
+   "doc_blocks": 38,
    "types": [
     "class Pass"
    ],
@@ -7328,8 +7328,8 @@
   "h3d.mat.PbrMaterial": {
    "file": "h3d/mat/PbrMaterial.hx",
    "package": "h3d.mat",
-   "lines": 598,
-   "doc_blocks": 0,
+   "lines": 737,
+   "doc_blocks": 46,
    "types": [
     "enum_abstract PbrMode",
     "enum_abstract PbrBlend",
@@ -7398,8 +7398,8 @@
   "h3d.mat.PbrMaterialSetup": {
    "file": "h3d/mat/PbrMaterialSetup.hx",
    "package": "h3d.mat",
-   "lines": 36,
-   "doc_blocks": 0,
+   "lines": 52,
+   "doc_blocks": 4,
    "types": [
     "class PbrMaterialSetup"
    ],
@@ -7442,8 +7442,8 @@
   "h3d.mat.Stencil": {
    "file": "h3d/mat/Stencil.hx",
    "package": "h3d.mat",
-   "lines": 90,
-   "doc_blocks": 0,
+   "lines": 158,
+   "doc_blocks": 19,
    "types": [
     "class Stencil"
    ],
@@ -7473,8 +7473,8 @@
   "h3d.mat.Texture": {
    "file": "h3d/mat/Texture.hx",
    "package": "h3d.mat",
-   "lines": 575,
-   "doc_blocks": 12,
+   "lines": 708,
+   "doc_blocks": 50,
    "types": [
     "class Texture"
    ],
@@ -7606,8 +7606,8 @@
   "h3d.mat.Texture3D": {
    "file": "h3d/mat/Texture3D.hx",
    "package": "h3d.mat",
-   "lines": 46,
-   "doc_blocks": 1,
+   "lines": 52,
+   "doc_blocks": 3,
    "types": [
     "class Texture3D"
    ],
@@ -7644,8 +7644,8 @@
   "h3d.mat.TextureArray": {
    "file": "h3d/mat/TextureArray.hx",
    "package": "h3d.mat",
-   "lines": 45,
-   "doc_blocks": 0,
+   "lines": 54,
+   "doc_blocks": 3,
    "types": [
     "class TextureArray"
    ],
@@ -7684,8 +7684,8 @@
   "h3d.mat.TextureChannels": {
    "file": "h3d/mat/TextureChannels.hx",
    "package": "h3d.mat",
-   "lines": 67,
-   "doc_blocks": 0,
+   "lines": 81,
+   "doc_blocks": 4,
    "types": [
     "class TextureChannels"
    ],
@@ -7717,8 +7717,8 @@
   "h3d.mat.TextureHandle": {
    "file": "h3d/mat/TextureHandle.hx",
    "package": "h3d.mat",
-   "lines": 11,
-   "doc_blocks": 0,
+   "lines": 21,
+   "doc_blocks": 3,
    "types": [
     "class TextureHandle"
    ],
@@ -7748,8 +7748,8 @@
   "h3d.mat.noise.WorleyNoise": {
    "file": "h3d/mat/noise/WorleyNoise.hx",
    "package": "h3d.mat.noise",
-   "lines": 156,
-   "doc_blocks": 0,
+   "lines": 169,
+   "doc_blocks": 4,
    "types": [
     "class WorleyNoise",
     "class OctaveShader"
@@ -7799,8 +7799,8 @@
   "h3d.parts.Collider": {
    "file": "h3d/parts/Collider.hx",
    "package": "h3d.parts",
-   "lines": 7,
-   "doc_blocks": 0,
+   "lines": 13,
+   "doc_blocks": 2,
    "types": [
     "interface Collider"
    ],
@@ -7820,8 +7820,8 @@
   "h3d.parts.Data": {
    "file": "h3d/parts/Data.hx",
    "package": "h3d.parts",
-   "lines": 242,
-   "doc_blocks": 0,
+   "lines": 499,
+   "doc_blocks": 85,
    "types": [
     "enum Value",
     "enum Converge",
@@ -7857,8 +7857,8 @@
   "h3d.parts.Emitter": {
    "file": "h3d/parts/Emitter.hx",
    "package": "h3d.parts",
-   "lines": 277,
-   "doc_blocks": 0,
+   "lines": 307,
+   "doc_blocks": 10,
    "types": [
     "class Emitter"
    ],
@@ -7904,8 +7904,8 @@
   "h3d.parts.GpuParticles": {
    "file": "h3d/parts/GpuParticles.hx",
    "package": "h3d.parts",
-   "lines": 1022,
-   "doc_blocks": 11,
+   "lines": 1304,
+   "doc_blocks": 103,
    "types": [
     "typedef GpuSave",
     "enum GpuSortMode",
@@ -7990,8 +7990,8 @@
   "h3d.parts.Particle": {
    "file": "h3d/parts/Particle.hx",
    "package": "h3d.parts",
-   "lines": 77,
-   "doc_blocks": 0,
+   "lines": 167,
+   "doc_blocks": 30,
    "types": [
     "class Particle"
    ],
@@ -8020,8 +8020,8 @@
   "h3d.parts.Particles": {
    "file": "h3d/parts/Particles.hx",
    "package": "h3d.parts",
-   "lines": 399,
-   "doc_blocks": 1,
+   "lines": 436,
+   "doc_blocks": 13,
    "types": [
     "class ParticleIterator",
     "class Particles"
@@ -8080,8 +8080,8 @@
   "h3d.pass.Blur": {
    "file": "h3d/pass/Blur.hx",
    "package": "h3d.pass",
-   "lines": 181,
-   "doc_blocks": 4,
+   "lines": 202,
+   "doc_blocks": 9,
    "types": [
     "class Blur"
    ],
@@ -8125,8 +8125,8 @@
   "h3d.pass.Border": {
    "file": "h3d/pass/Border.hx",
    "package": "h3d.pass",
-   "lines": 70,
-   "doc_blocks": 0,
+   "lines": 77,
+   "doc_blocks": 2,
    "types": [
     "class BorderShader",
     "class Border"
@@ -8167,8 +8167,8 @@
   "h3d.pass.CapsuleShadowMap": {
    "file": "h3d/pass/CapsuleShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 60,
-   "doc_blocks": 0,
+   "lines": 66,
+   "doc_blocks": 2,
    "types": [
     "class CapsuleShadowMap"
    ],
@@ -8210,8 +8210,8 @@
   "h3d.pass.CascadeShadowMap": {
    "file": "h3d/pass/CascadeShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 414,
-   "doc_blocks": 1,
+   "lines": 508,
+   "doc_blocks": 30,
    "types": [
     "typedef CascadeParams",
     "typedef CascadeCamera",
@@ -8287,8 +8287,8 @@
   "h3d.pass.ColorMatrix": {
    "file": "h3d/pass/ColorMatrix.hx",
    "package": "h3d.pass",
-   "lines": 77,
-   "doc_blocks": 0,
+   "lines": 97,
+   "doc_blocks": 6,
    "types": [
     "class ColorMatrixShader",
     "class ColorMatrix"
@@ -8332,8 +8332,8 @@
   "h3d.pass.Copy": {
    "file": "h3d/pass/Copy.hx",
    "package": "h3d.pass",
-   "lines": 129,
-   "doc_blocks": 0,
+   "lines": 168,
+   "doc_blocks": 10,
    "types": [
     "class Copy",
     "class ArrayCopyShader",
@@ -8412,8 +8412,8 @@
   "h3d.pass.CubeCopy": {
    "file": "h3d/pass/CubeCopy.hx",
    "package": "h3d.pass",
-   "lines": 53,
-   "doc_blocks": 0,
+   "lines": 65,
+   "doc_blocks": 4,
    "types": [
     "class CubeCopyShader",
     "class CubeCopy"
@@ -8459,8 +8459,8 @@
   "h3d.pass.CubeShadowMap": {
    "file": "h3d/pass/CubeShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 251,
-   "doc_blocks": 0,
+   "lines": 263,
+   "doc_blocks": 4,
    "types": [
     "enum CubeFaceFlag",
     "class CubeShadowMap"
@@ -8525,8 +8525,8 @@
   "h3d.pass.DefaultShadowMap": {
    "file": "h3d/pass/DefaultShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 36,
-   "doc_blocks": 0,
+   "lines": 46,
+   "doc_blocks": 3,
    "types": [
     "class DefaultShadowMap"
    ],
@@ -8565,8 +8565,8 @@
   "h3d.pass.DirShadowMap": {
    "file": "h3d/pass/DirShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 405,
-   "doc_blocks": 4,
+   "lines": 416,
+   "doc_blocks": 7,
    "types": [
     "class DirShadowMap"
    ],
@@ -8648,8 +8648,8 @@
   "h3d.pass.FXAA": {
    "file": "h3d/pass/FXAA.hx",
    "package": "h3d.pass",
-   "lines": 60,
-   "doc_blocks": 0,
+   "lines": 69,
+   "doc_blocks": 3,
    "types": [
     "class FXAAShader",
     "class FXAA"
@@ -8686,8 +8686,8 @@
   "h3d.pass.Merge": {
    "file": "h3d/pass/Merge.hx",
    "package": "h3d.pass",
-   "lines": 81,
-   "doc_blocks": 0,
+   "lines": 102,
+   "doc_blocks": 7,
    "types": [
     "class Merge",
     "class MergeShader",
@@ -8732,8 +8732,8 @@
   "h3d.pass.MipMaps": {
    "file": "h3d/pass/MipMaps.hx",
    "package": "h3d.pass",
-   "lines": 72,
-   "doc_blocks": 0,
+   "lines": 84,
+   "doc_blocks": 4,
    "types": [
     "class GenerateMipMapsShader",
     "class MipMaps"
@@ -8775,8 +8775,8 @@
   "h3d.pass.Outline": {
    "file": "h3d/pass/Outline.hx",
    "package": "h3d.pass",
-   "lines": 44,
-   "doc_blocks": 0,
+   "lines": 68,
+   "doc_blocks": 8,
    "types": [
     "class Outline"
    ],
@@ -8809,8 +8809,8 @@
   "h3d.pass.Output": {
    "file": "h3d/pass/Output.hx",
    "package": "h3d.pass",
-   "lines": 126,
-   "doc_blocks": 0,
+   "lines": 151,
+   "doc_blocks": 7,
    "types": [
     "class Output"
    ],
@@ -8857,8 +8857,8 @@
   "h3d.pass.OutputShader": {
    "file": "h3d/pass/OutputShader.hx",
    "package": "h3d.pass",
-   "lines": 29,
-   "doc_blocks": 0,
+   "lines": 41,
+   "doc_blocks": 4,
    "types": [
     "class OutputShader"
    ],
@@ -8889,8 +8889,8 @@
   "h3d.pass.PassList": {
    "file": "h3d/pass/PassList.hx",
    "package": "h3d.pass",
-   "lines": 156,
-   "doc_blocks": 7,
+   "lines": 184,
+   "doc_blocks": 16,
    "types": [
     "class PassListIterator",
     "class PassList"
@@ -8917,8 +8917,8 @@
   "h3d.pass.PassObject": {
    "file": "h3d/pass/PassObject.hx",
    "package": "h3d.pass",
-   "lines": 18,
-   "doc_blocks": 0,
+   "lines": 42,
+   "doc_blocks": 8,
    "types": [
     "class PassObject"
    ],
@@ -8947,8 +8947,8 @@
   "h3d.pass.PointShadowMap": {
    "file": "h3d/pass/PointShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 60,
-   "doc_blocks": 0,
+   "lines": 66,
+   "doc_blocks": 2,
    "types": [
     "class PointShadowMap"
    ],
@@ -8990,8 +8990,8 @@
   "h3d.pass.ProjectedShadowMap": {
    "file": "h3d/pass/ProjectedShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 159,
-   "doc_blocks": 0,
+   "lines": 165,
+   "doc_blocks": 2,
    "types": [
     "class ProjectedShadowMap"
    ],
@@ -9043,8 +9043,8 @@
   "h3d.pass.RectangleShadowMap": {
    "file": "h3d/pass/RectangleShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 33,
-   "doc_blocks": 0,
+   "lines": 36,
+   "doc_blocks": 1,
    "types": [
     "class RectangleShadowMap"
    ],
@@ -9074,8 +9074,8 @@
   "h3d.pass.SSR": {
    "file": "h3d/pass/SSR.hx",
    "package": "h3d.pass",
-   "lines": 161,
-   "doc_blocks": 0,
+   "lines": 229,
+   "doc_blocks": 21,
    "types": [
     "class SSR"
    ],
@@ -9121,8 +9121,8 @@
   "h3d.pass.ScalableAO": {
    "file": "h3d/pass/ScalableAO.hx",
    "package": "h3d.pass",
-   "lines": 26,
-   "doc_blocks": 0,
+   "lines": 35,
+   "doc_blocks": 3,
    "types": [
     "class ScalableAO"
    ],
@@ -9153,8 +9153,8 @@
   "h3d.pass.ScreenFx": {
    "file": "h3d/pass/ScreenFx.hx",
    "package": "h3d.pass",
-   "lines": 77,
-   "doc_blocks": 0,
+   "lines": 120,
+   "doc_blocks": 11,
    "types": [
     "class ScreenFx"
    ],
@@ -9226,8 +9226,8 @@
   "h3d.pass.Shadows": {
    "file": "h3d/pass/Shadows.hx",
    "package": "h3d.pass",
-   "lines": 216,
-   "doc_blocks": 1,
+   "lines": 312,
+   "doc_blocks": 30,
    "types": [
     "enum RenderMode",
     "enum_abstract ShadowSamplingKind",
@@ -9298,8 +9298,8 @@
   "h3d.pass.SortByMaterial": {
    "file": "h3d/pass/SortByMaterial.hx",
    "package": "h3d.pass",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 41,
+   "doc_blocks": 3,
    "types": [
     "class SortByMaterial"
    ],
@@ -9316,8 +9316,8 @@
   "h3d.pass.SpotShadowMap": {
    "file": "h3d/pass/SpotShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 24,
+   "doc_blocks": 1,
    "types": [
     "class SpotShadowMap"
    ],
@@ -9344,8 +9344,8 @@
   "h3d.pass.Timeout": {
    "file": "h3d/pass/Timeout.hx",
    "package": "h3d.pass",
-   "lines": 34,
-   "doc_blocks": 0,
+   "lines": 46,
+   "doc_blocks": 4,
    "types": [
     "class TimeoutShader",
     "class Timeout"
@@ -9380,8 +9380,8 @@
   "h3d.prim.BatchPrimitive": {
    "file": "h3d/prim/BatchPrimitive.hx",
    "package": "h3d.prim",
-   "lines": 461,
-   "doc_blocks": 0,
+   "lines": 564,
+   "doc_blocks": 33,
    "types": [
     "class BytesArray",
     "class SubMesh",
@@ -9441,8 +9441,8 @@
   "h3d.prim.BigPrimitive": {
    "file": "h3d/prim/BigPrimitive.hx",
    "package": "h3d.prim",
-   "lines": 318,
-   "doc_blocks": 6,
+   "lines": 344,
+   "doc_blocks": 14,
    "types": [
     "class BigPrimitive"
    ],
@@ -9503,8 +9503,8 @@
   "h3d.prim.Blendshape": {
    "file": "h3d/prim/Blendshape.hx",
    "package": "h3d.prim",
-   "lines": 335,
-   "doc_blocks": 0,
+   "lines": 390,
+   "doc_blocks": 18,
    "types": [
     "class BlendshapeInstance",
     "class Blendshape"
@@ -9550,8 +9550,8 @@
   "h3d.prim.Capsule": {
    "file": "h3d/prim/Capsule.hx",
    "package": "h3d.prim",
-   "lines": 132,
-   "doc_blocks": 0,
+   "lines": 148,
+   "doc_blocks": 4,
    "types": [
     "enum_abstract Axis",
     "class Capsule"
@@ -9593,8 +9593,8 @@
   "h3d.prim.ColliderData": {
    "file": "h3d/prim/ColliderData.hx",
    "package": "h3d.prim",
-   "lines": 139,
-   "doc_blocks": 0,
+   "lines": 148,
+   "doc_blocks": 3,
    "types": [
     "class ColliderData"
    ],
@@ -9651,8 +9651,8 @@
   "h3d.prim.Cube": {
    "file": "h3d/prim/Cube.hx",
    "package": "h3d.prim",
-   "lines": 104,
-   "doc_blocks": 0,
+   "lines": 124,
+   "doc_blocks": 4,
    "types": [
     "class Cube"
    ],
@@ -9696,8 +9696,8 @@
   "h3d.prim.Cylinder": {
    "file": "h3d/prim/Cylinder.hx",
    "package": "h3d.prim",
-   "lines": 84,
-   "doc_blocks": 1,
+   "lines": 94,
+   "doc_blocks": 3,
    "types": [
     "class Cylinder"
    ],
@@ -9739,8 +9739,8 @@
   "h3d.prim.Disc": {
    "file": "h3d/prim/Disc.hx",
    "package": "h3d.prim",
-   "lines": 53,
-   "doc_blocks": 1,
+   "lines": 67,
+   "doc_blocks": 5,
    "types": [
     "class Disc"
    ],
@@ -9777,8 +9777,8 @@
   "h3d.prim.DynamicPrimitive": {
    "file": "h3d/prim/DynamicPrimitive.hx",
    "package": "h3d.prim",
-   "lines": 95,
-   "doc_blocks": 2,
+   "lines": 114,
+   "doc_blocks": 8,
    "types": [
     "class DynamicPrimitive"
    ],
@@ -9823,8 +9823,8 @@
   "h3d.prim.GeoSphere": {
    "file": "h3d/prim/GeoSphere.hx",
    "package": "h3d.prim",
-   "lines": 58,
-   "doc_blocks": 0,
+   "lines": 64,
+   "doc_blocks": 2,
    "types": [
     "class GeoSphere"
    ],
@@ -9853,8 +9853,8 @@
   "h3d.prim.Grid": {
    "file": "h3d/prim/Grid.hx",
    "package": "h3d.prim",
-   "lines": 42,
-   "doc_blocks": 0,
+   "lines": 60,
+   "doc_blocks": 6,
    "types": [
     "class Grid"
    ],
@@ -9888,8 +9888,8 @@
   "h3d.prim.HMDModel": {
    "file": "h3d/prim/HMDModel.hx",
    "package": "h3d.prim",
-   "lines": 376,
-   "doc_blocks": 0,
+   "lines": 415,
+   "doc_blocks": 11,
    "types": [
     "class HMDModel"
    ],
@@ -9971,8 +9971,8 @@
   "h3d.prim.Instanced": {
    "file": "h3d/prim/Instanced.hx",
    "package": "h3d.prim",
-   "lines": 85,
-   "doc_blocks": 0,
+   "lines": 109,
+   "doc_blocks": 8,
    "types": [
     "class Instanced"
    ],
@@ -10012,8 +10012,8 @@
   "h3d.prim.MeshPrimitive": {
    "file": "h3d/prim/MeshPrimitive.hx",
    "package": "h3d.prim",
-   "lines": 72,
-   "doc_blocks": 0,
+   "lines": 88,
+   "doc_blocks": 5,
    "types": [
     "class MeshPrimitive"
    ],
@@ -10051,8 +10051,8 @@
   "h3d.prim.ModelCache": {
    "file": "h3d/prim/ModelCache.hx",
    "package": "h3d.prim",
-   "lines": 223,
-   "doc_blocks": 0,
+   "lines": 274,
+   "doc_blocks": 13,
    "types": [
     "typedef HideProps",
     "class ModelCache"
@@ -10095,8 +10095,8 @@
   "h3d.prim.ModelDatabase": {
    "file": "h3d/prim/ModelDatabase.hx",
    "package": "h3d.prim",
-   "lines": 349,
-   "doc_blocks": 0,
+   "lines": 417,
+   "doc_blocks": 22,
    "types": [
     "typedef ModelDataInput",
     "typedef ModelProps",
@@ -10138,8 +10138,8 @@
   "h3d.prim.Plane2D": {
    "file": "h3d/prim/Plane2D.hx",
    "package": "h3d.prim",
-   "lines": 56,
-   "doc_blocks": 0,
+   "lines": 65,
+   "doc_blocks": 3,
    "types": [
     "class Plane2D"
    ],
@@ -10175,8 +10175,8 @@
   "h3d.prim.Polygon": {
    "file": "h3d/prim/Polygon.hx",
    "package": "h3d.prim",
-   "lines": 319,
-   "doc_blocks": 1,
+   "lines": 390,
+   "doc_blocks": 22,
    "types": [
     "typedef PolygonLod",
     "class Polygon"
@@ -10252,8 +10252,8 @@
   "h3d.prim.Primitive": {
    "file": "h3d/prim/Primitive.hx",
    "package": "h3d.prim",
-   "lines": 157,
-   "doc_blocks": 17,
+   "lines": 169,
+   "doc_blocks": 21,
    "types": [
     "class Primitive"
    ],
@@ -10296,8 +10296,8 @@
   "h3d.prim.Quads": {
    "file": "h3d/prim/Quads.hx",
    "package": "h3d.prim",
-   "lines": 154,
-   "doc_blocks": 2,
+   "lines": 172,
+   "doc_blocks": 6,
    "types": [
     "class Quads"
    ],
@@ -10346,8 +10346,8 @@
   "h3d.prim.RawPrimitive": {
    "file": "h3d/prim/RawPrimitive.hx",
    "package": "h3d.prim",
-   "lines": 55,
-   "doc_blocks": 0,
+   "lines": 66,
+   "doc_blocks": 3,
    "types": [
     "class RawPrimitive"
    ],
@@ -10390,8 +10390,8 @@
   "h3d.prim.Sphere": {
    "file": "h3d/prim/Sphere.hx",
    "package": "h3d.prim",
-   "lines": 84,
-   "doc_blocks": 0,
+   "lines": 97,
+   "doc_blocks": 3,
    "types": [
     "class Sphere"
    ],
@@ -10437,8 +10437,8 @@
   "h3d.prim.UV": {
    "file": "h3d/prim/UV.hx",
    "package": "h3d.prim",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 36,
+   "doc_blocks": 5,
    "types": [
     "class UV"
    ],
@@ -12949,8 +12949,8 @@
   "h3d.shader.AlphaChannel": {
    "file": "h3d/shader/AlphaChannel.hx",
    "package": "h3d.shader",
-   "lines": 14,
-   "doc_blocks": 0,
+   "lines": 17,
+   "doc_blocks": 1,
    "types": [
     "class AlphaChannel"
    ],
@@ -12972,8 +12972,8 @@
   "h3d.shader.AlphaMSDF": {
    "file": "h3d/shader/AlphaMSDF.hx",
    "package": "h3d.shader",
-   "lines": 36,
-   "doc_blocks": 0,
+   "lines": 39,
+   "doc_blocks": 1,
    "types": [
     "class AlphaMSDF"
    ],
@@ -12995,8 +12995,8 @@
   "h3d.shader.AlphaMap": {
    "file": "h3d/shader/AlphaMap.hx",
    "package": "h3d.shader",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 38,
+   "doc_blocks": 2,
    "types": [
     "class AlphaMap"
    ],
@@ -13018,8 +13018,8 @@
   "h3d.shader.AlphaMult": {
    "file": "h3d/shader/AlphaMult.hx",
    "package": "h3d.shader",
-   "lines": 12,
-   "doc_blocks": 0,
+   "lines": 15,
+   "doc_blocks": 1,
    "types": [
     "class AlphaMult"
    ],
@@ -13041,8 +13041,8 @@
   "h3d.shader.AmbientLight": {
    "file": "h3d/shader/AmbientLight.hx",
    "package": "h3d.shader",
-   "lines": 40,
-   "doc_blocks": 0,
+   "lines": 43,
+   "doc_blocks": 1,
    "types": [
     "class AmbientLight"
    ],
@@ -13066,8 +13066,8 @@
   "h3d.shader.AnimatedTexture": {
    "file": "h3d/shader/AnimatedTexture.hx",
    "package": "h3d.shader",
-   "lines": 72,
-   "doc_blocks": 0,
+   "lines": 82,
+   "doc_blocks": 2,
    "types": [
     "class AnimatedTexture"
    ],
@@ -13089,8 +13089,8 @@
   "h3d.shader.ApplyTransformShader": {
    "file": "h3d/shader/ApplyTransformShader.hx",
    "package": "h3d.shader",
-   "lines": 28,
-   "doc_blocks": 0,
+   "lines": 31,
+   "doc_blocks": 1,
    "types": [
     "class ApplyTransformShader"
    ],
@@ -13114,8 +13114,8 @@
   "h3d.shader.Base2d": {
    "file": "h3d/shader/Base2d.hx",
    "package": "h3d.shader",
-   "lines": 82,
-   "doc_blocks": 0,
+   "lines": 85,
+   "doc_blocks": 1,
    "types": [
     "class Base2d"
    ],
@@ -13140,8 +13140,8 @@
   "h3d.shader.BaseMesh": {
    "file": "h3d/shader/BaseMesh.hx",
    "package": "h3d.shader",
-   "lines": 131,
-   "doc_blocks": 0,
+   "lines": 138,
+   "doc_blocks": 2,
    "types": [
     "class BaseMesh"
    ],
@@ -13173,8 +13173,8 @@
   "h3d.shader.Blendshape": {
    "file": "h3d/shader/Blendshape.hx",
    "package": "h3d.shader",
-   "lines": 27,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 1,
    "types": [
     "class Blendshape"
    ],
@@ -13198,8 +13198,8 @@
   "h3d.shader.Bloom": {
    "file": "h3d/shader/Bloom.hx",
    "package": "h3d.shader",
-   "lines": 18,
-   "doc_blocks": 0,
+   "lines": 21,
+   "doc_blocks": 1,
    "types": [
     "class Bloom"
    ],
@@ -13223,8 +13223,8 @@
   "h3d.shader.Blur": {
    "file": "h3d/shader/Blur.hx",
    "package": "h3d.shader",
-   "lines": 100,
-   "doc_blocks": 0,
+   "lines": 103,
+   "doc_blocks": 1,
    "types": [
     "class Blur"
    ],
@@ -13248,8 +13248,8 @@
   "h3d.shader.Buffers": {
    "file": "h3d/shader/Buffers.hx",
    "package": "h3d.shader",
-   "lines": 60,
-   "doc_blocks": 0,
+   "lines": 120,
+   "doc_blocks": 20,
    "types": [
     "enum_abstract BufferKind",
     "typedef ShaderBufferData",
@@ -13287,8 +13287,8 @@
   "h3d.shader.CascadeShadow": {
    "file": "h3d/shader/CascadeShadow.hx",
    "package": "h3d.shader",
-   "lines": 88,
-   "doc_blocks": 0,
+   "lines": 91,
+   "doc_blocks": 1,
    "types": [
     "class CascadeShadow"
    ],
@@ -13315,8 +13315,8 @@
   "h3d.shader.Checker": {
    "file": "h3d/shader/Checker.hx",
    "package": "h3d.shader",
-   "lines": 27,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 1,
    "types": [
     "class Checker"
    ],
@@ -13338,8 +13338,8 @@
   "h3d.shader.CheckerboardDepth": {
    "file": "h3d/shader/CheckerboardDepth.hx",
    "package": "h3d.shader",
-   "lines": 34,
-   "doc_blocks": 0,
+   "lines": 37,
+   "doc_blocks": 1,
    "types": [
     "class CheckerboardDepth"
    ],
@@ -13361,8 +13361,8 @@
   "h3d.shader.ColorAdd": {
    "file": "h3d/shader/ColorAdd.hx",
    "package": "h3d.shader",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 27,
+   "doc_blocks": 2,
    "types": [
     "class ColorAdd"
    ],
@@ -13386,8 +13386,8 @@
   "h3d.shader.ColorKey": {
    "file": "h3d/shader/ColorKey.hx",
    "package": "h3d.shader",
-   "lines": 20,
-   "doc_blocks": 0,
+   "lines": 26,
+   "doc_blocks": 2,
    "types": [
     "class ColorKey"
    ],
@@ -13411,8 +13411,8 @@
   "h3d.shader.ColorMatrix": {
    "file": "h3d/shader/ColorMatrix.hx",
    "package": "h3d.shader",
-   "lines": 23,
-   "doc_blocks": 0,
+   "lines": 29,
+   "doc_blocks": 2,
    "types": [
     "class ColorMatrix"
    ],
@@ -13437,8 +13437,8 @@
   "h3d.shader.ColorMult": {
    "file": "h3d/shader/ColorMult.hx",
    "package": "h3d.shader",
-   "lines": 17,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 1,
    "types": [
     "class ColorMult"
    ],
@@ -13460,8 +13460,8 @@
   "h3d.shader.ColorSpaces": {
    "file": "h3d/shader/ColorSpaces.hx",
    "package": "h3d.shader",
-   "lines": 82,
-   "doc_blocks": 0,
+   "lines": 85,
+   "doc_blocks": 1,
    "types": [
     "class ColorSpaces"
    ],
@@ -13487,8 +13487,8 @@
   "h3d.shader.CubeMap": {
    "file": "h3d/shader/CubeMap.hx",
    "package": "h3d.shader",
-   "lines": 30,
-   "doc_blocks": 0,
+   "lines": 36,
+   "doc_blocks": 2,
    "types": [
     "class CubeMap"
    ],
@@ -13510,8 +13510,8 @@
   "h3d.shader.DepthAwareUpsampling": {
    "file": "h3d/shader/DepthAwareUpsampling.hx",
    "package": "h3d.shader",
-   "lines": 58,
-   "doc_blocks": 0,
+   "lines": 61,
+   "doc_blocks": 1,
    "types": [
     "class DepthAwareUpsampling"
    ],
@@ -13533,8 +13533,8 @@
   "h3d.shader.DirLight": {
    "file": "h3d/shader/DirLight.hx",
    "package": "h3d.shader",
-   "lines": 44,
-   "doc_blocks": 0,
+   "lines": 50,
+   "doc_blocks": 2,
    "types": [
     "class DirLight"
    ],
@@ -13558,8 +13558,8 @@
   "h3d.shader.DirShadow": {
    "file": "h3d/shader/DirShadow.hx",
    "package": "h3d.shader",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 35,
+   "doc_blocks": 1,
    "types": [
     "class DirShadow"
    ],
@@ -13586,8 +13586,8 @@
   "h3d.shader.Displacement": {
    "file": "h3d/shader/Displacement.hx",
    "package": "h3d.shader",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 24,
+   "doc_blocks": 1,
    "types": [
     "class Displacement"
    ],
@@ -13611,8 +13611,8 @@
   "h3d.shader.DisplacementDisplay": {
    "file": "h3d/shader/DisplacementDisplay.hx",
    "package": "h3d.shader",
-   "lines": 17,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 1,
    "types": [
     "class DisplacementDisplay"
    ],
@@ -13634,8 +13634,8 @@
   "h3d.shader.DistanceFade": {
    "file": "h3d/shader/DistanceFade.hx",
    "package": "h3d.shader",
-   "lines": 31,
-   "doc_blocks": 0,
+   "lines": 34,
+   "doc_blocks": 1,
    "types": [
     "class DistanceFade"
    ],
@@ -13660,8 +13660,8 @@
   "h3d.shader.FixedColor": {
    "file": "h3d/shader/FixedColor.hx",
    "package": "h3d.shader",
-   "lines": 24,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 2,
    "types": [
     "class FixedColor"
    ],
@@ -13685,8 +13685,8 @@
   "h3d.shader.FlipBackFaceNormal": {
    "file": "h3d/shader/FlipBackFaceNormal.hx",
    "package": "h3d.shader",
-   "lines": 14,
-   "doc_blocks": 0,
+   "lines": 17,
+   "doc_blocks": 1,
    "types": [
     "class FlipBackFaceNormal"
    ],
@@ -13710,8 +13710,8 @@
   "h3d.shader.GenTexture": {
    "file": "h3d/shader/GenTexture.hx",
    "package": "h3d.shader",
-   "lines": 19,
-   "doc_blocks": 0,
+   "lines": 22,
+   "doc_blocks": 1,
    "types": [
     "class GenTexture"
    ],
@@ -13735,8 +13735,8 @@
   "h3d.shader.GpuParticle": {
    "file": "h3d/shader/GpuParticle.hx",
    "package": "h3d.shader",
-   "lines": 118,
-   "doc_blocks": 0,
+   "lines": 121,
+   "doc_blocks": 1,
    "types": [
     "class GpuParticle"
    ],
@@ -13763,8 +13763,8 @@
   "h3d.shader.HZB": {
    "file": "h3d/shader/HZB.hx",
    "package": "h3d.shader",
-   "lines": 39,
-   "doc_blocks": 0,
+   "lines": 42,
+   "doc_blocks": 1,
    "types": [
     "class HZB"
    ],
@@ -13788,8 +13788,8 @@
   "h3d.shader.InstanceIndirect": {
    "file": "h3d/shader/InstanceIndirect.hx",
    "package": "h3d.shader",
-   "lines": 274,
-   "doc_blocks": 0,
+   "lines": 283,
+   "doc_blocks": 3,
    "types": [
     "class InstanceIndirectBase",
     "class SubPartInstanceIndirect",
@@ -13828,8 +13828,8 @@
   "h3d.shader.KillAlpha": {
    "file": "h3d/shader/KillAlpha.hx",
    "package": "h3d.shader",
-   "lines": 22,
-   "doc_blocks": 0,
+   "lines": 28,
+   "doc_blocks": 2,
    "types": [
     "class KillAlpha"
    ],
@@ -13851,8 +13851,8 @@
   "h3d.shader.LineShader": {
    "file": "h3d/shader/LineShader.hx",
    "package": "h3d.shader",
-   "lines": 68,
-   "doc_blocks": 0,
+   "lines": 74,
+   "doc_blocks": 2,
    "types": [
     "class LineShader"
    ],
@@ -13876,8 +13876,8 @@
   "h3d.shader.LinearShadowDepth": {
    "file": "h3d/shader/LinearShadowDepth.hx",
    "package": "h3d.shader",
-   "lines": 23,
-   "doc_blocks": 0,
+   "lines": 26,
+   "doc_blocks": 1,
    "types": [
     "class LinearShadowDepth"
    ],
@@ -13901,8 +13901,8 @@
   "h3d.shader.MinMaxShader": {
    "file": "h3d/shader/MinMaxShader.hx",
    "package": "h3d.shader",
-   "lines": 37,
-   "doc_blocks": 0,
+   "lines": 43,
+   "doc_blocks": 2,
    "types": [
     "class MinMaxShader",
     "class CubeMinMaxShader"
@@ -13934,8 +13934,8 @@
   "h3d.shader.NoiseLib": {
    "file": "h3d/shader/NoiseLib.hx",
    "package": "h3d.shader",
-   "lines": 468,
-   "doc_blocks": 0,
+   "lines": 471,
+   "doc_blocks": 1,
    "types": [
     "class NoiseLib"
    ],
@@ -13957,8 +13957,8 @@
   "h3d.shader.NormalMap": {
    "file": "h3d/shader/NormalMap.hx",
    "package": "h3d.shader",
-   "lines": 42,
-   "doc_blocks": 0,
+   "lines": 48,
+   "doc_blocks": 2,
    "types": [
     "class NormalMap"
    ],
@@ -13983,8 +13983,8 @@
   "h3d.shader.Outline": {
    "file": "h3d/shader/Outline.hx",
    "package": "h3d.shader",
-   "lines": 27,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 1,
    "types": [
     "class Outline"
    ],
@@ -14009,8 +14009,8 @@
   "h3d.shader.Outline2D": {
    "file": "h3d/shader/Outline2D.hx",
    "package": "h3d.shader",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 35,
+   "doc_blocks": 1,
    "types": [
     "class Outline2D"
    ],
@@ -14034,8 +14034,8 @@
   "h3d.shader.Parallax": {
    "file": "h3d/shader/Parallax.hx",
    "package": "h3d.shader",
-   "lines": 64,
-   "doc_blocks": 0,
+   "lines": 76,
+   "doc_blocks": 4,
    "types": [
     "class Parallax"
    ],
@@ -14062,8 +14062,8 @@
   "h3d.shader.ParticleShader": {
    "file": "h3d/shader/ParticleShader.hx",
    "package": "h3d.shader",
-   "lines": 66,
-   "doc_blocks": 0,
+   "lines": 72,
+   "doc_blocks": 2,
    "types": [
     "class ParticleShader"
    ],
@@ -14090,8 +14090,8 @@
   "h3d.shader.PointLight": {
    "file": "h3d/shader/PointLight.hx",
    "package": "h3d.shader",
-   "lines": 58,
-   "doc_blocks": 1,
+   "lines": 64,
+   "doc_blocks": 3,
    "types": [
     "class PointLight"
    ],
@@ -14115,8 +14115,8 @@
   "h3d.shader.PointShadow": {
    "file": "h3d/shader/PointShadow.hx",
    "package": "h3d.shader",
-   "lines": 39,
-   "doc_blocks": 0,
+   "lines": 45,
+   "doc_blocks": 2,
    "types": [
     "class PointShadow"
    ],
@@ -14144,8 +14144,8 @@
   "h3d.shader.SAO": {
    "file": "h3d/shader/SAO.hx",
    "package": "h3d.shader",
-   "lines": 131,
-   "doc_blocks": 1,
+   "lines": 134,
+   "doc_blocks": 2,
    "types": [
     "class SAO"
    ],
@@ -14172,8 +14172,8 @@
   "h3d.shader.ScreenShader": {
    "file": "h3d/shader/ScreenShader.hx",
    "package": "h3d.shader",
-   "lines": 31,
-   "doc_blocks": 0,
+   "lines": 35,
+   "doc_blocks": 1,
    "types": [
     "class ScreenShader"
    ],
@@ -14226,8 +14226,8 @@
   "h3d.shader.Shadow": {
    "file": "h3d/shader/Shadow.hx",
    "package": "h3d.shader",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 38,
+   "doc_blocks": 2,
    "types": [
     "class Shadow"
    ],
@@ -14252,8 +14252,8 @@
   "h3d.shader.ShadowSampling": {
    "file": "h3d/shader/ShadowSampling.hx",
    "package": "h3d.shader",
-   "lines": 148,
-   "doc_blocks": 0,
+   "lines": 151,
+   "doc_blocks": 1,
    "types": [
     "class ShadowSampling"
    ],
@@ -14281,8 +14281,8 @@
   "h3d.shader.SignedDistanceField": {
    "file": "h3d/shader/SignedDistanceField.hx",
    "package": "h3d.shader",
-   "lines": 45,
-   "doc_blocks": 3,
+   "lines": 48,
+   "doc_blocks": 4,
    "types": [
     "class SignedDistanceField"
    ],
@@ -14310,8 +14310,8 @@
   "h3d.shader.SinusDeform": {
    "file": "h3d/shader/SinusDeform.hx",
    "package": "h3d.shader",
-   "lines": 27,
-   "doc_blocks": 0,
+   "lines": 33,
+   "doc_blocks": 2,
    "types": [
     "class SinusDeform"
    ],
@@ -14333,8 +14333,8 @@
   "h3d.shader.Skin": {
    "file": "h3d/shader/Skin.hx",
    "package": "h3d.shader",
-   "lines": 69,
-   "doc_blocks": 0,
+   "lines": 75,
+   "doc_blocks": 2,
    "types": [
     "class Utils",
     "class Skin"
@@ -14369,8 +14369,8 @@
   "h3d.shader.SkinBase": {
    "file": "h3d/shader/SkinBase.hx",
    "package": "h3d.shader",
-   "lines": 28,
-   "doc_blocks": 0,
+   "lines": 31,
+   "doc_blocks": 1,
    "types": [
     "class SkinBase"
    ],
@@ -14399,8 +14399,8 @@
   "h3d.shader.SkinTangent": {
    "file": "h3d/shader/SkinTangent.hx",
    "package": "h3d.shader",
-   "lines": 47,
-   "doc_blocks": 0,
+   "lines": 50,
+   "doc_blocks": 1,
    "types": [
     "class SkinTangent"
    ],
@@ -14427,8 +14427,8 @@
   "h3d.shader.SpecularTexture": {
    "file": "h3d/shader/SpecularTexture.hx",
    "package": "h3d.shader",
-   "lines": 20,
-   "doc_blocks": 0,
+   "lines": 26,
+   "doc_blocks": 2,
    "types": [
     "class SpecularTexture"
    ],
@@ -14453,8 +14453,8 @@
   "h3d.shader.SpotShadow": {
    "file": "h3d/shader/SpotShadow.hx",
    "package": "h3d.shader",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 35,
+   "doc_blocks": 1,
    "types": [
     "class SpotShadow"
    ],
@@ -14481,8 +14481,8 @@
   "h3d.shader.Texture": {
    "file": "h3d/shader/Texture.hx",
    "package": "h3d.shader",
-   "lines": 43,
-   "doc_blocks": 0,
+   "lines": 49,
+   "doc_blocks": 2,
    "types": [
     "class Texture"
    ],
@@ -14510,8 +14510,8 @@
   "h3d.shader.Texture2": {
    "file": "h3d/shader/Texture2.hx",
    "package": "h3d.shader",
-   "lines": 42,
-   "doc_blocks": 1,
+   "lines": 45,
+   "doc_blocks": 2,
    "types": [
     "class Texture2"
    ],
@@ -14536,8 +14536,8 @@
   "h3d.shader.UVAnim": {
    "file": "h3d/shader/UVAnim.hx",
    "package": "h3d.shader",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 44,
+   "doc_blocks": 2,
    "types": [
     "class UVAnim"
    ],
@@ -14559,8 +14559,8 @@
   "h3d.shader.UVDelta": {
    "file": "h3d/shader/UVDelta.hx",
    "package": "h3d.shader",
-   "lines": 20,
-   "doc_blocks": 0,
+   "lines": 26,
+   "doc_blocks": 2,
    "types": [
     "class UVDelta"
    ],
@@ -14586,8 +14586,8 @@
   "h3d.shader.UVScroll": {
    "file": "h3d/shader/UVScroll.hx",
    "package": "h3d.shader",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 27,
+   "doc_blocks": 2,
    "types": [
     "class UVScroll"
    ],
@@ -14609,8 +14609,8 @@
   "h3d.shader.VertexColor": {
    "file": "h3d/shader/VertexColor.hx",
    "package": "h3d.shader",
-   "lines": 22,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 1,
    "types": [
     "class VertexColor"
    ],
@@ -14632,8 +14632,8 @@
   "h3d.shader.VertexColorAlpha": {
    "file": "h3d/shader/VertexColorAlpha.hx",
    "package": "h3d.shader",
-   "lines": 22,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 1,
    "types": [
     "class VertexColorAlpha"
    ],
@@ -14658,8 +14658,8 @@
   "h3d.shader.VertexDensity": {
    "file": "h3d/shader/VertexDensity.hx",
    "package": "h3d.shader",
-   "lines": 47,
-   "doc_blocks": 0,
+   "lines": 50,
+   "doc_blocks": 1,
    "types": [
     "class VertexDensity"
    ],
@@ -14681,8 +14681,8 @@
   "h3d.shader.VolumeDecal": {
    "file": "h3d/shader/VolumeDecal.hx",
    "package": "h3d.shader",
-   "lines": 49,
-   "doc_blocks": 0,
+   "lines": 55,
+   "doc_blocks": 2,
    "types": [
     "class VolumeDecal"
    ],
@@ -14710,8 +14710,8 @@
   "h3d.shader.WhiteAlpha": {
    "file": "h3d/shader/WhiteAlpha.hx",
    "package": "h3d.shader",
-   "lines": 17,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 1,
    "types": [
     "class WhiteAlpha"
    ],
@@ -14733,8 +14733,8 @@
   "h3d.shader.ZCut": {
    "file": "h3d/shader/ZCut.hx",
    "package": "h3d.shader",
-   "lines": 27,
-   "doc_blocks": 0,
+   "lines": 33,
+   "doc_blocks": 2,
    "types": [
     "class ZCut"
    ],
@@ -14759,8 +14759,8 @@
   "h3d.shader.pbr.AlphaMask": {
    "file": "h3d/shader/pbr/AlphaMask.hx",
    "package": "h3d.shader.pbr",
-   "lines": 20,
-   "doc_blocks": 0,
+   "lines": 23,
+   "doc_blocks": 1,
    "types": [
     "class AlphaMask"
    ],
@@ -14784,8 +14784,8 @@
   "h3d.shader.pbr.AlphaMultiply": {
    "file": "h3d/shader/pbr/AlphaMultiply.hx",
    "package": "h3d.shader.pbr",
-   "lines": 10,
-   "doc_blocks": 0,
+   "lines": 13,
+   "doc_blocks": 1,
    "types": [
     "class AlphaMultiply"
    ],
@@ -14809,8 +14809,8 @@
   "h3d.shader.pbr.BRDF": {
    "file": "h3d/shader/pbr/BRDF.hx",
    "package": "h3d.shader.pbr",
-   "lines": 68,
-   "doc_blocks": 0,
+   "lines": 71,
+   "doc_blocks": 1,
    "types": [
     "class BRDF"
    ],
@@ -14835,8 +14835,8 @@
   "h3d.shader.pbr.ClusterCull": {
    "file": "h3d/shader/pbr/ClusterCull.hx",
    "package": "h3d.shader.pbr",
-   "lines": 333,
-   "doc_blocks": 0,
+   "lines": 339,
+   "doc_blocks": 2,
    "types": [
     "class ClusterCull",
     "class ClusterLightOcclusion"
@@ -14869,8 +14869,8 @@
   "h3d.shader.pbr.CubeLod": {
    "file": "h3d/shader/pbr/CubeLod.hx",
    "package": "h3d.shader.pbr",
-   "lines": 22,
-   "doc_blocks": 0,
+   "lines": 28,
+   "doc_blocks": 2,
    "types": [
     "class CubeLod"
    ],
@@ -14892,8 +14892,8 @@
   "h3d.shader.pbr.DefaultForward": {
    "file": "h3d/shader/pbr/DefaultForward.hx",
    "package": "h3d.shader.pbr",
-   "lines": 521,
-   "doc_blocks": 0,
+   "lines": 524,
+   "doc_blocks": 1,
    "types": [
     "class DefaultForward"
    ],
@@ -14933,8 +14933,8 @@
   "h3d.shader.pbr.Distortion": {
    "file": "h3d/shader/pbr/Distortion.hx",
    "package": "h3d.shader.pbr",
-   "lines": 16,
-   "doc_blocks": 0,
+   "lines": 19,
+   "doc_blocks": 1,
    "types": [
     "class Distortion"
    ],
@@ -14956,8 +14956,8 @@
   "h3d.shader.pbr.GammaCorrect": {
    "file": "h3d/shader/pbr/GammaCorrect.hx",
    "package": "h3d.shader.pbr",
-   "lines": 16,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 1,
    "types": [
     "class GammaCorrect"
    ],
@@ -14981,8 +14981,8 @@
   "h3d.shader.pbr.Light": {
    "file": "h3d/shader/pbr/Light.hx",
    "package": "h3d.shader.pbr",
-   "lines": 261,
-   "doc_blocks": 0,
+   "lines": 285,
+   "doc_blocks": 8,
    "types": [
     "class LightEvaluation",
     "class Light",
@@ -15054,8 +15054,8 @@
   "h3d.shader.pbr.Lighting": {
    "file": "h3d/shader/pbr/Lighting.hx",
    "package": "h3d.shader.pbr",
-   "lines": 153,
-   "doc_blocks": 0,
+   "lines": 159,
+   "doc_blocks": 2,
    "types": [
     "class Indirect",
     "class Direct"
@@ -15088,8 +15088,8 @@
   "h3d.shader.pbr.PerformanceViewer": {
    "file": "h3d/shader/pbr/PerformanceViewer.hx",
    "package": "h3d.shader.pbr",
-   "lines": 15,
-   "doc_blocks": 0,
+   "lines": 18,
+   "doc_blocks": 1,
    "types": [
     "class PerformanceViewer"
    ],
@@ -15113,8 +15113,8 @@
   "h3d.shader.pbr.PropsDefinition": {
    "file": "h3d/shader/pbr/PropsDefinition.hx",
    "package": "h3d.shader.pbr",
-   "lines": 38,
-   "doc_blocks": 0,
+   "lines": 41,
+   "doc_blocks": 1,
    "types": [
     "class PropsDefinition"
    ],
@@ -15138,8 +15138,8 @@
   "h3d.shader.pbr.PropsImport": {
    "file": "h3d/shader/pbr/PropsImport.hx",
    "package": "h3d.shader.pbr",
-   "lines": 86,
-   "doc_blocks": 0,
+   "lines": 89,
+   "doc_blocks": 1,
    "types": [
     "class PropsImport"
    ],
@@ -15166,8 +15166,8 @@
   "h3d.shader.pbr.PropsTexture": {
    "file": "h3d/shader/pbr/PropsTexture.hx",
    "package": "h3d.shader.pbr",
-   "lines": 61,
-   "doc_blocks": 0,
+   "lines": 68,
+   "doc_blocks": 2,
    "types": [
     "class PropsTexture"
    ],
@@ -15191,8 +15191,8 @@
   "h3d.shader.pbr.PropsValues": {
    "file": "h3d/shader/pbr/PropsValues.hx",
    "package": "h3d.shader.pbr",
-   "lines": 68,
-   "doc_blocks": 0,
+   "lines": 74,
+   "doc_blocks": 2,
    "types": [
     "class PropsValues"
    ],
@@ -15216,8 +15216,8 @@
   "h3d.shader.pbr.SSR": {
    "file": "h3d/shader/pbr/SSR.hx",
    "package": "h3d.shader.pbr",
-   "lines": 378,
-   "doc_blocks": 0,
+   "lines": 387,
+   "doc_blocks": 3,
    "types": [
     "class SSRResolve",
     "class SSRFilter",
@@ -15257,8 +15257,8 @@
   "h3d.shader.pbr.Slides": {
    "file": "h3d/shader/pbr/Slides.hx",
    "package": "h3d.shader.pbr",
-   "lines": 145,
-   "doc_blocks": 0,
+   "lines": 154,
+   "doc_blocks": 3,
    "types": [
     "enum_abstract DebugMode",
     "class Slides"
@@ -15286,8 +15286,8 @@
   "h3d.shader.pbr.StrengthValues": {
    "file": "h3d/shader/pbr/StrengthValues.hx",
    "package": "h3d.shader.pbr",
-   "lines": 39,
-   "doc_blocks": 0,
+   "lines": 45,
+   "doc_blocks": 2,
    "types": [
     "class StrengthValues"
    ],
@@ -15311,8 +15311,8 @@
   "h3d.shader.pbr.ToneMapping": {
    "file": "h3d/shader/pbr/ToneMapping.hx",
    "package": "h3d.shader.pbr",
-   "lines": 86,
-   "doc_blocks": 0,
+   "lines": 98,
+   "doc_blocks": 4,
    "types": [
     "class ToneMapping"
    ],
@@ -15337,8 +15337,8 @@
   "h3d.shader.pbr.VolumeDecal": {
    "file": "h3d/shader/pbr/VolumeDecal.hx",
    "package": "h3d.shader.pbr",
-   "lines": 219,
-   "doc_blocks": 0,
+   "lines": 234,
+   "doc_blocks": 5,
    "types": [
     "class BaseDecal",
     "class DecalOverlay",

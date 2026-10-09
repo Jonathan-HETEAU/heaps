@@ -4,6 +4,8 @@
 
 Implemented by: [`h3d.parts.Emitter`](Emitter.md), [`h3d.parts.Particle`](Particle.md)
 
+A source of random numbers for the particle values.
+
 ## Methods
 
 ### rand
@@ -11,3 +13,5 @@ Implemented by: [`h3d.parts.Emitter`](Emitter.md), [`h3d.parts.Particle`](Partic
 ```haxe
 function rand():Float
 ```
+
+Returns a random number between `0` and `1`.

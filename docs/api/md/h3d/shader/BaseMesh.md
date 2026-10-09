@@ -4,6 +4,9 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The base shader of the 3D meshes: transforms the vertices by the object and camera matrices, and outputs the color,
+depth and normal. Added to every `h3d.mat.Material`.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new():Void
 ```
+
+Creates the shader.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.anim.AnimatedObject`](AnimatedObject.md)
 
+An object animated by a `SmoothTransition`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.anim.AnimatedObject`](AnimatedObject.md)
 ```haxe
 function new(name:String):Void
 ```
+
+Creates an object.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new(name:String):Void
 var tmpMatrix:h3d.Matrix
 ```
 
+A temporary matrix.
+
 ### outMatrix
 
 ```haxe
 var outMatrix:h3d.Matrix
 ```
+
+The blended transform.
 
 ### isAnim1
 
@@ -32,17 +40,23 @@ var outMatrix:h3d.Matrix
 var isAnim1:Bool
 ```
 
+`true` if the object is animated by the first animation.
+
 ### isAnim2
 
 ```haxe
 var isAnim2:Bool
 ```
 
+`true` if the object is animated by the second animation.
+
 ### def
 
 ```haxe
 var def:h3d.Matrix
 ```
+
+The default transform of the object, used when only one animation animates it.
 
 ## Inherited members
 

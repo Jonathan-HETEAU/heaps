@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Extracts the bright parts of an image (above `power`), for a bloom post process.
+
 ## Constructor
 
 ### new

@@ -6,6 +6,9 @@ Extends: [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
 Subclasses: [`h3d.pass.DefaultShadowMap`](DefaultShadowMap.md)
 
+The shadow map of a directional light: an orthographic projection from the light covering the visible scene
+(or the bounds given by `calcShadowBounds`).
+
 ## Constructor
 
 ### new
@@ -13,6 +16,8 @@ Subclasses: [`h3d.pass.DefaultShadowMap`](DefaultShadowMap.md)
 ```haxe
 function new(light:h3d.scene.Light):Void
 ```
+
+Creates the shadow map of `light`.
 
 ## Variables
 
@@ -67,6 +72,9 @@ override function getShadowTex():hxsl.Texture
 ```haxe
 dynamic function calcShadowBounds(camera:h3d.Camera):Void
 ```
+
+Computes the orthographic bounds of the shadow camera, by default from the visible shadow casters and receivers.
+Can be replaced to use custom bounds.
 
 ### saveStaticData
 

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Upsamples a low resolution image using the depths to avoid bleeding across edges.
+
 ## Constructor
 
 ### new

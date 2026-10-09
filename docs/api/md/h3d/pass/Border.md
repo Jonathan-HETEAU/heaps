@@ -4,6 +4,9 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Draws a solid frame of `size` pixels along the edges of a `width` x `height` target (used for instance to avoid
+sampling outside of shadow maps).
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 ```haxe
 function new(width:Int, height:Int, ?size:Int = 1):Void
 ```
+
+Creates a white border for a target of the given size.
 
 ## Methods
 

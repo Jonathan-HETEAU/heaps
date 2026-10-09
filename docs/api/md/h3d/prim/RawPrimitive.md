@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Primitive`](Primitive.md)
 
+A primitive created from raw vertex data (and optional indexes) in any buffer format.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,10 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 function new(inf:{ vbuf:hxd.FloatBuffer, ?ibuf:Null<hxd.IndexBuffer>, format:hxd.BufferFormat, ?bounds:Null<h3d.col.Bounds> }, ?persist:Bool = false):Void
 ```
 
+Creates the primitive and uploads its data.
+- **param** `inf` The vertexes (`vbuf` in `format`), optional indexes (`ibuf`, otherwise every 3 vertexes form a triangle) and bounds.
+- **param** `persist` If `true`, keeps a reference to the data to reupload it after a context loss.
+
 ## Variables
 
 ### onContextLost
@@ -19,6 +25,8 @@ function new(inf:{ vbuf:hxd.FloatBuffer, ?ibuf:Null<hxd.IndexBuffer>, format:hxd
 ```haxe
 var onContextLost:() -> { vbuf:hxd.FloatBuffer, ?ibuf:Null<hxd.IndexBuffer>, format:hxd.BufferFormat }
 ```
+
+If set, called to get the data again when the GPU buffers must be reallocated.
 
 ## Methods
 

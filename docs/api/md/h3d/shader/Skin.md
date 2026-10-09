@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.SkinBase`](SkinBase.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The skinning shader of `h3d.scene.Skin`: deforms the vertices by up to 4 bones.
+
 ## Constructor
 
 ### new

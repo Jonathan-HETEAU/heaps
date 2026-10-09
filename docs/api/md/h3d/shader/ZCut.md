@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Clamps the projected depth between `zMin` and `zMax`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?zMin:Float = 0., ?zMax:Float = 1.):Void
 ```
+
+Creates the shader.
 
 ## Variables
 

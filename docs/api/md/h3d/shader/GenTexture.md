@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Generates simple textures (a disc, see `h3d.mat.Texture.genDisc`).
+
 ## Constructor
 
 ### new

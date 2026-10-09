@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+One pass of a separable blur, used by `h3d.pass.Blur`.
+
 ## Constructor
 
 ### new

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.scene.Object`](../scene/Object.md)
 
+The debug display of a `SkinCollider`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.scene.Object`](../scene/Object.md)
 ```haxe
 function new(col:SkinCollider):Void
 ```
+
+Creates the collider of the skin `obj` from its triangles `col`.
 
 ## Inherited members
 

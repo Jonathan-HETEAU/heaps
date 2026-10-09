@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Generates the mip levels of a texture with shaders (each level averages 2x2 pixels of the previous one).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 ```haxe
 function new():Void
 ```
+
+Creates the pass.
 
 ## Static methods
 
@@ -20,6 +24,8 @@ function new():Void
 static function generate(from:h3d.mat.Texture):Void
 ```
 
+Generates the mip levels of `from` using a shared instance.
+
 ## Methods
 
 ### apply
@@ -27,6 +33,8 @@ static function generate(from:h3d.mat.Texture):Void
 ```haxe
 function apply(from:h3d.mat.Texture):Void
 ```
+
+Generates the mip levels of `from`.
 
 ## Inherited members
 

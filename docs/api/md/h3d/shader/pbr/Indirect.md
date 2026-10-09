@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.pbr.PropsDefinition`](PropsDefinition.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Computes the indirect lighting (environment diffuse and specular) and the sky of the PBR renderer.
+
 ## Constructor
 
 ### new

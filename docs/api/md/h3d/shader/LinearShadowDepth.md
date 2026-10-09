@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Outputs the distance to the camera divided by its far plane as depth (for omnidirectional shadow maps).
+
 ## Constructor
 
 ### new

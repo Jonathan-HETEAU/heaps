@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Displays a mip level of a cube texture (used to display the environment as sky).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 ```haxe
 function new(?texture:hxsl.Texture):Void
 ```
+
+Creates the shader with the cube `texture`.
 
 ## Variables
 

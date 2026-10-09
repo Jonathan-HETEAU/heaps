@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../shader/ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Interpolates between two textures.
+
 ## Constructor
 
 ### new

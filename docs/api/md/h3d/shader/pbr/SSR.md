@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Computes the screen space reflections by marching rays in the depth buffer (see `h3d.pass.SSR`).
+
 ## Constructor
 
 ### new

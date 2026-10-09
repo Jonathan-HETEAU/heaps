@@ -6,6 +6,9 @@ Extends: [`h3d.anim.Animation`](Animation.md)
 
 Subclasses: [`h3d.anim.SimpleBlend`](SimpleBlend.md), [`h3d.anim.SmoothTransition`](SmoothTransition.md)
 
+Base class of the animations combining two animations (`anim1` and `anim2`).
+Its frame count is the smallest common multiple of the frame counts of both.
+
 ## Constructor
 
 ### new
@@ -13,6 +16,8 @@ Subclasses: [`h3d.anim.SimpleBlend`](SimpleBlend.md), [`h3d.anim.SmoothTransitio
 ```haxe
 function new(transitionName:String, anim1:Animation, anim2:Animation):Void
 ```
+
+Creates a transition between two animations.
 
 ## Variables
 
@@ -22,11 +27,15 @@ function new(transitionName:String, anim1:Animation, anim2:Animation):Void
 var anim1:Animation
 ```
 
+The first animation.
+
 ### anim2
 
 ```haxe
 var anim2:Animation
 ```
+
+The second animation.
 
 ## Methods
 

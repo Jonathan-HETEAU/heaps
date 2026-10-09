@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Animates the particles of `h3d.parts.GpuParticles` on the GPU.
+
 ## Constructor
 
 ### new

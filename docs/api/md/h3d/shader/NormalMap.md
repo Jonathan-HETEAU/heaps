@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies a tangent space normal map (the mesh needs tangents). See `h3d.mat.Material.normalMap`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?texture:hxsl.Texture):Void
 ```
+
+Creates the shader with the normal map `texture`.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A flat disc (or disc sector) in the XY plane, centered on the origin.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,10 @@ Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPri
 ```haxe
 function new(?radius:Float = 0.5, ?segments:Int = 8, ?thetaStart:Float = 0.0, ?thetaLength:Float):Void
 ```
+
+Creates a disc.
+- **param** `thetaStart` The start angle of the sector, in radians.
+- **param** `thetaLength` The angle of the sector, in radians (a full disc by default).
 
 ## Static methods
 
@@ -33,11 +39,15 @@ static function defaultUnitDisc():Disc
 var radius(default, null):Float
 ```
 
+The radius.
+
 ### segments
 
 ```haxe
 var segments(default, null):Int
 ```
+
+The number of segments of the border.
 
 ## Methods
 

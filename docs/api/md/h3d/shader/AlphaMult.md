@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Multiplies the alpha by `alpha`.
+
 ## Constructor
 
 ### new

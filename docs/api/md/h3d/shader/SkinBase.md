@@ -6,6 +6,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
 Subclasses: [`h3d.shader.Skin`](Skin.md), [`h3d.shader.SkinTangent`](SkinTangent.md)
 
+Base of the skinning shaders: holds the bone matrices.
+
 ## Constructor
 
 ### new

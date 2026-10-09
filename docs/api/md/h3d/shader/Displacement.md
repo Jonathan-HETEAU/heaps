@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Displaces the pixels of a texture according to a normal map (for distortion effects).
+
 ## Constructor
 
 ### new

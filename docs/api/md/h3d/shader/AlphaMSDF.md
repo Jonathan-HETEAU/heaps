@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Uses a multi-channel signed distance field texture as alpha mask, for sharp shapes at any scale (for instance MSDF fonts).
+
 ## Constructor
 
 ### new

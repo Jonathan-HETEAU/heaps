@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Draws an outline around the opaque pixels of a texture (see `h3d.pass.Outline`).
+
 ## Constructor
 
 ### new

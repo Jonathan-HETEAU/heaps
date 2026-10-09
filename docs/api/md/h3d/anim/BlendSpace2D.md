@@ -14,6 +14,8 @@ Blends multiple animations points placed on a virtual 2d plane
 function new(name:String, points:Array<BlendSpace2DPoint>):Void
 ```
 
+Creates a blend space from its points.
+
 ## Variables
 
 ### x
@@ -66,6 +68,8 @@ and the distance of the closest point inside of the graph to the center
 ```haxe
 function resetSmooth():Void
 ```
+
+Moves the smoothed position immediately to `x` and `y`.
 
 ### sync
 

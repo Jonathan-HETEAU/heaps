@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+The ambient light of the forward renderer, combined with the light shaders (see `h3d.scene.fwd.LightSystem`).
+
 ## Constructor
 
 ### new

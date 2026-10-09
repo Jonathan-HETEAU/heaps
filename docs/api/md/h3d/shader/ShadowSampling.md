@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Shader functions sampling shadow maps (hard, ESM or PCF), to be used by the shadow shaders.
+
 ## Constructor
 
 ### new

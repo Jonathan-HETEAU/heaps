@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Applies the distortion texture rendered by the `"distortion"` pass to the image.
+
 ## Constructor
 
 ### new

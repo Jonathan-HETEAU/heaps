@@ -2,6 +2,17 @@
 
 **class** · package [`h3d`](README.md) · source [`h3d/Camera.hx`](../../../../h3d/Camera.hx)
 
+A 3D camera: a position `pos` looking at `target`, with a perspective (or orthographic, see `orthoBounds`)
+projection. The default coordinate system has Z up.
+
+Call `update()` after changing its properties to recompute its matrices (done every frame for `Scene.camera`).
+
+```haxe
+s3d.camera.pos.set(10, 10, 10);
+s3d.camera.target.set(0, 0, 0);
+s3d.camera.fovY = 60;
+```
+
 ## Constructor
 
 ### new
@@ -10,6 +21,9 @@
 function new(?fovY:Float = 25., ?zoom:Float = 1., ?screenRatio:Float = 1.333333, ?zNear:Float = 0.02, ?zFar:Float = 4000., ?rightHanded:Bool = false):Void
 ```
 
+Creates a camera at `(2, 3, 4)` looking at the origin, with Z up.
+- **param** `fovY` The vertical field of view, in degrees.
+
 ## Variables
 
 ### zoom
@@ -17,6 +31,8 @@ function new(?fovY:Float = 25., ?zoom:Float = 1., ?screenRatio:Float = 1.333333,
 ```haxe
 var zoom:Float
 ```
+
+A zoom factor applied to the projection (`1` by default).
 
 ### screenRatio
 
@@ -43,11 +59,15 @@ Use setFovX to initialize fovY based on an horizontal FOV and an initial screen 
 var zNear:Float
 ```
 
+The distance of the near clipping plane: closer objects are not drawn.
+
 ### zFar
 
 ```haxe
 var zFar:Float
 ```
+
+The distance of the far clipping plane: farther objects are not drawn.
 
 ### orthoBounds
 
@@ -63,11 +83,15 @@ Set orthographic bounds.
 var rightHanded:Bool
 ```
 
+Uses a right-handed coordinate system instead of the default left-handed one.
+
 ### mproj
 
 ```haxe
 var mproj:Matrix
 ```
+
+The projection matrix, computed by `update`.
 
 ### mcam
 
@@ -75,17 +99,23 @@ var mproj:Matrix
 var mcam:Matrix
 ```
 
+The view matrix (world to camera space), computed by `update`.
+
 ### m
 
 ```haxe
 var m:Matrix
 ```
 
+The view-projection matrix (`mcam * mproj`), computed by `update`.
+
 ### pos
 
 ```haxe
 var pos:Vector
 ```
+
+The camera position.
 
 ### up
 
@@ -103,11 +133,15 @@ use getUp instead.
 var target:Vector
 ```
 
+The point the camera looks at.
+
 ### viewX
 
 ```haxe
 var viewX:Float
 ```
+
+A horizontal offset of the projection center, in screen units (`-1` to `1`), to shift the view without moving the camera.
 
 ### viewY
 
@@ -115,11 +149,16 @@ var viewX:Float
 var viewY:Float
 ```
 
+A vertical offset of the projection center, in screen units (`-1` to `1`).
+
 ### follow
 
 ```haxe
 var follow:{ target:h3d.scene.Object, pos:h3d.scene.Object }
 ```
+
+If set, `update` places the camera at the absolute position of `follow.pos` looking at `follow.target`
+(for instance cameras animated in a model). An animated `FOVY` property of `follow.pos` also sets `fovY`.
 
 ### frustum
 
@@ -127,11 +166,15 @@ var follow:{ target:h3d.scene.Object, pos:h3d.scene.Object }
 var frustum(default, null):h3d.col.Frustum
 ```
 
+The view frustum, computed by `update`, used for culling.
+
 ### jitterOffsetX
 
 ```haxe
 var jitterOffsetX:Float
 ```
+
+A sub-pixel horizontal offset of the projection, used by temporal anti-aliasing.
 
 ### jitterOffsetY
 
@@ -139,11 +182,15 @@ var jitterOffsetX:Float
 var jitterOffsetY:Float
 ```
 
+A sub-pixel vertical offset of the projection, used by temporal anti-aliasing.
+
 ### reverseDepth
 
 ```haxe
 var reverseDepth:Bool
 ```
+
+Uses a reversed depth range (near at 1, far at 0) for better precision. Set by the render context.
 
 ## Methods
 
@@ -168,6 +215,8 @@ Calculate the current horizontal fov (in degrees).
 ```haxe
 function clone():Camera
 ```
+
+Returns a copy of the camera.
 
 ### getInverseViewProj
 
@@ -243,11 +292,17 @@ For instance the 3D ray between unproject(0,0,0) and unproject(0,0,1) is the cen
 function rayFromScreen(pixelX:Float, pixelY:Float, ?sceneWidth:Int = -1, ?sceneHeight:Int = -1):h3d.col.Ray
 ```
 
+Returns the ray going from the camera through the given screen pixel, in world space (for picking).
+- **param** `sceneWidth` The width of the screen, the engine width by default.
+- **param** `sceneHeight` The height of the screen, the engine height by default.
+
 ### update
 
 ```haxe
 function update():Void
 ```
+
+Recomputes the matrices and the frustum from the camera properties.
 
 ### getFrustumCorners
 
@@ -255,11 +310,16 @@ function update():Void
 function getFrustumCorners(?zMax:Float = 1., ?zMin:Float = 0.):Array<Vector>
 ```
 
+Returns the 8 corners of the view frustum in world space: the 4 corners at depth `zMin`, then the 4 at depth `zMax`
+(depths from `0` near to `1` far).
+
 ### lostUp
 
 ```haxe
 function lostUp():Bool
 ```
+
+Tells if the camera position direction is aligned with the `up` vector, in which case the view orientation is undefined.
 
 ### getViewDirection
 
@@ -267,11 +327,15 @@ function lostUp():Bool
 function getViewDirection(dx:Float, dy:Float, ?dz:Float = 0.):Vector
 ```
 
+Returns the normalized direction of the camera space vector (`dx`, `dy`, `dz`), transformed by the view matrix.
+
 ### movePosAxis
 
 ```haxe
 function movePosAxis(dx:Float, dy:Float, ?dz:Float = 0.):Void
 ```
+
+Moves the camera position along its view axes.
 
 ### moveTargetAxis
 
@@ -279,11 +343,15 @@ function movePosAxis(dx:Float, dy:Float, ?dz:Float = 0.):Void
 function moveTargetAxis(dx:Float, dy:Float, ?dz:Float = 0.):Void
 ```
 
+Moves the camera target along its view axes.
+
 ### forward
 
 ```haxe
 function forward(?speed:Float = 1.):Void
 ```
+
+Moves the camera 2.5% closer to its target (multiplied by `speed`).
 
 ### backward
 
@@ -291,11 +359,15 @@ function forward(?speed:Float = 1.):Void
 function backward(?speed:Float = 1.):Void
 ```
 
+Moves the camera 2.5% farther from its target (multiplied by `speed`).
+
 ### setTransform
 
 ```haxe
 function setTransform(m:Matrix):Void
 ```
+
+Places the camera at the position of `m`, looking along its X axis.
 
 ### projectInline
 
@@ -311,11 +383,17 @@ Project a 3D point into the 2D screen. Make sure to update() the camera if it's 
 function project(x:Float, y:Float, z:Float, screenWidth:Float, screenHeight:Float, ?snapToPixel:Bool = true, ?p:Vector):Null<Vector>
 ```
 
+Returns the screen position, in pixels, of the world position (`x`, `y`, `z`). Its `z` is the projected depth.
+- **param** `snapToPixel` Rounds the result to integer pixels.
+- **param** `p` An optional vector to store the result in.
+
 ### distanceToDepth
 
 ```haxe
 function distanceToDepth(dist:Float):Float
 ```
+
+Converts a distance from the camera to the depth buffer value (taking `reverseDepth` into account).
 
 ### depthToDistance
 
@@ -323,8 +401,12 @@ function distanceToDepth(dist:Float):Float
 function depthToDistance(depth:Float):Float
 ```
 
+Converts a depth buffer value to a distance from the camera.
+
 ### load
 
 ```haxe
 function load(cam:Camera):Void
 ```
+
+Copies all the properties of `cam`.

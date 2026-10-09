@@ -6,6 +6,8 @@ Extends: [`h3d.pass.Shadows`](Shadows.md) → [`h3d.pass.Output`](Output.md)
 
 Subclasses: [`h3d.pass.RectangleShadowMap`](RectangleShadowMap.md), [`h3d.pass.SpotShadowMap`](SpotShadowMap.md)
 
+Base class of the shadow maps rendered with a perspective projection from the light (spot and rectangle lights).
+
 ## Constructor
 
 ### new
@@ -13,6 +15,8 @@ Subclasses: [`h3d.pass.RectangleShadowMap`](RectangleShadowMap.md), [`h3d.pass.S
 ```haxe
 function new(light:h3d.scene.Light):Void
 ```
+
+Creates the shadow map of `light`.
 
 ## Methods
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Combines the Worley noise octaves on the GPU (used by `WorleyNoise.generateOctave`).
+
 ## Constructor
 
 ### new

@@ -10,6 +10,8 @@
 function new():Void
 ```
 
+Creates stencil settings which always pass and keep the stencil buffer unchanged.
+
 ## Static variables
 
 ### readMask_bits
@@ -286,11 +288,15 @@ static inline function getBackDPfail(v:Int):Int
 var readMask(default, set):Int
 ```
 
+The bits of the stencil value and reference compared by the test.
+
 ### writeMask
 
 ```haxe
 var writeMask(default, set):Int
 ```
+
+The bits of the stencil buffer which can be modified.
 
 ### reference
 
@@ -298,11 +304,15 @@ var writeMask(default, set):Int
 var reference(default, set):Int
 ```
 
+The reference value used by the test and the `Replace` operation.
+
 ### frontTest
 
 ```haxe
 var frontTest(default, set):Compare
 ```
+
+The stencil test of front faces.
 
 ### frontPass
 
@@ -310,11 +320,15 @@ var frontTest(default, set):Compare
 var frontPass(default, set):StencilOp
 ```
 
+The operation on front faces when both the stencil and depth tests pass.
+
 ### frontSTfail
 
 ```haxe
 var frontSTfail(default, set):StencilOp
 ```
+
+The operation on front faces when the stencil test fails.
 
 ### frontDPfail
 
@@ -322,11 +336,15 @@ var frontSTfail(default, set):StencilOp
 var frontDPfail(default, set):StencilOp
 ```
 
+The operation on front faces when the stencil test passes but the depth test fails.
+
 ### backTest
 
 ```haxe
 var backTest(default, set):Compare
 ```
+
+The stencil test of back faces.
 
 ### backPass
 
@@ -334,17 +352,23 @@ var backTest(default, set):Compare
 var backPass(default, set):StencilOp
 ```
 
+The operation on back faces when both the stencil and depth tests pass.
+
 ### backSTfail
 
 ```haxe
 var backSTfail(default, set):StencilOp
 ```
 
+The operation on back faces when the stencil test fails.
+
 ### backDPfail
 
 ```haxe
 var backDPfail(default, set):StencilOp
 ```
+
+The operation on back faces when the stencil test passes but the depth test fails.
 
 ## Methods
 
@@ -354,11 +378,18 @@ var backDPfail(default, set):StencilOp
 function setFront(stfail:StencilOp, dpfail:StencilOp, pass:StencilOp):Void
 ```
 
+Sets the operations of front faces.
+- **param** `stfail` When the stencil test fails.
+- **param** `dpfail` When the stencil test passes but the depth test fails.
+- **param** `pass` When both tests pass.
+
 ### setBack
 
 ```haxe
 function setBack(stfail:StencilOp, dpfail:StencilOp, pass:StencilOp):Void
 ```
+
+Sets the operations of back faces. See `setFront`.
 
 ### setOp
 
@@ -366,11 +397,15 @@ function setBack(stfail:StencilOp, dpfail:StencilOp, pass:StencilOp):Void
 function setOp(stfail:StencilOp, dpfail:StencilOp, pass:StencilOp):Void
 ```
 
+Sets the operations of both front and back faces. See `setFront`.
+
 ### setFunc
 
 ```haxe
 function setFunc(f:Compare, ?reference:Int = 0, ?readMask:Int = 0xFF, ?writeMask:Int = 0xFF):Void
 ```
+
+Sets the stencil test of both front and back faces, with its reference value and masks.
 
 ### clone
 
@@ -378,8 +413,12 @@ function setFunc(f:Compare, ?reference:Int = 0, ?readMask:Int = 0xFF, ?writeMask
 function clone():Stencil
 ```
 
+Returns a copy of the settings.
+
 ### load
 
 ```haxe
 function load(s:Stencil):Void
 ```
+
+Copies the settings of `s`.

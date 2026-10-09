@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Projects a texture on the surfaces inside a box volume (the decal mesh), using the depth buffer.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(objectWidth:Float, objectHeight:Float):Void
 ```
+
+Creates the shader for a decal of the given size.
 
 ## Variables
 

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Primitive`](Primitive.md)
 
+A full screen quad (two triangles covering clip space from -1 to 1), used to draw screen passes (see `h3d.pass.ScreenFx`).
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 function new():Void
 ```
 
+Creates the quad. Use the shared instance returned by `get` instead.
+
 ## Static methods
 
 ### get
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 static function get():Null<Dynamic>
 ```
+
+Returns the shared instance.
 
 ## Methods
 

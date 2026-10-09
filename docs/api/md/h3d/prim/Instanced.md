@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Primitive`](Primitive.md)
 
+A primitive drawing many instances of a `MeshPrimitive` in a single draw call (used by `h3d.scene.MeshBatch`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 ```haxe
 function new():Void
 ```
+
+Creates an instanced primitive. Call `setMesh` before using it.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var commands:h3d.impl.InstanceBuffer
 ```
 
+The draw commands: number of instances and index ranges.
+
 ### bounds
 
 ```haxe
 var bounds:h3d.col.Bounds
 ```
+
+The bounds of all the instances, used for culling.
 
 ## Methods
 
@@ -34,17 +42,23 @@ var bounds:h3d.col.Bounds
 function setMesh(m:MeshPrimitive):Void
 ```
 
+Sets the primitive drawn by each instance.
+
 ### initBounds
 
 ```haxe
 function initBounds():Void
 ```
 
+Empties the bounds before adding the bounds of the instances.
+
 ### addInstanceBounds
 
 ```haxe
 inline function addInstanceBounds(absPos:h3d.Matrix):Void
 ```
+
+Adds the bounds of an instance with the given transform.
 
 ### dispose
 
@@ -81,6 +95,8 @@ override function screenRatioToLod(screenRatio:Float):Int
 ```haxe
 function setCommand(material:Int, lod:Int, count:Int):Void
 ```
+
+Sets the draw command drawing `count` instances of the given material group and level of detail.
 
 ### render
 

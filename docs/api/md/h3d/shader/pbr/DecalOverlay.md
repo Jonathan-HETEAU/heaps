@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.pbr.BaseDecal`](BaseDecal.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+A decal drawing a colored texture over the surfaces.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.shader.pbr.BaseDecal`](BaseDecal.md) → [`hxsl.Shader`](../../..
 ```haxe
 function new():Void
 ```
+
+Creates the shader.
 
 ## Variables
 

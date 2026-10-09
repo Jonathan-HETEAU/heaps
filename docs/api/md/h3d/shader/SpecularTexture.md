@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Multiplies the specular amount by a texture (see `h3d.mat.Material.specularTexture`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?tex:hxsl.Texture):Void
 ```
+
+Creates the shader with the texture `tex`.
 
 ## Variables
 

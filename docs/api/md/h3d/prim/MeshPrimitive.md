@@ -6,6 +6,9 @@ Extends: [`h3d.prim.Primitive`](Primitive.md)
 
 Subclasses: [`h3d.prim.BatchPrimitive`](BatchPrimitive.md), [`h3d.prim.HMDModel`](HMDModel.md), [`h3d.prim.Polygon`](Polygon.md)
 
+A primitive whose vertex inputs can be spread over several buffers (for instance a base geometry buffer plus an
+extra buffer of tangents or per-vertex colors added later).
+
 ## Constructor
 
 ### new
@@ -22,11 +25,15 @@ function new():Void
 function hasInput(name:String):Bool
 ```
 
+Tells if one of the buffers provides the vertex input `name` (such as `"normal"` or `"uv"`).
+
 ### resolveBuffer
 
 ```haxe
 function resolveBuffer(name:String):h3d.Buffer
 ```
+
+Returns the buffer providing the vertex input `name`, or `null`.
 
 ### removeBuffer
 
@@ -34,11 +41,15 @@ function resolveBuffer(name:String):h3d.Buffer
 function removeBuffer(buf:h3d.Buffer):Void
 ```
 
+Removes an additional buffer.
+
 ### addBuffer
 
 ```haxe
 function addBuffer(buf:h3d.Buffer):Void
 ```
+
+Adds a buffer providing additional vertex inputs (with the same number of vertexes).
 
 ### dispose
 

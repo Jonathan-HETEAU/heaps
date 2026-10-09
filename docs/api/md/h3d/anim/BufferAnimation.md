@@ -4,6 +4,9 @@
 
 Extends: [`h3d.anim.Animation`](Animation.md)
 
+An animation whose keyframes are stored in a single packed float buffer, as loaded from HMD files.
+More compact and faster to load than a `LinearAnimation`.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.anim.Animation`](Animation.md)
 ```haxe
 function new(name:String, frame:Int, sampling:Float):Void
 ```
+
+Creates an empty animation of `frame` frames at `sampling` frames per second.
 
 ## Methods
 
@@ -20,11 +25,15 @@ function new(name:String, frame:Int, sampling:Float):Void
 function setData(data:hxd.impl.Float32Array, stride:Int):Void
 ```
 
+Sets the packed animation data and the number of floats per frame.
+
 ### addObject
 
 ```haxe
 function addObject(objName:String, offset:Int):BufferObject
 ```
+
+Adds an animated object whose values start at `offset` in each frame, and returns it.
 
 ### getPropValue
 

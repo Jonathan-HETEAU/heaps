@@ -2,6 +2,8 @@
 
 **enum** · package [`h3d.parts`](README.md) · module `h3d.parts.GpuParticles` · source [`h3d/parts/GpuParticles.hx`](../../../../../h3d/parts/GpuParticles.hx)
 
+The shape the particles of a `GpuPartGroup` are emitted from.
+
 ## Constructors
 
 ### Point

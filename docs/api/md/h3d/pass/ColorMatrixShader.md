@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../shader/ScreenShader.md) → [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Transforms the colors of a texture by a matrix, with an optional mask.
+
 ## Constructor
 
 ### new

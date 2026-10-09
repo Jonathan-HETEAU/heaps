@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Adds a color to the output color.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?color:Int = 0):Void
 ```
+
+Creates the shader with a color in `0xRRGGBB` format.
 
 ## Variables
 

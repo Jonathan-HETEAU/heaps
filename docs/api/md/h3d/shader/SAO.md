@@ -15,6 +15,8 @@ Uses "Scalable Ambient Obscurance" [McGuire12]
 function new():Void
 ```
 
+Creates the shader.
+
 ## Variables
 
 ### numSamples

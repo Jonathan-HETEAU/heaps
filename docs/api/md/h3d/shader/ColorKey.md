@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Discards the pixels of a given color (color keying).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(?v:Int = 0):Void
 ```
+
+Creates the shader with the key color `v`, in `0xAARRGGBB` format.
 
 ## Variables
 

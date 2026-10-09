@@ -4,6 +4,8 @@
 
 Extends: [`h3d.mat.Texture`](Texture.md)
 
+A 3D (volume) texture of `width` x `height` x `depth` pixels.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.mat.Texture`](Texture.md)
 ```haxe
 function new(w:Int, h:Int, d:Int, ?flags:Array<TextureFlags>, ?format:Null<TextureFormat>):Void
 ```
+
+Creates a 3D texture of `w` x `h` x `d` pixels.
 
 ## Static methods
 

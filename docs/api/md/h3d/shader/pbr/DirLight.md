@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.pbr.Light`](Light.md) → [`h3d.shader.pbr.LightEvaluation`](LightEvaluation.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+The shader of `h3d.scene.pbr.DirLight`.
+
 ## Constructor
 
 ### new

@@ -6,6 +6,8 @@ Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
 Subclasses: [`h3d.shader.pbr.DecalOverlay`](DecalOverlay.md), [`h3d.shader.pbr.DecalPBR`](DecalPBR.md)
 
+Base of the PBR volume decal shaders: reconstructs the position of the surface inside the decal box from the depth.
+
 ## Constructor
 
 ### new

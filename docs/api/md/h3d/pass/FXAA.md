@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Fast approximate anti-aliasing: smooths the edges of an image as a post process.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 function new():Void
 ```
 
+Creates the pass.
+
 ## Methods
 
 ### apply
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 function apply(texture:h3d.mat.Texture):Void
 ```
+
+Draws `texture` to the current target with anti-aliasing.
 
 ## Inherited members
 

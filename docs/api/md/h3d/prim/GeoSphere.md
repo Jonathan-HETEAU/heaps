@@ -4,6 +4,8 @@
 
 Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPrimitive.md) → [`h3d.prim.Primitive`](Primitive.md)
 
+A sphere of radius 1 built by subdividing an octahedron: its triangles are more regular than those of `Sphere`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.prim.Polygon`](Polygon.md) → [`h3d.prim.MeshPrimitive`](MeshPri
 ```haxe
 function new(?subdiv:Int = 2):Void
 ```
+
+Creates a geodesic sphere. Each subdivision level multiplies the number of triangles by 4.
 
 ## Inherited members
 

@@ -2,6 +2,8 @@
 
 **enum** · package [`h3d`](README.md) · module `h3d.Buffer` · source [`h3d/Buffer.hx`](../../../../h3d/Buffer.hx)
 
+The flags of a `Buffer`, given at creation.
+
 ## Constructors
 
 ### Dynamic

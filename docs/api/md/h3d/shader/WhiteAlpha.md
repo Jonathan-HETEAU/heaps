@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Replaces the texture color by white, keeping its alpha.
+
 ## Constructor
 
 ### new

@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Multiplies the alpha by a channel of a texture (blue by default, or alpha with `useAlphaChannel`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 ```haxe
 function new(texture:hxsl.Texture, ?useAlphaChannel:Bool = false):Void
 ```
+
+Creates the shader with the alpha map `texture`.
 
 ## Variables
 

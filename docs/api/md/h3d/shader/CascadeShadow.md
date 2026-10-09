@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies the cascaded shadows of a directional light (see `h3d.pass.CascadeShadowMap`).
+
 ## Constructor
 
 ### new

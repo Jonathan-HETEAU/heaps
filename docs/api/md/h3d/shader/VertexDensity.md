@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Debug: displays the density of vertices on screen with a color ramp.
+
 ## Constructor
 
 ### new

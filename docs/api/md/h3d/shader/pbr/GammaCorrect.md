@@ -4,6 +4,9 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Converts the color to linear space (approximated by squaring it), for unlit objects drawn in HDR (see `h3d.mat.PbrMaterial`
+`BeforeTonemapping` mode). With `useEmissiveHDR`, the color is also multiplied by `1 + emissive`.
+
 ## Constructor
 
 ### new

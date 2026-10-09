@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Multiplies the color by the alpha (premultiplied alpha), for the `AlphaMultiply` blend mode.
+
 ## Constructor
 
 ### new

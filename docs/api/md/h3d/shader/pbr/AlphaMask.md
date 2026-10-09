@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Makes the sky pixels (without geometry) transparent, for `h3d.scene.pbr.Renderer.enableTransparency`.
+
 ## Constructor
 
 ### new

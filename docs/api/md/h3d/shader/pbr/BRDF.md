@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Shader functions of the PBR lighting model (GGX distribution, visibility and Fresnel terms), to be used by the lighting shaders.
+
 ## Constructor
 
 ### new

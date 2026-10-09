@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Applies the blend shapes (morph targets) of a mesh on the GPU (see `h3d.prim.Blendshape`).
+
 ## Constructor
 
 ### new
