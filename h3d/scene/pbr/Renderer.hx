@@ -3,49 +3,113 @@ package h3d.scene.pbr;
 import h3d.impl.Driver;
 import h3d.impl.Upscaling;
 
+/**
+	What the PBR renderer displays: the lit scene or a debug view.
+**/
 enum abstract DisplayMode(String) {
-	/*
+	/**
 		Full PBR display
-	*/
+	**/
 	var Pbr = "Pbr";
-	/*
+	/**
 		Set Albedo = 0x808080
-	*/
+	**/
 	var Env = "Env";
-	/*
+	/**
 		Set Albedo = 0x808080, Roughness = 0, Metalness = 1
-	*/
+	**/
 	var MatCap = "MatCap";
-	/*
+	/**
 		Debug slides
-	*/
+	**/
 	var Debug = "Debug";
+	/**
+		Displays the lighting cost of each pixel as a heat map.
+	**/
 	var Performance = "Performance";
 }
 
+/**
+	What the PBR renderer displays where no object is drawn.
+**/
 enum abstract SkyMode(String) {
+	/**
+		Nothing (the background stays black, or transparent with `Renderer.enableTransparency`).
+	**/
 	var Hide = "Hide";
+	/**
+		The environment cube map (`Environment.env`).
+	**/
 	var Env = "Env";
+	/**
+		The specular lighting cube map of the environment (debug).
+	**/
 	var Specular = "Specular";
+	/**
+		The diffuse irradiance cube map of the environment.
+	**/
 	var Irrad = "Irrad";
+	/**
+		The engine background color (`h3d.Engine.backgroundColor`).
+	**/
 	var Background = "Background";
+	/**
+		The color `RenderProps.skyColor`.
+	**/
 	var CustomColor = "CustomColor";
 }
 
+/**
+	The tone mapping operators converting the HDR lighting to displayable colors.
+**/
 enum abstract TonemapMap(String) {
+	/**
+		No tone mapping: colors are clamped.
+	**/
 	var Linear = "Linear";
+	/**
+		Reinhard operator: compresses the high values smoothly.
+	**/
 	var Reinhard = "Reinhard";
+	/**
+		Filmic curve, configured by the `a` to `e` properties of `RenderProps` (ACES approximation by default).
+	**/
 	var Filmic = "Filmic";
+	/**
+		Khronos PBR Neutral operator, which preserves the hue and saturation of the base colors.
+	**/
 	var KhronosNeutral = "KhronosNeutral";
 }
 
+/**
+	The properties of the PBR renderer (see `hxd.impl.AnyProps.props`), usually edited in Hide.
+	Call `refreshProps()` after modifying them.
+**/
 typedef RenderProps = {
+	/**
+		The display mode.
+	**/
 	var mode : DisplayMode;
+	/**
+		The exposure: colors are multiplied by `exp(exposure)` before tone mapping.
+	**/
 	var exposure : Float;
+	/**
+		The sky mode.
+	**/
 	var sky : SkyMode;
 	var ?skyColor : Int;
+	/**
+		The tone mapping operator.
+	**/
 	var tone : TonemapMap;
+	/**
+		The emissive intensity multiplier is `emissive * emissive`.
+	**/
 	var emissive : Float;
+	/**
+		The ambient occlusion strength is `occlusion * occlusion`.
+	**/
 	var occlusion : Float;
 	var ?a : Float;
 	var ?b : Float;
@@ -55,6 +119,9 @@ typedef RenderProps = {
 	var ?forceDirectDiscard : Bool;
 }
 
+/**
+	Copies a depth channel texture to the output color.
+**/
 class DepthCopy extends h3d.shader.ScreenShader {
 
 	static var SRC = {
@@ -65,8 +132,28 @@ class DepthCopy extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	The physically based deferred renderer. Enable it before creating the scene with `h3d.mat.PbrMaterialSetup.set()`.
+
+	Each frame it renders the opaque objects into a G-buffer (albedo, normal, metalness/roughness/occlusion, emissive, depth),
+	applies the decals, renders the shadow maps and computes the lighting (environment `env` and lights) into an HDR texture, draws the
+	`"forward"` and `"forwardAlpha"` passes, then tone maps the result (`toneMode`, `exposure`) and applies FXAA.
+	`h3d.impl.RendererFX` effects can be inserted at each step (see `effects`).
+
+	```haxe
+	h3d.mat.PbrMaterialSetup.set();
+	// in hxd.App.init:
+	var env = new h3d.scene.pbr.Environment(hxd.Res.sky.toTexture());
+	env.compute();
+	var renderer = cast(s3d.renderer, h3d.scene.pbr.Renderer);
+	renderer.env = env;
+	```
+**/
 class Renderer extends h3d.scene.Renderer {
 
+	/**
+		The stencil bit marking the pixels already lit by a volumetric light map, so that the environment lighting skips them.
+	**/
 	public static final LIGHTMAP_STENCIL = 0x80;
 
 	var slides = new h3d.pass.ScreenFx(new h3d.shader.pbr.Slides());
@@ -99,11 +186,31 @@ class Renderer extends h3d.scene.Renderer {
 		translucency : (null:h3d.mat.Texture),
 	};
 
+	/**
+		The sky mode, set from `RenderProps.sky` by `refreshProps`.
+	**/
 	public var skyMode : SkyMode = Hide;
+	/**
+		The tone mapping operator, set from `RenderProps.tone` by `refreshProps`.
+	**/
 	public var toneMode : TonemapMap = Reinhard;
+	/**
+		The display mode, set from `RenderProps.mode` by `refreshProps`.
+	**/
 	public var displayMode : DisplayMode = Pbr;
+	/**
+		The environment used for the indirect lighting and the sky. If `null` or with a `power` of 0, there is no
+		environment lighting.
+	**/
 	public var env : Environment;
+	/**
+		The exposure, set from `RenderProps.exposure` by `refreshProps`: colors are multiplied by `exp(exposure)`.
+	**/
 	public var exposure(get,set) : Float;
+	/**
+		If `true`, the output keeps the alpha of the scene so that it can be composed over other content
+		(for instance a transparent canvas or an editor view).
+	**/
 	public var enableTransparency = false;
 	var debugShadowMapIndex = 1;
 
@@ -158,6 +265,10 @@ class Renderer extends h3d.scene.Renderer {
 		[Swiz(Value("output.depth",1),[X,X,X,X])]
 	);
 
+	/**
+		Creates the renderer. It is usually created by `h3d.mat.PbrMaterialSetup`.
+		@param env The environment, see `env`.
+	**/
 	public function new(?env) {
 		super();
 		this.env = env;
@@ -264,10 +375,19 @@ class Renderer extends h3d.scene.Renderer {
 	}
 
 	var hzbPass = new h3d.pass.ScreenFx(new h3d.shader.HZB());
+	/**
+		Builds the hierarchical depth buffer of the current depth into `RenderContext.hzb`, used for GPU occlusion culling.
+		@param max If `true`, each mip level keeps the farthest depth of the pixels it covers (conservative for occlusion).
+	**/
 	public function updateHZB(max : Bool = true) {
 		ctx.hzb = buildHZB(max, "HZB");
 	}
 
+	/**
+		Builds a hierarchical depth buffer (a mipmapped depth texture) from the current depth and returns it.
+		@param max If `true`, each mip level keeps the maximum depth, otherwise the minimum.
+		@param name The name of the render target.
+	**/
 	public function buildHZB(max : Bool, name : String) : h3d.mat.Texture {
 		var hzbTarget = allocTarget(name, false, 1, R32F, [Target, Writable, MipMapped, ManualMipMapGen]);
 		var hzbTargetCopy = allocTarget(name + "Copy", false, 1, R32F, [Target, Writable, MipMapped, ManualMipMapGen]);
