@@ -1,12 +1,27 @@
 package h3d.scene.fwd;
 
+/**
+	The light system of the forward renderer: each object is drawn with the ambient light and up to
+	`maxLightsPerObject` lights shaders.
+**/
 class LightSystem extends h3d.scene.LightSystem {
 
+	/**
+		The maximum number of lights applied to an object. When there are more lights, the lights with the highest
+		`Light.priority` are kept first, then the lights nearest to the object (or to the camera target for objects
+		with `Object.lightCameraCenter`).
+	**/
 	public var maxLightsPerObject = 6;
 	var globals : hxsl.Globals;
 	var ambientShader : hxsl.Shader;
 	var lightCount : Int;
+	/**
+		Computes the lighting per pixel. If `false`, it is computed per vertex (faster, less precise).
+	**/
 	public var perPixelLighting : Bool = true;
+	/**
+		The ambient light color, added to all the lit objects (`0.5, 0.5, 0.5` by default). Modify its components.
+	**/
 	public var ambientLight(default,null) : h3d.Vector;
 
 	/**
@@ -15,6 +30,9 @@ class LightSystem extends h3d.scene.LightSystem {
 	**/
 	public var additiveLighting(get, set) : Bool;
 
+	/**
+		Creates the light system.
+	**/
 	public function new() {
 		super();
 		ambientLight = new h3d.Vector(0.5, 0.5, 0.5);

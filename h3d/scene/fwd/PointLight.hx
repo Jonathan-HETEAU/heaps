@@ -1,10 +1,22 @@
 package h3d.scene.fwd;
 
+/**
+	A point light of the forward renderer, shining in all directions from its position.
+
+	Its intensity at distance `d` is divided by `params.x + params.y * d + params.z * d²`.
+	The light is culled when this attenuated intensity falls below 1/128 outside of the camera view.
+**/
 class PointLight extends Light {
 
 	var pshader : h3d.shader.PointLight;
+	/**
+		The attenuation coefficients: `x` constant, `y` linear and `z` quadratic.
+	**/
 	public var params(get, set) : h3d.Vector;
 
+	/**
+		Creates a point light.
+	**/
 	public function new(?parent) {
 		pshader = new h3d.shader.PointLight();
 		super(pshader, parent);
