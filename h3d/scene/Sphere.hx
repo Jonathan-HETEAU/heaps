@@ -1,10 +1,29 @@
 package h3d.scene;
 
+/**
+	A debug wireframe sphere, drawn as three orthogonal circles of 32 segments.
+
+	It is meant for visualizing positions, radii or colliders: it has no collider itself and is not a solid mesh
+	(use `h3d.prim.Sphere` with a `Mesh` for that).
+**/
 class Sphere extends Graphics {
 
+	/**
+		The line color, in `0xRRGGBB` format. Changes are applied the next time `radius` is set.
+	**/
 	public var color : Int;
+	/**
+		The sphere radius. Setting it redraws the lines.
+	**/
 	public var radius(default, set) : Float;
 
+	/**
+		Creates a wireframe sphere.
+		@param color The line color, in `0xRRGGBB` format (red by default, the alpha byte is ignored).
+		@param radius The sphere radius.
+		@param depth If `false`, the sphere is always drawn on top of the scene (depth test disabled).
+		@param parent An optional parent object.
+	**/
 	public function new( ?color = 0xFFFF0000, ?radius : Float=1.0, ?depth = true, ?parent) {
 		super(parent);
 		this.color = color;

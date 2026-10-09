@@ -1,9 +1,24 @@
 package h3d.scene;
 
+/**
+	A debug wireframe box, drawn with 12 lines.
+
+	The lines are rebuilt automatically during sync whenever `bounds` changes. It has no collider and is meant
+	for visualizing bounds; use `h3d.prim.Cube` with a `Mesh` for a solid box.
+**/
 class Box extends Graphics {
 
+	/**
+		The line color, in `0xRRGGBB` format. Changes are applied the next time the bounds change.
+	**/
 	public var color : Int;
+	/**
+		The box bounds, in local space. If `null`, a unit box centered on the origin (from -0.5 to 0.5) is drawn.
+	**/
 	public var bounds : h3d.col.Bounds;
+	/**
+		The line thickness. Changes are applied the next time the bounds change.
+	**/
 	public var thickness = 1.0;
 	var prevXMin = 1e9;
 	var prevYMin = 1e9;
@@ -12,6 +27,13 @@ class Box extends Graphics {
 	var prevYMax = -1e9;
 	var prevZMax = -1e9;
 
+	/**
+		Creates a wireframe box.
+		@param color The line color, in `0xRRGGBB` format (red by default, the alpha byte is ignored).
+		@param bounds The box bounds in local space, or `null` for a unit box centered on the origin.
+		@param depth If `false`, the box is always drawn on top of the scene (depth test disabled).
+		@param parent An optional parent object.
+	**/
 	public function new( ?color = 0xFFFF0000, ?bounds : h3d.col.Bounds, ?depth = true, ?parent) {
 		super(parent);
 		this.color = color;

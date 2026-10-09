@@ -1,11 +1,33 @@
 package h3d.scene;
 
+/**
+	A debug wireframe capsule aligned on the X axis: a cylinder of `length` capped by two half spheres of `radius`.
+
+	It has no collider and is meant for visualizing capsule colliders (see `h3d.col.Capsule`).
+**/
 class Capsule extends Graphics {
 
+	/**
+		The line color, in `0xRRGGBB` format. Changes are applied the next time `radius` or `length` is set.
+	**/
 	public var color : Int;
+	/**
+		The capsule radius. Setting it redraws the lines.
+	**/
 	public var radius(default, set) : Float;
+	/**
+		The length of the cylindrical part along the X axis, excluding the caps. Setting it redraws the lines.
+	**/
 	public var length(default, set) : Float;
 
+	/**
+		Creates a wireframe capsule.
+		@param color The line color, in `0xRRGGBB` format (red by default, the alpha byte is ignored).
+		@param radius The capsule radius.
+		@param length The length of the cylindrical part along the X axis.
+		@param depth If `false`, the capsule is always drawn on top of the scene (depth test disabled).
+		@param parent An optional parent object.
+	**/
 	public function new( ?color = 0xFFFF0000, ?radius : Float=1.0, ?length : Float=2.0, ?depth = true, ?parent) {
 		super(parent);
 		this.color = color;

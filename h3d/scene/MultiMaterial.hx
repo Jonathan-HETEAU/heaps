@@ -1,9 +1,25 @@
 package h3d.scene;
 
+/**
+	A `Mesh` using several materials, one per material group of its primitive.
+
+	The primitive must split its indexes per material (for instance a `h3d.prim.HMDModel` loaded from a model
+	with several materials): each material `i` is drawn with the indexes of group `i`.
+**/
 class MultiMaterial extends Mesh {
 
+	/**
+		The materials, indexed by primitive material group. `null` entries are not drawn.
+		`Mesh.material` refers to the first one.
+	**/
 	public var materials : Array<h3d.mat.Material>;
 
+	/**
+		Creates a multi-material mesh.
+		@param prim The primitive to draw, with one index group per material.
+		@param mats The materials. If `null`, a single default material is created.
+		@param parent An optional parent object.
+	**/
 	public function new( prim, ?mats, ?parent ) {
 		super(prim, mats == null ? null : mats[0], parent);
 		this.materials = mats == null ? [material] : mats;
