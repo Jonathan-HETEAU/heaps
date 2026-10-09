@@ -12,43 +12,138 @@ private class SharedGlobal {
 	}
 }
 
+/**
+	A rendering view: the frustum used to cull objects for the current view (see `RenderContext.currentView`).
+	Renderers drawing several views (for instance shadow cascades) change it temporarily.
+**/
 class View {
+	/**
+		The index of the view.
+	**/
 	public var idx : Int;
+	/**
+		The frustum used to cull the objects of this view.
+	**/
 	public var frustum : Frustum;
+	/**
+		Creates a view with the given index.
+	**/
 	public function new(idx) {
 		this.idx = idx;
 	}
 }
 
+/**
+	The per-frame state of a 3D `Scene` rendering, shared by the scene objects, the `Renderer` and the render passes.
+
+	Each frame, `Scene.render` calls `start`, syncs the objects (which `emit` the passes of their materials and their lights),
+	hands the emitted passes to the renderer and calls `done`.
+	It also holds the shader globals (`camera.*`, `global.*`), which can be read and changed with `getGlobal` and `setGlobal`.
+	Accessible from objects in `Object.sync`, `Object.emit` and `Object.draw`, and from the scene as `s3d.ctx`.
+**/
 @:build(hxsl.Macros.buildGlobals())
 class RenderContext extends h3d.impl.RenderContext {
 
+	/**
+		The camera used for the current frame: a copy of `Scene.camera` made in `start`. Use `setCamera` to change it.
+	**/
 	public var camera(default,null) : h3d.Camera;
+	/**
+		The scene being rendered.
+	**/
 	public var scene(default,null) : Scene;
+	/**
+		The pass currently being drawn, set by the render passes before calling `Object.draw`.
+	**/
 	public var drawPass : h3d.pass.PassObject;
+	/**
+		The material pass used by the PBR lights to emit their light volumes. Set by `h3d.scene.pbr.Renderer`.
+	**/
 	public var pbrLightPass : h3d.mat.Pass;
+	/**
+		`true` while computing static data, such as static shadow maps (see `Scene.computeStatic`).
+	**/
 	public var computingStatic : Bool;
+	/**
+		When set, objects keep their previous frame transform so that a velocity buffer can be rendered
+		(used by temporal effects such as TAA or motion blur). Reset to `false` at the end of each frame.
+	**/
 	public var computeVelocity : Bool;
+	/**
+		Enables the translucency output of the PBR renderer (an additional G-buffer texture used by translucent materials).
+	**/
 	public var enableTranslucency : Bool;
+	/**
+		Uses a reversed depth buffer (1 near, 0 far), which improves depth precision. Applied to the camera in `setCamera`.
+	**/
 	public var useReverseDepth : Bool;
+	/**
+		The width of the rendering, in pixels. Set to the engine width in `start`, see `setRenderResolution`.
+	**/
 	public var renderResolutionWidth : Int;
+	/**
+		The height of the rendering, in pixels. Set to the engine height in `start`, see `setRenderResolution`.
+	**/
 	public var renderResolutionHeight : Int;
 
+	/**
+		The light system of the scene, used by the render passes to add the light shaders.
+	**/
 	public var lightSystem : h3d.scene.LightSystem;
+	/**
+		Shaders added to every object drawn by the render passes, in addition to their material shaders.
+	**/
 	public var extraShaders : hxsl.ShaderList;
+	/**
+		`false` while syncing the children of an invisible or culled object. Objects use it to skip work, such as
+		updating animations, unless `Object.alwaysSyncAnimation` is set.
+	**/
 	public var visibleFlag : Bool;
+	/**
+		Debug flag set by `h3d.impl.Benchmark`. It is not read by Heaps itself and can be used by custom objects to display culling information.
+	**/
 	public var debugCulling : Bool;
+	/**
+		`true` during the first frame rendered after the GPU context was lost and restored (see `Scene.onContextLost`).
+	**/
 	public var wasContextLost : Bool;
+	/**
+		The culling collider inherited from the parent objects during sync (see `Object.cullingCollider`).
+	**/
 	public var cullingCollider : h3d.col.Collider;
+	/**
+		If not negative, the screen ratio used by meshes to select their level of detail instead of computing it.
+		Set by a `Mesh` with `inheritLod` so that its children use the same level of detail. Reset at the beginning of each frame.
+	**/
 	public var forcedScreenRatio : Float = -1;
+	/**
+		A multiplier applied to the screen ratio of meshes when selecting their level of detail: lower values select
+		lower details sooner.
+	**/
 	public var meshLodScale : Float = 1.0;
 
+	/**
+		The hierarchical depth buffer (HZB) built by the PBR renderer, used for GPU occlusion culling.
+	**/
 	public var hzb : h3d.mat.Texture;
 
+	/**
+		The number of views rendered in the current frame. Reset to 1 in `start`.
+	**/
 	public var numViews : Int = 1;
+	/**
+		The view currently rendered. Its frustum is the camera frustum, unless a pass renders from another view.
+	**/
 	public var currentView : View = new h3d.scene.View(0);
 
+	/**
+		The camera of the previous frame, used to compute velocities.
+	**/
 	public var prevCamera : h3d.Camera;
+	/**
+		If set, the world origin offset between the previous and current frame, used by temporal effects when the world
+		is rebased. Reset at the end of each frame.
+	**/
 	public var prevWorldDelta : h3d.Vector;
 
 	@global("camera.view") var cameraView : h3d.Matrix;
@@ -89,6 +184,9 @@ class RenderContext extends h3d.impl.RenderContext {
 	var cameraFrustumBuffer : h3d.Buffer = null;
 	var cameraFrustumUploaded : Bool = false;
 
+	/**
+		Creates the render context of a scene. Done by the `Scene` itself.
+	**/
 	public function new(scene) {
 		super();
 		this.scene = scene;
@@ -102,6 +200,9 @@ class RenderContext extends h3d.impl.RenderContext {
 		initGlobals();
 	}
 
+	/**
+		Copies `cam` into `camera` and updates the camera shader globals. The previous camera is kept in `prevCamera`.
+	**/
 	public function setCamera( cam : h3d.Camera ) {
 		prevCamera.load(camera);
 		camera.load(cam);
@@ -130,21 +231,34 @@ class RenderContext extends h3d.impl.RenderContext {
 		currentView.frustum = camera.frustum;
 	}
 
+	/**
+		Sets the rendering resolution and the `global.pixelSize` shader global.
+	**/
 	public function setRenderResolution( width : Int, height : Int ) {
 		renderResolutionWidth = width;
 		renderResolutionHeight = height;
 		pixelSize = new h3d.Vector(2 / width, 2 / height);
 	}
 
+	/**
+		Sets the number of views rendered in the current frame.
+	**/
 	public function updateNumViews( numViews : Int ) {
 		this.numViews = numViews;
 	}
 
+	/**
+		Sets the view currently rendered and its culling frustum.
+	**/
 	public function setCurrentView( viewIdx : Int, viewFrustum : Frustum ) {
 		currentView.idx = viewIdx;
 		currentView.frustum = viewFrustum;
 	}
 
+	/**
+		Updates the `camera.projFlip` global according to the current render target: needed on drivers using
+		bottom-left texture coordinates when rendering to a texture.
+	**/
 	public function setupTarget() {
 		var v = engine.driver.hasFeature(BottomLeftCoords) && engine.getCurrentTarget() != null ? -1 : 1;
 		if( cameraProjFlip != v ) cameraProjFlip = v;
@@ -155,6 +269,11 @@ class RenderContext extends h3d.impl.RenderContext {
 		return new h3d.Vector(2 / (t == null ? engine.width : t.width), 2 / (t == null ? engine.height : t.height));
 	}
 
+	/**
+		Emits the passes of material `mat` for object `obj`, so that they are drawn this frame.
+		Called by objects in their `Object.emit` implementation.
+		@param index The index of the material in the object (for instance a material group of a `MultiMaterial`).
+	**/
 	@:access(h3d.mat.Pass)
 	public inline function emit( mat : h3d.mat.Material, obj, index = 0 ) {
 		var p = mat.mainPass;
@@ -165,6 +284,10 @@ class RenderContext extends h3d.impl.RenderContext {
 		}
 	}
 
+	/**
+		Starts a new frame: resets the emitted passes and lights, advances `time` and `frame`, and copies the scene camera.
+		Called by `Scene.render`.
+	**/
 	public function start() {
 		drawPass = null;
 		passes.resize(0);
@@ -185,19 +308,31 @@ class RenderContext extends h3d.impl.RenderContext {
 		numViews = 1;
 	}
 
+	/**
+		Resets the shader list cache before rendering the next pass.
+	**/
 	public inline function nextPass() {
 		cachedPos = 0;
 		drawPass = null;
 	}
 
+	/**
+		Returns the value of the shader global `name` (for instance `"global.time"`).
+	**/
 	public inline function getGlobal(name) : Dynamic {
 		return globals.get(name);
 	}
 
+	/**
+		Sets the value of the shader global `name`.
+	**/
 	public inline function setGlobal(name,v:Dynamic) {
 		globals.set(name, v);
 	}
 
+	/**
+		Emits a single material pass for object `obj` and returns the allocated pass object.
+	**/
 	public function emitPass( pass : h3d.mat.Pass, obj : h3d.scene.Object ) @:privateAccess {
 		var o = allocPool;
 		if( o == null ) {
@@ -215,6 +350,9 @@ class RenderContext extends h3d.impl.RenderContext {
 		return o;
 	}
 
+	/**
+		Returns a shader list node from the frame cache (to avoid allocations), holding `s` followed by `next`.
+	**/
 	public function allocShaderList( s : hxsl.Shader, ?next : hxsl.ShaderList ) {
 		var sl = cachedShaderList[cachedPos++];
 		if( sl == null ) {
@@ -226,16 +364,27 @@ class RenderContext extends h3d.impl.RenderContext {
 		return sl;
 	}
 
+	/**
+		Sets the list of compute shaders to run with the next `computeDispatch` called without shader.
+	**/
 	public function computeList(list : hxsl.ShaderList) {
 		if ( computeLink != null )
 			throw "Use computeDispatch to dispatch computeList";
 		computeLink = list;
 	}
 
+	/**
+		Inserts a GPU memory barrier, so that the writes of the previous compute dispatches are visible to the next ones.
+	**/
 	public function memoryBarrier(){
 		engine.driver.memoryBarrier();
 	}
 
+	/**
+		Runs a compute shader, or the shaders set by `computeList`, with the given number of work groups (at most 65535 per axis).
+		Can be called outside of a frame rendering: the context is then started and ended around the dispatch.
+		@param barrier Inserts a memory barrier after the dispatch.
+	**/
 	public function computeDispatch( ?shader : hxsl.Shader, x = 1, y = 1, z = 1, barrier : Bool = true) {
 		if ( x <= 0 || y <= 0 || z <= 0 )
 			throw "Can't use zero or negative work groups count";
@@ -275,11 +424,18 @@ class RenderContext extends h3d.impl.RenderContext {
 		}
 	}
 
+	/**
+		Adds a light to the lights of the current frame. Called by `Light.emit`.
+	**/
 	public function emitLight( l : Light ) {
 		l.next = lights;
 		lights = l;
 	}
 
+	/**
+		Returns a GPU buffer containing the 6 planes of the camera frustum (left, right, top, bottom, far, near),
+		uploaded once per frame. Used for GPU culling.
+	**/
 	public function getCameraFrustumBuffer() {
 		if ( cameraFrustumBuffer == null )
 			cameraFrustumBuffer = hxd.impl.Allocator.get().allocBuffer( 6, hxd.BufferFormat.VEC4_DATA, UniformDynamic );
@@ -308,23 +464,38 @@ class RenderContext extends h3d.impl.RenderContext {
 		return cameraFrustumBuffer;
 	}
 
+	/**
+		Returns the value to clear the depth buffer with: `0` with reverse depth, `1` otherwise.
+	**/
 	public function getDepthClearValue() : Float {
 		return useReverseDepth ? 0.0 : 1.0;
 	}
 
+	/**
+		Binds bindless texture handles for the next draws (requires a driver supporting them).
+	**/
 	public function selectTextureHandles(handles : Array<h3d.mat.TextureHandle>) {
 		engine.driver.selectTextureHandles(handles);
 	}
 
+	/**
+		Binds bindless buffer handles for the next draws (requires a driver supporting them).
+	**/
 	public function selectBufferHandles(handles : Array<h3d.BufferHandle>) {
 		engine.driver.selectBufferHandles(handles);
 	}
 
+	/**
+		Uploads the shader parameters of the current `drawPass`. Call it after changing shader parameters inside `Object.draw`.
+	**/
 	public function uploadParams() {
 		fillParams(shaderBuffers, drawPass.shader, drawPass.shaders);
 		engine.uploadInstanceShaderBuffers(shaderBuffers);
 	}
 
+	/**
+		Ends the frame: recycles the emitted passes and stores the camera matrices for the next frame. Called by `Scene.render`.
+	**/
 	public function done() {
 		drawPass = null;
 		// move passes to pool, and erase data

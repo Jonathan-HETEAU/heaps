@@ -12,6 +12,9 @@ DECL = re.compile(r'^\s*(?:@:[\w.]+(?:\([^)]*\))?\s+)*'
                   r'(class|interface|enum\s+abstract|enum|abstract|typedef|var|final|function)\s+(\w+)')
 
 
+private_ctx = [False]
+
+
 def scan(path):
     lines = open(path, encoding="utf-8", errors="replace").read().split("\n")
     out, total, depth, in_doc, last_doc_end, in_comment = [], 0, 0, False, -10, False
@@ -57,6 +60,11 @@ def scan(path):
                     out.append((i + 1, s[:110]))
             if is_type and depth == 0:
                 interface_ctx_set(kind == "interface" or (kind == "typedef"))
+                private_ctx[0] = "private" in mods
+            if not is_type and private_ctx[0] and relevant:
+                total -= 1
+                if out and out[-1][0] == i + 1:
+                    out.pop()
         clean = re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//.*', "", line)
         depth += clean.count("{") - clean.count("}")
         if depth < 0:
