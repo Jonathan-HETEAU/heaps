@@ -11,24 +11,63 @@ private class TrailElement {
 	}
 }
 
+/**
+	A ribbon following the movements of the object, such as a sword or projectile trail.
+
+	Every frame the trail records the absolute position and orientation of the object, and draws a strip
+	through the recorded points that fades after `duration` seconds. Move the object (or its parent) to draw.
+	The strip is drawn in world space.
+**/
 class Trail extends Mesh {
 
 	// to optimize : use a proper buffer with slide window
 	var points : Array<TrailElement> = [];
 	var dprim : h3d.prim.DynamicPrimitive;
 
+	/**
+		The time, in seconds, a point stays in the trail.
+	**/
 	public var duration : Float = 0.5;
+	/**
+		The orientation of the strip width, in radians: at `0` the strip extends along the local Y axis of the object,
+		other values rotate it around the local X axis.
+	**/
 	public var angle : Float = 0.;
+	/**
+		The width of the strip at the head of the trail (most recent point).
+	**/
 	public var sizeStart : Float = 4.;
+	/**
+		The width of the strip at the tail of the trail (oldest point).
+	**/
 	public var sizeEnd : Float = 0.;
+	/**
+		Movements smaller than this distance do not add width to the trail (the strip collapses while the object stays still).
+	**/
 	public var movementMin : Float = 0.1;
+	/**
+		Movements larger than this distance are split into several points, interpolated with a curve.
+	**/
 	public var movementMax : Float = 0.5;
+	/**
+		The curvature of the interpolation between points, from `0` (straight segments) to `1`.
+	**/
 	public var smoothness : Float = 0.5;
+	/**
+		The material properties per `h3d.mat.MaterialSetup` name, saved with `save`. See `getMaterialProps`.
+	**/
 	public var materialData = {};
 
+	/**
+		The texture applied to the strip: its U coordinate goes along the trail (`0` at the head, `1` at the tail)
+		and its V coordinate across the strip.
+	**/
 	public var texture(get, set) : h3d.mat.Texture;
 	var pending = new TrailElement(); // tmp
 
+	/**
+		Creates a trail.
+	**/
 	public function new(?parent) {
 		dprim = new h3d.prim.DynamicPrimitive(hxd.BufferFormat.POS3D_NORMAL_UV);
 		super(dprim, null, parent);
@@ -39,6 +78,10 @@ class Trail extends Mesh {
 	function get_texture() return material.texture;
 	function set_texture(t) return material.texture = t;
 
+	/**
+		Returns the material properties for the current `h3d.mat.MaterialSetup`, creating them from the setup
+		defaults for `"trail3D"` if needed.
+	**/
 	public function getMaterialProps() {
 		var name = h3d.mat.MaterialSetup.current.name;
 		var p = Reflect.field(materialData, name);
@@ -49,10 +92,16 @@ class Trail extends Mesh {
 		return p;
 	}
 
+	/**
+		Removes all the points of the trail.
+	**/
 	public function clear() {
 		if( points.length > 0 ) points = [];
 	}
 
+	/**
+		Returns the trail parameters as a serializable object (the texture is stored by its resource path).
+	**/
 	public function save() : Dynamic {
 		return {
 			duration : duration,
@@ -67,6 +116,10 @@ class Trail extends Mesh {
 		};
 	}
 
+	/**
+		Loads the parameters returned by `save`. The texture is loaded from the resources, or replaced by a pink
+		texture if not found.
+	**/
 	public function load( obj : Dynamic ) {
 		for( f in Reflect.fields(obj) ) {
 			var v : Dynamic = Reflect.field(obj, f);

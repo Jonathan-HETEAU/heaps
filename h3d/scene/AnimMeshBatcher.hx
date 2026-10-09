@@ -1,5 +1,8 @@
 package h3d.scene;
 
+/**
+	Shader applying the animated transform of the source object to all the instances of an `AnimMeshBatch`.
+**/
 class AnimMeshBatchShader extends hxsl.Shader {
 	static var SRC = {
 		@param var animationMatrix : Mat4;
@@ -21,10 +24,16 @@ class AnimMeshBatchShader extends hxsl.Shader {
 	};
 }
 
+/**
+	A `MeshBatch` whose instances all follow the animated transform of a source mesh (see `AnimMeshBatcher`).
+**/
 class AnimMeshBatch extends MeshBatch {
 	var copyObject : Object;
 	var shader : AnimMeshBatchShader;
 
+	/**
+		Creates a batch of `primitive` whose instances copy the animated local transform of `copyObject`.
+	**/
 	public function new(primitive, material, copyObject, ?parent) {
 		super(primitive, material, parent);
 		shader = new AnimMeshBatchShader();
@@ -37,10 +46,23 @@ class AnimMeshBatch extends MeshBatch {
 	}
 }
 
+/**
+	Draws many copies of an animated object with instancing: one `MeshBatch` is created per mesh of the object, and
+	all the copies play the same animation in sync.
+
+	Only the transform of each mesh is animated (rigid animations): skeletal deformation is not supported.
+**/
 class AnimMeshBatcher extends Object {
 	var originalObject : Object;
 
 	var batches : Array<MeshBatch> = [];
+	/**
+		Creates the batches from `object`, which becomes a hidden child used as animation source.
+		@param object The object to copy. Play animations on the batcher with `playAnimation`.
+		@param spawn Called repeatedly to place the copies: it must fill the given matrix with the world transform of the
+		next copy and return `true`, or return `false` when there are no more copies.
+		@param parent An optional parent object.
+	**/
 	public function new(object : h3d.scene.Object, spawn : h3d.Matrix -> Bool, ?parent) {
 		super(parent);
 		originalObject = object;

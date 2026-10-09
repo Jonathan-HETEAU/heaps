@@ -2,6 +2,13 @@ package h3d.scene;
 
 import h3d.scene.MeshBatch.BatchData;
 
+/**
+	A `MeshBatch` using GPU driven rendering: the level of detail selection and the frustum culling of each instance
+	can be computed by a compute shader (see `enableGpuLod` and `enableGpuCulling`), and the instances are drawn with
+	indirect draw calls.
+
+	Requires compute shaders and indirect draws: not available on JavaScript and DirectX 11 (`hldx` without `dx12`).
+**/
 class GPUMeshBatch extends MeshBatch {
 
 	static var INDIRECT_DRAW_ARGUMENTS_FMT = hxd.BufferFormat.make([{ name : "", type : DVec4 }, { name : "", type : DFloat }]);
@@ -19,8 +26,17 @@ class GPUMeshBatch extends MeshBatch {
 	var subMeshesInfos : h3d.Buffer;
 	var subPartsInfos : h3d.Buffer;
 
+	/**
+		The pass holding the compute shaders run by `dispatch`.
+	**/
 	public var computePass : h3d.mat.Pass;
+	/**
+		The indirect draw commands written by the compute pass, one per material and instance.
+	**/
 	public var commandBuffer : h3d.Buffer;
+	/**
+		The GPU counter of the draw commands written by the compute pass.
+	**/
 	public var gpuCounter : h3d.GPUCounter;
 
 	var gpuLodEnabled : Bool;
@@ -32,6 +48,9 @@ class GPUMeshBatch extends MeshBatch {
 	*/
 	public var maxDistance : Float = -1;
 
+	/**
+		Creates a GPU driven mesh batch. Throws on platforms without compute shaders support.
+	**/
 	public function new(primitive, ?material, ?parent) {
 		super(primitive, material, parent);
 
@@ -268,6 +287,10 @@ class GPUMeshBatch extends MeshBatch {
 			dispatch(ctx);
 	}
 
+	/**
+		Runs the compute pass which selects the level of detail and culls the instances, writing the draw commands.
+		Called automatically when the batch is emitted.
+	**/
 	public function dispatch(ctx:RenderContext) {
 		if ( commandBuffer != null ) {
 			var computeShader = computePass.getShader(h3d.shader.InstanceIndirect.InstanceIndirectBase);
