@@ -1,5 +1,8 @@
 package h3d.scene.pbr;
 
+/**
+	Base shader of the environment lighting precomputations (importance sampling helpers).
+**/
 class IrradBase extends h3d.shader.ScreenShader {
 
 	static var SRC = {
@@ -38,6 +41,9 @@ class IrradBase extends h3d.shader.ScreenShader {
 
 }
 
+/**
+	Computes the diffuse irradiance and the prefiltered specular cube maps of an `Environment`.
+**/
 class IrradShader extends IrradBase {
 
 	static var SRC = {
@@ -113,6 +119,9 @@ class IrradShader extends IrradBase {
 
 }
 
+/**
+	Computes the BRDF lookup texture shared by all environments (see `Environment.getDefaultLUT`).
+**/
 class IrradLut extends IrradBase {
 
 	static var SRC = {
@@ -153,6 +162,9 @@ class IrradLut extends IrradBase {
 	}
 }
 
+/**
+	Converts an equirectangular (panorama) texture into the faces of a cube map.
+**/
 class PanoramaToCube extends h3d.shader.ScreenShader {
 
 	static var SRC = {
@@ -184,6 +196,9 @@ class PanoramaToCube extends h3d.shader.ScreenShader {
 	};
 }
 
+/**
+	Converts a cube map into an equirectangular (panorama) texture.
+**/
 class CubeToPanorama extends h3d.shader.ScreenShader {
 
 	static var SRC = {
@@ -209,33 +224,85 @@ class CubeToPanorama extends h3d.shader.ScreenShader {
 	};
 }
 
+/**
+	The environment lighting of the PBR renderer (image based lighting): the sky texture and the diffuse and specular
+	lighting textures computed from it, used for the indirect lighting and the reflections.
+
+	```haxe
+	var env = new h3d.scene.pbr.Environment(hxd.Res.sky.toTexture());
+	env.compute();
+	cast(s3d.renderer, h3d.scene.pbr.Renderer).env = env;
+	```
+**/
 class Environment {
 
 	static var DEFAULT_FORMAT : hxd.PixelFormat = RGBA32F;
 
+	/**
+		The number of samples used by `compute` is `2^sampleBits`.
+	**/
 	public var sampleBits : Int;
+	/**
+		The size of the diffuse irradiance cube map faces.
+	**/
 	public var diffSize : Int;
+	/**
+		The size of the specular cube map faces.
+	**/
 	public var specSize : Int;
+	/**
+		The number of mip levels of the specular cube map used for the roughness levels. Computed by `compute`.
+	**/
 	public var specLevels : Int;
+	/**
+		The number of smallest mip levels of the specular cube map not used for roughness levels.
+	**/
 	public var ignoredSpecLevels : Int = 1;
+	/**
+		The maximum color value of the source texture used by `compute`, which limits the fireflies caused by very bright pixels.
+	**/
 	public var hdrMax : Float = 10.0;
 
 	// 2D Texture - Panoramic
+	/**
+		The source texture: a cube map or an equirectangular (2:1) panorama.
+	**/
 	public var source : h3d.mat.Texture;
 
 	// Cube Texture - Source converted
+	/**
+		The source as a cube map, converted from `source` on first access if needed.
+	**/
 	public var env(get,null) : h3d.mat.Texture;
+	/**
+		The BRDF lookup texture, shared by all environments.
+	**/
 	public var lut(get,never) : h3d.mat.Texture;
+	/**
+		The diffuse irradiance cube map, computed by `compute`.
+	**/
 	public var diffuse : h3d.mat.Texture;
+	/**
+		The prefiltered specular cube map, with one mip level per roughness level, computed by `compute`.
+	**/
 	public var specular : h3d.mat.Texture;
 
+	/**
+		The intensity of the environment lighting is `power * power`. With `0` the environment does not light the scene.
+	**/
 	public var power : Float = 1.;
+	/**
+		The rotation of the environment around the Z axis, in radians.
+	**/
 	public var rotation : Float = 0.;
 
-	/*
-		Source can be cube map already prepared or a 2D equirectangular map that
-		will be turned into a cube map.
-	*/
+	/**
+		Creates an environment from `src`, which can be a cube map already prepared or a 2D equirectangular map that
+		will be turned into a cube map. Call `compute` to build the lighting textures.
+		@param diffSize The size of the diffuse irradiance cube map faces.
+		@param specSize The size of the specular cube map faces.
+		@param sampleBits The number of samples used to compute the textures is `2^sampleBits`.
+	**/
 	public function new( src : h3d.mat.Texture, ?diffSize = 64, ?specSize = 512, ?sampleBits = 12 ) {
 		this.source = src;
 		this.diffSize = diffSize;
@@ -252,6 +319,9 @@ class Environment {
 
 	static var LUT_PIXELS = null;
 
+	/**
+		Returns the BRDF lookup texture, computing it the first time.
+	**/
 	public static function getDefaultLUT() {
 		var engine = h3d.Engine.getCurrent();
 		var t : h3d.mat.Texture = @:privateAccess engine.resCache.get(IrradLut);
@@ -270,6 +340,11 @@ class Environment {
 		return t;
 	}
 
+	/**
+		Converts an equirectangular texture (twice as wide as high) to a cube map. Cube textures are returned unchanged.
+		@param threshold The color value above which `scale` is applied.
+		@param scale The multiplier applied to the colors above `threshold`.
+	**/
 	public static function equiToCube( source : h3d.mat.Texture, ?threshold = 1.0, ?scale = 1.0 ) {
 		if( source.flags.has(Loading) )
 			throw "Source is not ready";
@@ -293,6 +368,9 @@ class Environment {
 		return env;
 	}
 
+	/**
+		Releases the textures of the environment.
+	**/
 	public function dispose() {
 		if( @:bypassAccessor env != null ) env.dispose();
 		if( diffuse != null ) diffuse.dispose();
@@ -322,6 +400,9 @@ class Environment {
 			specular = createSpecularTexture();
 	}
 
+	/**
+		Computes the `diffuse` and `specular` lighting textures from the source. This is expensive: do it once, at load time.
+	**/
 	public function compute() {
 		createTextures();
 		computeIrradiance(diffuse, specular, env);
@@ -404,6 +485,9 @@ class Environment {
 		}
 	}
 
+	/**
+		Returns the default environment embedded in Heaps, with precomputed textures.
+	**/
 	public static function getDefault() {
 		var engine = h3d.Engine.getCurrent();
 		var e : Environment = @:privateAccess engine.resCache.get(Environment);
