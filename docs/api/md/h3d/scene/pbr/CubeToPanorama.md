@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../../shader/ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Converts a cube map into an equirectangular (panorama) texture.
+
 ## Constructor
 
 ### new

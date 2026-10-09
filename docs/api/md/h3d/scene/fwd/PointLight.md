@@ -4,6 +4,11 @@
 
 Extends: [`h3d.scene.fwd.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A point light of the forward renderer, shining in all directions from its position.
+
+Its intensity at distance `d` is divided by `params.x + params.y * d + params.z * d²`.
+The light is culled when this attenuated intensity falls below 1/128 outside of the camera view.
+
 ## Constructor
 
 ### new
@@ -12,6 +17,8 @@ Extends: [`h3d.scene.fwd.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 function new(?parent:h3d.scene.Object):Void
 ```
 
+Creates a point light.
+
 ## Variables
 
 ### params
@@ -19,6 +26,8 @@ function new(?parent:h3d.scene.Object):Void
 ```haxe
 var params(get, set):h3d.Vector
 ```
+
+The attenuation coefficients: `x` constant, `y` linear and `z` quadratic.
 
 ## Inherited members
 

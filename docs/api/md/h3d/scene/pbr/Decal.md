@@ -4,6 +4,9 @@
 
 Extends: [`h3d.scene.Mesh`](../Mesh.md) → [`h3d.scene.Object`](../Object.md)
 
+A projected decal for the PBR renderer: a box volume (usually a unit cube) whose material uses a
+`h3d.shader.pbr.VolumeDecal` shader to project a texture on the surfaces inside the box.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.scene.Mesh`](../Mesh.md) → [`h3d.scene.Object`](../Object.md)
 ```haxe
 function new(primitive:h3d.prim.Primitive, ?material:h3d.mat.Material, ?parent:h3d.scene.Object):Void
 ```
+
+Creates a decal using the given volume primitive and material.
 
 ## Inherited members
 

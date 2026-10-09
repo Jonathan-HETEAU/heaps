@@ -4,6 +4,8 @@
 
 Extends: [`h3d.shader.ScreenShader`](../../shader/ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Copies a depth channel texture to the output color.
+
 ## Constructor
 
 ### new

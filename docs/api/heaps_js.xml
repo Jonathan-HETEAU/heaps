@@ -42514,52 +42514,75 @@
 		<priority public="1" expr="0">
 			<x path="Int"/>
 			<meta><m n=":value"><e>0</e></m></meta>
+			<haxe_doc>When an object is lit by more lights than `LightSystem.maxLightsPerObject`, lights with a higher priority are
+		kept first, then the nearest ones.</haxe_doc>
 		</priority>
-		<enableSpecular public="1" get="accessor" set="accessor"><x path="Bool"/></enableSpecular>
-		<get_enableSpecular set="method" line="10"><f a=""><x path="Bool"/></f></get_enableSpecular>
-		<set_enableSpecular set="method" line="14"><f a="b">
+		<enableSpecular public="1" get="accessor" set="accessor">
+			<x path="Bool"/>
+			<haxe_doc>Enables the specular highlights of this light. Not supported by all lights (throws when enabled on those).</haxe_doc>
+		</enableSpecular>
+		<get_enableSpecular set="method" line="21"><f a=""><x path="Bool"/></f></get_enableSpecular>
+		<set_enableSpecular set="method" line="25"><f a="b">
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_enableSpecular>
-		<new public="1" set="method" line="3"><f a="shader:?parent">
+		<new public="1" set="method" line="7"><f a="shader:?parent">
 	<c path="hxsl.Shader"/>
 	<c path="h3d.scene.Object"/>
 	<x path="Void"/>
 </f></new>
+		<haxe_doc>Base class of the lights of the forward renderer (`h3d.scene.fwd.Renderer`, the default renderer).
+	See `DirLight` and `PointLight`.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.fwd.DirLight" params="" file="/home/user/heaps/h3d/scene/fwd/DirLight.hx">
 		<extends path="h3d.scene.fwd.Light"/>
 		<dshader><c path="h3d.shader.DirLight"/></dshader>
-		<get_color set="method" line="14" override="1"><f a=""><t path="hxsl.Vec"/></f></get_color>
-		<set_color set="method" line="18" override="1"><f a="v">
+		<get_color set="method" line="29" override="1"><f a=""><t path="hxsl.Vec"/></f></get_color>
+		<set_color set="method" line="33" override="1"><f a="v">
 	<t path="hxsl.Vec"/>
 	<t path="hxsl.Vec"/>
 </f></set_color>
-		<get_enableSpecular set="method" line="22" override="1"><f a=""><x path="Bool"/></f></get_enableSpecular>
-		<set_enableSpecular set="method" line="26" override="1"><f a="b">
+		<get_enableSpecular set="method" line="37" override="1"><f a=""><x path="Bool"/></f></get_enableSpecular>
+		<set_enableSpecular set="method" line="41" override="1"><f a="b">
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_enableSpecular>
-		<getShadowDirection public="1" set="method" line="30" override="1"><f a="?v">
+		<getShadowDirection public="1" set="method" line="45" override="1"><f a="?v">
 	<x path="h3d.Vector"/>
 	<x path="h3d.Vector"/>
 </f></getShadowDirection>
-		<emit set="method" line="36" override="1"><f a="ctx">
+		<emit set="method" line="51" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<new public="1" set="method" line="7"><f a="?dir:?parent">
-	<x path="h3d.Vector"/>
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="22">
+			<f a="?dir:?parent">
+				<x path="h3d.Vector"/>
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a directional light, with a `priority` of 100.
+		@param dir The light direction (towards which the light shines).
+		@param parent An optional parent object.</haxe_doc>
+		</new>
+		<haxe_doc>A directional light of the forward renderer, such as the sun: its rays are parallel and it has no position.
+
+	The light direction is the X axis of the object (see `Object.setDirection`).
+
+	```haxe
+	var light = new h3d.scene.fwd.DirLight(new h3d.Vector(0.5, 0.5, -0.5), s3d);
+	light.color.set(1, 1, 1);
+	```</haxe_doc>
 	</class>
 	<class path="h3d.scene.fwd.LightSystem" params="" file="/home/user/heaps/h3d/scene/fwd/LightSystem.hx">
 		<extends path="h3d.scene.LightSystem"/>
 		<maxLightsPerObject public="1" expr="6">
 			<x path="Int"/>
 			<meta><m n=":value"><e>6</e></m></meta>
+			<haxe_doc>The maximum number of lights applied to an object. When there are more lights, the lights with the highest
+		`Light.priority` are kept first, then the lights nearest to the object (or to the camera target for objects
+		with `Object.lightCameraCenter`).</haxe_doc>
 		</maxLightsPerObject>
 		<globals><c path="hxsl.Globals"/></globals>
 		<ambientShader><c path="hxsl.Shader"/></ambientShader>
@@ -42567,67 +42590,86 @@
 		<perPixelLighting public="1" expr="true">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>true</e></m></meta>
+			<haxe_doc>Computes the lighting per pixel. If `false`, it is computed per vertex (faster, less precise).</haxe_doc>
 		</perPixelLighting>
-		<ambientLight public="1" set="null"><x path="h3d.Vector"/></ambientLight>
+		<ambientLight public="1" set="null">
+			<x path="h3d.Vector"/>
+			<haxe_doc>The ambient light color, added to all the lit objects (`0.5, 0.5, 0.5` by default). Modify its components.</haxe_doc>
+		</ambientLight>
 		<additiveLighting public="1" get="accessor" set="accessor">
 			<x path="Bool"/>
 			<haxe_doc>In the additive lighting model (by default), the lights are added after the ambient.
 		In the new non additive ligthning model, the lights will be modulated against the ambient, so an ambient of 1 will reduce lights intensities to 0.</haxe_doc>
 		</additiveLighting>
-		<get_additiveLighting set="method" line="25"><f a=""><x path="Bool"/></f></get_additiveLighting>
-		<set_additiveLighting set="method" line="29"><f a="b">
+		<get_additiveLighting set="method" line="43"><f a=""><x path="Bool"/></f></get_additiveLighting>
+		<set_additiveLighting set="method" line="47"><f a="b">
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_additiveLighting>
-		<initLights public="1" set="method" line="33" override="1"><f a="ctx">
+		<initLights public="1" set="method" line="51" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></initLights>
-		<initGlobals public="1" set="method" line="42" override="1"><f a="globals">
+		<initGlobals public="1" set="method" line="60" override="1"><f a="globals">
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></initGlobals>
-		<cullLights set="method" line="47"><f a=""><x path="Void"/></f></cullLights>
-		<sortLight set="method" line="75"><f a="l1:l2">
+		<cullLights set="method" line="65"><f a=""><x path="Void"/></f></cullLights>
+		<sortLight set="method" line="93"><f a="l1:l2">
 	<c path="h3d.scene.fwd.Light"/>
 	<c path="h3d.scene.fwd.Light"/>
 	<x path="Int"/>
 </f></sortLight>
-		<computeLight public="1" set="method" line="81" override="1"><f a="obj:shaders">
+		<computeLight public="1" set="method" line="99" override="1"><f a="obj:shaders">
 	<c path="h3d.scene.Object"/>
 	<c path="hxsl.ShaderList"/>
 	<c path="hxsl.ShaderList"/>
 </f></computeLight>
-		<new public="1" set="method" line="18"><f a=""><x path="Void"/></f></new>
+		<new public="1" set="method" line="36">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the light system.</haxe_doc>
+		</new>
+		<haxe_doc>The light system of the forward renderer: each object is drawn with the ambient light and up to
+	`maxLightsPerObject` lights shaders.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.fwd.PointLight" params="" file="/home/user/heaps/h3d/scene/fwd/PointLight.hx">
 		<extends path="h3d.scene.fwd.Light"/>
 		<pshader><c path="h3d.shader.PointLight"/></pshader>
-		<params public="1" get="accessor" set="accessor"><x path="h3d.Vector"/></params>
-		<get_color set="method" line="13" override="1"><f a=""><t path="hxsl.Vec"/></f></get_color>
-		<set_color set="method" line="17" override="1"><f a="v">
+		<params public="1" get="accessor" set="accessor">
+			<x path="h3d.Vector"/>
+			<haxe_doc>The attenuation coefficients: `x` constant, `y` linear and `z` quadratic.</haxe_doc>
+		</params>
+		<get_color set="method" line="25" override="1"><f a=""><t path="hxsl.Vec"/></f></get_color>
+		<set_color set="method" line="29" override="1"><f a="v">
 	<t path="hxsl.Vec"/>
 	<t path="hxsl.Vec"/>
 </f></set_color>
-		<get_enableSpecular set="method" line="21" override="1"><f a=""><x path="Bool"/></f></get_enableSpecular>
-		<set_enableSpecular set="method" line="25" override="1"><f a="b">
+		<get_enableSpecular set="method" line="33" override="1"><f a=""><x path="Bool"/></f></get_enableSpecular>
+		<set_enableSpecular set="method" line="37" override="1"><f a="b">
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_enableSpecular>
-		<get_params get="inline" set="null" line="29"><f a=""><x path="h3d.Vector"/></f></get_params>
-		<set_params get="inline" set="null" line="33"><f a="p">
+		<get_params get="inline" set="null" line="41"><f a=""><x path="h3d.Vector"/></f></get_params>
+		<set_params get="inline" set="null" line="45"><f a="p">
 	<x path="h3d.Vector"/>
 	<x path="h3d.Vector"/>
 </f></set_params>
-		<emit set="method" line="37" override="1"><f a="ctx">
+		<emit set="method" line="49" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<new public="1" set="method" line="8"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="20">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a point light.</haxe_doc>
+		</new>
+		<haxe_doc>A point light of the forward renderer, shining in all directions from its position.
+
+	Its intensity at distance `d` is divided by `params.x + params.y * d + params.z * d²`.
+	The light is culled when this attenuated intensity falls below 1/128 outside of the camera view.</haxe_doc>
 	</class>
 	<class path="h3d.scene.fwd.DepthPass" params="" file="/home/user/heaps/h3d/scene/fwd/Renderer.hx" module="h3d.scene.fwd.Renderer">
 		<extends path="h3d.pass.Output"/>
@@ -42635,8 +42677,9 @@
 		<enableSky public="1" expr="false">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>false</e></m></meta>
+			<haxe_doc>If `true`, the depth texture is cleared to zero instead of the maximum depth.</haxe_doc>
 		</enableSky>
-		<draw public="1" set="method" line="13" override="1"><f a="passes:?sort">
+		<draw public="1" set="method" line="22" override="1"><f a="passes:?sort">
 	<c path="h3d.pass.PassList"/>
 	<f a="">
 		<c path="h3d.pass.PassList"/>
@@ -42644,13 +42687,17 @@
 	</f>
 	<x path="Void"/>
 </f></draw>
-		<new public="1" set="method" line="8"><f a=""><x path="Void"/></f></new>
+		<new public="1" set="method" line="17">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the depth pass.</haxe_doc>
+		</new>
+		<haxe_doc>Renders the objects having a `"depth"` pass into the `depthMap` shader global (a packed depth texture).</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.fwd.NormalPass" params="" file="/home/user/heaps/h3d/scene/fwd/Renderer.hx" module="h3d.scene.fwd.Renderer">
 		<extends path="h3d.pass.Output"/>
 		<normalMapId><x path="Int"/></normalMapId>
-		<draw public="1" set="method" line="33" override="1"><f a="passes:?sort">
+		<draw public="1" set="method" line="48" override="1"><f a="passes:?sort">
 	<c path="h3d.pass.PassList"/>
 	<f a="">
 		<c path="h3d.pass.PassList"/>
@@ -42658,7 +42705,11 @@
 	</f>
 	<x path="Void"/>
 </f></draw>
-		<new public="1" set="method" line="28"><f a=""><x path="Void"/></f></new>
+		<new public="1" set="method" line="43">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the normal pass.</haxe_doc>
+		</new>
+		<haxe_doc>Renders the objects having a `"normal"` pass into the `normalMap` shader global (a packed normal texture).</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.fwd.Renderer" params="" file="/home/user/heaps/h3d/scene/fwd/Renderer.hx">
@@ -42667,17 +42718,20 @@
 		<depth public="1" expr="new DepthPass()">
 			<c path="h3d.pass.Output"/>
 			<meta><m n=":value"><e>new DepthPass()</e></m></meta>
+			<haxe_doc>The pass rendering the `"depth"` objects.</haxe_doc>
 		</depth>
 		<normal public="1" expr="new NormalPass()">
 			<c path="h3d.pass.Output"/>
 			<meta><m n=":value"><e>new NormalPass()</e></m></meta>
+			<haxe_doc>The pass rendering the `"normal"` objects.</haxe_doc>
 		</normal>
 		<shadow public="1" expr="new h3d.pass.DefaultShadowMap(1024)">
 			<c path="h3d.pass.DefaultShadowMap"/>
 			<meta><m n=":value"><e>new h3d.pass.DefaultShadowMap(1024)</e></m></meta>
+			<haxe_doc>The shadow map of the shadow light (1024x1024 pixels).</haxe_doc>
 		</shadow>
-		<get_def get="inline" set="null" line="57"><f a=""><c path="h3d.pass.Output"/></f></get_def>
-		<renderPass set="method" line="60"><f a="p:passes:?sort">
+		<get_def get="inline" set="null" line="91"><f a=""><c path="h3d.pass.Output"/></f></get_def>
+		<renderPass set="method" line="94"><f a="p:passes:?sort">
 	<c path="h3d.pass.Output"/>
 	<c path="h3d.pass.PassList"/>
 	<f a="">
@@ -42686,12 +42740,20 @@
 	</f>
 	<x path="Void"/>
 </f></renderPass>
-		<getPassByName public="1" set="method" line="64" override="1"><f a="name">
+		<getPassByName public="1" set="method" line="98" override="1"><f a="name">
 	<c path="String"/>
 	<c path="h3d.pass.Output"/>
 </f></getPassByName>
-		<render set="method" line="70" override="1"><f a=""><x path="Void"/></f></render>
-		<new public="1" set="method" line="51"><f a=""><x path="Void"/></f></new>
+		<render set="method" line="104" override="1"><f a=""><x path="Void"/></f></render>
+		<new public="1" set="method" line="85">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the renderer.</haxe_doc>
+		</new>
+		<haxe_doc>The forward renderer, used by default (see `h3d.mat.MaterialSetup`).
+
+	Objects are drawn directly to the output with their lights (see `LightSystem`), in this order:
+	the `"shadow"`, `"depth"` and `"normal"` passes to their textures if used, then the `"default"`, `"alpha"`
+	(sorted back to front) and `"additive"` passes.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.Light" params="" file="/home/user/heaps/h3d/scene/pbr/Light.hx">
@@ -42701,41 +42763,62 @@
 		<power public="1" expr="1.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>1.</e></m></meta>
+			<haxe_doc>The light power. The intensity is `power * power` (scaled by 100 for point and capsule lights).</haxe_doc>
 		</power>
-		<shadows public="1"><c path="h3d.pass.Shadows"/></shadows>
+		<shadows public="1">
+			<c path="h3d.pass.Shadows"/>
+			<haxe_doc>The shadow map of the light. Shadows are disabled by default: set `shadows.mode` to enable them.</haxe_doc>
+		</shadows>
 		<isMainLight public="1" expr="false">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>false</e></m></meta>
+			<haxe_doc>If `true`, the light color, power, position, direction and shadow map are exposed to the shaders as the
+		`mainLight*` globals (`mainLightColor`, `mainLightPower`, `mainLightPos`, `mainLightDir`, `mainLightShadowMap`,
+		`mainLightViewProj`).</haxe_doc>
 		</isMainLight>
 		<occlusionFactor public="1" expr="0.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
+			<haxe_doc>How much the material ambient occlusion attenuates this light, from `0` (not at all) to `1` (fully).</haxe_doc>
 		</occlusionFactor>
 		<enableForward public="1" expr="true">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>true</e></m></meta>
+			<haxe_doc>If `true`, the light also lights the objects drawn in the forward passes (`"forward"` and `"forwardAlpha"`),
+		such as transparent objects.</haxe_doc>
 		</enableForward>
-		<onRemove set="method" line="19" override="1"><f a=""><x path="Void"/></f></onRemove>
-		<sync set="method" line="24" override="1"><f a="ctx">
+		<onRemove set="method" line="44" override="1"><f a=""><x path="Void"/></f></onRemove>
+		<sync set="method" line="49" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></sync>
-		<get_color set="method" line="36" override="1"><f a=""><x path="h3d.Vector"/></f></get_color>
-		<set_color set="method" line="40" override="1"><f a="v">
+		<get_color set="method" line="61" override="1"><f a=""><x path="h3d.Vector"/></f></get_color>
+		<set_color set="method" line="65" override="1"><f a="v">
 	<x path="h3d.Vector"/>
 	<x path="h3d.Vector"/>
 </f></set_color>
-		<getIntensity public="1" set="method" line="44"><f a=""><x path="Float"/></f></getIntensity>
-		<inFrustum public="1" set="method" line="48"><f a="frustum">
-	<c path="h3d.col.Frustum"/>
-	<x path="Bool"/>
-</f></inFrustum>
-		<getParentScale set="method" line="52"><f a=""><x path="Float"/></f></getParentScale>
-		<new set="method" line="13"><f a="shader:?parent">
+		<getIntensity public="1" set="method" line="72">
+			<f a=""><x path="Float"/></f>
+			<haxe_doc>Returns the light intensity, computed from `power`.</haxe_doc>
+		</getIntensity>
+		<inFrustum public="1" set="method" line="79">
+			<f a="frustum">
+				<c path="h3d.col.Frustum"/>
+				<x path="Bool"/>
+			</f>
+			<haxe_doc>Tells if the light volume intersects `frustum`. Lights outside of the camera frustum are not drawn.</haxe_doc>
+		</inFrustum>
+		<getParentScale set="method" line="83"><f a=""><x path="Float"/></f></getParentScale>
+		<new set="method" line="38"><f a="shader:?parent">
 	<c path="hxsl.Shader"/>
 	<c path="h3d.scene.Object"/>
 	<x path="Void"/>
 </f></new>
+		<haxe_doc>Base class of the lights of the PBR renderer (`h3d.scene.pbr.Renderer`).
+
+	Lights with a volume (point, spot, capsule, rectangle) are drawn as their volume in the lighting pass, so they only
+	cost for the pixels they cover. Each light owns its `shadows` map.
+	See `DirLight`, `PointLight`, `SpotLight`, `CapsuleLight` and `RectangleLight`.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.CapsuleLight" params="" file="/home/user/heaps/h3d/scene/pbr/CapsuleLight.hx">
@@ -42744,39 +42827,42 @@
 		<radius public="1" expr="0.5">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.5</e></m></meta>
+			<haxe_doc>The radius of the light source.</haxe_doc>
 		</radius>
 		<length public="1" set="accessor" expr="1.0">
 			<x path="Float"/>
 			<meta><m n=":value"><e>1.0</e></m></meta>
+			<haxe_doc>The length of the light segment, along the X axis.</haxe_doc>
 		</length>
 		<zNear public="1" expr="0.02">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.02</e></m></meta>
+			<haxe_doc>The near plane distance of the shadow map cameras.</haxe_doc>
 		</zNear>
 		<range public="1" get="accessor" set="accessor">
 			<x path="Float"/>
 			<haxe_doc>Alias for uniform scale.</haxe_doc>
 		</range>
-		<clone public="1" set="method" line="21" override="1"><f a="?o">
+		<clone public="1" set="method" line="37" override="1"><f a="?o">
 	<c path="h3d.scene.Object"/>
 	<c path="h3d.scene.Object"/>
 </f></clone>
-		<get_range set="method" line="30"><f a=""><x path="Float"/></f></get_range>
-		<updatePrim set="method" line="34"><f a=""><x path="Void"/></f></updatePrim>
-		<set_range set="method" line="40"><f a="v">
+		<get_range set="method" line="46"><f a=""><x path="Float"/></f></get_range>
+		<updatePrim set="method" line="50"><f a=""><x path="Void"/></f></updatePrim>
+		<set_range set="method" line="56"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_range>
-		<getIntensity public="1" set="method" line="46" override="1"><f a=""><x path="Float"/></f></getIntensity>
-		<set_length set="method" line="51"><f a="v">
+		<getIntensity public="1" set="method" line="62" override="1"><f a=""><x path="Float"/></f></getIntensity>
+		<set_length set="method" line="67"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_length>
-		<draw set="method" line="57" override="1"><f a="ctx">
+		<draw set="method" line="73" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></draw>
-		<sync set="method" line="61" override="1"><f a="ctx">
+		<sync set="method" line="77" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></sync>
@@ -42784,59 +42870,79 @@
 			<c path="h3d.col.Sphere"/>
 			<meta><m n=":value"><e>new h3d.col.Sphere()</e></m></meta>
 		</s>
-		<emit set="method" line="76" override="1"><f a="ctx">
+		<emit set="method" line="92" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<inFrustum public="1" set="method" line="98" override="1"><f a="frustum">
+		<inFrustum public="1" set="method" line="114" override="1"><f a="frustum">
 	<c path="h3d.col.Frustum"/>
 	<x path="Bool"/>
 </f></inFrustum>
-		<new public="1" set="method" line="14"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="30">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a capsule light with a range of 10.</haxe_doc>
+		</new>
+		<haxe_doc>A capsule shaped light of the PBR renderer (a segment of `length` along the X axis, with a `radius`),
+	such as a neon tube, up to `range`.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.Decal" params="" file="/home/user/heaps/h3d/scene/pbr/Decal.hx">
 		<extends path="h3d.scene.Mesh"/>
-		<emit set="method" line="9" override="1"><f a="ctx">
+		<emit set="method" line="16" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<new public="1" set="method" line="5"><f a="primitive:?material:?parent">
-	<c path="h3d.prim.Primitive"/>
-	<c path="h3d.mat.Material"/>
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="12">
+			<f a="primitive:?material:?parent">
+				<c path="h3d.prim.Primitive"/>
+				<c path="h3d.mat.Material"/>
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a decal using the given volume primitive and material.</haxe_doc>
+		</new>
+		<haxe_doc>A projected decal for the PBR renderer: a box volume (usually a unit cube) whose material uses a
+	`h3d.shader.pbr.VolumeDecal` shader to project a texture on the surfaces inside the box.</haxe_doc>
 	</class>
 	<class path="h3d.scene.pbr.DirLight" params="" file="/home/user/heaps/h3d/scene/pbr/DirLight.hx">
 		<extends path="h3d.scene.pbr.Light"/>
 		<pbr><c path="h3d.shader.pbr.DirLight"/></pbr>
-		<clone public="1" set="method" line="14" override="1"><f a="?o">
+		<clone public="1" set="method" line="26" override="1"><f a="?o">
 	<c path="h3d.scene.Object"/>
 	<c path="h3d.scene.Object"/>
 </f></clone>
-		<getShadowDirection public="1" set="method" line="20" override="1"><f a="?v">
+		<getShadowDirection public="1" set="method" line="32" override="1"><f a="?v">
 	<x path="h3d.Vector"/>
 	<x path="h3d.Vector"/>
 </f></getShadowDirection>
-		<emit set="method" line="26" override="1"><f a="ctx">
+		<emit set="method" line="38" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<new public="1" set="method" line="7"><f a="?dir:?parent:?cascade">
-	<x path="h3d.Vector"/>
-	<c path="h3d.scene.Object"/>
-	<x path="Bool"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="19">
+			<f a="?dir:?parent:?cascade">
+				<x path="h3d.Vector"/>
+				<c path="h3d.scene.Object"/>
+				<x path="Bool"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a directional light.
+		@param dir The light direction (towards which the light shines).
+		@param parent An optional parent object.
+		@param cascade If `true`, uses cascaded shadow maps (`h3d.pass.CascadeShadowMap`), better for large scenes.
+		Otherwise uses a single `h3d.pass.DirShadowMap`.</haxe_doc>
+		</new>
+		<haxe_doc>A directional light of the PBR renderer, such as the sun: its rays are parallel and it lights the whole scene.
+
+	The light direction is the X axis of the object (see `Object.setDirection`).</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.IrradBase" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx" module="h3d.scene.pbr.Environment">
 		<extends path="h3d.shader.ScreenShader"/>
-		<SRC expr="&quot;HXSMF2gzZC5zY2VuZS5wYnIuSXJyYWRCYXNlCwEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgtzYW1wbGVzQml0cwECAAEAAAAAAAsIX19pbml0X18OBgAADAZ2ZXJ0ZXgOBgAADQxfcmV2ZXJzZWJpdHMOBgAADgpoYW1tZXJzbGV5DgYAAA8TaW1wb3J0YW5jZVNhbXBsZUdHWA4GAAAFAgsAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAAMAAAFAQYEAgYFDAkDKw4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAAMNARABaQEEAAABBQYIEQFyAQQAAAYMBAYQAhABAQIQAAAAAQEBBAYSAhABAQIQAAAAAQEBAQAGBAIRAQYMBAYQBAYLAhEBAQL/AP8AAQEBAQIIAAAAAQEBBAYSBAYLAhEBAQIA/wD/AQEBAQIIAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIPDw8PAQEBAQIEAAAAAQEBBAYSBAYLAhEBAQLw8PDwAQEBAQIEAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIzMzMzAQEBAQICAAAAAQEBBAYSBAYLAhEBAQLMzMzMAQEBAQICAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQJVVVVVAQEBAQIBAAAAAQEBBAYSBAYLAhEBAQKqqqqqAQEBAQIBAAAAAQEBAQENAhEBAAADDgISAWkBBAAAEwNtYXgBBAAABQoFAggUAnJpAwQAAAYBCQMnDgEJAg0OAQISAQEDAQMAAAAAAADwPQMDAA0JAykOAgYCCQMnDgECEgEDCQMnDgECEwEDAwIUAwUKAAADDwMVCXJvdWdobmVzcwMEAAAWAXAFCgQAABcBbgULBAAABQsFCQgYAWEDBAAABgECFQMCFQMDAAgZA3BoaQMEAAAGAQYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMKAhYFCgAAAwMACBoEY29zVAMEAAAJAxUOAgkDDQ4BBgIEBgMBAwAAAAAAAPA/AwoCFgUKBAADAwMEBgABAwAAAAAAAPA/AwYBBAYDBgECGAMCGAMDAQMAAAAAAADwPwMDAwoCFgUKBAADAwMDAwMBAwAAAAAAAPA/AwMACBsEc2luVAMEAAAJAw0OAQYDAQMAAAAAAADwPwMGAQIaAwIaAwMDAwAIHARsdGFuBQsEAAAJAyoOAwYBAhsDCQMDDgECGQMDAwYBAhsDCQMCDgECGQMDAwIaAwULAAgdAnVwBQsEAAALBgkJAw8OAQoCFwULCAADAwEDK4cW2c737z8DAgkDKg4DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQsJAyoOAwEDAAAAAAAA8D8DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwULBQsACB4EdGFuWAULBAAACQMgDgEJAx8OAgIdBQsCFwULBQsFCwAIHwR0YW5ZBQsEAAAJAyAOAQkDHw4CAhcFCwIeBQsFCwULAA0JAyAOAQQGAAYABgECHgULCgIcBQsAAAMFCwYBAh8FCwoCHAULBAADBQsFCwYBAhcFCwoCHAULCAADBQsFCwULBQsAAA&quot;" line="5" static="1">
+		<SRC expr="&quot;HXSMF2gzZC5zY2VuZS5wYnIuSXJyYWRCYXNlCwEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgtzYW1wbGVzQml0cwECAAEAAAAAAAsIX19pbml0X18OBgAADAZ2ZXJ0ZXgOBgAADQxfcmV2ZXJzZWJpdHMOBgAADgpoYW1tZXJzbGV5DgYAAA8TaW1wb3J0YW5jZVNhbXBsZUdHWA4GAAAFAgsAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAAMAAAFAQYEAgYFDAkDKw4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAAMNARABaQEEAAABBQYIEQFyAQQAAAYMBAYQAhABAQIQAAAAAQEBBAYSAhABAQIQAAAAAQEBAQAGBAIRAQYMBAYQBAYLAhEBAQL/AP8AAQEBAQIIAAAAAQEBBAYSBAYLAhEBAQIA/wD/AQEBAQIIAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIPDw8PAQEBAQIEAAAAAQEBBAYSBAYLAhEBAQLw8PDwAQEBAQIEAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIzMzMzAQEBAQICAAAAAQEBBAYSBAYLAhEBAQLMzMzMAQEBAQICAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQJVVVVVAQEBAQIBAAAAAQEBBAYSBAYLAhEBAQKqqqqqAQEBAQIBAAAAAQEBAQENAhEBAAADDgISAWkBBAAAEwNtYXgBBAAABQoFAggUAnJpAwQAAAYBCQMnDgEJAg0OAQISAQEDAQMAAAAAAADwPQMDAA0JAykOAgYCCQMnDgECEgEDCQMnDgECEwEDAwIUAwUKAAADDwMVCXJvdWdobmVzcwMEAAAWAXAFCgQAABcBbgULBAAABQsFCQgYAWEDBAAABgECFQMCFQMDAAgZA3BoaQMEAAAGAQYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMKAhYFCgAAAwMACBoEY29zVAMEAAAJAxUOAgkDDQ4BBgIEBgMBAwAAAAAAAPA/AwoCFgUKBAADAwMEBgABAwAAAAAAAPA/AwYBBAYDBgECGAMCGAMDAQMAAAAAAADwPwMDAwoCFgUKBAADAwMDAwMBAwAAAAAAAPA/AwMACBsEc2luVAMEAAAJAw0OAQYDAQMAAAAAAADwPwMGAQIaAwIaAwMDAwAIHARsdGFuBQsEAAAJAyoOAwYBAhsDCQMDDgECGQMDAwYBAhsDCQMCDgECGQMDAwIaAwULAAgdAnVwBQsEAAALBgkJAw8OAQoCFwULCAADAwEDK4cW2c737z8DAgkDKg4DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQsJAyoOAwEDAAAAAAAA8D8DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwULBQsACB4EdGFuWAULBAAACQMgDgEJAx8OAgIdBQsCFwULBQsFCwAIHwR0YW5ZBQsEAAAJAyAOAQkDHw4CAhcFCwIeBQsFCwULAA0JAyAOAQQGAAYABgECHgULCgIcBQsAAAMFCwYBAh8FCwoCHAULBAADBQsFCwYBAhcFCwoCHAULCAADBQsFCwULBQsAAA&quot;" line="8" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"HXSMF2gzZC5zY2VuZS5wYnIuSXJyYWRCYXNlCwEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgtzYW1wbGVzQml0cwECAAEAAAAAAAsIX19pbml0X18OBgAADAZ2ZXJ0ZXgOBgAADQxfcmV2ZXJzZWJpdHMOBgAADgpoYW1tZXJzbGV5DgYAAA8TaW1wb3J0YW5jZVNhbXBsZUdHWA4GAAAFAgsAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAAMAAAFAQYEAgYFDAkDKw4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAAMNARABaQEEAAABBQYIEQFyAQQAAAYMBAYQAhABAQIQAAAAAQEBBAYSAhABAQIQAAAAAQEBAQAGBAIRAQYMBAYQBAYLAhEBAQL/AP8AAQEBAQIIAAAAAQEBBAYSBAYLAhEBAQIA/wD/AQEBAQIIAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIPDw8PAQEBAQIEAAAAAQEBBAYSBAYLAhEBAQLw8PDwAQEBAQIEAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQIzMzMzAQEBAQICAAAAAQEBBAYSBAYLAhEBAQLMzMzMAQEBAQICAAAAAQEBAQEGBAIRAQYMBAYQBAYLAhEBAQJVVVVVAQEBAQIBAAAAAQEBBAYSBAYLAhEBAQKqqqqqAQEBAQIBAAAAAQEBAQENAhEBAAADDgISAWkBBAAAEwNtYXgBBAAABQoFAggUAnJpAwQAAAYBCQMnDgEJAg0OAQISAQEDAQMAAAAAAADwPQMDAA0JAykOAgYCCQMnDgECEgEDCQMnDgECEwEDAwIUAwUKAAADDwMVCXJvdWdobmVzcwMEAAAWAXAFCgQAABcBbgULBAAABQsFCQgYAWEDBAAABgECFQMCFQMDAAgZA3BoaQMEAAAGAQYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMKAhYFCgAAAwMACBoEY29zVAMEAAAJAxUOAgkDDQ4BBgIEBgMBAwAAAAAAAPA/AwoCFgUKBAADAwMEBgABAwAAAAAAAPA/AwYBBAYDBgECGAMCGAMDAQMAAAAAAADwPwMDAwoCFgUKBAADAwMDAwMBAwAAAAAAAPA/AwMACBsEc2luVAMEAAAJAw0OAQYDAQMAAAAAAADwPwMGAQIaAwIaAwMDAwAIHARsdGFuBQsEAAAJAyoOAwYBAhsDCQMDDgECGQMDAwYBAhsDCQMCDgECGQMDAwIaAwULAAgdAnVwBQsEAAALBgkJAw8OAQoCFwULCAADAwEDK4cW2c737z8DAgkDKg4DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQsJAyoOAwEDAAAAAAAA8D8DAQMAAAAAAAAAAAMBAwAAAAAAAAAAAwULBQsACB4EdGFuWAULBAAACQMgDgEJAx8OAgIdBQsCFwULBQsFCwAIHwR0YW5ZBQsEAAAJAyAOAQkDHw4CAhcFCwIeBQsFCwULAA0JAyAOAQQGAAYABgECHgULCgIcBQsAAAMFCwYBAh8FCwoCHAULBAADBQsFCwYBAhcFCwoCHAULCAADBQsFCwULBQsAAA"</e></m>
@@ -42884,23 +42990,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="5" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="8" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="5" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="8" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="5" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="8" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="5" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="3"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="8" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="6"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Base shader of the environment lighting precomputations (importance sampling helpers).</haxe_doc>
 		<meta>
 			<m n=":src"><e><![CDATA[{
 	@const var samplesBits:Int;
@@ -42934,7 +43041,7 @@
 	</class>
 	<class path="h3d.scene.pbr.IrradShader" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx" module="h3d.scene.pbr.Environment">
 		<extends path="h3d.scene.pbr.IrradBase"/>
-		<SRC expr="&quot;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&quot;" line="43" static="1">
+		<SRC expr="&quot;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&quot;" line="49" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"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"</e></m>
@@ -43163,23 +43270,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="43" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="49" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="43" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="49" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="43" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="49" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="43" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="41"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="49" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="47"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Computes the diffuse irradiance and the prefiltered specular cube maps of an `Environment`.</haxe_doc>
 		<meta>
 			<m n=":directlyUsed"/>
 			<m n=":src"><e><![CDATA[{
@@ -43243,7 +43351,7 @@
 	</class>
 	<class path="h3d.scene.pbr.IrradLut" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx" module="h3d.scene.pbr.Environment">
 		<extends path="h3d.scene.pbr.IrradBase"/>
-		<SRC expr="&quot;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&quot;" line="118" static="1">
+		<SRC expr="&quot;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&quot;" line="127" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"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"</e></m>
@@ -43265,23 +43373,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="118" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="127" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="118" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="127" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="118" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="127" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="118" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="116"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="127" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="125"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Computes the BRDF lookup texture shared by all environments (see `Environment.getDefaultLUT`).</haxe_doc>
 		<meta>
 			<m n=":directlyUsed"/>
 			<m n=":src"><e><![CDATA[{
@@ -43323,7 +43432,7 @@
 	</class>
 	<class path="h3d.scene.pbr.PanoramaToCube" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx" module="h3d.scene.pbr.Environment">
 		<extends path="h3d.shader.ScreenShader"/>
-		<SRC expr="&quot;HXSMHGgzZC5zY2VuZS5wYnIuUGFub3JhbWFUb0N1YmUNAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKB3RleHR1cmUKAgIAAAsKZmFjZU1hdHJpeAYCAAAMCXRocmVzaG9sZAMCAAANE2Fib3ZlVGhyZXNob2xkU2NhbGUDAgAADghfX2luaXRfXw4GAAAPBnZlcnRleA4GAAAQCWdldE5vcm1hbA4GAAARCGZyYWdtZW50DgYAAAQCDgAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAA8AAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAxAABQsFAggSAWQFCgQAAAYDBgECAwUKAQMAAAAAAAAAQAMFCgEDAAAAAAAA8D8DBQoADQkDIA4BBAYBCQMqDgICEgUKAQMAAAAAAADwPwMFCwILBgULBQsFCwAAAREAAAUGCBMBbgULBAAACQIQDgAFCwAIFAJ1dgUKBAAACQMpDgIJAwcOAgoCEwULBAADCgITBQsAAAMDCQMFDgEHAwoCEwULCAADAwMFCgAGgQIUBQoJAykOAgEDr5RliGNdxD8DAQN0RpT2Bl/UPwMFCgUKBoACFAUKAQMAAAAAAADgPwMFCgYEAggFDAkDIg4CAgoKAgIUBQoFDAUMCwYHCQMWDgIJAxYOAgoCCAUMAAADCgIIBQwEAAMDCgIIBQwIAAMDAgwDAgaBAggFDAINAwUMAAAA&quot;" line="158" static="1">
+		<SRC expr="&quot;HXSMHGgzZC5zY2VuZS5wYnIuUGFub3JhbWFUb0N1YmUNAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKB3RleHR1cmUKAgIAAAsKZmFjZU1hdHJpeAYCAAAMCXRocmVzaG9sZAMCAAANE2Fib3ZlVGhyZXNob2xkU2NhbGUDAgAADghfX2luaXRfXw4GAAAPBnZlcnRleA4GAAAQCWdldE5vcm1hbA4GAAARCGZyYWdtZW50DgYAAAQCDgAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAA8AAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAxAABQsFAggSAWQFCgQAAAYDBgECAwUKAQMAAAAAAAAAQAMFCgEDAAAAAAAA8D8DBQoADQkDIA4BBAYBCQMqDgICEgUKAQMAAAAAAADwPwMFCwILBgULBQsFCwAAAREAAAUGCBMBbgULBAAACQIQDgAFCwAIFAJ1dgUKBAAACQMpDgIJAwcOAgoCEwULBAADCgITBQsAAAMDCQMFDgEHAwoCEwULCAADAwMFCgAGgQIUBQoJAykOAgEDr5RliGNdxD8DAQN0RpT2Bl/UPwMFCgUKBoACFAUKAQMAAAAAAADgPwMFCgYEAggFDAkDIg4CAgoKAgIUBQoFDAUMCwYHCQMWDgIJAxYOAgoCCAUMAAADCgIIBQwEAAMDCgIIBQwIAAMDAgwDAgaBAggFDAINAwUMAAAA&quot;" line="170" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"HXSMHGgzZC5zY2VuZS5wYnIuUGFub3JhbWFUb0N1YmUNAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKB3RleHR1cmUKAgIAAAsKZmFjZU1hdHJpeAYCAAAMCXRocmVzaG9sZAMCAAANE2Fib3ZlVGhyZXNob2xkU2NhbGUDAgAADghfX2luaXRfXw4GAAAPBnZlcnRleA4GAAAQCWdldE5vcm1hbA4GAAARCGZyYWdtZW50DgYAAAQCDgAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAA8AAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAxAABQsFAggSAWQFCgQAAAYDBgECAwUKAQMAAAAAAAAAQAMFCgEDAAAAAAAA8D8DBQoADQkDIA4BBAYBCQMqDgICEgUKAQMAAAAAAADwPwMFCwILBgULBQsFCwAAAREAAAUGCBMBbgULBAAACQIQDgAFCwAIFAJ1dgUKBAAACQMpDgIJAwcOAgoCEwULBAADCgITBQsAAAMDCQMFDgEHAwoCEwULCAADAwMFCgAGgQIUBQoJAykOAgEDr5RliGNdxD8DAQN0RpT2Bl/UPwMFCgUKBoACFAUKAQMAAAAAAADgPwMFCgYEAggFDAkDIg4CAgoKAgIUBQoFDAUMCwYHCQMWDgIJAxYOAgoCCAUMAAADCgIIBQwEAAMDCgIIBQwIAAMDAgwDAgaBAggFDAINAwUMAAAA"</e></m>
@@ -43448,23 +43557,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="158" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="170" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="158" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="170" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="158" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="170" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="158" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="156"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="170" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="168"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Converts an equirectangular (panorama) texture into the faces of a cube map.</haxe_doc>
 		<meta>
 			<m n=":directlyUsed"/>
 			<m n=":src"><e><![CDATA[{
@@ -43491,7 +43601,7 @@
 	</class>
 	<class path="h3d.scene.pbr.CubeToPanorama" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx" module="h3d.scene.pbr.Environment">
 		<extends path="h3d.shader.ScreenShader"/>
-		<SRC expr="&quot;HXSMHGgzZC5zY2VuZS5wYnIuQ3ViZVRvUGFub3JhbWEJAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKBnNvdXJjZQoGAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUNCA4EZm92WAMEAAAGAQEDGC1EVPshCUADAQMAAAAAAAAAQAMDAAgPBGZvdlkDBAAAAQMYLURU+yEJQAMACBAHaE9mZnNldAMEAAAGAQQGAwYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMCDgMDAwEDAAAAAAAA4D8DAwAIEQd2T2Zmc2V0AwQAAAYBBAYDAQMYLURU+yEJQAMCDwMDAwEDAAAAAAAA4D8DAwAIEgZoQW5nbGUDBAAABgACEAMGAQoCCQUKAAADAg4DAwMACBMGdkFuZ2xlAwQAAAYAAhEDBgEKAgkFCgQAAwIPAwMDAAgUAW4FCwQAAAkDKg4BAQMAAAAAAAAAAAMFCwAGBAoCFAULAAADBgEJAwIOAQITAwMJAwIOAQISAwMDAwYECgIUBQsEAAMJAwMOAQITAwMDBgQKAhQFCwgAAwYBCQMCDgECEwMDCQMDDgECEgMDAwMGBAIUBQsJAyAOAQIUBQsFCwULBgQCCAUMCQMrDgIKCQMiDgICCgoGAhQFCwUMkgAFCwEDAAAAAAAA8D8DBQwFDAYEAggFDAkDKw4EAQMAAAAAAADwPwMBAwAAAAAAAAAAAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAA&quot;" line="189" static="1">
+		<SRC expr="&quot;HXSMHGgzZC5zY2VuZS5wYnIuQ3ViZVRvUGFub3JhbWEJAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKBnNvdXJjZQoGAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUNCA4EZm92WAMEAAAGAQEDGC1EVPshCUADAQMAAAAAAAAAQAMDAAgPBGZvdlkDBAAAAQMYLURU+yEJQAMACBAHaE9mZnNldAMEAAAGAQQGAwYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMCDgMDAwEDAAAAAAAA4D8DAwAIEQd2T2Zmc2V0AwQAAAYBBAYDAQMYLURU+yEJQAMCDwMDAwEDAAAAAAAA4D8DAwAIEgZoQW5nbGUDBAAABgACEAMGAQoCCQUKAAADAg4DAwMACBMGdkFuZ2xlAwQAAAYAAhEDBgEKAgkFCgQAAwIPAwMDAAgUAW4FCwQAAAkDKg4BAQMAAAAAAAAAAAMFCwAGBAoCFAULAAADBgEJAwIOAQITAwMJAwIOAQISAwMDAwYECgIUBQsEAAMJAwMOAQITAwMDBgQKAhQFCwgAAwYBCQMCDgECEwMDCQMDDgECEgMDAwMGBAIUBQsJAyAOAQIUBQsFCwULBgQCCAUMCQMrDgIKCQMiDgICCgoGAhQFCwUMkgAFCwEDAAAAAAAA8D8DBQwFDAYEAggFDAkDKw4EAQMAAAAAAADwPwMBAwAAAAAAAAAAAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAA&quot;" line="204" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"HXSMHGgzZC5zY2VuZS5wYnIuQ3ViZVRvUGFub3JhbWEJAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKBnNvdXJjZQoGAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMrDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUNCA4EZm92WAMEAAAGAQEDGC1EVPshCUADAQMAAAAAAAAAQAMDAAgPBGZvdlkDBAAAAQMYLURU+yEJQAMACBAHaE9mZnNldAMEAAAGAQQGAwYBAQMAAAAAAAAAQAMBAxgtRFT7IQlAAwMCDgMDAwEDAAAAAAAA4D8DAwAIEQd2T2Zmc2V0AwQAAAYBBAYDAQMYLURU+yEJQAMCDwMDAwEDAAAAAAAA4D8DAwAIEgZoQW5nbGUDBAAABgACEAMGAQoCCQUKAAADAg4DAwMACBMGdkFuZ2xlAwQAAAYAAhEDBgEKAgkFCgQAAwIPAwMDAAgUAW4FCwQAAAkDKg4BAQMAAAAAAAAAAAMFCwAGBAoCFAULAAADBgEJAwIOAQITAwMJAwIOAQISAwMDAwYECgIUBQsEAAMJAwMOAQITAwMDBgQKAhQFCwgAAwYBCQMCDgECEwMDCQMDDgECEgMDAwMGBAIUBQsJAyAOAQIUBQsFCwULBgQCCAUMCQMrDgIKCQMiDgICCgoGAhQFCwUMkgAFCwEDAAAAAAAA8D8DBQwFDAYEAggFDAkDKw4EAQMAAAAAAADwPwMBAwAAAAAAAAAAAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAA"</e></m>
@@ -43538,23 +43648,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="189" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="204" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="189" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="204" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="189" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="204" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="189" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="187"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="204" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="202"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Converts a cube map into an equirectangular (panorama) texture.</haxe_doc>
 		<meta>
 			<m n=":src"><e>{
 	@param var source:SamplerCube;
@@ -43579,16 +43690,19 @@
 		</meta>
 	</class>
 	<class path="h3d.scene.pbr.Environment" params="" file="/home/user/heaps/h3d/scene/pbr/Environment.hx">
-		<DEFAULT_FORMAT expr="RGBA32F" line="214" static="1">
+		<DEFAULT_FORMAT expr="RGBA32F" line="239" static="1">
 			<e path="hxd.PixelFormat"/>
 			<meta><m n=":value"><e>RGBA32F</e></m></meta>
 		</DEFAULT_FORMAT>
-		<LUT_PIXELS expr="null" line="253" static="1">
+		<LUT_PIXELS expr="null" line="320" static="1">
 			<x path="Null"><c path="hxd.Pixels"/></x>
 			<meta><m n=":value"><e>null</e></m></meta>
 		</LUT_PIXELS>
-		<getDefaultLUT public="1" set="method" line="255" static="1"><f a=""><c path="h3d.mat.Texture"/></f></getDefaultLUT>
-		<equiToCube public="1" set="method" line="273" static="1">
+		<getDefaultLUT public="1" set="method" line="325" static="1">
+			<f a=""><c path="h3d.mat.Texture"/></f>
+			<haxe_doc>Returns the BRDF lookup texture, computing it the first time.</haxe_doc>
+		</getDefaultLUT>
+		<equiToCube public="1" set="method" line="348" static="1">
 			<f a="source:?threshold:?scale" v=":1.0:1.0">
 				<c path="h3d.mat.Texture"/>
 				<x path="Float"/>
@@ -43596,56 +43710,99 @@
 				<c path="h3d.mat.Texture"/>
 			</f>
 			<meta><m n=":value"><e>{ scale : 1.0, threshold : 1.0 }</e></m></meta>
+			<haxe_doc>Converts an equirectangular texture (twice as wide as high) to a cube map. Cube textures are returned unchanged.
+		@param threshold The color value above which `scale` is applied.
+		@param scale The multiplier applied to the colors above `threshold`.</haxe_doc>
 		</equiToCube>
-		<getCubeMatrix set="method" line="330" static="1"><f a="face">
+		<getCubeMatrix set="method" line="411" static="1"><f a="face">
 	<x path="Int"/>
 	<x path="h3d.Matrix"/>
 </f></getCubeMatrix>
-		<computeIrradLut set="method" line="353" static="1"><f a="t">
+		<computeIrradLut set="method" line="434" static="1"><f a="t">
 	<c path="h3d.mat.Texture"/>
 	<x path="Void"/>
 </f></computeIrradLut>
-		<getDefault public="1" set="method" line="407" static="1"><f a=""><c path="h3d.scene.pbr.Environment"/></f></getDefault>
-		<sampleBits public="1"><x path="Int"/></sampleBits>
-		<diffSize public="1"><x path="Int"/></diffSize>
-		<specSize public="1"><x path="Int"/></specSize>
-		<specLevels public="1"><x path="Int"/></specLevels>
+		<getDefault public="1" set="method" line="491" static="1">
+			<f a=""><c path="h3d.scene.pbr.Environment"/></f>
+			<haxe_doc>Returns the default environment embedded in Heaps, with precomputed textures.</haxe_doc>
+		</getDefault>
+		<sampleBits public="1">
+			<x path="Int"/>
+			<haxe_doc>The number of samples used by `compute` is `2^sampleBits`.</haxe_doc>
+		</sampleBits>
+		<diffSize public="1">
+			<x path="Int"/>
+			<haxe_doc>The size of the diffuse irradiance cube map faces.</haxe_doc>
+		</diffSize>
+		<specSize public="1">
+			<x path="Int"/>
+			<haxe_doc>The size of the specular cube map faces.</haxe_doc>
+		</specSize>
+		<specLevels public="1">
+			<x path="Int"/>
+			<haxe_doc>The number of mip levels of the specular cube map used for the roughness levels. Computed by `compute`.</haxe_doc>
+		</specLevels>
 		<ignoredSpecLevels public="1" expr="1">
 			<x path="Int"/>
 			<meta><m n=":value"><e>1</e></m></meta>
+			<haxe_doc>The number of smallest mip levels of the specular cube map not used for roughness levels.</haxe_doc>
 		</ignoredSpecLevels>
 		<hdrMax public="1" expr="10.0">
 			<x path="Float"/>
 			<meta><m n=":value"><e>10.0</e></m></meta>
+			<haxe_doc>The maximum color value of the source texture used by `compute`, which limits the fireflies caused by very bright pixels.</haxe_doc>
 		</hdrMax>
-		<source public="1"><c path="h3d.mat.Texture"/></source>
-		<env public="1" get="accessor" set="null"><c path="h3d.mat.Texture"/></env>
-		<lut public="1" get="accessor" set="null"><c path="h3d.mat.Texture"/></lut>
-		<diffuse public="1"><c path="h3d.mat.Texture"/></diffuse>
-		<specular public="1"><c path="h3d.mat.Texture"/></specular>
+		<source public="1">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>The source texture: a cube map or an equirectangular (2:1) panorama.</haxe_doc>
+		</source>
+		<env public="1" get="accessor" set="null">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>The source as a cube map, converted from `source` on first access if needed.</haxe_doc>
+		</env>
+		<lut public="1" get="accessor" set="null">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>The BRDF lookup texture, shared by all environments.</haxe_doc>
+		</lut>
+		<diffuse public="1">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>The diffuse irradiance cube map, computed by `compute`.</haxe_doc>
+		</diffuse>
+		<specular public="1">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>The prefiltered specular cube map, with one mip level per roughness level, computed by `compute`.</haxe_doc>
+		</specular>
 		<power public="1" expr="1.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>1.</e></m></meta>
+			<haxe_doc>The intensity of the environment lighting is `power * power`. With `0` the environment does not light the scene.</haxe_doc>
 		</power>
 		<rotation public="1" expr="0.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
+			<haxe_doc>The rotation of the environment around the Z axis, in radians.</haxe_doc>
 		</rotation>
-		<get_lut set="method" line="246"><f a=""><c path="h3d.mat.Texture"/></f></get_lut>
-		<get_env set="method" line="248"><f a=""><c path="h3d.mat.Texture"/></f></get_env>
-		<dispose public="1" set="method" line="296"><f a=""><x path="Void"/></f></dispose>
-		<createDiffuseTexture set="method" line="303"><f a=""><c path="h3d.mat.Texture"/></f></createDiffuseTexture>
-		<createSpecularTexture set="method" line="310"><f a=""><c path="h3d.mat.Texture"/></f></createSpecularTexture>
-		<createTextures set="method" line="318"><f a=""><x path="Void"/></f></createTextures>
-		<compute public="1" set="method" line="325"><f a=""><x path="Void"/></f></compute>
-		<getMipLevels set="method" line="364"><f a=""><x path="Int"/></f></getMipLevels>
-		<computeIrradiance set="method" line="371"><f a="diffuse:specular:env">
+		<get_lut set="method" line="313"><f a=""><c path="h3d.mat.Texture"/></f></get_lut>
+		<get_env set="method" line="315"><f a=""><c path="h3d.mat.Texture"/></f></get_env>
+		<dispose public="1" set="method" line="374">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Releases the textures of the environment.</haxe_doc>
+		</dispose>
+		<createDiffuseTexture set="method" line="381"><f a=""><c path="h3d.mat.Texture"/></f></createDiffuseTexture>
+		<createSpecularTexture set="method" line="388"><f a=""><c path="h3d.mat.Texture"/></f></createSpecularTexture>
+		<createTextures set="method" line="396"><f a=""><x path="Void"/></f></createTextures>
+		<compute public="1" set="method" line="406">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Computes the `diffuse` and `specular` lighting textures from the source. This is expensive: do it once, at load time.</haxe_doc>
+		</compute>
+		<getMipLevels set="method" line="445"><f a=""><x path="Int"/></f></getMipLevels>
+		<computeIrradiance set="method" line="452"><f a="diffuse:specular:env">
 	<c path="h3d.mat.Texture"/>
 	<c path="h3d.mat.Texture"/>
 	<c path="h3d.mat.Texture"/>
 	<x path="Void"/>
 </f></computeIrradiance>
-		<new public="1" set="method" line="239">
+		<new public="1" set="method" line="306">
 			<f a="src:?diffSize:?specSize:?sampleBits" v=":64:512:12">
 				<c path="h3d.mat.Texture"/>
 				<x path="Int"/>
@@ -43654,23 +43811,40 @@
 				<x path="Void"/>
 			</f>
 			<meta><m n=":value"><e>{ sampleBits : 12, specSize : 512, diffSize : 64 }</e></m></meta>
+			<haxe_doc>Creates an environment from `src`, which can be a cube map already prepared or a 2D equirectangular map that
+		will be turned into a cube map. Call `compute` to build the lighting textures.
+		@param diffSize The size of the diffuse irradiance cube map faces.
+		@param specSize The size of the specular cube map faces.
+		@param sampleBits The number of samples used to compute the textures is `2^sampleBits`.</haxe_doc>
 		</new>
+		<haxe_doc>The environment lighting of the PBR renderer (image based lighting): the sky texture and the diffuse and specular
+	lighting textures computed from it, used for the indirect lighting and the reflections.
+
+	```haxe
+	var env = new h3d.scene.pbr.Environment(hxd.Res.sky.toTexture());
+	env.compute();
+	cast(s3d.renderer, h3d.scene.pbr.Renderer).env = env;
+	```</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.LightBuffer" params="" file="/home/user/heaps/h3d/scene/pbr/LightBuffer.hx">
 		<defaultForwardShader public="1" expr="new h3d.shader.pbr.DefaultForward()">
 			<c path="h3d.shader.pbr.DefaultForward"/>
 			<meta><m n=":value"><e>new h3d.shader.pbr.DefaultForward()</e></m></meta>
+			<haxe_doc>The forward lighting shader added to the forward objects which do not already have one.</haxe_doc>
 		</defaultForwardShader>
 		<useBindless><x path="Bool"/></useBindless>
 		<useDynamicSamplerIndex><x path="Bool"/></useDynamicSamplerIndex>
 		<shadowHandles public="1" expr="[]">
 			<c path="Array"><c path="h3d.mat.TextureHandle"/></c>
 			<meta><m n=":value"><e>[]</e></m></meta>
+			<haxe_doc>The bindless handles of the shadow maps used in the frame.</haxe_doc>
 		</shadowHandles>
 		<tightShadowSamplers public="1" expr="true">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>true</e></m></meta>
+			<haxe_doc>If `true` (default on JavaScript), the forward shader declares only the shadow samplers used by the current lights
+		instead of the maximum count. This saves texture units but compiles more shader variants. Ignored with bindless.</haxe_doc>
 		</tightShadowSamplers>
 		<MAX_DIR_SHADOW expr="1">
 			<x path="Int"/>
@@ -43789,14 +43963,18 @@
 		<clusterMaxDistance public="1" expr="0.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
+			<haxe_doc>If positive, the distance covered by the clusters; farther objects use the last depth slice.
+		Otherwise the clusters cover the camera range up to `zFar`.</haxe_doc>
 		</clusterMaxDistance>
 		<enableClustering public="1" expr="true">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>true</e></m></meta>
+			<haxe_doc>Enables the light clustering when compute shaders are supported.</haxe_doc>
 		</enableClustering>
 		<enableClusterHZB public="1" expr="true">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>true</e></m></meta>
+			<haxe_doc>Uses the hierarchical depth buffer to skip the clusters and lights hidden by the opaque geometry.</haxe_doc>
 		</enableClusterHZB>
 		<cullShader><c path="h3d.shader.pbr.ClusterCull"/></cullShader>
 		<occlusionShader><c path="h3d.shader.pbr.ClusterLightOcclusion"/></occlusionShader>
@@ -43822,12 +44000,15 @@
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
 		</clusterFar>
-		<createBuffers set="method" line="76"><f a=""><x path="Void"/></f></createBuffers>
-		<setBuffers public="1" set="method" line="81"><f a="s">
-	<c path="h3d.shader.pbr.DefaultForward"/>
-	<x path="Void"/>
-</f></setBuffers>
-		<fillFloats set="method" line="148"><f a="b:f1:f2:f3:f4:i">
+		<createBuffers set="method" line="107"><f a=""><x path="Void"/></f></createBuffers>
+		<setBuffers public="1" set="method" line="115">
+			<f a="s">
+				<c path="h3d.shader.pbr.DefaultForward"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Copies the light buffer and counts of the frame to a custom forward shader `s`.</haxe_doc>
+		</setBuffers>
+		<fillFloats set="method" line="182"><f a="b:f1:f2:f3:f4:i">
 	<x path="hxd.FloatBuffer"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -43836,19 +44017,19 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></fillFloats>
-		<fillVector set="method" line="155"><f a="b:v:i">
+		<fillVector set="method" line="189"><f a="b:v:i">
 	<x path="hxd.FloatBuffer"/>
 	<x path="h3d.Vector"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></fillVector>
-		<fillVector4 set="method" line="162"><f a="b:v:i">
+		<fillVector4 set="method" line="196"><f a="b:v:i">
 	<x path="hxd.FloatBuffer"/>
 	<x path="h3d.Vector4"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></fillVector4>
-		<sortingCriteria set="method" line="169"><f a="l1:l2:cameraTarget">
+		<sortingCriteria set="method" line="203"><f a="l1:l2:cameraTarget">
 	<c path="h3d.scene.pbr.Light"/>
 	<c path="h3d.scene.pbr.Light"/>
 	<x path="h3d.Vector"/>
@@ -43858,58 +44039,93 @@
 			<c path="Array"><c path="h3d.scene.pbr.Light"/></c>
 			<meta><m n=":value"><e>[]</e></m></meta>
 		</tmpLights>
-		<sortLights public="1" set="method" line="183"><f a="ctx">
-	<c path="h3d.scene.RenderContext"/>
-	<c path="Array"><c path="h3d.scene.pbr.Light"/></c>
-</f></sortLights>
-		<fillLights public="1" set="method" line="199"><f a="lights:shadows">
-	<c path="Array"><c path="h3d.scene.pbr.Light"/></c>
-	<x path="Bool"/>
-	<x path="Void"/>
-</f></fillLights>
-		<sync public="1" set="method" line="268"><f a="ctx">
-	<c path="h3d.scene.RenderContext"/>
-	<x path="Void"/>
-</f></sync>
-		<cull set="method" line="554"><f a="ctx:renderer">
+		<sortLights public="1" set="method" line="221">
+			<f a="ctx">
+				<c path="h3d.scene.RenderContext"/>
+				<c path="Array"><c path="h3d.scene.pbr.Light"/></c>
+			</f>
+			<haxe_doc>Returns the lights of the frame enabled for the forward passes (see `Light.enableForward`) and inside the camera
+		frustum, sorted with the directional lights first, then by distance to the camera target.</haxe_doc>
+		</sortLights>
+		<fillLights public="1" set="method" line="241">
+			<f a="lights:shadows">
+				<c path="Array"><c path="h3d.scene.pbr.Light"/></c>
+				<x path="Bool"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Writes `lights` into the light buffer, within the buffer size and shadow limits.
+		@param shadows If `false`, the lights are written without their shadows.</haxe_doc>
+		</fillLights>
+		<sync public="1" set="method" line="313">
+			<f a="ctx">
+				<c path="h3d.scene.RenderContext"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Updates the light buffer and the clusters for the current frame. Called by the PBR renderer before the forward passes.</haxe_doc>
+		</sync>
+		<cull set="method" line="599"><f a="ctx:renderer">
 	<c path="h3d.scene.RenderContext"/>
 	<c path="h3d.scene.pbr.Renderer"/>
 	<x path="Void"/>
 </f></cull>
-		<createClusterDebug public="1" set="method" line="636"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<c path="h3d.scene.Graphics"/>
-</f></createClusterDebug>
-		<dispose public="1" set="method" line="697"><f a=""><x path="Void"/></f></dispose>
-		<new public="1" set="method" line="67"><f a=""><x path="Void"/></f></new>
+		<createClusterDebug public="1" set="method" line="685">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<c path="h3d.scene.Graphics"/>
+			</f>
+			<haxe_doc>Debug: draws the clusters of the last frame as lines, colored by their number of lights.
+		Returns `null` if no clusters were built.</haxe_doc>
+		</createClusterDebug>
+		<dispose public="1" set="method" line="749">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Releases the GPU buffers.</haxe_doc>
+		</dispose>
+		<new public="1" set="method" line="98">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the light buffer.</haxe_doc>
+		</new>
+		<haxe_doc>Packs the lights of the frame in a GPU buffer read by the forward shader (`h3d.shader.pbr.DefaultForward`), so that
+	the objects drawn in the forward passes (such as transparent objects) are lit by the PBR lights.
+
+	When compute shaders are available, the lights can be sorted into a grid of clusters covering the camera view
+	(16x9 tiles and 24 depth slices), so that each pixel only evaluates the lights affecting its cluster.
+	A limited number of lights of each kind can cast shadows in the forward passes.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.LightSystem" params="" file="/home/user/heaps/h3d/scene/pbr/LightSystem.hx">
 		<extends path="h3d.scene.LightSystem"/>
-		<lightBuffer public="1"><c path="h3d.scene.pbr.LightBuffer"/></lightBuffer>
+		<lightBuffer public="1">
+			<c path="h3d.scene.pbr.LightBuffer"/>
+			<haxe_doc>The buffer of lights used by the forward passes.</haxe_doc>
+		</lightBuffer>
 		<forwardMode public="1" expr="false">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>false</e></m></meta>
+			<haxe_doc>`true` while the renderer draws the forward passes.</haxe_doc>
 		</forwardMode>
 		<lightingShaders public="1" expr="[]">
 			<c path="Array"><c path="hxsl.Shader"/></c>
 			<meta><m n=":value"><e>[]</e></m></meta>
+			<haxe_doc>Additional shaders applied with each light in the lighting pass.</haxe_doc>
 		</lightingShaders>
-		<initGlobals public="1" set="method" line="15" override="1"><f a="globals">
+		<initGlobals public="1" set="method" line="31" override="1"><f a="globals">
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></initGlobals>
-		<computeLight public="1" set="method" line="21" override="1"><f a="obj:shaders">
+		<computeLight public="1" set="method" line="37" override="1"><f a="obj:shaders">
 	<c path="h3d.scene.Object"/>
 	<c path="hxsl.ShaderList"/>
 	<c path="hxsl.ShaderList"/>
 </f></computeLight>
-		<drawShadows public="1" set="method" line="45"><f a="light:passes">
-	<c path="h3d.scene.pbr.Light"/>
-	<c path="h3d.pass.PassList"/>
-	<x path="Void"/>
-</f></drawShadows>
-		<drawScreenLights public="1" set="method" line="51">
+		<drawShadows public="1" set="method" line="64">
+			<f a="light:passes">
+				<c path="h3d.scene.pbr.Light"/>
+				<c path="h3d.pass.PassList"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Draws the shadow map of `light` with the given shadow casters.</haxe_doc>
+		</drawShadows>
+		<drawScreenLights public="1" set="method" line="74">
 			<f a="r:lightPass:?shadows" v="::true">
 				<c path="h3d.scene.Renderer"/>
 				<c path="h3d.pass.ScreenFx"><d/></c>
@@ -43917,9 +44133,16 @@
 				<x path="Void"/>
 			</f>
 			<meta><m n=":value"><e>{ shadows : true }</e></m></meta>
+			<haxe_doc>Draws the lights without volume (such as directional lights) as full screen passes.
+		@param shadows If `false`, the shadows of these lights are ignored.</haxe_doc>
 		</drawScreenLights>
-		<dispose public="1" set="method" line="71" override="1"><f a=""><x path="Void"/></f></dispose>
-		<new public="1" set="method" line="10"><f a=""><x path="Void"/></f></new>
+		<dispose public="1" set="method" line="94" override="1"><f a=""><x path="Void"/></f></dispose>
+		<new public="1" set="method" line="26">
+			<f a=""><x path="Void"/></f>
+			<haxe_doc>Creates the light system.</haxe_doc>
+		</new>
+		<haxe_doc>The light system of the PBR renderer. Lights are applied in a deferred lighting pass, except for the objects drawn
+	in the forward passes, which read the lights from `lightBuffer`.</haxe_doc>
 		<meta>
 			<m n=":directlyUsed"/>
 			<m n=":access"><e>h3d.scene.pbr.Light</e></m>
@@ -43931,30 +44154,32 @@
 		<size public="1" expr="0.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
+			<haxe_doc>The radius of the light source: closer than this distance, the light has its full intensity.</haxe_doc>
 		</size>
 		<zNear public="1" expr="0.02">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.02</e></m></meta>
+			<haxe_doc>The near plane distance of the shadow map cameras.</haxe_doc>
 		</zNear>
 		<range public="1" get="accessor" set="accessor">
 			<x path="Float"/>
 			<haxe_doc>Alias for uniform scale.</haxe_doc>
 		</range>
-		<clone public="1" set="method" line="21" override="1"><f a="?o">
+		<clone public="1" set="method" line="34" override="1"><f a="?o">
 	<c path="h3d.scene.Object"/>
 	<c path="h3d.scene.Object"/>
 </f></clone>
-		<get_range set="method" line="29"><f a=""><x path="Float"/></f></get_range>
-		<set_range set="method" line="33"><f a="v">
+		<get_range set="method" line="42"><f a=""><x path="Float"/></f></get_range>
+		<set_range set="method" line="46"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_range>
-		<getIntensity public="1" set="method" line="38" override="1"><f a=""><x path="Float"/></f></getIntensity>
-		<draw set="method" line="43" override="1"><f a="ctx">
+		<getIntensity public="1" set="method" line="51" override="1"><f a=""><x path="Float"/></f></getIntensity>
+		<draw set="method" line="56" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></draw>
-		<sync set="method" line="47" override="1"><f a="ctx">
+		<sync set="method" line="60" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></sync>
@@ -43962,18 +44187,23 @@
 			<c path="h3d.col.Sphere"/>
 			<meta><m n=":value"><e>new h3d.col.Sphere()</e></m></meta>
 		</s>
-		<emit set="method" line="61" override="1"><f a="ctx">
+		<emit set="method" line="74" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<inFrustum public="1" set="method" line="82" override="1"><f a="frustum">
+		<inFrustum public="1" set="method" line="95" override="1"><f a="frustum">
 	<c path="h3d.col.Frustum"/>
 	<x path="Bool"/>
 </f></inFrustum>
-		<new public="1" set="method" line="13"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="26">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a point light with a range of 10.</haxe_doc>
+		</new>
+		<haxe_doc>A point light of the PBR renderer, shining in all directions from its position up to `range`.
+	Its shadows use a cube shadow map (`h3d.pass.PointShadowMap`).</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.RectangleLight" params="" file="/home/user/heaps/h3d/scene/pbr/RectangleLight.hx">
@@ -43982,56 +44212,63 @@
 		<width public="1" set="accessor" expr="0.5">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.5</e></m></meta>
+			<haxe_doc>The width of the rectangle (along the Y axis).</haxe_doc>
 		</width>
 		<height public="1" set="accessor" expr="0.5">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.5</e></m></meta>
+			<haxe_doc>The height of the rectangle (along the Z axis).</haxe_doc>
 		</height>
 		<verticalAngle public="1" set="accessor" expr="0.5">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.5</e></m></meta>
+			<haxe_doc>The vertical opening angle of the emitted light, in degrees.</haxe_doc>
 		</verticalAngle>
 		<horizontalAngle public="1" set="accessor" expr="0.5">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.5</e></m></meta>
+			<haxe_doc>The horizontal opening angle of the emitted light, in degrees.</haxe_doc>
 		</horizontalAngle>
 		<range public="1" set="accessor" expr="1">
 			<x path="Float"/>
 			<meta><m n=":value"><e>1</e></m></meta>
+			<haxe_doc>The maximum distance reached by the light.</haxe_doc>
 		</range>
 		<fallOff public="1" expr="1">
 			<x path="Float"/>
 			<meta><m n=":value"><e>1</e></m></meta>
+			<haxe_doc>The half angle, in degrees, inside which the light has its full intensity: it fades out up to half of
+		`verticalAngle` / `horizontalAngle`.</haxe_doc>
 		</fallOff>
-		<set_width public="1" set="method" line="22"><f a="v">
+		<set_width public="1" set="method" line="48"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_width>
-		<set_height public="1" set="method" line="28"><f a="v">
+		<set_height public="1" set="method" line="54"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_height>
-		<set_verticalAngle public="1" set="method" line="34"><f a="v">
+		<set_verticalAngle public="1" set="method" line="60"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_verticalAngle>
-		<set_horizontalAngle public="1" set="method" line="40"><f a="v">
+		<set_horizontalAngle public="1" set="method" line="66"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_horizontalAngle>
-		<set_range set="method" line="46"><f a="v">
+		<set_range set="method" line="72"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_range>
-		<clone public="1" set="method" line="52" override="1"><f a="?o">
+		<clone public="1" set="method" line="78" override="1"><f a="?o">
 	<c path="h3d.scene.Object"/>
 	<c path="h3d.scene.Object"/>
 </f></clone>
-		<draw set="method" line="64" override="1"><f a="ctx">
+		<draw set="method" line="90" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></draw>
-		<sync set="method" line="68" override="1"><f a="ctx">
+		<sync set="method" line="94" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></sync>
@@ -44039,334 +44276,397 @@
 			<c path="h3d.col.Sphere"/>
 			<meta><m n=":value"><e>new h3d.col.Sphere()</e></m></meta>
 		</s>
-		<emit set="method" line="93" override="1"><f a="ctx">
+		<emit set="method" line="119" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<getSpread public="1" set="method" line="115"><f a="angle">
-	<x path="Float"/>
-	<x path="Float"/>
-</f></getSpread>
-		<updatePrim set="method" line="119"><f a=""><c path="h3d.prim.Primitive"/></f></updatePrim>
-		<inFrustum public="1" set="method" line="189" override="1"><f a="frustum">
+		<getSpread public="1" set="method" line="144">
+			<f a="angle">
+				<x path="Float"/>
+				<x path="Float"/>
+			</f>
+			<haxe_doc>Returns how far the light spreads sideways at `range` for an opening `angle` in degrees (capped to 179).</haxe_doc>
+		</getSpread>
+		<updatePrim set="method" line="148"><f a=""><c path="h3d.prim.Primitive"/></f></updatePrim>
+		<inFrustum public="1" set="method" line="218" override="1"><f a="frustum">
 	<c path="h3d.col.Frustum"/>
 	<x path="Bool"/>
 </f></inFrustum>
-		<new public="1" set="method" line="15"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="41">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a rectangle light with a range of 10.</haxe_doc>
+		</new>
+		<haxe_doc>A rectangular area light of the PBR renderer, such as a window or a screen. The rectangle is in the YZ plane of
+	the object and shines along its X axis, up to `range`.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<abstract path="h3d.scene.pbr.DisplayMode" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer">
 		<this><c path="String"/></this>
+		<haxe_doc>What the PBR renderer displays: the lit scene or a debug view.</haxe_doc>
 		<meta><m n=":enum"/></meta>
 		<impl><class path="h3d.scene.pbr._Renderer.DisplayMode_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-	<Pbr public="1" get="inline" set="null" expr="cast &quot;Pbr&quot;" line="10" static="1">
+	<Pbr public="1" get="inline" set="null" expr="cast &quot;Pbr&quot;" line="13" static="1">
 		<x path="h3d.scene.pbr.DisplayMode"/>
 		<meta>
 			<m n=":value"><e>cast "Pbr"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Full PBR display</haxe_doc>
 	</Pbr>
-	<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="14" static="1">
+	<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="17" static="1">
 		<x path="h3d.scene.pbr.DisplayMode"/>
 		<meta>
 			<m n=":value"><e>cast "Env"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Set Albedo = 0x808080</haxe_doc>
 	</Env>
-	<MatCap public="1" get="inline" set="null" expr="cast &quot;MatCap&quot;" line="18" static="1">
+	<MatCap public="1" get="inline" set="null" expr="cast &quot;MatCap&quot;" line="21" static="1">
 		<x path="h3d.scene.pbr.DisplayMode"/>
 		<meta>
 			<m n=":value"><e>cast "MatCap"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Set Albedo = 0x808080, Roughness = 0, Metalness = 1</haxe_doc>
 	</MatCap>
-	<Debug public="1" get="inline" set="null" expr="cast &quot;Debug&quot;" line="22" static="1">
+	<Debug public="1" get="inline" set="null" expr="cast &quot;Debug&quot;" line="25" static="1">
 		<x path="h3d.scene.pbr.DisplayMode"/>
 		<meta>
 			<m n=":value"><e>cast "Debug"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Debug slides</haxe_doc>
 	</Debug>
-	<Performance public="1" get="inline" set="null" expr="cast &quot;Performance&quot;" line="23" static="1">
+	<Performance public="1" get="inline" set="null" expr="cast &quot;Performance&quot;" line="29" static="1">
 		<x path="h3d.scene.pbr.DisplayMode"/>
 		<meta>
 			<m n=":value"><e>cast "Performance"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Displays the lighting cost of each pixel as a heat map.</haxe_doc>
 	</Performance>
 	<meta><m n=":enum"/></meta>
 </class></impl>
 	</abstract>
 	<class path="h3d.scene.pbr._Renderer.DisplayMode_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-		<Pbr public="1" get="inline" set="null" expr="cast &quot;Pbr&quot;" line="10" static="1">
+		<Pbr public="1" get="inline" set="null" expr="cast &quot;Pbr&quot;" line="13" static="1">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta>
 				<m n=":value"><e>cast "Pbr"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Full PBR display</haxe_doc>
 		</Pbr>
-		<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="14" static="1">
+		<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="17" static="1">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta>
 				<m n=":value"><e>cast "Env"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Set Albedo = 0x808080</haxe_doc>
 		</Env>
-		<MatCap public="1" get="inline" set="null" expr="cast &quot;MatCap&quot;" line="18" static="1">
+		<MatCap public="1" get="inline" set="null" expr="cast &quot;MatCap&quot;" line="21" static="1">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta>
 				<m n=":value"><e>cast "MatCap"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Set Albedo = 0x808080, Roughness = 0, Metalness = 1</haxe_doc>
 		</MatCap>
-		<Debug public="1" get="inline" set="null" expr="cast &quot;Debug&quot;" line="22" static="1">
+		<Debug public="1" get="inline" set="null" expr="cast &quot;Debug&quot;" line="25" static="1">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta>
 				<m n=":value"><e>cast "Debug"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Debug slides</haxe_doc>
 		</Debug>
-		<Performance public="1" get="inline" set="null" expr="cast &quot;Performance&quot;" line="23" static="1">
+		<Performance public="1" get="inline" set="null" expr="cast &quot;Performance&quot;" line="29" static="1">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta>
 				<m n=":value"><e>cast "Performance"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Displays the lighting cost of each pixel as a heat map.</haxe_doc>
 		</Performance>
 		<meta><m n=":enum"/></meta>
 	</class>
 	<abstract path="h3d.scene.pbr.SkyMode" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer">
 		<this><c path="String"/></this>
+		<haxe_doc>What the PBR renderer displays where no object is drawn.</haxe_doc>
 		<meta><m n=":enum"/></meta>
 		<impl><class path="h3d.scene.pbr._Renderer.SkyMode_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-	<Hide public="1" get="inline" set="null" expr="cast &quot;Hide&quot;" line="27" static="1">
+	<Hide public="1" get="inline" set="null" expr="cast &quot;Hide&quot;" line="39" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "Hide"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Nothing (the background stays black, or transparent with `Renderer.enableTransparency`).</haxe_doc>
 	</Hide>
-	<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="28" static="1">
+	<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="43" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "Env"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>The environment cube map (`Environment.env`).</haxe_doc>
 	</Env>
-	<Specular public="1" get="inline" set="null" expr="cast &quot;Specular&quot;" line="29" static="1">
+	<Specular public="1" get="inline" set="null" expr="cast &quot;Specular&quot;" line="47" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "Specular"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>The specular lighting cube map of the environment (debug).</haxe_doc>
 	</Specular>
-	<Irrad public="1" get="inline" set="null" expr="cast &quot;Irrad&quot;" line="30" static="1">
+	<Irrad public="1" get="inline" set="null" expr="cast &quot;Irrad&quot;" line="51" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "Irrad"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>The diffuse irradiance cube map of the environment.</haxe_doc>
 	</Irrad>
-	<Background public="1" get="inline" set="null" expr="cast &quot;Background&quot;" line="31" static="1">
+	<Background public="1" get="inline" set="null" expr="cast &quot;Background&quot;" line="55" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "Background"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>The engine background color (`h3d.Engine.backgroundColor`).</haxe_doc>
 	</Background>
-	<CustomColor public="1" get="inline" set="null" expr="cast &quot;CustomColor&quot;" line="32" static="1">
+	<CustomColor public="1" get="inline" set="null" expr="cast &quot;CustomColor&quot;" line="59" static="1">
 		<x path="h3d.scene.pbr.SkyMode"/>
 		<meta>
 			<m n=":value"><e>cast "CustomColor"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>The color `RenderProps.skyColor`.</haxe_doc>
 	</CustomColor>
 	<meta><m n=":enum"/></meta>
 </class></impl>
 	</abstract>
 	<class path="h3d.scene.pbr._Renderer.SkyMode_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-		<Hide public="1" get="inline" set="null" expr="cast &quot;Hide&quot;" line="27" static="1">
+		<Hide public="1" get="inline" set="null" expr="cast &quot;Hide&quot;" line="39" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "Hide"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Nothing (the background stays black, or transparent with `Renderer.enableTransparency`).</haxe_doc>
 		</Hide>
-		<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="28" static="1">
+		<Env public="1" get="inline" set="null" expr="cast &quot;Env&quot;" line="43" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "Env"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>The environment cube map (`Environment.env`).</haxe_doc>
 		</Env>
-		<Specular public="1" get="inline" set="null" expr="cast &quot;Specular&quot;" line="29" static="1">
+		<Specular public="1" get="inline" set="null" expr="cast &quot;Specular&quot;" line="47" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "Specular"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>The specular lighting cube map of the environment (debug).</haxe_doc>
 		</Specular>
-		<Irrad public="1" get="inline" set="null" expr="cast &quot;Irrad&quot;" line="30" static="1">
+		<Irrad public="1" get="inline" set="null" expr="cast &quot;Irrad&quot;" line="51" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "Irrad"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>The diffuse irradiance cube map of the environment.</haxe_doc>
 		</Irrad>
-		<Background public="1" get="inline" set="null" expr="cast &quot;Background&quot;" line="31" static="1">
+		<Background public="1" get="inline" set="null" expr="cast &quot;Background&quot;" line="55" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "Background"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>The engine background color (`h3d.Engine.backgroundColor`).</haxe_doc>
 		</Background>
-		<CustomColor public="1" get="inline" set="null" expr="cast &quot;CustomColor&quot;" line="32" static="1">
+		<CustomColor public="1" get="inline" set="null" expr="cast &quot;CustomColor&quot;" line="59" static="1">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta>
 				<m n=":value"><e>cast "CustomColor"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>The color `RenderProps.skyColor`.</haxe_doc>
 		</CustomColor>
 		<meta><m n=":enum"/></meta>
 	</class>
 	<abstract path="h3d.scene.pbr.TonemapMap" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer">
 		<this><c path="String"/></this>
+		<haxe_doc>The tone mapping operators converting the HDR lighting to displayable colors.</haxe_doc>
 		<meta><m n=":enum"/></meta>
 		<impl><class path="h3d.scene.pbr._Renderer.TonemapMap_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-	<Linear public="1" get="inline" set="null" expr="cast &quot;Linear&quot;" line="36" static="1">
+	<Linear public="1" get="inline" set="null" expr="cast &quot;Linear&quot;" line="69" static="1">
 		<x path="h3d.scene.pbr.TonemapMap"/>
 		<meta>
 			<m n=":value"><e>cast "Linear"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>No tone mapping: colors are clamped.</haxe_doc>
 	</Linear>
-	<Reinhard public="1" get="inline" set="null" expr="cast &quot;Reinhard&quot;" line="37" static="1">
+	<Reinhard public="1" get="inline" set="null" expr="cast &quot;Reinhard&quot;" line="73" static="1">
 		<x path="h3d.scene.pbr.TonemapMap"/>
 		<meta>
 			<m n=":value"><e>cast "Reinhard"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Reinhard operator: compresses the high values smoothly.</haxe_doc>
 	</Reinhard>
-	<Filmic public="1" get="inline" set="null" expr="cast &quot;Filmic&quot;" line="38" static="1">
+	<Filmic public="1" get="inline" set="null" expr="cast &quot;Filmic&quot;" line="77" static="1">
 		<x path="h3d.scene.pbr.TonemapMap"/>
 		<meta>
 			<m n=":value"><e>cast "Filmic"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Filmic curve, configured by the `a` to `e` properties of `RenderProps` (ACES approximation by default).</haxe_doc>
 	</Filmic>
-	<KhronosNeutral public="1" get="inline" set="null" expr="cast &quot;KhronosNeutral&quot;" line="39" static="1">
+	<KhronosNeutral public="1" get="inline" set="null" expr="cast &quot;KhronosNeutral&quot;" line="81" static="1">
 		<x path="h3d.scene.pbr.TonemapMap"/>
 		<meta>
 			<m n=":value"><e>cast "KhronosNeutral"</e></m>
 			<m n=":impl"/>
 			<m n=":enum"/>
 		</meta>
+		<haxe_doc>Khronos PBR Neutral operator, which preserves the hue and saturation of the base colors.</haxe_doc>
 	</KhronosNeutral>
 	<meta><m n=":enum"/></meta>
 </class></impl>
 	</abstract>
 	<class path="h3d.scene.pbr._Renderer.TonemapMap_Impl_" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" private="1" module="h3d.scene.pbr.Renderer" extern="1" final="1">
-		<Linear public="1" get="inline" set="null" expr="cast &quot;Linear&quot;" line="36" static="1">
+		<Linear public="1" get="inline" set="null" expr="cast &quot;Linear&quot;" line="69" static="1">
 			<x path="h3d.scene.pbr.TonemapMap"/>
 			<meta>
 				<m n=":value"><e>cast "Linear"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>No tone mapping: colors are clamped.</haxe_doc>
 		</Linear>
-		<Reinhard public="1" get="inline" set="null" expr="cast &quot;Reinhard&quot;" line="37" static="1">
+		<Reinhard public="1" get="inline" set="null" expr="cast &quot;Reinhard&quot;" line="73" static="1">
 			<x path="h3d.scene.pbr.TonemapMap"/>
 			<meta>
 				<m n=":value"><e>cast "Reinhard"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Reinhard operator: compresses the high values smoothly.</haxe_doc>
 		</Reinhard>
-		<Filmic public="1" get="inline" set="null" expr="cast &quot;Filmic&quot;" line="38" static="1">
+		<Filmic public="1" get="inline" set="null" expr="cast &quot;Filmic&quot;" line="77" static="1">
 			<x path="h3d.scene.pbr.TonemapMap"/>
 			<meta>
 				<m n=":value"><e>cast "Filmic"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Filmic curve, configured by the `a` to `e` properties of `RenderProps` (ACES approximation by default).</haxe_doc>
 		</Filmic>
-		<KhronosNeutral public="1" get="inline" set="null" expr="cast &quot;KhronosNeutral&quot;" line="39" static="1">
+		<KhronosNeutral public="1" get="inline" set="null" expr="cast &quot;KhronosNeutral&quot;" line="81" static="1">
 			<x path="h3d.scene.pbr.TonemapMap"/>
 			<meta>
 				<m n=":value"><e>cast "KhronosNeutral"</e></m>
 				<m n=":impl"/>
 				<m n=":enum"/>
 			</meta>
+			<haxe_doc>Khronos PBR Neutral operator, which preserves the hue and saturation of the base colors.</haxe_doc>
 		</KhronosNeutral>
 		<meta><m n=":enum"/></meta>
 	</class>
-	<typedef path="h3d.scene.pbr.RenderProps" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer"><a>
-	<tone><x path="h3d.scene.pbr.TonemapMap"/></tone>
-	<skyColor>
-		<x path="Null"><x path="Int"/></x>
-		<meta><m n=":optional"/></meta>
-	</skyColor>
-	<sky><x path="h3d.scene.pbr.SkyMode"/></sky>
-	<occlusion><x path="Float"/></occlusion>
-	<mode><x path="h3d.scene.pbr.DisplayMode"/></mode>
-	<forceDirectDiscard>
-		<x path="Null"><x path="Bool"/></x>
-		<meta><m n=":optional"/></meta>
-	</forceDirectDiscard>
-	<exposure><x path="Float"/></exposure>
-	<emissive><x path="Float"/></emissive>
-	<e>
-		<x path="Null"><x path="Float"/></x>
-		<meta><m n=":optional"/></meta>
-	</e>
-	<d>
-		<x path="Null"><x path="Float"/></x>
-		<meta><m n=":optional"/></meta>
-	</d>
-	<c>
-		<x path="Null"><x path="Float"/></x>
-		<meta><m n=":optional"/></meta>
-	</c>
-	<b>
-		<x path="Null"><x path="Float"/></x>
-		<meta><m n=":optional"/></meta>
-	</b>
-	<a>
-		<x path="Null"><x path="Float"/></x>
-		<meta><m n=":optional"/></meta>
-	</a>
-</a></typedef>
+	<typedef path="h3d.scene.pbr.RenderProps" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer">
+		<a>
+			<tone>
+				<x path="h3d.scene.pbr.TonemapMap"/>
+				<haxe_doc>The tone mapping operator.</haxe_doc>
+			</tone>
+			<skyColor>
+				<x path="Null"><x path="Int"/></x>
+				<meta><m n=":optional"/></meta>
+			</skyColor>
+			<sky>
+				<x path="h3d.scene.pbr.SkyMode"/>
+				<haxe_doc>The sky mode.</haxe_doc>
+			</sky>
+			<occlusion>
+				<x path="Float"/>
+				<haxe_doc>The ambient occlusion strength is `occlusion * occlusion`.</haxe_doc>
+			</occlusion>
+			<mode>
+				<x path="h3d.scene.pbr.DisplayMode"/>
+				<haxe_doc>The display mode.</haxe_doc>
+			</mode>
+			<forceDirectDiscard>
+				<x path="Null"><x path="Bool"/></x>
+				<meta><m n=":optional"/></meta>
+			</forceDirectDiscard>
+			<exposure>
+				<x path="Float"/>
+				<haxe_doc>The exposure: colors are multiplied by `exp(exposure)` before tone mapping.</haxe_doc>
+			</exposure>
+			<emissive>
+				<x path="Float"/>
+				<haxe_doc>The emissive intensity multiplier is `emissive * emissive`.</haxe_doc>
+			</emissive>
+			<e>
+				<x path="Null"><x path="Float"/></x>
+				<meta><m n=":optional"/></meta>
+			</e>
+			<d>
+				<x path="Null"><x path="Float"/></x>
+				<meta><m n=":optional"/></meta>
+			</d>
+			<c>
+				<x path="Null"><x path="Float"/></x>
+				<meta><m n=":optional"/></meta>
+			</c>
+			<b>
+				<x path="Null"><x path="Float"/></x>
+				<meta><m n=":optional"/></meta>
+			</b>
+			<a>
+				<x path="Null"><x path="Float"/></x>
+				<meta><m n=":optional"/></meta>
+			</a>
+		</a>
+		<haxe_doc>The properties of the PBR renderer (see `hxd.impl.AnyProps.props`), usually edited in Hide.
+	Call `refreshProps()` after modifying them.</haxe_doc>
+	</typedef>
 	<class path="h3d.scene.pbr.DepthCopy" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx" module="h3d.scene.pbr.Renderer">
 		<extends path="h3d.shader.ScreenShader"/>
-		<SRC expr="&quot;HXSMF2gzZC5zY2VuZS5wYnIuRGVwdGhDb3B5CQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgxkZXB0aFRleHR1cmURAQIAAQgLCF9faW5pdF9fDgYAAAwGdmVydGV4DgYAAA0IZnJhZ21lbnQOBgAAAwILAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAADAAABQEGBAIGBQwJAysOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAABDQAABQEGBAIIBQwJAysOAQkDQA4CAgoRAQIJBQoDBQwFDAA&quot;" line="60" static="1">
+		<SRC expr="&quot;HXSMF2gzZC5zY2VuZS5wYnIuRGVwdGhDb3B5CQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgxkZXB0aFRleHR1cmURAQIAAQgLCF9faW5pdF9fDgYAAAwGdmVydGV4DgYAAA0IZnJhZ21lbnQOBgAAAwILAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAADAAABQEGBAIGBQwJAysOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAABDQAABQEGBAIIBQwJAysOAQkDQA4CAgoRAQIJBQoDBQwFDAA&quot;" line="127" static="1">
 			<c path="String"/>
 			<meta>
 				<m n=":value"><e>"HXSMF2gzZC5zY2VuZS5wYnIuRGVwdGhDb3B5CQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgxkZXB0aFRleHR1cmURAQIAAQgLCF9faW5pdF9fDgYAAAwGdmVydGV4DgYAAA0IZnJhZ21lbnQOBgAAAwILAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAADAAABQEGBAIGBQwJAysOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAABDQAABQEGBAIIBQwJAysOAQkDQA4CAgoRAQIJBQoDBQwFDAA"</e></m>
@@ -44423,23 +44723,24 @@
 	<c path="hxsl.Globals"/>
 	<x path="Void"/>
 </f></updateConstants>
-		<getParamValue public="1" set="method" line="60" override="1"><f a="index">
+		<getParamValue public="1" set="method" line="127" override="1"><f a="index">
 	<x path="Int"/>
 	<d/>
 </f></getParamValue>
-		<getParamFloatValue public="1" set="method" line="60" override="1"><f a="index">
+		<getParamFloatValue public="1" set="method" line="127" override="1"><f a="index">
 	<x path="Int"/>
 	<x path="Float"/>
 </f></getParamFloatValue>
-		<writeParam public="1" set="method" line="60" override="1"><f a="index:type:out:pos">
+		<writeParam public="1" set="method" line="127" override="1"><f a="index:type:out:pos">
 	<x path="Int"/>
 	<e path="hxsl.Type"/>
 	<t path="hxsl.ShaderParamBuffer"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></writeParam>
-		<clone public="1" set="method" line="60" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
-		<new public="1" set="method" line="58"><f a=""><x path="Void"/></f></new>
+		<clone public="1" set="method" line="127" override="1"><f a=""><c path="hxsl.Shader"/></f></clone>
+		<new public="1" set="method" line="125"><f a=""><x path="Void"/></f></new>
+		<haxe_doc>Copies a depth channel texture to the output color.</haxe_doc>
 		<meta>
 			<m n=":directlyUsed"/>
 			<m n=":src"><e>{
@@ -44481,51 +44782,52 @@
 	</enum>
 	<class path="h3d.scene.pbr.Renderer" params="" file="/home/user/heaps/h3d/scene/pbr/Renderer.hx">
 		<extends path="h3d.scene.Renderer"/>
-		<LIGHTMAP_STENCIL final="1" public="1" set="null" expr="0x80" line="70" static="1">
+		<LIGHTMAP_STENCIL final="1" public="1" set="null" expr="0x80" line="157" static="1">
 			<x path="Int"/>
 			<meta><m n=":value"><e>0x80</e></m></meta>
+			<haxe_doc>The stencil bit marking the pixels already lit by a volumetric light map, so that the environment lighting skips them.</haxe_doc>
 		</LIGHTMAP_STENCIL>
-		<ALPHA expr="Swiz(Value(&quot;output.color&quot;), [W])" line="115" static="1">
+		<ALPHA expr="Swiz(Value(&quot;output.color&quot;), [W])" line="222" static="1">
 			<e path="hxsl.Output"/>
 			<meta><m n=":value"><e>Swiz(Value("output.color"), [W])</e></m></meta>
 		</ALPHA>
-		<upscalingInputs expr="new UpscalingInputs()" line="499" static="1">
+		<upscalingInputs expr="new UpscalingInputs()" line="619" static="1">
 			<c path="h3d.impl.UpscalingInputs"/>
 			<meta><m n=":value"><e>new UpscalingInputs()</e></m></meta>
 		</upscalingInputs>
-		<upscalingParams expr="new UpscalingParams()" line="500" static="1">
+		<upscalingParams expr="new UpscalingParams()" line="620" static="1">
 			<c path="h3d.impl.UpscalingParams"/>
 			<meta><m n=":value"><e>new UpscalingParams()</e></m></meta>
 		</upscalingParams>
-		<viewToViewPrev expr="new h3d.Matrix()" line="501" static="1">
+		<viewToViewPrev expr="new h3d.Matrix()" line="621" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</viewToViewPrev>
-		<tmp expr="new h3d.Matrix()" line="502" static="1">
+		<tmp expr="new h3d.Matrix()" line="622" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</tmp>
-		<clipToPrevClip expr="new h3d.Matrix()" line="503" static="1">
+		<clipToPrevClip expr="new h3d.Matrix()" line="623" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</clipToPrevClip>
-		<prevClipToClip expr="new h3d.Matrix()" line="504" static="1">
+		<prevClipToClip expr="new h3d.Matrix()" line="624" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</prevClipToClip>
-		<projNoJitter expr="new h3d.Matrix()" line="505" static="1">
+		<projNoJitter expr="new h3d.Matrix()" line="625" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</projNoJitter>
-		<prevProjNoJitter expr="new h3d.Matrix()" line="506" static="1">
+		<prevProjNoJitter expr="new h3d.Matrix()" line="626" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</prevProjNoJitter>
-		<clipToViewNoJitter expr="new h3d.Matrix()" line="507" static="1">
+		<clipToViewNoJitter expr="new h3d.Matrix()" line="627" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</clipToViewNoJitter>
-		<viewToWorldRebased expr="new h3d.Matrix()" line="508" static="1">
+		<viewToWorldRebased expr="new h3d.Matrix()" line="628" static="1">
 			<x path="h3d.Matrix"/>
 			<meta><m n=":value"><e>new h3d.Matrix()</e></m></meta>
 		</viewToWorldRebased>
@@ -44597,20 +44899,32 @@
 		<skyMode public="1" expr="Hide">
 			<x path="h3d.scene.pbr.SkyMode"/>
 			<meta><m n=":value"><e>Hide</e></m></meta>
+			<haxe_doc>The sky mode, set from `RenderProps.sky` by `refreshProps`.</haxe_doc>
 		</skyMode>
 		<toneMode public="1" expr="Reinhard">
 			<x path="h3d.scene.pbr.TonemapMap"/>
 			<meta><m n=":value"><e>Reinhard</e></m></meta>
+			<haxe_doc>The tone mapping operator, set from `RenderProps.tone` by `refreshProps`.</haxe_doc>
 		</toneMode>
 		<displayMode public="1" expr="Pbr">
 			<x path="h3d.scene.pbr.DisplayMode"/>
 			<meta><m n=":value"><e>Pbr</e></m></meta>
+			<haxe_doc>The display mode, set from `RenderProps.mode` by `refreshProps`.</haxe_doc>
 		</displayMode>
-		<env public="1"><c path="h3d.scene.pbr.Environment"/></env>
-		<exposure public="1" get="accessor" set="accessor"><x path="Float"/></exposure>
+		<env public="1">
+			<c path="h3d.scene.pbr.Environment"/>
+			<haxe_doc>The environment used for the indirect lighting and the sky. If `null` or with a `power` of 0, there is no
+		environment lighting.</haxe_doc>
+		</env>
+		<exposure public="1" get="accessor" set="accessor">
+			<x path="Float"/>
+			<haxe_doc>The exposure, set from `RenderProps.exposure` by `refreshProps`: colors are multiplied by `exp(exposure)`.</haxe_doc>
+		</exposure>
 		<enableTransparency public="1" expr="false">
 			<x path="Bool"/>
 			<meta><m n=":value"><e>false</e></m></meta>
+			<haxe_doc>If `true`, the output keeps the alpha of the scene so that it can be composed over other content
+		(for instance a transparent canvas or an editor view).</haxe_doc>
 		</enableTransparency>
 		<debugShadowMapIndex expr="1">
 			<x path="Int"/>
@@ -44640,21 +44954,21 @@
 			<c path="h3d.pass.Output"/>
 			<meta><m n=":value"><e>new h3d.pass.Output("depth", [Swiz(Value("output.depth", 1), [X, X, X, X])])</e></m></meta>
 		</depthOutput>
-		<addShader public="1" set="method" line="183" override="1"><f a="s">
+		<addShader public="1" set="method" line="294" override="1"><f a="s">
 	<c path="hxsl.Shader"/>
 	<x path="Void"/>
 </f></addShader>
-		<get_exposure get="inline" set="null" line="187"><f a=""><x path="Float"/></f></get_exposure>
-		<set_exposure get="inline" set="null" line="188"><f a="v">
+		<get_exposure get="inline" set="null" line="298"><f a=""><x path="Float"/></f></get_exposure>
+		<set_exposure get="inline" set="null" line="299"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_exposure>
-		<getPassByName public="1" set="method" line="190" override="1"><f a="name">
+		<getPassByName public="1" set="method" line="301" override="1"><f a="name">
 	<c path="String"/>
 	<c path="h3d.pass.Output"/>
 </f></getPassByName>
-		<start public="1" set="method" line="210" override="1"><f a=""><x path="Void"/></f></start>
-		<cullPasses get="inline" set="null" line="238"><f a="passes:f">
+		<start public="1" set="method" line="321" override="1"><f a=""><x path="Void"/></f></start>
+		<cullPasses get="inline" set="null" line="349"><f a="passes:f">
 	<c path="h3d.pass.PassList"/>
 	<f a="">
 		<c path="h3d.col.Collider"/>
@@ -44662,11 +44976,11 @@
 	</f>
 	<x path="Void"/>
 </f></cullPasses>
-		<draw set="method" line="253" override="1"><f a="name">
+		<draw set="method" line="364" override="1"><f a="name">
 	<c path="String"/>
 	<x path="Void"/>
 </f></draw>
-		<renderPass set="method" line="260"><f a="p:passes:?sort">
+		<renderPass set="method" line="371"><f a="p:passes:?sort">
 	<c path="h3d.pass.Output"/>
 	<c path="h3d.pass.PassList"/>
 	<f a="">
@@ -44679,47 +44993,54 @@
 			<c path="h3d.pass.ScreenFx"><c path="h3d.shader.HZB"/></c>
 			<meta><m n=":value"><e>new h3d.pass.ScreenFx(new h3d.shader.HZB())</e></m></meta>
 		</hzbPass>
-		<updateHZB public="1" set="method" line="267">
+		<updateHZB public="1" set="method" line="382">
 			<f a="?max" v="true">
 				<x path="Bool"/>
 				<x path="Void"/>
 			</f>
 			<meta><m n=":value"><e>{ max : true }</e></m></meta>
+			<haxe_doc>Builds the hierarchical depth buffer of the current depth into `RenderContext.hzb`, used for GPU occlusion culling.
+		@param max If `true`, each mip level keeps the farthest depth of the pixels it covers (conservative for occlusion).</haxe_doc>
 		</updateHZB>
-		<buildHZB public="1" set="method" line="271"><f a="max:name">
-	<x path="Bool"/>
-	<c path="String"/>
-	<c path="h3d.mat.Texture"/>
-</f></buildHZB>
-		<lighting set="method" line="316"><f a=""><x path="Void"/></f></lighting>
-		<shouldDoIndirect get="inline" set="null" line="382"><f a=""><x path="Bool"/></f></shouldDoIndirect>
-		<isIndirectSkyOnly get="inline" set="null" line="386"><f a=""><x path="Bool"/></f></isIndirectSkyOnly>
-		<doIndirectLighting set="method" line="390"><f a=""><x path="Void"/></f></doIndirectLighting>
-		<beforeIndirect set="method" line="400"><f a=""><x path="Void"/></f></beforeIndirect>
-		<afterIndirect set="method" line="401"><f a=""><x path="Void"/></f></afterIndirect>
-		<beforeFullScreenLights set="method" line="402"><f a=""><x path="Void"/></f></beforeFullScreenLights>
-		<afterFullScreenLights set="method" line="403"><f a=""><x path="Void"/></f></afterFullScreenLights>
-		<renderLightProbes set="method" line="405"><f a=""><x path="Bool"/></f></renderLightProbes>
-		<drawShadows set="method" line="437"><f a="ls">
+		<buildHZB public="1" set="method" line="391">
+			<f a="max:name">
+				<x path="Bool"/>
+				<c path="String"/>
+				<c path="h3d.mat.Texture"/>
+			</f>
+			<haxe_doc>Builds a hierarchical depth buffer (a mipmapped depth texture) from the current depth and returns it.
+		@param max If `true`, each mip level keeps the maximum depth, otherwise the minimum.
+		@param name The name of the render target.</haxe_doc>
+		</buildHZB>
+		<lighting set="method" line="436"><f a=""><x path="Void"/></f></lighting>
+		<shouldDoIndirect get="inline" set="null" line="502"><f a=""><x path="Bool"/></f></shouldDoIndirect>
+		<isIndirectSkyOnly get="inline" set="null" line="506"><f a=""><x path="Bool"/></f></isIndirectSkyOnly>
+		<doIndirectLighting set="method" line="510"><f a=""><x path="Void"/></f></doIndirectLighting>
+		<beforeIndirect set="method" line="520"><f a=""><x path="Void"/></f></beforeIndirect>
+		<afterIndirect set="method" line="521"><f a=""><x path="Void"/></f></afterIndirect>
+		<beforeFullScreenLights set="method" line="522"><f a=""><x path="Void"/></f></beforeFullScreenLights>
+		<afterFullScreenLights set="method" line="523"><f a=""><x path="Void"/></f></afterFullScreenLights>
+		<renderLightProbes set="method" line="525"><f a=""><x path="Bool"/></f></renderLightProbes>
+		<drawShadows set="method" line="557"><f a="ls">
 	<c path="h3d.scene.pbr.LightSystem"/>
 	<x path="Void"/>
 </f></drawShadows>
-		<begin set="method" line="450"><f a="step">
+		<begin set="method" line="570"><f a="step">
 	<e path="h3d.impl.Step"/>
 	<x path="Void"/>
 </f></begin>
-		<renderEditorOutline set="method" line="483"><f a=""><x path="Void"/></f></renderEditorOutline>
-		<renderEditorOverlay set="method" line="492"><f a=""><x path="Void"/></f></renderEditorOverlay>
-		<unjitterProj get="inline" set="null" line="510"><f a="out:cam">
+		<renderEditorOutline set="method" line="603"><f a=""><x path="Void"/></f></renderEditorOutline>
+		<renderEditorOverlay set="method" line="612"><f a=""><x path="Void"/></f></renderEditorOverlay>
+		<unjitterProj get="inline" set="null" line="630"><f a="out:cam">
 	<x path="h3d.Matrix"/>
 	<c path="h3d.Camera"/>
 	<x path="Void"/>
 </f></unjitterProj>
-		<fillUpscalingParams set="method" line="516"><f a="reset">
+		<fillUpscalingParams set="method" line="636"><f a="reset">
 	<x path="Bool"/>
 	<x path="Void"/>
 </f></fillUpscalingParams>
-		<applyUpscaling set="method" line="565">
+		<applyUpscaling set="method" line="685">
 			<f a="mode:?reset" v=":false">
 				<e path="h3d.impl.UpscalingMode"/>
 				<x path="Bool"/>
@@ -44727,39 +45048,39 @@
 			</f>
 			<meta><m n=":value"><e>{ reset : false }</e></m></meta>
 		</applyUpscaling>
-		<applyFrameGen set="method" line="584">
+		<applyFrameGen set="method" line="704">
 			<f a="?reset" v="false">
 				<x path="Bool"/>
 				<x path="Void"/>
 			</f>
 			<meta><m n=":value"><e>{ reset : false }</e></m></meta>
 		</applyFrameGen>
-		<setRenderResolution set="method" line="599"><f a="width:height">
+		<setRenderResolution set="method" line="719"><f a="width:height">
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></setRenderResolution>
-		<end set="method" line="610"><f a=""><x path="Void"/></f></end>
-		<computeStatic set="method" line="628" override="1"><f a=""><x path="Void"/></f></computeStatic>
-		<initTextures set="method" line="647"><f a=""><x path="Void"/></f></initTextures>
-		<getPbrDepth public="1" set="method" line="663"><f a=""><c path="h3d.mat.Texture"/></f></getPbrDepth>
-		<initGlobals set="method" line="667"><f a=""><x path="Void"/></f></initGlobals>
-		<beginPbr set="method" line="685"><f a=""><x path="Void"/></f></beginPbr>
-		<drawPbrDecals set="method" line="796"><f a="passName">
+		<end set="method" line="730"><f a=""><x path="Void"/></f></end>
+		<computeStatic set="method" line="748" override="1"><f a=""><x path="Void"/></f></computeStatic>
+		<initTextures set="method" line="767"><f a=""><x path="Void"/></f></initTextures>
+		<getPbrDepth public="1" set="method" line="783"><f a=""><c path="h3d.mat.Texture"/></f></getPbrDepth>
+		<initGlobals set="method" line="787"><f a=""><x path="Void"/></f></initGlobals>
+		<beginPbr set="method" line="805"><f a=""><x path="Void"/></f></beginPbr>
+		<drawPbrDecals set="method" line="916"><f a="passName">
 	<c path="String"/>
 	<x path="Void"/>
 </f></drawPbrDecals>
-		<drawEmissiveDecals set="method" line="804"><f a="passName">
+		<drawEmissiveDecals set="method" line="924"><f a="passName">
 	<c path="String"/>
 	<x path="Void"/>
 </f></drawEmissiveDecals>
-		<getPbrRenderTargets set="method" line="812"><f a="depth">
+		<getPbrRenderTargets set="method" line="932"><f a="depth">
 	<x path="Bool"/>
 	<c path="Array"><c path="h3d.mat.Texture"/></c>
 </f></getPbrRenderTargets>
-		<render set="method" line="823" override="1"><f a=""><x path="Void"/></f></render>
-		<endPbr set="method" line="893"><f a=""><x path="Void"/></f></endPbr>
-		<mark set="method" line="999" override="1"><f a="step">
+		<render set="method" line="943" override="1"><f a=""><x path="Void"/></f></render>
+		<endPbr set="method" line="1013"><f a=""><x path="Void"/></f></endPbr>
+		<mark set="method" line="1119" override="1"><f a="step">
 	<c path="String"/>
 	<x path="Void"/>
 </f></mark>
@@ -44767,80 +45088,118 @@
 	<y><x path="Float"/></y>
 	<x><x path="Float"/></x>
 </a></debugPushPos>
-		<onEvent set="method" line="1006"><f a="e">
+		<onEvent set="method" line="1126"><f a="e">
 	<c path="hxd.Event"/>
 	<x path="Void"/>
 </f></onEvent>
-		<getLightingPerformanceGradient set="method" line="1034"><f a=""><c path="h3d.mat.Texture"/></f></getLightingPerformanceGradient>
-		<getDefaultProps public="1" set="method" line="1046" override="1"><f a="?kind">
+		<getLightingPerformanceGradient set="method" line="1154"><f a=""><c path="h3d.mat.Texture"/></f></getLightingPerformanceGradient>
+		<getDefaultProps public="1" set="method" line="1166" override="1"><f a="?kind">
 	<c path="String"/>
 	<x path="Any"/>
 </f></getDefaultProps>
-		<createEnv set="method" line="1063"><f a="t">
+		<createEnv set="method" line="1183"><f a="t">
 	<c path="h3d.mat.Texture"/>
 	<c path="h3d.scene.pbr.Environment"/>
 </f></createEnv>
-		<refreshProps public="1" set="method" line="1067" override="1"><f a=""><x path="Void"/></f></refreshProps>
-		<new public="1" set="method" line="161"><f a="?env">
-	<c path="h3d.scene.pbr.Environment"/>
-	<x path="Void"/>
-</f></new>
+		<refreshProps public="1" set="method" line="1187" override="1"><f a=""><x path="Void"/></f></refreshProps>
+		<new public="1" set="method" line="272">
+			<f a="?env">
+				<c path="h3d.scene.pbr.Environment"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates the renderer. It is usually created by `h3d.mat.PbrMaterialSetup`.
+		@param env The environment, see `env`.</haxe_doc>
+		</new>
+		<haxe_doc>The physically based deferred renderer. Enable it before creating the scene with `h3d.mat.PbrMaterialSetup.set()`.
+
+	Each frame it renders the opaque objects into a G-buffer (albedo, normal, metalness/roughness/occlusion, emissive, depth),
+	applies the decals, renders the shadow maps and computes the lighting (environment `env` and lights) into an HDR texture, draws the
+	`"forward"` and `"forwardAlpha"` passes, then tone maps the result (`toneMode`, `exposure`) and applies FXAA.
+	`h3d.impl.RendererFX` effects can be inserted at each step (see `effects`).
+
+	```haxe
+	h3d.mat.PbrMaterialSetup.set();
+	// in hxd.App.init:
+	var env = new h3d.scene.pbr.Environment(hxd.Res.sky.toTexture());
+	env.compute();
+	var renderer = cast(s3d.renderer, h3d.scene.pbr.Renderer);
+	renderer.env = env;
+	```</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.scene.pbr.SpotLight" params="" file="/home/user/heaps/h3d/scene/pbr/SpotLight.hx">
 		<extends path="h3d.scene.pbr.Light"/>
-		<spotLightPrim public="1" set="method" line="58" static="1"><f a=""><c path="h3d.prim.Polygon"/></f></spotLightPrim>
+		<spotLightPrim public="1" set="method" line="81" static="1">
+			<f a=""><c path="h3d.prim.Polygon"/></f>
+			<haxe_doc>Returns the pyramid primitive used to draw the light volume (shared, cached by the engine).</haxe_doc>
+		</spotLightPrim>
 		<pbr><c path="h3d.shader.pbr.SpotLight"/></pbr>
-		<range public="1" get="accessor" set="accessor"><x path="Float"/></range>
-		<angle public="1" set="accessor"><x path="Float"/></angle>
+		<range public="1" get="accessor" set="accessor">
+			<x path="Float"/>
+			<haxe_doc>The maximum distance reached by the light. Alias for the X scale of the object.</haxe_doc>
+		</range>
+		<angle public="1" set="accessor">
+			<x path="Float"/>
+			<haxe_doc>The opening angle of the cone, in degrees.</haxe_doc>
+		</angle>
 		<fallOff public="1" expr="0.">
 			<x path="Float"/>
 			<meta><m n=":value"><e>0.</e></m></meta>
+			<haxe_doc>The half angle, in degrees, inside which the light has its full intensity: it then fades out up to `angle / 2`.
+		With `0` the light fades from the center of the cone.</haxe_doc>
 		</fallOff>
-		<cookie public="1"><c path="h3d.mat.Texture"/></cookie>
+		<cookie public="1">
+			<c path="h3d.mat.Texture"/>
+			<haxe_doc>An optional texture projected by the light (its color and alpha modulate the light).</haxe_doc>
+		</cookie>
 		<lightProj><c path="h3d.Camera"/></lightProj>
-		<clone public="1" set="method" line="24" override="1"><f a="?o">
+		<clone public="1" set="method" line="44" override="1"><f a="?o">
 	<c path="h3d.scene.Object"/>
 	<c path="h3d.scene.Object"/>
 </f></clone>
-		<get_range set="method" line="35"><f a=""><x path="Float"/></f></get_range>
-		<set_range set="method" line="39"><f a="v">
+		<get_range set="method" line="55"><f a=""><x path="Float"/></f></get_range>
+		<set_range set="method" line="59"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_range>
-		<set_angle set="method" line="46"><f a="v">
+		<set_angle set="method" line="66"><f a="v">
 	<x path="Float"/>
 	<x path="Float"/>
 </f></set_angle>
-		<updateConeScale set="method" line="53"><f a=""><x path="Void"/></f></updateConeScale>
-		<generateLightProj set="method" line="95"><f a=""><x path="Void"/></f></generateLightProj>
-		<getShadowDirection public="1" set="method" line="102" override="1"><f a="?v">
+		<updateConeScale set="method" line="73"><f a=""><x path="Void"/></f></updateConeScale>
+		<generateLightProj set="method" line="118"><f a=""><x path="Void"/></f></generateLightProj>
+		<getShadowDirection public="1" set="method" line="125" override="1"><f a="?v">
 	<x path="h3d.Vector"/>
 	<x path="h3d.Vector"/>
 </f></getShadowDirection>
-		<draw set="method" line="108" override="1"><f a="ctx">
+		<draw set="method" line="131" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></draw>
-		<sync set="method" line="112" override="1"><f a="ctx">
+		<sync set="method" line="135" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></sync>
-		<emit set="method" line="135" override="1"><f a="ctx">
+		<emit set="method" line="158" override="1"><f a="ctx">
 	<c path="h3d.scene.RenderContext"/>
 	<x path="Void"/>
 </f></emit>
-		<inFrustum public="1" set="method" line="152" override="1">
+		<inFrustum public="1" set="method" line="175" override="1">
 			<f a="frustum">
 				<c path="h3d.col.Frustum"/>
 				<x path="Bool"/>
 			</f>
 			<meta><m n=":access"><e>h3d.col.Plane</e></m></meta>
 		</inFrustum>
-		<new public="1" set="method" line="13"><f a="?parent">
-	<c path="h3d.scene.Object"/>
-	<x path="Void"/>
-</f></new>
+		<new public="1" set="method" line="33">
+			<f a="?parent">
+				<c path="h3d.scene.Object"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>Creates a spot light with a range of 10 and an angle of 45 degrees.</haxe_doc>
+		</new>
+		<haxe_doc>A spot light of the PBR renderer: a cone of light along the X axis of the object (see `Object.setDirection`),
+	up to `range`. A `cookie` texture can be projected.</haxe_doc>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="h3d.shader.AlphaChannel" params="" file="/home/user/heaps/h3d/shader/AlphaChannel.hx">

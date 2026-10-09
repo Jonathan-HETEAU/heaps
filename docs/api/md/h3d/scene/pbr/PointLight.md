@@ -4,6 +4,9 @@
 
 Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A point light of the PBR renderer, shining in all directions from its position up to `range`.
+Its shadows use a cube shadow map (`h3d.pass.PointShadowMap`).
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 ```haxe
 function new(?parent:h3d.scene.Object):Void
 ```
+
+Creates a point light with a range of 10.
 
 ## Variables
 
@@ -20,11 +25,15 @@ function new(?parent:h3d.scene.Object):Void
 var size:Float
 ```
 
+The radius of the light source: closer than this distance, the light has its full intensity.
+
 ### zNear
 
 ```haxe
 var zNear:Float
 ```
+
+The near plane distance of the shadow map cameras.
 
 ### range
 

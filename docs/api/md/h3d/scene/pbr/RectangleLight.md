@@ -4,6 +4,9 @@
 
 Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A rectangular area light of the PBR renderer, such as a window or a screen. The rectangle is in the YZ plane of
+the object and shines along its X axis, up to `range`.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 ```haxe
 function new(?parent:h3d.scene.Object):Void
 ```
+
+Creates a rectangle light with a range of 10.
 
 ## Variables
 
@@ -20,11 +25,15 @@ function new(?parent:h3d.scene.Object):Void
 var width(default, set):Float
 ```
 
+The width of the rectangle (along the Y axis).
+
 ### height
 
 ```haxe
 var height(default, set):Float
 ```
+
+The height of the rectangle (along the Z axis).
 
 ### verticalAngle
 
@@ -32,11 +41,15 @@ var height(default, set):Float
 var verticalAngle(default, set):Float
 ```
 
+The vertical opening angle of the emitted light, in degrees.
+
 ### horizontalAngle
 
 ```haxe
 var horizontalAngle(default, set):Float
 ```
+
+The horizontal opening angle of the emitted light, in degrees.
 
 ### range
 
@@ -44,11 +57,16 @@ var horizontalAngle(default, set):Float
 var range(default, set):Float
 ```
 
+The maximum distance reached by the light.
+
 ### fallOff
 
 ```haxe
 var fallOff:Float
 ```
+
+The half angle, in degrees, inside which the light has its full intensity: it fades out up to half of
+`verticalAngle` / `horizontalAngle`.
 
 ## Methods
 
@@ -87,6 +105,8 @@ override function clone(?o:h3d.scene.Object):h3d.scene.Object
 ```haxe
 function getSpread(angle:Float):Float
 ```
+
+Returns how far the light spreads sideways at `range` for an opening `angle` in degrees (capped to 179).
 
 ### inFrustum
 

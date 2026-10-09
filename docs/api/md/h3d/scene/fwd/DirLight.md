@@ -4,6 +4,15 @@
 
 Extends: [`h3d.scene.fwd.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A directional light of the forward renderer, such as the sun: its rays are parallel and it has no position.
+
+The light direction is the X axis of the object (see `Object.setDirection`).
+
+```haxe
+var light = new h3d.scene.fwd.DirLight(new h3d.Vector(0.5, 0.5, -0.5), s3d);
+light.color.set(1, 1, 1);
+```
+
 ## Constructor
 
 ### new
@@ -11,6 +20,10 @@ Extends: [`h3d.scene.fwd.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 ```haxe
 function new(?dir:h3d.Vector, ?parent:h3d.scene.Object):Void
 ```
+
+Creates a directional light, with a `priority` of 100.
+- **param** `dir` The light direction (towards which the light shines).
+- **param** `parent` An optional parent object.
 
 ## Methods
 

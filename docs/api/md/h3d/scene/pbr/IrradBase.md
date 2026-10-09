@@ -6,6 +6,8 @@ Extends: [`h3d.shader.ScreenShader`](../../shader/ScreenShader.md) → [`hxsl.Sh
 
 Subclasses: [`h3d.scene.pbr.IrradLut`](IrradLut.md), [`h3d.scene.pbr.IrradShader`](IrradShader.md)
 
+Base shader of the environment lighting precomputations (importance sampling helpers).
+
 ## Constructor
 
 ### new

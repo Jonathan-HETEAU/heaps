@@ -4,6 +4,9 @@
 
 Extends: [`h3d.scene.LightSystem`](../LightSystem.md)
 
+The light system of the forward renderer: each object is drawn with the ambient light and up to
+`maxLightsPerObject` lights shaders.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.scene.LightSystem`](../LightSystem.md)
 ```haxe
 function new():Void
 ```
+
+Creates the light system.
 
 ## Variables
 
@@ -20,17 +25,25 @@ function new():Void
 var maxLightsPerObject:Int
 ```
 
+The maximum number of lights applied to an object. When there are more lights, the lights with the highest
+`Light.priority` are kept first, then the lights nearest to the object (or to the camera target for objects
+with `Object.lightCameraCenter`).
+
 ### perPixelLighting
 
 ```haxe
 var perPixelLighting:Bool
 ```
 
+Computes the lighting per pixel. If `false`, it is computed per vertex (faster, less precise).
+
 ### ambientLight
 
 ```haxe
 var ambientLight(default, null):h3d.Vector
 ```
+
+The ambient light color, added to all the lit objects (`0.5, 0.5, 0.5` by default). Modify its components.
 
 ### additiveLighting
 

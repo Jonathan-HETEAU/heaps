@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.Output`](../../pass/Output.md)
 
+Renders the objects having a `"depth"` pass into the `depthMap` shader global (a packed depth texture).
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`h3d.pass.Output`](../../pass/Output.md)
 function new():Void
 ```
 
+Creates the depth pass.
+
 ## Variables
 
 ### enableSky
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 var enableSky:Bool
 ```
+
+If `true`, the depth texture is cleared to zero instead of the maximum depth.
 
 ## Methods
 

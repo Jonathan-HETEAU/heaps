@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.Output`](../../pass/Output.md)
 
+Renders the objects having a `"normal"` pass into the `normalMap` shader global (a packed normal texture).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.pass.Output`](../../pass/Output.md)
 ```haxe
 function new():Void
 ```
+
+Creates the normal pass.
 
 ## Methods
 

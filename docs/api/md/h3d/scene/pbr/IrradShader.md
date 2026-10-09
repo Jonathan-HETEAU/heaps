@@ -4,6 +4,8 @@
 
 Extends: [`h3d.scene.pbr.IrradBase`](IrradBase.md) → [`h3d.shader.ScreenShader`](../../shader/ScreenShader.md) → [`hxsl.Shader`](../../../hxsl/Shader.md)
 
+Computes the diffuse irradiance and the prefiltered specular cube maps of an `Environment`.
+
 ## Constructor
 
 ### new

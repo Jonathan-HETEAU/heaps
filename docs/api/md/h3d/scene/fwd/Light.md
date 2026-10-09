@@ -6,6 +6,9 @@ Extends: [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
 Subclasses: [`h3d.scene.fwd.DirLight`](DirLight.md), [`h3d.scene.fwd.PointLight`](PointLight.md)
 
+Base class of the lights of the forward renderer (`h3d.scene.fwd.Renderer`, the default renderer).
+See `DirLight` and `PointLight`.
+
 ## Constructor
 
 ### new
@@ -22,11 +25,16 @@ function new(shader:hxsl.Shader, ?parent:h3d.scene.Object):Void
 var priority:Int
 ```
 
+When an object is lit by more lights than `LightSystem.maxLightsPerObject`, lights with a higher priority are
+kept first, then the nearest ones.
+
 ### enableSpecular
 
 ```haxe
 var enableSpecular(get, set):Bool
 ```
+
+Enables the specular highlights of this light. Not supported by all lights (throws when enabled on those).
 
 ## Inherited members
 

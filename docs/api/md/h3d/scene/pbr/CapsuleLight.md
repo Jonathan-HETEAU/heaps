@@ -4,6 +4,9 @@
 
 Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A capsule shaped light of the PBR renderer (a segment of `length` along the X axis, with a `radius`),
+such as a neon tube, up to `range`.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 ```haxe
 function new(?parent:h3d.scene.Object):Void
 ```
+
+Creates a capsule light with a range of 10.
 
 ## Variables
 
@@ -20,17 +25,23 @@ function new(?parent:h3d.scene.Object):Void
 var radius:Float
 ```
 
+The radius of the light source.
+
 ### length
 
 ```haxe
 var length(default, set):Float
 ```
 
+The length of the light segment, along the X axis.
+
 ### zNear
 
 ```haxe
 var zNear:Float
 ```
+
+The near plane distance of the shadow map cameras.
 
 ### range
 

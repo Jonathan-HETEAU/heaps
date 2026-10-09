@@ -12035,8 +12035,8 @@
   "h3d.scene.fwd.DirLight": {
    "file": "h3d/scene/fwd/DirLight.hx",
    "package": "h3d.scene.fwd",
-   "lines": 41,
-   "doc_blocks": 0,
+   "lines": 56,
+   "doc_blocks": 2,
    "types": [
     "class DirLight"
    ],
@@ -12064,8 +12064,8 @@
   "h3d.scene.fwd.Light": {
    "file": "h3d/scene/fwd/Light.hx",
    "package": "h3d.scene.fwd",
-   "lines": 19,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 3,
    "types": [
     "class Light"
    ],
@@ -12091,8 +12091,8 @@
   "h3d.scene.fwd.LightSystem": {
    "file": "h3d/scene/fwd/LightSystem.hx",
    "package": "h3d.scene.fwd",
-   "lines": 108,
-   "doc_blocks": 1,
+   "lines": 126,
+   "doc_blocks": 6,
    "types": [
     "class LightSystem"
    ],
@@ -12146,8 +12146,8 @@
   "h3d.scene.fwd.PointLight": {
    "file": "h3d/scene/fwd/PointLight.hx",
    "package": "h3d.scene.fwd",
-   "lines": 51,
-   "doc_blocks": 0,
+   "lines": 63,
+   "doc_blocks": 3,
    "types": [
     "class PointLight"
    ],
@@ -12178,8 +12178,8 @@
   "h3d.scene.fwd.Renderer": {
    "file": "h3d/scene/fwd/Renderer.hx",
    "package": "h3d.scene.fwd",
-   "lines": 85,
-   "doc_blocks": 0,
+   "lines": 119,
+   "doc_blocks": 10,
    "types": [
     "class DepthPass",
     "class NormalPass",
@@ -12225,8 +12225,8 @@
   "h3d.scene.pbr.CapsuleLight": {
    "file": "h3d/scene/pbr/CapsuleLight.hx",
    "package": "h3d.scene.pbr",
-   "lines": 101,
-   "doc_blocks": 1,
+   "lines": 117,
+   "doc_blocks": 6,
    "types": [
     "class CapsuleLight"
    ],
@@ -12275,8 +12275,8 @@
   "h3d.scene.pbr.Decal": {
    "file": "h3d/scene/pbr/Decal.hx",
    "package": "h3d.scene.pbr",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 28,
+   "doc_blocks": 2,
    "types": [
     "class Decal"
    ],
@@ -12304,8 +12304,8 @@
   "h3d.scene.pbr.DirLight": {
    "file": "h3d/scene/pbr/DirLight.hx",
    "package": "h3d.scene.pbr",
-   "lines": 36,
-   "doc_blocks": 0,
+   "lines": 48,
+   "doc_blocks": 2,
    "types": [
     "class DirLight"
    ],
@@ -12347,8 +12347,8 @@
   "h3d.scene.pbr.Environment": {
    "file": "h3d/scene/pbr/Environment.hx",
    "package": "h3d.scene.pbr",
-   "lines": 427,
-   "doc_blocks": 0,
+   "lines": 511,
+   "doc_blocks": 25,
    "types": [
     "class IrradBase",
     "class IrradShader",
@@ -12422,8 +12422,8 @@
   "h3d.scene.pbr.Light": {
    "file": "h3d/scene/pbr/Light.hx",
    "package": "h3d.scene.pbr",
-   "lines": 62,
-   "doc_blocks": 0,
+   "lines": 93,
+   "doc_blocks": 8,
    "types": [
     "class Light"
    ],
@@ -12470,8 +12470,8 @@
   "h3d.scene.pbr.LightBuffer": {
    "file": "h3d/scene/pbr/LightBuffer.hx",
    "package": "h3d.scene.pbr",
-   "lines": 709,
-   "doc_blocks": 0,
+   "lines": 761,
+   "doc_blocks": 14,
    "types": [
     "class LightBuffer"
    ],
@@ -12558,8 +12558,8 @@
   "h3d.scene.pbr.LightSystem": {
    "file": "h3d/scene/pbr/LightSystem.hx",
    "package": "h3d.scene.pbr",
-   "lines": 75,
-   "doc_blocks": 0,
+   "lines": 98,
+   "doc_blocks": 7,
    "types": [
     "class LightSystem"
    ],
@@ -12614,8 +12614,8 @@
   "h3d.scene.pbr.PointLight": {
    "file": "h3d/scene/pbr/PointLight.hx",
    "package": "h3d.scene.pbr",
-   "lines": 85,
-   "doc_blocks": 1,
+   "lines": 98,
+   "doc_blocks": 5,
    "types": [
     "class PointLight"
    ],
@@ -12664,8 +12664,8 @@
   "h3d.scene.pbr.RectangleLight": {
    "file": "h3d/scene/pbr/RectangleLight.hx",
    "package": "h3d.scene.pbr",
-   "lines": 192,
-   "doc_blocks": 0,
+   "lines": 221,
+   "doc_blocks": 9,
    "types": [
     "class RectangleLight"
    ],
@@ -12718,8 +12718,8 @@
   "h3d.scene.pbr.Renderer": {
    "file": "h3d/scene/pbr/Renderer.hx",
    "package": "h3d.scene.pbr",
-   "lines": 1145,
-   "doc_blocks": 0,
+   "lines": 1265,
+   "doc_blocks": 37,
    "types": [
     "enum_abstract DisplayMode",
     "enum_abstract SkyMode",
@@ -12884,8 +12884,8 @@
   "h3d.scene.pbr.SpotLight": {
    "file": "h3d/scene/pbr/SpotLight.hx",
    "package": "h3d.scene.pbr",
-   "lines": 169,
-   "doc_blocks": 0,
+   "lines": 192,
+   "doc_blocks": 7,
    "types": [
     "class SpotLight"
    ],

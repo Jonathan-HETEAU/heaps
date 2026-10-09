@@ -4,6 +4,10 @@
 
 Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
 
+A directional light of the PBR renderer, such as the sun: its rays are parallel and it lights the whole scene.
+
+The light direction is the X axis of the object (see `Object.setDirection`).
+
 ## Constructor
 
 ### new
@@ -11,6 +15,12 @@ Extends: [`h3d.scene.pbr.Light`](Light.md) → [`h3d.scene.Light`](../Light.md) 
 ```haxe
 function new(?dir:h3d.Vector, ?parent:h3d.scene.Object, ?cascade:Bool):Void
 ```
+
+Creates a directional light.
+- **param** `dir` The light direction (towards which the light shines).
+- **param** `parent` An optional parent object.
+- **param** `cascade` If `true`, uses cascaded shadow maps (`h3d.pass.CascadeShadowMap`), better for large scenes.
+Otherwise uses a single `h3d.pass.DirShadowMap`.
 
 ## Methods
 

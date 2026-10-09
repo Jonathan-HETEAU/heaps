@@ -2,7 +2,7 @@
 
 > Généré par `tools/docgen/deps.py` (analyse statique, sans compilateur Haxe). Ne pas éditer à la main.
 
-- Modules (fichiers `.hx`) : **554** — lignes : **132800** — packages : **44**
+- Modules (fichiers `.hx`) : **554** — lignes : **133300** — packages : **44**
 - Dépendances module→module : **2779**
 - Cycles de modules (SCC > 1) : **18**
 
@@ -27,8 +27,8 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 | [`h3d.pass`](modules/h3d.pass.md) | 28 | 3081 | 17 | h2d.col, h3d, h3d.col, h3d.impl, h3d.mat, h3d.prim, h3d.scene, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxsl | 8 |
 | [`h3d.prim`](modules/h3d.prim.md) | 23 | 3772 | 30 | h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.scene, h3d.shader, hxd, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.res | 10 |
 | [`h3d.scene`](modules/h3d.scene.md) | 22 | 10163 | 573 | h2d.col, h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene.pbr, h3d.shader, hxd, hxd.fmt.hmd, hxd.impl, hxd.res, hxsl | 15 |
-| [`h3d.scene.fwd`](modules/h3d.scene.fwd.md) | 5 | 304 | 1 | h3d, h3d.col, h3d.pass, h3d.scene, h3d.shader, hxd, hxsl | 1 |
-| [`h3d.scene.pbr`](modules/h3d.scene.pbr.md) | 11 | 3022 | 2 | h3d, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene, h3d.shader, h3d.shader.pbr, hxd, hxd.res, hxsl | 4 |
+| [`h3d.scene.fwd`](modules/h3d.scene.fwd.md) | 5 | 394 | 24 | h3d, h3d.col, h3d.pass, h3d.scene, h3d.shader, hxd, hxsl | 1 |
+| [`h3d.scene.pbr`](modules/h3d.scene.pbr.md) | 11 | 3432 | 122 | h3d, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene, h3d.shader, h3d.shader.pbr, hxd, hxd.res, hxsl | 4 |
 | [`h3d.shader`](modules/h3d.shader.md) | 68 | 3586 | 6 | h3d, h3d.mat, hxd.impl, hxsl | 15 |
 | [`h3d.shader.pbr`](modules/h3d.shader.pbr.md) | 20 | 2555 | 0 | h3d, h3d.shader, hxsl | 4 |
 | [`hxd`](modules/hxd.md) | 33 | 8440 | 121 | h2d, h3d, h3d.scene, hxd.fmt.pak, hxd.fs, hxd.impl, hxd.res, hxsl | 33 |

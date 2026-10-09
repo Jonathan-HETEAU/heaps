@@ -410,34 +410,34 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.scene.WorldMaterial](api/md/h3d/scene/WorldMaterial.md): A material of a `World` model: the geometries sharing the same material bits are merged in the same mesh.
 - [h3d.scene.WorldModel](api/md/h3d/scene/WorldModel.md): A model loaded by `World.loadModel`: its geometry is kept on the CPU to be merged into the chunks.
 - [h3d.scene.WorldModelGeometry](api/md/h3d/scene/WorldModelGeometry.md): A part of a `WorldModel` using one material.
-- [h3d.scene.fwd.DepthPass](api/md/h3d/scene/fwd/DepthPass.md)
-- [h3d.scene.fwd.DirLight](api/md/h3d/scene/fwd/DirLight.md)
-- [h3d.scene.fwd.Light](api/md/h3d/scene/fwd/Light.md)
-- [h3d.scene.fwd.LightSystem](api/md/h3d/scene/fwd/LightSystem.md)
-- [h3d.scene.fwd.NormalPass](api/md/h3d/scene/fwd/NormalPass.md)
-- [h3d.scene.fwd.PointLight](api/md/h3d/scene/fwd/PointLight.md)
-- [h3d.scene.fwd.Renderer](api/md/h3d/scene/fwd/Renderer.md)
-- [h3d.scene.pbr.CapsuleLight](api/md/h3d/scene/pbr/CapsuleLight.md)
-- [h3d.scene.pbr.CubeToPanorama](api/md/h3d/scene/pbr/CubeToPanorama.md)
-- [h3d.scene.pbr.Decal](api/md/h3d/scene/pbr/Decal.md)
-- [h3d.scene.pbr.DepthCopy](api/md/h3d/scene/pbr/DepthCopy.md)
-- [h3d.scene.pbr.DirLight](api/md/h3d/scene/pbr/DirLight.md)
-- [h3d.scene.pbr.DisplayMode](api/md/h3d/scene/pbr/DisplayMode.md)
-- [h3d.scene.pbr.Environment](api/md/h3d/scene/pbr/Environment.md)
-- [h3d.scene.pbr.IrradBase](api/md/h3d/scene/pbr/IrradBase.md)
-- [h3d.scene.pbr.IrradLut](api/md/h3d/scene/pbr/IrradLut.md)
-- [h3d.scene.pbr.IrradShader](api/md/h3d/scene/pbr/IrradShader.md)
-- [h3d.scene.pbr.Light](api/md/h3d/scene/pbr/Light.md)
-- [h3d.scene.pbr.LightBuffer](api/md/h3d/scene/pbr/LightBuffer.md)
-- [h3d.scene.pbr.LightSystem](api/md/h3d/scene/pbr/LightSystem.md)
-- [h3d.scene.pbr.PanoramaToCube](api/md/h3d/scene/pbr/PanoramaToCube.md)
-- [h3d.scene.pbr.PointLight](api/md/h3d/scene/pbr/PointLight.md)
-- [h3d.scene.pbr.RectangleLight](api/md/h3d/scene/pbr/RectangleLight.md)
-- [h3d.scene.pbr.RenderProps](api/md/h3d/scene/pbr/RenderProps.md)
-- [h3d.scene.pbr.Renderer](api/md/h3d/scene/pbr/Renderer.md)
-- [h3d.scene.pbr.SkyMode](api/md/h3d/scene/pbr/SkyMode.md)
-- [h3d.scene.pbr.SpotLight](api/md/h3d/scene/pbr/SpotLight.md)
-- [h3d.scene.pbr.TonemapMap](api/md/h3d/scene/pbr/TonemapMap.md)
+- [h3d.scene.fwd.DepthPass](api/md/h3d/scene/fwd/DepthPass.md): Renders the objects having a `"depth"` pass into the `depthMap` shader global (a packed depth texture).
+- [h3d.scene.fwd.DirLight](api/md/h3d/scene/fwd/DirLight.md): A directional light of the forward renderer, such as the sun: its rays are parallel and it has no position.
+- [h3d.scene.fwd.Light](api/md/h3d/scene/fwd/Light.md): Base class of the lights of the forward renderer (`h3d.scene.fwd.Renderer`, the default renderer).
+- [h3d.scene.fwd.LightSystem](api/md/h3d/scene/fwd/LightSystem.md): The light system of the forward renderer: each object is drawn with the ambient light and up to `maxLightsPerObject` lights shaders.
+- [h3d.scene.fwd.NormalPass](api/md/h3d/scene/fwd/NormalPass.md): Renders the objects having a `"normal"` pass into the `normalMap` shader global (a packed normal texture).
+- [h3d.scene.fwd.PointLight](api/md/h3d/scene/fwd/PointLight.md): A point light of the forward renderer, shining in all directions from its position.
+- [h3d.scene.fwd.Renderer](api/md/h3d/scene/fwd/Renderer.md): The forward renderer, used by default (see `h3d.mat.MaterialSetup`).
+- [h3d.scene.pbr.CapsuleLight](api/md/h3d/scene/pbr/CapsuleLight.md): A capsule shaped light of the PBR renderer (a segment of `length` along the X axis, with a `radius`), such as a neon tube, up to `range`.
+- [h3d.scene.pbr.CubeToPanorama](api/md/h3d/scene/pbr/CubeToPanorama.md): Converts a cube map into an equirectangular (panorama) texture.
+- [h3d.scene.pbr.Decal](api/md/h3d/scene/pbr/Decal.md): A projected decal for the PBR renderer: a box volume (usually a unit cube) whose material uses a `h3d.shader.pbr.VolumeDecal` shader to project a texture on the surfaces inside the box.
+- [h3d.scene.pbr.DepthCopy](api/md/h3d/scene/pbr/DepthCopy.md): Copies a depth channel texture to the output color.
+- [h3d.scene.pbr.DirLight](api/md/h3d/scene/pbr/DirLight.md): A directional light of the PBR renderer, such as the sun: its rays are parallel and it lights the whole scene.
+- [h3d.scene.pbr.DisplayMode](api/md/h3d/scene/pbr/DisplayMode.md): What the PBR renderer displays: the lit scene or a debug view.
+- [h3d.scene.pbr.Environment](api/md/h3d/scene/pbr/Environment.md): The environment lighting of the PBR renderer (image based lighting): the sky texture and the diffuse and specular lighting textures computed from it, used for the indirect lighting and the reflections.
+- [h3d.scene.pbr.IrradBase](api/md/h3d/scene/pbr/IrradBase.md): Base shader of the environment lighting precomputations (importance sampling helpers).
+- [h3d.scene.pbr.IrradLut](api/md/h3d/scene/pbr/IrradLut.md): Computes the BRDF lookup texture shared by all environments (see `Environment.getDefaultLUT`).
+- [h3d.scene.pbr.IrradShader](api/md/h3d/scene/pbr/IrradShader.md): Computes the diffuse irradiance and the prefiltered specular cube maps of an `Environment`.
+- [h3d.scene.pbr.Light](api/md/h3d/scene/pbr/Light.md): Base class of the lights of the PBR renderer (`h3d.scene.pbr.Renderer`).
+- [h3d.scene.pbr.LightBuffer](api/md/h3d/scene/pbr/LightBuffer.md): Packs the lights of the frame in a GPU buffer read by the forward shader (`h3d.shader.pbr.DefaultForward`), so that the objects drawn in the forward passes (such as transparent objects) are lit by the PBR lights.
+- [h3d.scene.pbr.LightSystem](api/md/h3d/scene/pbr/LightSystem.md): The light system of the PBR renderer.
+- [h3d.scene.pbr.PanoramaToCube](api/md/h3d/scene/pbr/PanoramaToCube.md): Converts an equirectangular (panorama) texture into the faces of a cube map.
+- [h3d.scene.pbr.PointLight](api/md/h3d/scene/pbr/PointLight.md): A point light of the PBR renderer, shining in all directions from its position up to `range`.
+- [h3d.scene.pbr.RectangleLight](api/md/h3d/scene/pbr/RectangleLight.md): A rectangular area light of the PBR renderer, such as a window or a screen.
+- [h3d.scene.pbr.RenderProps](api/md/h3d/scene/pbr/RenderProps.md): The properties of the PBR renderer (see `hxd.impl.AnyProps.props`), usually edited in Hide.
+- [h3d.scene.pbr.Renderer](api/md/h3d/scene/pbr/Renderer.md): The physically based deferred renderer.
+- [h3d.scene.pbr.SkyMode](api/md/h3d/scene/pbr/SkyMode.md): What the PBR renderer displays where no object is drawn.
+- [h3d.scene.pbr.SpotLight](api/md/h3d/scene/pbr/SpotLight.md): A spot light of the PBR renderer: a cone of light along the X axis of the object (see `Object.setDirection`), up to `range`.
+- [h3d.scene.pbr.TonemapMap](api/md/h3d/scene/pbr/TonemapMap.md): The tone mapping operators converting the HDR lighting to displayable colors.
 - [h3d.shader.AlphaChannel](api/md/h3d/shader/AlphaChannel.md)
 - [h3d.shader.AlphaMSDF](api/md/h3d/shader/AlphaMSDF.md)
 - [h3d.shader.AlphaMap](api/md/h3d/shader/AlphaMap.md)
