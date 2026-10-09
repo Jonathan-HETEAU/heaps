@@ -1,6 +1,9 @@
 package h3d;
 import hxd.Math;
 
+/**
+	Color adjustments applied by `Matrix.adjustColor` (and `h2d.Drawable.adjustColor`). All fields are optional.
+**/
 typedef ColorAdjust = {
 	?saturation : Float,
 	?lightness : Float,
@@ -9,31 +12,94 @@ typedef ColorAdjust = {
 	?gain : { color : Int, alpha : Float },
 };
 
+/**
+	The implementation of `Matrix`: use `h3d.Matrix` instead.
+**/
 class MatrixImpl {
 
 	static var tmp = new Matrix();
 
+	/**
+		The value at row 1, column 1. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _11 : Float;
+	/**
+		The value at row 1, column 2. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _12 : Float;
+	/**
+		The value at row 1, column 3. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _13 : Float;
+	/**
+		The value at row 1, column 4. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _14 : Float;
+	/**
+		The value at row 2, column 1. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _21 : Float;
+	/**
+		The value at row 2, column 2. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _22 : Float;
+	/**
+		The value at row 2, column 3. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _23 : Float;
+	/**
+		The value at row 2, column 4. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _24 : Float;
+	/**
+		The value at row 3, column 1. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _31 : Float;
+	/**
+		The value at row 3, column 2. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _32 : Float;
+	/**
+		The value at row 3, column 3. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _33 : Float;
+	/**
+		The value at row 3, column 4. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _34 : Float;
+	/**
+		The value at row 4, column 1. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _41 : Float;
+	/**
+		The value at row 4, column 2. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _42 : Float;
+	/**
+		The value at row 4, column 3. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _43 : Float;
+	/**
+		The value at row 4, column 4. Matrixes use row vectors: the 4th row holds the translation.
+	**/
 	public var _44 : Float;
 
+	/**
+		The X translation, alias for `_41`.
+	**/
 	public var tx(get, set) : Float;
+	/**
+		The Y translation, alias for `_42`.
+	**/
 	public var ty(get, set) : Float;
+	/**
+		The Z translation, alias for `_43`.
+	**/
 	public var tz(get, set) : Float;
 
+	/**
+		Creates a matrix. Its values are not initialized: call `identity()` or use `Matrix.I()`.
+	**/
 	inline public function new() {
 	}
 
@@ -44,6 +110,9 @@ class MatrixImpl {
 	inline function set_ty(v) return _42 = v;
 	inline function set_tz(v) return _43 = v;
 
+	/**
+		Tells if all the values are equal to those of `other`.
+	**/
 	public function equal( other : Matrix ) {
 		return	_11 == other._11 && _12 == other._12 && _13 == other._13 && _14 == other._14
 			&& 	_21 == other._21 && _22 == other._22 && _23 == other._23 && _24 == other._24
@@ -51,6 +120,9 @@ class MatrixImpl {
 			&& 	_41 == other._41 && _42 == other._42 && _43 == other._43 && _44 == other._44;
 	}
 
+	/**
+		Sets all the values to 0.
+	**/
 	public function zero() {
 		_11 = 0.0; _12 = 0.0; _13 = 0.0; _14 = 0.0;
 		_21 = 0.0; _22 = 0.0; _23 = 0.0; _24 = 0.0;
@@ -58,6 +130,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 0.0;
 	}
 
+	/**
+		Sets the matrix to the identity (no transformation).
+	**/
 	public function identity() {
 		_11 = 1.0; _12 = 0.0; _13 = 0.0; _14 = 0.0;
 		_21 = 0.0; _22 = 1.0; _23 = 0.0; _24 = 0.0;
@@ -65,6 +140,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 1.0;
 	}
 
+	/**
+		Tells if the matrix is exactly the identity.
+	**/
 	public function isIdentity() {
 		if( _41 != 0 || _42 != 0 || _43 != 0 )
 			return false;
@@ -79,6 +157,9 @@ class MatrixImpl {
 		return _44 == 1;
 	}
 
+	/**
+		Tells if the matrix is the identity, within the tolerance `e`.
+	**/
 	public function isIdentityEpsilon( e : Float ) {
 		if( Math.abs(_41) > e || Math.abs(_42) > e || Math.abs(_43) > e )
 			return false;
@@ -93,6 +174,9 @@ class MatrixImpl {
 		return Math.abs(_44 - 1) <= e;
 	}
 
+	/**
+		Sets the matrix to a rotation of `a` radians around the X axis.
+	**/
 	public function initRotationX( a : Float ) {
 		var cos = Math.cos(a);
 		var sin = Math.sin(a);
@@ -102,6 +186,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 1.0;
 	}
 
+	/**
+		Sets the matrix to a rotation of `a` radians around the Y axis.
+	**/
 	public function initRotationY( a : Float ) {
 		var cos = Math.cos(a);
 		var sin = Math.sin(a);
@@ -111,6 +198,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 1.0;
 	}
 
+	/**
+		Sets the matrix to a rotation of `a` radians around the Z axis.
+	**/
 	public function initRotationZ( a : Float ) {
 		var cos = Math.cos(a);
 		var sin = Math.sin(a);
@@ -120,6 +210,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 1.0;
 	}
 
+	/**
+		Sets the matrix to a translation.
+	**/
 	public function initTranslation( x = 0., y = 0., z = 0. ) {
 		_11 = 1.0; _12 = 0.0; _13 = 0.0; _14 = 0.0;
 		_21 = 0.0; _22 = 1.0; _23 = 0.0; _24 = 0.0;
@@ -127,6 +220,9 @@ class MatrixImpl {
 		_41 = x; _42 = y; _43 = z; _44 = 1.0;
 	}
 
+	/**
+		Sets the matrix to a scale.
+	**/
 	public function initScale( x = 1., y = 1., z = 1. ) {
 		_11 = x; _12 = 0.0; _13 = 0.0; _14 = 0.0;
 		_21 = 0.0; _22 = y; _23 = 0.0; _24 = 0.0;
@@ -134,6 +230,9 @@ class MatrixImpl {
 		_41 = 0.0; _42 = 0.0; _43 = 0.0; _44 = 1.0;
 	}
 
+	/**
+		Sets the matrix to a rotation of `angle` radians around the normalized `axis`.
+	**/
 	public inline function initRotationAxis( axis : Vector, angle : Float ) {
 		var cos = Math.cos(angle), sin = Math.sin(angle);
 		var cos1 = 1 - cos;
@@ -159,6 +258,9 @@ class MatrixImpl {
 		_41 = 0.; _42 = 0.; _43 = 0.; _44 = 1.;
 	}
 
+	/**
+		Sets the matrix to a rotation from Euler angles, in radians.
+	**/
 	public function initRotation( x : Float, y : Float, z : Float ) {
 		var cx = Math.cos(x);
 		var sx = Math.sin(x);
@@ -186,6 +288,9 @@ class MatrixImpl {
 		_44 = 1;
 	}
 
+	/**
+		Appends a translation: it is applied after the current transformation.
+	**/
 	public function translate( x = 0., y = 0., z = 0. ) {
 		_11 += x * _14;
 		_12 += y * _14;
@@ -201,6 +306,9 @@ class MatrixImpl {
 		_43 += z * _44;
 	}
 
+	/**
+		Appends a scale: it is applied after the current transformation.
+	**/
 	public function scale( x = 1., y = 1., z = 1. ) {
 		_11 *= x;
 		_21 *= x;
@@ -216,30 +324,45 @@ class MatrixImpl {
 		_43 *= z;
 	}
 
+	/**
+		Appends a rotation from Euler angles, in radians.
+	**/
 	public function rotate( x, y, z ) {
 		var tmp = tmp;
 		tmp.initRotation(x,y,z);
 		multiply(this, tmp);
 	}
 
+	/**
+		Appends a rotation of `angle` radians around `axis`.
+	**/
 	public function rotateAxis( axis, angle ) {
 		var tmp = tmp;
 		tmp.initRotationAxis(axis, angle);
 		multiply(this, tmp);
 	}
 
+	/**
+		Returns the translation part.
+	**/
 	public inline function getPosition() {
 		var v = new Vector();
 		v.set(_41,_42,_43);
 		return v;
 	}
 
+	/**
+		Sets the translation part.
+	**/
 	public inline function setPosition( v : Vector ) {
 		_41 = v.x;
 		_42 = v.y;
 		_43 = v.z;
 	}
 
+	/**
+		Prepends a translation: it is applied before the current transformation.
+	**/
 	public function prependTranslation( x = 0., y = 0., z = 0. ) {
 		var vx = _11 * x + _21 * y + _31 * z + _41;
 		var vy = _12 * x + _22 * y + _32 * z + _42;
@@ -251,6 +374,9 @@ class MatrixImpl {
 		_44 = vw;
 	}
 
+	/**
+		Returns the scale of each axis (the length of the first three rows), all negated if the matrix is mirrored.
+	**/
 	public inline function getScale() {
 		var v = new Vector();
 		v.x = Math.sqrt(_11 * _11 + _12 * _12 + _13 * _13);
@@ -264,28 +390,43 @@ class MatrixImpl {
 		return v;
 	}
 
+	/**
+		Prepends a rotation from Euler angles, in radians.
+	**/
 	public function prependRotation( x, y, z ) {
 		var tmp = tmp;
 		tmp.initRotation(x,y,z);
 		multiply(tmp, this);
 	}
 
+	/**
+		Prepends a rotation of `angle` radians around `axis`.
+	**/
 	public function prependRotationAxis( axis, angle ) {
 		var tmp = tmp;
 		tmp.initRotationAxis(axis, angle);
 		multiply(tmp, this);
 	}
 
+	/**
+		Prepends a scale: it is applied before the current transformation.
+	**/
 	public function prependScale( sx = 1., sy = 1., sz = 1. ) {
 		var tmp = tmp;
 		tmp.initScale(sx,sy,sz);
 		multiply(tmp, this);
 	}
 
+	/**
+		Sets `this` to `a * b`, using only the 3x3 rotation and scale part.
+	**/
 	public function multiply3x3( a : Matrix, b : Matrix ) {
 		multiply3x3inline(a, b);
 	}
 
+	/**
+		Inline version of `multiply3x3`.
+	**/
 	public inline function multiply3x3inline( a : Matrix, b : Matrix ) {
 		var m11 = a._11; var m12 = a._12; var m13 = a._13;
 		var m21 = a._21; var m22 = a._22; var m23 = a._23;
@@ -307,11 +448,17 @@ class MatrixImpl {
 		_33 = a31 * b13 + a32 * b23 + a33 * b33;
 	}
 
+	/**
+		Sets `this` to `a * b` for affine matrixes (the last column is assumed to be `0, 0, 0, 1`). Faster than `multiply`.
+	**/
 	@:noDebug
 	public function multiply3x4( a : Matrix, b : Matrix ) {
 		multiply3x4inline(a, b);
 	}
 
+	/**
+		Inline version of `multiply3x4`.
+	**/
 	public inline function multiply3x4inline( a : Matrix, b : Matrix ) {
 		var m11 = a._11; var m12 = a._12; var m13 = a._13;
 		var m21 = a._21; var m22 = a._22; var m23 = a._23;
@@ -343,6 +490,9 @@ class MatrixImpl {
 		_44 = 1;
 	}
 
+	/**
+		Sets `this` to `a * b`: the transformation `a` followed by `b`. `this` can be `a` or `b`.
+	**/
 	public function multiply( a : Matrix, b : Matrix ) {
 		var a11 = a._11; var a12 = a._12; var a13 = a._13; var a14 = a._14;
 		var a21 = a._21; var a22 = a._22; var a23 = a._23; var a24 = a._24;
@@ -374,6 +524,9 @@ class MatrixImpl {
 		_44 = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
 	}
 
+	/**
+		Multiplies all the values by `v`.
+	**/
 	public function multiplyValue( v : Float ) {
 		_11 *= v;
 		_12 *= v;
@@ -393,20 +546,33 @@ class MatrixImpl {
 		_44 *= v;
 	}
 
+	/**
+		Inverts the matrix.
+	**/
 	public inline function invert() {
 		initInverse(this);
 	}
 
+	/**
+		Returns the inverse of the matrix.
+		@param m An optional matrix to store the result in.
+	**/
 	public function getInverse( ?m : h3d.Matrix ) {
 		if( m == null ) m = new h3d.Matrix();
 		m.initInverse(this);
 		return m;
 	}
 
+	/**
+		Returns the determinant.
+	**/
 	public inline function getDeterminant() {
 		return _11 * (_22*_33 - _23*_32) + _12 * (_23*_31 - _21*_33) + _13 * (_21*_32 - _22*_31);
 	}
 
+	/**
+		Sets `this` to the inverse of the affine matrix `m` (faster than `initInverse`).
+	**/
 	public function inverse3x4( m : Matrix ) {
 		var m11 = m._11, m12 = m._12, m13 = m._13;
 		var m21 = m._21, m22 = m._22, m23 = m._23;
@@ -441,6 +607,9 @@ class MatrixImpl {
 		_41 *= invDet; _42 *= invDet; _43 *= invDet;
 	}
 
+	/**
+		Sets `this` to the inverse of `m`.
+	**/
 	public function initInverse( m : Matrix ) {
 		var m11 = m._11; var m12 = m._12; var m13 = m._13; var m14 = m._14;
 		var m21 = m._21; var m22 = m._22; var m23 = m._23; var m24 = m._24;
@@ -490,6 +659,9 @@ class MatrixImpl {
 	}
 
 
+	/**
+		Sets `this` to the inverse of the 3x3 part of `m`.
+	**/
 	public function initInverse3x3( m : Matrix ) {
 		var m11 = m._11; var m12 = m._12; var m13 = m._13;
 		var m21 = m._21; var m22 = m._22; var m23 = m._23;
@@ -530,24 +702,36 @@ class MatrixImpl {
 		_44 = 1;
 	}
 
+	/**
+		Returns the normalized X axis (first row): the direction the transformation points to.
+	**/
 	public inline function front() {
         var v = new h3d.Vector(_11, _12, _13);
         v.normalize();
         return v;
     }
 
+    /**
+    	Returns the normalized Y axis (second row).
+    **/
     public inline function right() {
         var v = new h3d.Vector(_21, _22, _23);
         v.normalize();
         return v;
     }
 
+    /**
+    	Returns the normalized Z axis (third row).
+    **/
     public inline function up() {
         var v = new h3d.Vector(_31, _32, _33);
         v.normalize();
         return v;
     }
 
+	/**
+		Transposes the matrix.
+	**/
 	public function transpose() {
 		var tmp;
 		tmp = _12; _12 = _21; _21 = tmp;
@@ -558,6 +742,9 @@ class MatrixImpl {
 		tmp = _34; _34 = _43; _43 = tmp;
 	}
 
+	/**
+		Returns a copy.
+	**/
 	public function clone() {
 		var m = new Matrix();
 		m._11 = _11; m._12 = _12; m._13 = _13; m._14 = _14;
@@ -567,6 +754,9 @@ class MatrixImpl {
 		return m;
 	}
 
+	/**
+		Copies the values of `m`.
+	**/
 	public function load( m : Matrix ) {
 		_11 = m._11; _12 = m._12; _13 = m._13; _14 = m._14;
 		_21 = m._21; _22 = m._22; _23 = m._23; _24 = m._24;
@@ -574,6 +764,9 @@ class MatrixImpl {
 		_41 = m._41; _42 = m._42; _43 = m._43; _44 = m._44;
 	}
 
+	/**
+		Sets the 16 values from an array, row by row.
+	**/
 	public function loadValues( a : Array<Float> ) {
 		_11 = a[0]; _12 = a[1]; _13 = a[2]; _14 = a[3];
 		_21 = a[4]; _22 = a[5]; _23 = a[6]; _24 = a[7];
@@ -581,10 +774,16 @@ class MatrixImpl {
 		_41 = a[12]; _42 = a[13]; _43 = a[14]; _44 = a[15];
 	}
 
+	/**
+		Returns the 16 values, row by row.
+	**/
 	public function getFloats() {
 		return [_11, _12, _13, _14, _21, _22, _23, _24, _31, _32, _33, _34, _41, _42, _43, _44];
 	}
 
+	/**
+		Returns the direction of the X axis of the rotation, without the scale.
+	**/
 	public function getDirection() {
 		var q = new h3d.Quat();
 		q.initRotateMatrix(this);
@@ -621,6 +820,9 @@ class MatrixImpl {
 		}
 	}
 
+	/**
+		Returns a string representation of the values.
+	**/
 	public function toString() {
 		return "MAT=[\n" +
 			"  [ " + Math.fmt(_11) + ", " + Math.fmt(_12) + ", " + Math.fmt(_13) + ", " + Math.fmt(_14) + " ]\n" +
@@ -637,6 +839,9 @@ class MatrixImpl {
 	static inline var lumB = 0.072169;
 
 	static inline var SQ13 = 0.57735026918962576450914878050196; // sqrt(1/3)
+	/**
+		For color matrixes: rotates the hue by `hue` radians.
+	**/
 	public function colorHue( hue : Float ) {
 		if( hue == 0. )
 			return;
@@ -663,6 +868,9 @@ class MatrixImpl {
 		multiply3x4(this, tmp);
 	}
 
+	/**
+		For color matrixes: changes the saturation (`0` keeps it, `-1` makes it grey).
+	**/
 	public function colorSaturate( sat : Float ) {
 		sat += 1;
 		var ins = 1 - sat;
@@ -685,6 +893,9 @@ class MatrixImpl {
 		multiply3x4(this, tmp);
 	}
 
+	/**
+		For color matrixes: changes the contrast (`0` keeps it).
+	**/
 	public function colorContrast( contrast : Float ) {
 		var tmp = tmp;
 		var v = contrast + 1;
@@ -703,12 +914,18 @@ class MatrixImpl {
 		multiply3x4(this, tmp);
 	}
 
+	/**
+		For color matrixes: adds `lightness` to the color components.
+	**/
 	public function colorLightness( lightness : Float ) {
 		_41 += lightness;
 		_42 += lightness;
 		_43 += lightness;
 	}
 
+	/**
+		For color matrixes: blends the color towards `color` (`0xRRGGBB`) by `alpha`.
+	**/
 	public function colorGain( color : Int, alpha : Float ) {
 		var tmp = tmp;
 		tmp._11 = 1 - alpha;
@@ -727,6 +944,9 @@ class MatrixImpl {
 	}
 
 
+	/**
+		For color matrixes: mixes the channels according to `bits` (bit `i * 3 + j` copies the input channel `i` to the output channel `j`), blended by `blend`.
+	**/
 	public function colorBits( bits : Int, blend : Float ) {
 		var t11 = 0., t12 = 0., t13 = 0.;
 		var t21 = 0., t22 = 0., t23 = 0.;
@@ -775,18 +995,27 @@ class MatrixImpl {
 		_33 = _33 * k + b33 * ik;
 	}
 
+	/**
+		For color matrixes: adds the color `c` (`0xRRGGBB`).
+	**/
 	public inline function colorAdd( c : Int ) {
 		_41 += ((c >> 16) & 0xFF) / 255;
 		_42 += ((c >> 8) & 0xFF) / 255;
 		_43 += (c & 0xFF) / 255;
 	}
 
+	/**
+		For color matrixes: outputs the constant color `c` (`0xRRGGBB`) with the alpha multiplied by `alpha`.
+	**/
 	public inline function colorSet( c : Int, alpha = 1. ) {
 		zero();
 		_44 = alpha;
 		colorAdd(c);
 	}
 
+	/**
+		For color matrixes: applies the hue, saturation, contrast, lightness and gain adjustments of `col`.
+	**/
 	public function adjustColor( col : ColorAdjust ) {
 		if( col.hue != null ) colorHue(col.hue);
 		if( col.saturation != null ) colorSaturate(col.saturation);
@@ -795,6 +1024,9 @@ class MatrixImpl {
 		if( col.gain != null ) colorGain(col.gain.color, col.gain.alpha);
 	}
 
+	/**
+		Returns the 2D affine part of the matrix as a `h2d.col.Matrix`.
+	**/
 	public inline function toMatrix2D( ?m : h2d.col.Matrix ) {
 		if( m == null ) m = new h2d.col.Matrix();
 		m.a = _11;
@@ -872,12 +1104,29 @@ class MatrixImpl {
 }
 
 
+/**
+	A 4x4 transformation matrix. Heaps uses row vectors: a point is transformed with `p * M`, the translation is stored in
+	the 4th row (`_41`, `_42`, `_43`), and `a * b` applies `a` then `b`.
+
+	```haxe
+	var m = h3d.Matrix.S(2, 2, 2);  // scale
+	m.rotate(0, 0, Math.PI / 4);    // then rotate around Z
+	m.translate(10, 0, 0);          // then translate
+	var p = new h3d.Vector(1, 0, 0).transformed(m);
+	```
+**/
 @:forward abstract Matrix(MatrixImpl) from MatrixImpl to MatrixImpl {
 
+	/**
+		Creates a matrix. Its values are not initialized: call `identity()` or use `Matrix.I()`.
+	**/
 	public inline function new() {
 		this = new MatrixImpl();
 	}
 
+	/**
+		Returns `this * m` as a new matrix.
+	**/
 	@:op(a * b) public inline function multiplied( m : Matrix ) {
 		var mout = new Matrix();
 		mout.multiply(this, m);
@@ -886,30 +1135,45 @@ class MatrixImpl {
 
 	// STATICS
 
+	/**
+		Returns a new identity matrix.
+	**/
 	public static function I() {
 		var m = new Matrix();
 		m.identity();
 		return m;
 	}
 
+	/**
+		Returns a new matrix from 16 values, row by row.
+	**/
 	public static function L( a : Array<Float> ) {
 		var m = new Matrix();
 		m.loadValues(a);
 		return m;
 	}
 
+	/**
+		Returns a new translation matrix.
+	**/
 	public static function T( x = 0., y = 0., z = 0. ) {
 		var m = new Matrix();
 		m.initTranslation(x, y, z);
 		return m;
 	}
 
+	/**
+		Returns a new rotation matrix from Euler angles, in radians.
+	**/
 	public static function R(x,y,z) {
 		var m = new Matrix();
 		m.initRotation(x,y,z);
 		return m;
 	}
 
+	/**
+		Returns a new scale matrix.
+	**/
 	public static function S( x = 1., y = 1., z = 1.0 ) {
 		var m = new Matrix();
 		m.initScale(x, y, z);
@@ -948,12 +1212,18 @@ class MatrixImpl {
 		return m;
 	}
 
+	/**
+		Returns a rotation matrix whose X axis points to `dir` and whose Z axis is up (`up`, by default `0, 0, 1`).
+	**/
 	public static function lookAtX( dir : Vector, ?up : Vector, ?m : Matrix ) {
 		if( up == null ) up = new Vector(0, 0, 1);
 		if( m == null ) m = new Matrix();
 		return lookAtXInline(dir, up, m);
 	}
 
+	/**
+		The identity in the decomposed format of `decomposeMatrix` (scale and rotation quaternion stored separately).
+	**/
 	public static final IDENTITY_DECOMPOSED = h3d.Matrix.L([
 		1, 0, 0, 0,
 		0, 1, 1, 0,

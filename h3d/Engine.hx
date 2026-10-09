@@ -17,37 +17,109 @@ private class TargetTmp {
 	}
 }
 
+/**
+	How the depth buffer is bound when rendering to a target (see `Engine.pushTarget`).
+**/
 enum DepthBinding {
+	/**
+		The depth buffer of the target is tested and written.
+	**/
 	ReadWrite;
+	/**
+		The depth buffer of the target is tested but not written.
+	**/
 	ReadOnly;
+	/**
+		Only a depth buffer is bound, without color target.
+	**/
 	DepthOnly;
+	/**
+		No depth buffer is bound.
+	**/
 	NotBound;
 }
 
+/**
+	The 3D engine: it owns the graphics driver and the GPU memory manager, and manages the render targets and the frame.
+
+	There is a single engine, created by `hxd.App` and accessible with `h3d.Engine.getCurrent()` (or `engine` in an `hxd.App`).
+	It renders the scenes each frame with `render`, and offers render target management with `pushTarget` / `popTarget`.
+
+	```haxe
+	var engine = h3d.Engine.getCurrent();
+	engine.backgroundColor = 0xFF202040;
+	trace(engine.width + "x" + engine.height + " " + engine.drawCalls + " draw calls");
+	```
+**/
 class Engine {
 	#if multidriver
 	static var ID = 0;
+	/**
+		The identifier of the engine (with `-D multidriver`).
+	**/
 	public var id(default, null) : Int;
 	#end
 
+	/**
+		The graphics driver (OpenGL, DirectX, WebGL...).
+	**/
 	public var driver(default,null) : h3d.impl.Driver;
 
+	/**
+		The GPU memory manager.
+	**/
 	public var mem(default,null) : h3d.impl.MemoryManager;
 
+	/**
+		`true` if the driver is hardware accelerated.
+	**/
 	public var hardware(default, null) : Bool;
+	/**
+		The width of the output, in pixels.
+	**/
 	public var width(default, null) : Int;
+	/**
+		The height of the output, in pixels.
+	**/
 	public var height(default, null) : Int;
+	/**
+		Enables the debug mode of the driver (more checks and error reports, slower).
+	**/
 	public var debug(default, set) : Bool;
 
+	/**
+		The number of triangles drawn during the last frame.
+	**/
 	public var drawTriangles(default, null) : Float;
+	/**
+		The number of draw calls during the last frame.
+	**/
 	public var drawCalls(default, null) : Int;
+	/**
+		The number of compute shader dispatches during the last frame.
+	**/
 	public var dispatches(default, null) : Int;
+	/**
+		The number of shader changes during the last frame.
+	**/
 	public var shaderSwitches(default, null) : Int;
 
+	/**
+		The color (`0xAARRGGBB`) the output is cleared with at the beginning of each frame, or `null` to not clear it.
+	**/
 	public var backgroundColor : Null<Int> = 0xFF000000;
+	/**
+		If `true` (default), the output follows the window size.
+	**/
 	public var autoResize : Bool;
+	/**
+		Displays the window in full screen (borderless) mode, on platforms with windows.
+	**/
 	public var fullScreen(default, set) : Bool;
 
+	/**
+		The smoothed number of frames rendered per second.
+	**/
 	public var fps(get, never) : Float;
 
 	var realFps : Float;
@@ -66,10 +138,19 @@ class Engine {
 	var nullTexture : h3d.mat.Texture;
 	var textureColorCache = new Map<Int,h3d.mat.Texture>();
 	var inRender = false;
+	/**
+		`true` once the driver is initialized.
+	**/
 	public var ready(default,null) = false;
 	@:allow(hxd.res) var resCache = new Map<{},Dynamic>();
 
+	/**
+		If `true`, the engine is created with a software driver (set before creating the engine).
+	**/
 	public static var SOFTWARE_DRIVER = false;
+	/**
+		The number of samples of the multisampling antialiasing of the output (set before creating the engine).
+	**/
 	public static var ANTIALIASING = 0;
 
 	@:access(hxd.Window)
@@ -113,38 +194,62 @@ class Engine {
 
 	static var CURRENT : Engine = null;
 
+	/**
+		Replaces the graphics driver.
+	**/
 	public function setDriver(d) {
 		driver = d;
 		if( mem != null ) mem.driver = d;
 	}
 
+	/**
+		Returns the current engine.
+	**/
 	public static inline function getCurrent() {
 		return CURRENT;
 	}
 
+	/**
+		Makes this engine the current one.
+	**/
 	public inline function setCurrent() {
 		CURRENT = this;
 		window.setCurrent();
 	}
 
+	/**
+		Initializes the driver. `onReady` is called when it is ready. Done by `hxd.App`.
+	**/
 	public function init() {
 		driver.init(onCreate, !hardware);
 	}
 
+	/**
+		Returns the name of the driver (and details such as the GPU name if `details` is set).
+	**/
 	public function driverName(details=false) {
 		return driver.getDriverName(details);
 	}
 
+	/**
+		Low level: selects the shader used by the next draw calls.
+	**/
 	public function selectShader( shader : hxsl.RuntimeShader ) {
 		flushTarget();
 		if( driver.selectShader(shader) )
 			shaderSwitches++;
 	}
 
+	/**
+		Low level: applies the render states of `pass` for the next draw calls.
+	**/
 	public function selectMaterial( pass : h3d.mat.Pass ) {
 		driver.selectMaterial(pass);
 	}
 
+	/**
+		Low level: uploads the per-object parameters, textures and buffers of the current shader.
+	**/
 	public function uploadInstanceShaderBuffers(buffers) {
 		driver.flushShaderBuffers();
 		driver.uploadShaderBuffers(buffers, Params);
@@ -152,6 +257,9 @@ class Engine {
 		driver.uploadShaderBuffers(buffers, Buffers);
 	}
 
+	/**
+		Low level: uploads a kind of shader buffers (globals, parameters, textures or buffers) of the current shader.
+	**/
 	public function uploadShaderBuffers(buffers, which) {
 		driver.uploadShaderBuffers(buffers, which);
 	}
@@ -164,10 +272,20 @@ class Engine {
 		return true;
 	}
 
+	/**
+		Low level: draws a buffer of independent triangles (3 vertexes each).
+		@param start The first triangle.
+		@param max The number of triangles, or `-1` for all.
+	**/
 	public inline function renderTriBuffer( b : Buffer, start = 0, max = -1 ) {
 		return renderBuffer(b, mem.getTriIndexes(b.vertices), 3, start, max);
 	}
 
+	/**
+		Low level: draws a buffer of quads (4 vertexes each, as 2 triangles).
+		@param start The first triangle.
+		@param max The number of triangles, or `-1` for all.
+	**/
 	public inline function renderQuadBuffer( b : Buffer, start = 0, max = -1 ) {
 		return renderBuffer(b, mem.getQuadIndexes(b.vertices), 2, start, max);
 	}
@@ -190,6 +308,11 @@ class Engine {
 	}
 
 	// we use custom indexes, so the number of triangles is the number of indexes/3
+	/**
+		Low level: draws the triangles of a vertex buffer using an index buffer.
+		@param startTri The first triangle.
+		@param drawTri The number of triangles, or `-1` for all.
+	**/
 	public function renderIndexed( b : Buffer, indexes : Indexes, startTri = 0, drawTri = -1 ) {
 		if( indexes.isDisposed() )
 			return;
@@ -203,6 +326,9 @@ class Engine {
 		}
 	}
 
+	/**
+		Low level: draws triangles whose vertex inputs come from several buffers.
+	**/
 	public function renderMultiBuffers( format : hxd.BufferFormat.MultiFormat, buffers : Array<Buffer>, indexes : Indexes, startTri = 0, drawTri = -1 ) {
 		var maxTri = Std.int(indexes.count / 3);
 		if( maxTri <= 0 ) return;
@@ -219,6 +345,9 @@ class Engine {
 		}
 	}
 
+	/**
+		Low level: draws instances with the given draw commands.
+	**/
 	public function renderInstanced( indexes : Indexes, commands : h3d.impl.InstanceBuffer ) {
 		if( indexes.isDisposed() )
 			return;
@@ -260,9 +389,15 @@ class Engine {
 		ready = true;
 	}
 
+	/**
+		Called when the GPU context was lost and recreated: GPU resources without `realloc` must be recreated.
+	**/
 	public dynamic function onContextLost() {
 	}
 
+	/**
+		Called when the driver is initialized.
+	**/
 	public dynamic function onReady() {
 	}
 
@@ -283,9 +418,15 @@ class Engine {
 		return v;
 	}
 
+	/**
+		Called after the output was resized to follow the window.
+	**/
 	public dynamic function onResized() {
 	}
 
+	/**
+		Resizes the output (32x32 minimum).
+	**/
 	public function resize(width, height) {
 		// minimum 32x32 size
 		if( width < 32 ) width = 32;
@@ -295,6 +436,10 @@ class Engine {
 		if( !driver.isDisposed() ) driver.resize(width, height);
 	}
 
+	/**
+		Starts a frame: resets the statistics and clears the output with `backgroundColor`. Returns `false` if the driver
+		cannot render. Called by `render`.
+	**/
 	public function begin() {
 		if( driver.isDisposed() )
 			return false;
@@ -316,19 +461,34 @@ class Engine {
 		return true;
 	}
 
+	/**
+		Tells if the driver supports the feature `f` (see `h3d.impl.Driver.Feature`).
+	**/
 	public function hasFeature(f) {
 		return driver.hasFeature(f);
 	}
 
+	/**
+		Ends the frame and presents it. Called by `render`.
+	**/
 	public function end() {
 		inRender = false;
 		driver.end();
 	}
 
+	/**
+		Returns the current render target, or `null` when rendering to the screen.
+	**/
 	public function getCurrentTarget() {
 		return targetStack == null ? null : targetStack.t == nullTexture ? targetStack.textures[0] : targetStack.t;
 	}
 
+	/**
+		Renders to the texture `tex` until the matching `popTarget`. The texture must have the `Target` flag.
+		@param layer The layer (cube face or array layer) to render to.
+		@param mipLevel The mip level to render to.
+		@param depthBinding How the depth buffer of the texture is used.
+	**/
 	public function pushTarget( tex : h3d.mat.Texture, layer = 0, mipLevel = 0, depthBinding = ReadWrite ) {
 		var c = targetTmp;
 		if( c == null )
@@ -353,16 +513,25 @@ class Engine {
 			needFlushTarget = currentTargetTex != t.t || currentTargetLayer != t.layer || currentTargetMip != t.mipLevel || t.textures != null || currentDepthBinding != t.depthBinding;
 	}
 
+	/**
+		Renders to several textures at once (multiple render targets) until the matching `popTarget`.
+	**/
 	public function pushTargets( textures : Array<h3d.mat.Texture>, depthBinding = ReadWrite ) {
 		pushTarget(nullTexture, depthBinding);
 		targetStack.textures = textures;
 		needFlushTarget = true;
 	}
 
+	/**
+		Renders only to a depth texture until the matching `popTarget`.
+	**/
 	public function pushDepth( depthBuffer : h3d.mat.Texture, layer = 0 ) {
 		pushTarget(depthBuffer, layer, 0, DepthOnly);
 	}
 
+	/**
+		Restores the render target active before the last `pushTarget`.
+	**/
 	public function popTarget() {
 		var c = targetStack;
 		if( c == null )
@@ -400,11 +569,20 @@ class Engine {
 		needFlushTarget = false;
 	}
 
+	/**
+		Clears the current target with a float color, and optionally the depth and stencil.
+	**/
 	public function clearF( color : h3d.Vector4, ?depth : Float, ?stencil : Int ) {
 		flushTarget();
 		driver.clear(color, depth, stencil);
 	}
 
+	/**
+		Clears the current target.
+		@param color The color in `0xAARRGGBB` format, or `null` to keep the color.
+		@param depth The depth value, or `null` to keep the depth.
+		@param stencil The stencil value, or `null` to keep the stencil.
+	**/
 	public function clear( ?color : Int, ?depth : Float, ?stencil : Int ) {
 		if( color != null )
 			tmpVector.setColor(color);
@@ -421,6 +599,9 @@ class Engine {
 		driver.setRenderZone(x, y, width, height);
 	}
 
+	/**
+		Renders a frame: calls `begin`, `obj.render(this)` and `end`, and updates `fps`. Done every frame by `hxd.App`.
+	**/
 	public function render( obj : { function render( engine : Engine ) : Void; } ) {
 		if( !begin() ) return false;
 		obj.render(this);
@@ -438,14 +619,23 @@ class Engine {
 		return true;
 	}
 
+	/**
+		Enables the depth clamping of the next draw calls.
+	**/
 	public function setDepthClamp( enabled : Bool ) {
 		driver.setDepthClamp(enabled);
 	}
 
+	/**
+		Sets the depth bias of the next draw calls (used against shadow acne).
+	**/
 	public function setDepthBias( depthBias : Float, slopeScaledBias : Float ) {
 		driver.setDepthBias( depthBias, slopeScaledBias );
 	}
 
+	/**
+		Releases the driver and all the GPU resources.
+	**/
 	public function dispose() {
 		driver.dispose();
 		window.removeResizeEvent(onWindowResize);
