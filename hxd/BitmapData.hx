@@ -1,22 +1,50 @@
 package hxd;
 
 #if js
+/**
+	The native data of a `BitmapData`: a canvas 2D context.
+**/
 typedef BitmapInnerData = js.html.CanvasRenderingContext2D;
 #else
+/**
+	The native data of a `BitmapData`.
+**/
 typedef BitmapInnerData = BitmapInnerDataImpl;
+/**
+	The native data of a `BitmapData` on non JS targets: an array of 32 bit pixels.
+**/
 class BitmapInnerDataImpl {
 	#if hl
+	/**
+		The pixels, in `0xAARRGGBB` format.
+	**/
 	public var pixels : hl.BytesAccess<Int>;
 	#else
+	/**
+		The pixels, in `0xAARRGGBB` format.
+	**/
 	public var pixels : haxe.ds.Vector<Int>;
 	#end
+	/**
+		The width in pixels.
+	**/
 	public var width : Int;
+	/**
+		The height in pixels.
+	**/
 	public var height : Int;
+	/**
+		Creates empty data.
+	**/
 	public function new() {
 	}
 }
 #end
 
+/**
+	A CPU image that can be drawn into, used for icons, cursors and fonts.
+	It uses a canvas on JS, and an array of pixels on other targets. Use `getPixels` to convert it to `Pixels`.
+**/
 class BitmapData {
 
 #if js
@@ -27,9 +55,18 @@ class BitmapData {
 	var data : BitmapInnerData;
 #end
 
+	/**
+		The width in pixels.
+	**/
 	public var width(get, never) : Int;
+	/**
+		The height in pixels.
+	**/
 	public var height(get, never) : Int;
 
+	/**
+		Creates a bitmap of the given size, filled with transparent black.
+	**/
 	public function new(width:Int, height:Int) {
 		if( width == -101 && height == -102 ) {
 			// no alloc
@@ -53,6 +90,9 @@ class BitmapData {
 		}
 	}
 
+	/**
+		Fills the whole bitmap with the color, in `0xAARRGGBB` format.
+	**/
 	public function clear( color : Int ) {
 		fill(0, 0, width, height, color);
 	}
@@ -61,6 +101,9 @@ class BitmapData {
 		throw "Not implemented";
 	}
 
+	/**
+		Fills the rectangle with the color, in `0xAARRGGBB` format.
+	**/
 	public function fill( x : Int, y : Int, width : Int, height : Int, color : Int ) {
 		#if js
 		ctx.fillStyle = 'rgba(${(color>>16)&0xFF}, ${(color>>8)&0xFF}, ${color&0xFF}, ${(color>>>24)/255})';
@@ -86,10 +129,17 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Copies a rectangle of `src` at the given position (see `drawScaled`).
+	**/
 	public function draw( x : Int, y : Int, src : BitmapData, srcX : Int, srcY : Int, width : Int, height : Int, ?blendMode : h2d.BlendMode ) {
 		drawScaled(x,y,width,height,src,srcX,srcY,width,height,blendMode);
 	}
 
+	/**
+		Copies a rectangle of `src` to a rectangle of this bitmap, scaling it if needed.
+		Only supported on HashLink, with `blendMode` set to `None`, and with both rectangles inside the bitmaps.
+	**/
 	public function drawScaled( x : Int, y : Int, width : Int, height : Int, src : BitmapData, srcX : Int, srcY : Int, srcWidth : Int, srcHeight : Int, ?blendMode : h2d.BlendMode, smooth = true ) {
 		if( blendMode == null ) blendMode = Alpha;
 		#if hl
@@ -107,9 +157,10 @@ class BitmapData {
 		#end
 	}
 
-	/* Line plotting using Yevgeny P. Kuzmin. - Bresenham's Line Generation Algorithm with Built-in Clipping. Computer Graphics Forum, 14(5):275-280, 2005.
- 	 * see: https://stackoverflow.com/questions/40884680/how-to-use-bresenhams-line-drawing-algorithm-with-clipping/40902741#40902741 )
-	 */
+	/**
+		Draws a line from `(x0, y0)` to `(x1, y1)` with the color, in `0xAARRGGBB` format, clipped to the bitmap.
+		Uses Yevgeny P. Kuzmin's Bresenham line algorithm with built-in clipping (Computer Graphics Forum, 14(5):275-280, 2005).
+	**/
 	public function line( x0 : Int, y0 : Int, x1 : Int, y1 : Int, color : Int ) {
 		var dx = x1 - x0;
 		var dy = y1 - y0;
@@ -344,6 +395,9 @@ class BitmapData {
 		}
 	}
 
+	/**
+		Releases the data of the bitmap.
+	**/
 	public inline function dispose() {
 		#if js
 		ctx = null;
@@ -353,10 +407,16 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Returns a copy of the bitmap.
+	**/
 	public function clone() {
 		return sub(0,0,width,height);
 	}
 
+	/**
+		Returns a copy of a rectangle of the bitmap.
+	**/
 	public function sub( x, y, w, h ) : BitmapData {
 		#if js
 		var canvas = js.Browser.document.createCanvasElement();
@@ -469,6 +529,9 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Returns a copy of the bitmap as `Pixels` (`RGBA` on JS, `BGRA` on other targets).
+	**/
 	public function getPixels() : Pixels {
 		#if js
 		var w = width;
@@ -484,6 +547,9 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Replaces the content of the bitmap by `pixels`, which must have the same size. The pixels are converted to the native format.
+	**/
 	public function setPixels( pixels : Pixels ) {
 		if( pixels.width != width || pixels.height != height )
 			throw "Invalid pixels size";
@@ -500,6 +566,9 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Returns the native data of the bitmap.
+	**/
 	public inline function toNative() : BitmapInnerData {
 		#if js
 		return ctx;
@@ -508,6 +577,9 @@ class BitmapData {
 		#end
 	}
 
+	/**
+		Creates a bitmap using the given native data, without copying it.
+	**/
 	public static function fromNative( data : BitmapInnerData ) : BitmapData {
 		var b = new BitmapData( -101, -102 );
 		#if js
@@ -518,6 +590,9 @@ class BitmapData {
 		return b;
 	}
 
+	/**
+		Encodes the bitmap as a PNG file.
+	**/
 	public function toPNG() {
 		var pixels = getPixels();
 		var png = pixels.toPNG();

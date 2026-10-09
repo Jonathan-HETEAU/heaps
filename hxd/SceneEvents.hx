@@ -1,20 +1,58 @@
 package hxd;
 
+/**
+	A scene which can receive events from `SceneEvents`, such as `h2d.Scene` and `h3d.scene.Scene`.
+**/
 interface InteractiveScene {
+	/**
+		Called when the scene is added to or removed (with `null`) from a `SceneEvents`.
+	**/
 	public function setEvents( s : SceneEvents ) : Void;
+	/**
+		Returns the next interactive under the event position after `last` (or the first one if `last` is `null`), and sets the event position relative to it.
+	**/
 	public function handleEvent( e : Event, last : Interactive ) : Interactive;
+	/**
+		Sends the event to the interactive, with its position relative to it.
+	**/
 	public function dispatchEvent( e : Event, to : Interactive ) : Void;
+	/**
+		Sends the event to the event listeners of the scene, when no interactive handled it.
+	**/
 	public function dispatchListeners( e : Event ) : Void;
+	/**
+		Tells if the interactive is visible in the scene.
+	**/
 	public function isInteractiveVisible( i : Interactive ) : Bool;
 }
 
+/**
+	An object which can receive events from `SceneEvents`, such as `h2d.Interactive` and `h3d.scene.Interactive`.
+**/
 interface Interactive {
+	/**
+		If set, events are also sent to the interactives below this one.
+	**/
 	public var propagateEvents : Bool;
+	/**
+		The cursor displayed when the mouse is over the interactive.
+	**/
 	public var cursor(default, set) : hxd.Cursor;
+	/**
+		Handles an event sent to the interactive.
+	**/
 	public function handleEvent( e : Event ) : Void;
+	/**
+		Returns the scene of the interactive.
+	**/
 	public function getInteractiveScene() : InteractiveScene;
 }
 
+/**
+	Dispatches the window input events to the interactives of one or more scenes.
+	It handles the focus, the over/out events, the mouse capture and the cursor.
+	`hxd.App` creates one as `sevents`, with `s2d` and `s3d` added.
+**/
 class SceneEvents {
 
 	var window : hxd.Window;
@@ -55,6 +93,9 @@ class SceneEvents {
 	 */
 	public var defaultCursor(default,set) : Cursor = Default;
 
+	/**
+		Creates an event dispatcher listening to the window (the current one by default).
+	**/
 	public function new( ?window ) {
 		scenes = [];
 		pendingEvents = [];
@@ -66,6 +107,9 @@ class SceneEvents {
 		window.addEventTarget(onEvent);
 	}
 
+	/**
+		Sets the mouse position, used when `enablePhysicalMouse` is disabled.
+	**/
 	public function setMousePos( xPos, yPos ) {
 		mouseX = xPos;
 		mouseY = yPos;
@@ -89,19 +133,31 @@ class SceneEvents {
 		pushList.remove(i);
 	}
 
+	/**
+		Adds a scene, at the end of the list or at `index`. The scenes receive events in list order.
+	**/
 	public function addScene( s : InteractiveScene, ?index : Int ) {
 		s.setEvents(this);
 		if( index == null ) scenes.push(s) else scenes.insert(index, s);
 	}
 
+	/**
+		Removes a scene.
+	**/
 	public function removeScene( s : InteractiveScene ) {
 		if( scenes.remove(s) ) s.setEvents(null);
 	}
 
+	/**
+		Stops listening to the window events.
+	**/
 	public function dispose() {
 		window.removeEventTarget(onEvent);
 	}
 
+	/**
+		Gives the focus to the interactive, which then receives the key, text and wheel events. The interactive can refuse it by cancelling the `EFocus` event.
+	**/
 	public function focus( i : Interactive ) {
 		if( currentFocus == i )
 			return;
@@ -119,6 +175,9 @@ class SceneEvents {
 			currentFocus = i;
 	}
 
+	/**
+		Removes the focus from the current interactive. It can refuse it by cancelling the `EFocusLost` event.
+	**/
 	public function blur() {
 		if( currentFocus == null )
 			return;
@@ -308,6 +367,9 @@ class SceneEvents {
 		}
 	}
 
+	/**
+		Dispatches the pending events. Called every frame by `hxd.App`.
+	**/
 	public function checkEvents() {
 		var old = pendingEvents;
 		var checkMoved = !mouseCheckMove;
@@ -382,6 +444,10 @@ class SceneEvents {
 		}
 	}
 
+	/**
+		Sends all the following events to `f` until `stopCapture` is called, such as for a drag operation.
+		`onCancel` is called when the capture stops. If `touchId` is set, only the events of this touch are captured.
+	**/
 	public function startCapture( f : hxd.Event -> Void, ?onCancel : Void -> Void, ?touchId : Int ) {
 		if ( currentDrag != null && currentDrag.onCancel != null )
 			currentDrag.onCancel();
@@ -389,6 +455,9 @@ class SceneEvents {
 		window.captureMouseEvents(true);
 	}
 
+	/**
+		Stops the current capture.
+	**/
 	public function stopCapture() {
 		if ( currentDrag != null && currentDrag.onCancel != null )
 			currentDrag.onCancel();
@@ -406,10 +475,16 @@ class SceneEvents {
 		stopCapture();
 	}
 
+	/**
+		Returns the interactive which has the focus.
+	**/
 	public function getFocus() {
 		return currentFocus;
 	}
 
+	/**
+		Updates the displayed cursor after the cursor of the interactive changed.
+	**/
 	public function updateCursor( i : Interactive ) {
 		if ( overList.indexOf(i) != -1 ) selectCursor();
 	}

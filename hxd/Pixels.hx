@@ -1,32 +1,59 @@
 package hxd;
 
+/**
+	Flags of a `Pixels`.
+**/
 enum Flags {
+	/**
+		The bytes are shared and must not be modified: they are copied before the first change.
+	**/
 	ReadOnly;
+	/**
+		The colors are premultiplied by the alpha.
+	**/
 	AlphaPremultiplied;
 }
 
+/**
+	`Pixels` converted to the `ARGB` format, with fast pixel access.
+**/
 @:forward(bytes, format, width, height, offset, flags, clear, dispose, toPNG, clone, sub, blit)
 abstract PixelsARGB(Pixels) to Pixels {
 
 
+	/**
+		Returns the color of the pixel, in `0xAARRGGBB` format.
+	**/
 	public inline function getPixel(x, y) {
 		return Pixels.switchEndian( this.bytes.getInt32(((x + y * this.width) << 2) + this.offset) );
 	}
 
+	/**
+		Sets the color of the pixel, in `0xAARRGGBB` format.
+	**/
 	public inline function setPixel(x, y, v) {
 		this.bytes.setInt32(((x + y * this.width) << 2) + this.offset, Pixels.switchEndian(v));
 	}
 
+	/**
+		Converts the pixels to `ARGB` in place.
+	**/
 	@:from public static function fromPixels(p:Pixels) : PixelsARGB {
 		p.convert(ARGB);
 		return cast p;
 	}
 }
 
+/**
+	`Pixels` converted to the `R32F` format, with fast pixel access.
+**/
 @:forward(bytes, format, width, height, offset, flags, clear, dispose, toPNG, clone, sub, blit)
 @:access(hxd.Pixels)
 abstract PixelsFloat(Pixels) to Pixels {
 
+	/**
+		Returns the value of the pixel in the X component of `v` (or of a new vector).
+	**/
 	public inline function getPixelF(x, y, ?v:h3d.Vector4) {
 		if( v == null )
 			v = new h3d.Vector4();
@@ -35,11 +62,17 @@ abstract PixelsFloat(Pixels) to Pixels {
 		return v;
 	}
 
+	/**
+		Sets the value of the pixel to the X component of `v`.
+	**/
 	public inline function setPixelF(x, y, v:h3d.Vector4) {
 		var pix = ((x + y * this.width) << 2) + this.offset;
 		this.bytes.setFloat(pix, v.x);
 	}
 
+	/**
+		Converts the pixels to `R32F` in place.
+	**/
 	@:from public static function fromPixels(p:Pixels) : PixelsFloat {
 		p.convert(R32F);
 		return cast p;
@@ -47,10 +80,16 @@ abstract PixelsFloat(Pixels) to Pixels {
 
 }
 
+/**
+	`Pixels` converted to the `RGBA32F` format, with fast pixel access.
+**/
 @:forward(bytes, format, width, height, offset, flags, clear, dispose, toPNG, clone, sub, blit)
 @:access(hxd.Pixels)
 abstract PixelsFloatRGBA(Pixels) to Pixels {
 
+	/**
+		Returns the 4 values of the pixel in `v` (or in a new vector).
+	**/
 	public inline function getPixelF(x, y, ?v:h3d.Vector4) {
 		if( v == null )
 			v = new h3d.Vector4();
@@ -62,6 +101,9 @@ abstract PixelsFloatRGBA(Pixels) to Pixels {
 		return v;
 	}
 
+	/**
+		Sets the 4 values of the pixel.
+	**/
 	public inline function setPixelF(x, y, v:h3d.Vector4) {
 		var pix = ((x + y * this.width) << 4) + this.offset;
 		this.bytes.setFloat(pix, v.x);
@@ -70,6 +112,9 @@ abstract PixelsFloatRGBA(Pixels) to Pixels {
 		this.bytes.setFloat(pix+12, v.w);
 	}
 
+	/**
+		Converts the pixels to `RGBA32F` in place.
+	**/
 	@:from public static function fromPixels(p:Pixels) : PixelsFloatRGBA {
 		p.convert(RGBA32F);
 		return cast p;
@@ -77,29 +122,78 @@ abstract PixelsFloatRGBA(Pixels) to Pixels {
 
 }
 
+/**
+	A color channel.
+**/
 enum abstract Channel(Int) {
+	/**
+		The red channel.
+	**/
 	public var R = 0;
+	/**
+		The green channel.
+	**/
 	public var G = 1;
+	/**
+		The blue channel.
+	**/
 	public var B = 2;
+	/**
+		The alpha channel.
+	**/
 	public var A = 3;
+	/**
+		Returns the index of the channel.
+	**/
 	public inline function toInt() return this;
+	/**
+		Returns the channel of the given index.
+	**/
 	public static inline function fromInt( v : Int ) : Channel return cast v;
 }
 
+/**
+	An image in CPU memory: its bytes, size and `PixelFormat`.
+	It is used to load, convert and save images, and to upload data to a `h3d.mat.Texture`.
+**/
 @:noDebug
 class Pixels {
+	/**
+		The data of the image, starting at `offset`.
+	**/
 	public var bytes : haxe.io.Bytes;
+	/**
+		The format of the pixels. Use `convert` to change it.
+	**/
 	public var format(get,never) : PixelFormat;
+	/**
+		The width in pixels.
+	**/
 	public var width(default,null) : Int;
+	/**
+		The height in pixels.
+	**/
 	public var height(default,null) : Int;
+	/**
+		The size of the image data in bytes.
+	**/
 	public var dataSize(default,null) : Int;
+	/**
+		The position of the image data in `bytes`.
+	**/
 	public var offset : Int;
+	/**
+		The flags of the image.
+	**/
 	public var flags: haxe.EnumFlags<Flags>;
 
 	var stride : Int;
 	var bytesPerPixel : Int;
 	var innerFormat(default, set) : PixelFormat;
 
+	/**
+		Creates an image using the given bytes, without copying them. See `alloc` to allocate new bytes.
+	**/
 	public function new(width : Int, height : Int, bytes : haxe.io.Bytes, format : hxd.PixelFormat, offset = 0) {
 		this.width = width;
 		this.height = height;
@@ -109,10 +203,16 @@ class Pixels {
 		flags = haxe.EnumFlags.ofInt(0);
 	}
 
+	/**
+		Reverses the order of the 4 bytes of `v`.
+	**/
 	public static inline function switchEndian(v) {
 		return (v >>> 24) | ((v >> 8) & 0xFF00) | ((v << 8) & 0xFF0000) | (v << 24);
 	}
 
+	/**
+		Swaps the first and third bytes of `v` (converts between `0xAARRGGBB` and `0xAABBGGRR`).
+	**/
 	public static inline function switchBR(v) {
 		return (v & 0xFF00FF00) | ((v << 16) & 0xFF0000) | ((v >> 16) & 0xFF);
 	}
@@ -131,6 +231,9 @@ class Pixels {
 		throw "Unsupported format for this operation : " + format;
 	}
 
+	/**
+		Returns a copy of a rectangle of the image. Throws if it is outside the image.
+	**/
 	public function sub( x : Int, y : Int, width : Int, height : Int ) {
 		if( x < 0 || y < 0 || x + width > this.width || y + height > this.height )
 			throw "Pixels.sub() outside bounds";
@@ -145,6 +248,9 @@ class Pixels {
 		return new hxd.Pixels(width, height, out, format);
 	}
 
+	/**
+		Copies a rectangle of `src` at the given position. `src` is converted to the format of this image first.
+	**/
 	public function blit( x : Int, y : Int, src : hxd.Pixels, srcX : Int, srcY : Int, width : Int, height : Int ) {
 		if( x < 0 || y < 0 || x + width > this.width || y + height > this.height )
 			throw "Pixels.blit() outside bounds";
@@ -163,6 +269,10 @@ class Pixels {
 		}
 	}
 
+	/**
+		Fills the image with the color, in `0xAARRGGBB` format. The bits set in `preserveMask` keep their current value.
+		Only supported for 4 bytes formats (`BGRA`, `RGBA`, `ARGB`), unless all the bytes of the color are equal.
+	**/
 	public function clear( color : Int, preserveMask = 0 ) {
 		var mask = preserveMask;
 		willChange();
@@ -211,6 +321,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Returns the colors of the pixels in `0xAARRGGBB` format. Only supported for `BGRA`, `RGBA` and `ARGB`.
+	**/
 	public function toVector() : haxe.ds.Vector<Int> {
 		var vec = new haxe.ds.Vector<Int>(width * height);
 		var idx = 0;
@@ -249,6 +362,9 @@ class Pixels {
 		return vec;
 	}
 
+	/**
+		Extends the image to power of two dimensions, filling the new pixels with zeros. Returns a new image if `copy` is set, or modifies this one.
+	**/
 	public function makeSquare( ?copy : Bool ) {
 		var w = width, h = height;
 		var tw = w == 0 ? 0 : 1, th = h == 0 ? 0 : 1;
@@ -291,6 +407,9 @@ class Pixels {
 		if( flags.has(ReadOnly) ) copyInner();
 	}
 
+	/**
+		Flips the image vertically, in place.
+	**/
 	public function flipY() {
 		willChange();
 		if( stride%4 != 0 ) invalidFormat();
@@ -308,6 +427,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Converts the pixels to the `target` format, in place. Throws if the conversion is not supported.
+	**/
 	public function convert( target : PixelFormat ) {
 		if( format == target || format.equals(target) )
 			return;
@@ -427,6 +549,9 @@ class Pixels {
 		return ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3);
 	}
 
+	/**
+		Returns the color of the pixel in `0xAARRGGBB` format (for `BGRA`, `RGBA` and `ARGB`), or its raw value (for `R8` and `RG8`).
+	**/
 	public function getPixel(x, y) : Int {
 		var p = ((x + y * width) * bytesPerPixel) + offset;
 		switch(format) {
@@ -447,6 +572,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Sets the color of the pixel in `0xAARRGGBB` format (for `BGRA`, `RGBA` and `ARGB`), or its raw value (for `R8` and `RG8`).
+	**/
 	public function setPixel(x, y, color) : Void {
 		var p = ((x + y * width) * bytesPerPixel) + offset;
 		willChange();
@@ -469,6 +597,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Returns the value of the pixel as floats in `v` (or in a new vector). 8 and 16 bits channels are returned in the `[0, 1]` range.
+	**/
 	public function getPixelF(x, y, ?v:h3d.Vector4) : h3d.Vector4 {
 		if( v == null )
 			v = new h3d.Vector4();
@@ -495,6 +626,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Sets the value of the pixel from floats. 8 and 16 bits channels take values in the `[0, 1]` range.
+	**/
 	public function setPixelF(x, y, v:h3d.Vector4) {
 		willChange();
 		var p = ((x + y * width) * bytesPerPixel) + offset;
@@ -513,14 +647,23 @@ class Pixels {
 		}
 	}
 
+	/**
+		Releases the bytes of the image.
+	**/
 	public function dispose() {
 		bytes = null;
 	}
 
+	/**
+		Returns a description of the size and format of the image.
+	**/
 	public function toString() {
 		return 'Pixels(${width}x${height} ${format})';
 	}
 
+	/**
+		Encodes the image as a PNG file with the given compression level. Images not in `ARGB` or `R8` format are converted to `BGRA` first.
+	**/
 	public function toPNG( ?level = 9 ) {
 		var png;
 		if( offset != 0 ) {
@@ -541,10 +684,16 @@ class Pixels {
 		return o.getBytes();
 	}
 
+	/**
+		Encodes the image as a DDS file (see `toDDSLayers`).
+	**/
 	public function toDDS() {
 		return Pixels.toDDSLayers([this]);
 	}
 
+	/**
+		Returns a copy of the image.
+	**/
 	public function clone() {
 		var p = new Pixels(width, height, null, format);
 		p.flags = flags;
@@ -556,6 +705,9 @@ class Pixels {
 		return p;
 	}
 
+	/**
+		Returns the size in bytes of an image of the given size and format.
+	**/
 	public static function calcDataSize( width : Int, height : Int, format : PixelFormat ) {
 		return switch( format ) {
 		case S3TC(_):
@@ -565,6 +717,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Returns the size in bytes of a row of pixels (of a row of 4x4 blocks for compressed formats).
+	**/
 	public static function calcStride( width : Int, format : PixelFormat ) {
 		return width * switch( format ) {
 		case ARGB, BGRA, RGBA, SRGB, SRGB_ALPHA: 4;
@@ -593,6 +748,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Tells if the format stores float values (16 or 32 bits floats).
+	**/
 	public static function isFloatFormat( format : PixelFormat ) {
 		return switch( format ) {
 		case R16F, RG16F, RGB16F, RGBA16F: true;
@@ -633,6 +791,9 @@ class Pixels {
 		}
 	}
 
+	/**
+		Allocates an image of the given size and format, filled with zeros.
+	**/
 	public static function alloc( width, height, format : PixelFormat ) {
 		return new Pixels(width, height, haxe.io.Bytes.alloc(calcDataSize(width, height, format)), format);
 	}

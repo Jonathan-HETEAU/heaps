@@ -6,6 +6,9 @@ import sdl.Cursor;
 import dx.Cursor;
 #end
 
+/**
+	The kind of platform the application runs on (see `System.platform`).
+**/
 enum Platform {
 	IOS;
 	Android;
@@ -15,12 +18,18 @@ enum Platform {
 	FlashPlayer;
 }
 
+/**
+	Boolean system properties, queried with `System.getValue`.
+**/
 enum SystemValue {
 	IsTouch;
 	IsWindowed;
 	IsMobile;
 }
 
+/**
+	The detected keyboard layout (see `System.getKeyboardLayout`).
+**/
 enum KeyboardLayout {
 	QWERTY;
 	AZERTY;
@@ -30,14 +39,39 @@ enum KeyboardLayout {
 }
 
 //@:coreApi
+/**
+	Platform-specific services: main loop, cursor, clipboard, locale, and screen information.
+	Each target has its own implementation (`System.hl.hx`, `System.js.hx`).
+**/
 class System {
 
+	/**
+		The width of the screen in pixels.
+	**/
 	public static var width(get,never) : Int;
+	/**
+		The height of the screen in pixels.
+	**/
 	public static var height(get, never) : Int;
+	/**
+		The language code of the user, such as `"en"`.
+	**/
 	public static var lang(get, never) : String;
+	/**
+		The platform the application runs on.
+	**/
 	public static var platform(get, null) : Platform;
+	/**
+		The resolution of the screen in dots per inch (currently always `72`).
+	**/
 	public static var screenDPI(get,never) : Float;
+	/**
+		Sets the current cursor. It can be replaced by a custom function, which should call `setNativeCursor` with the cursor to display.
+	**/
 	public static var setCursor = setNativeCursor;
+	/**
+		Tells if the infinite loop check is enabled. Set it to `false` to temporarily disable it during long computations.
+	**/
 	public static var allowTimeout(get, set) : Bool;
 
 	static var loopFunc : Void -> Void;
@@ -55,13 +89,22 @@ class System {
 	static var currentCustomCursor : hxd.Cursor.CustomCursor;
 	static var cursorVisible = true;
 
+	/**
+		If set, `lang` keeps the region code for the locales that need it (such as `"zh-TW"` for traditional Chinese).
+	**/
 	public static var allowLCID : Bool = false;
 	static var lcidMapping = [ "zh-TW" => "zh-TW", "zh-HK" => "zh-TW", "zh-MO" => "zh-TW" ];
 
+	/**
+		Returns the function called every frame, set with `setLoop`.
+	**/
 	public static function getCurrentLoop() : Void -> Void {
 		return loopFunc;
 	}
 
+	/**
+		Sets the function called every frame by the main loop.
+	**/
 	public static function setLoop( f : Void -> Void ) : Void {
 		loopFunc = f;
 	}
@@ -100,6 +143,9 @@ class System {
 		}
 	}
 
+	/**
+		Creates the main window. Its size and title can be set with the `-D windowSize=WIDTHxHEIGHT`, `-D windowTitle=...` and `-D windowFixed=1` defines. Can be replaced to customize the window.
+	**/
 	public static dynamic function createWindow() {
 		var width = 800;
 		var height = 600;
@@ -116,6 +162,9 @@ class System {
 		return new Window(title, width, height, { fixed: fixed });
 	}
 
+	/**
+		Initializes the system and creates the window with `createWindow`, then calls `init` and runs the main loop until the application exits. Called by `hxd.App`.
+	**/
 	public static function start( init : Void -> Void ) : Void {
 		#if usesys
 		if( !haxe.System.init() ) return;
@@ -201,6 +250,9 @@ class System {
 	**/
 	public dynamic static function onReload() {}
 
+	/**
+		Called when an uncaught exception occurs in the main loop. By default, writes the error and its call stack to stderr, and on Windows also shows them in a dialog. Can be replaced to log or report errors.
+	**/
 	public dynamic static function reportError( e : Dynamic ) {
 		#if (haxe_ver >= 4.1)
 		var exc = Std.downcast(e, haxe.Exception);
@@ -260,6 +312,9 @@ class System {
 		#end
 	}
 
+	/**
+		Sets the displayed cursor. Meant to be called by a custom `setCursor`: calling it outside of the automatic interactive cursor update leads to undefined behavior.
+	**/
 	public static function setNativeCursor( c : hxd.Cursor ) : Void {
 		#if (hlsdl || hldx)
 		if( c.equals(currentNativeCursor) )
@@ -343,31 +398,52 @@ class System {
 	#end
 
 	#if (hl_ver < version("1.12.0"))
+	/**
+		Returns the text in the system clipboard, or `null` if not supported.
+	**/
 	public static function getClipboardText() : String {
 		return null;
 	}
 
+	/**
+		Sets the text in the system clipboard. Returns `false` if not supported.
+	**/
 	public static function setClipboardText(text:String) : Bool {
 		return false;
 	}
 	#elseif hlsdl
+	/**
+		Returns the text in the system clipboard, or `null` if not supported.
+	**/
 	public static function getClipboardText() : String {
 		return sdl.Sdl.getClipboardText();
 	}
 
+	/**
+		Sets the text in the system clipboard. Returns `false` if not supported.
+	**/
 	public static function setClipboardText(text:String) : Bool {
 		return sdl.Sdl.setClipboardText(text);
 	}
 	#else
+	/**
+		Returns the text in the system clipboard, or `null` if not supported.
+	**/
 	public static function getClipboardText() : String {
 		return hl.UI.getClipboardText();
 	}
 
+	/**
+		Sets the text in the system clipboard. Returns `false` if not supported.
+	**/
 	public static function setClipboardText(text:String) : Bool {
 		return hl.UI.setClipboardText(text);
 	}
 	#end
 
+	/**
+		Returns a description of the device, such as `"PC/"` followed by the graphics device name.
+	**/
 	public static function getDeviceName() : String {
 		#if usesys
 		return haxe.System.name;
@@ -382,10 +458,16 @@ class System {
 		#end
 	}
 
+	/**
+		Returns the default frame rate of the platform.
+	**/
 	public static function getDefaultFrameRate() : Float {
 		return 60.;
 	}
 
+	/**
+		Returns the value of a system property.
+	**/
 	public static function getValue( s : SystemValue ) : Bool {
 		return switch( s ) {
 		#if !usesys
@@ -402,6 +484,9 @@ class System {
 		}
 	}
 
+	/**
+		Exits the application (does nothing on JS).
+	**/
 	public static function exit() : Void {
 		try {
 			Sys.exit(0);
@@ -411,6 +496,9 @@ class System {
 		}
 	}
 
+	/**
+		Opens the URL in the default browser (in a new tab on JS).
+	**/
 	public static function openURL( url : String ) : Void {
 		switch Sys.systemName() {
 			case 'Windows': Sys.command('start ${url}');
@@ -439,6 +527,9 @@ class System {
 	 * Returns the locale including region code ()
 	**/
 	static var _loc : String;
+	/**
+		Returns the locale of the user, including the region code (such as `"en-US"`).
+	**/
 	public static function getLocale() {
 		if( _loc == null ) {
 			var str = @:privateAccess Sys.makePath(sys_locale());
@@ -470,6 +561,9 @@ class System {
 		};
 	}
 
+	/**
+		Called when the keyboard layout changes.
+	**/
 	public static dynamic function onKeyboardLayoutChange() : Void {}
 
 	// getters
@@ -508,6 +602,9 @@ class System {
 
 	static function get_screenDPI() : Int return 72; // TODO
 
+	/**
+		Notifies the infinite loop check that the application is still running. Call it frequently during long computations, or disable `allowTimeout`.
+	**/
 	public static function timeoutTick() : Void @:privateAccess {
 		#if !usesys
 		sentinel.tick();

@@ -1,7 +1,14 @@
 package hxd;
 
+/**
+	Gradient (Perlin) noise generator in 1D, 2D and 3D, with fractal (multi-octave) and ridged variants.
+	Each `seed` gives a different noise. Single octave values are roughly in the `[-1, 1]` range.
+**/
 class Perlin {
 
+	/**
+		The period of the noise in grid cells along X and Y, to make it tile. No tiling by default.
+	**/
 	public var repeat : Int;
 
 	/** Keep result in the [-1, 1] range **/
@@ -9,6 +16,9 @@ class Perlin {
 
 	var gradients : Array<Float>;
 
+	/**
+		Creates a generator.
+	**/
 	public function new() {
 		repeat = 0x7FFFFFFF;
 		gradients = [];
@@ -54,11 +64,17 @@ class Perlin {
 		return gx * (x - ix) + gy * (y - iy);
 	}
 
+	/**
+		Sets `repeat` so that a noise sampled at `x * scale` tiles over `size` units, and returns the corrected scale to use.
+	**/
 	public function adjustScale( size : Int, scale : Float ) {
 		repeat = Std.int(size * scale);
 		return repeat / size;
 	}
 
+	/**
+		Returns a single octave of 3D noise at the given position.
+	**/
 	public function gradient3D( seed : Int, x : Float, y : Float, z : Float ) {
 		var ix = Std.int(x), xs = scurve(x - ix);
 		var iy = Std.int(y), ys = scurve(y - iy);
@@ -79,6 +95,9 @@ class Perlin {
 		return linear(v1, v2, zs);
 	}
 
+	/**
+		Returns a single octave of 1D noise at the given position.
+	**/
 	public function gradient1D( seed : Int, x : Float ) {
 		var ix = Std.int(x), xs = scurve(x - ix);
 		var ga = gradient1DAt(x, ix, seed);
@@ -86,10 +105,16 @@ class Perlin {
 		return linear(ga, gb, xs);
 	}
 
+	/**
+		Returns a single octave of 2D noise at the given position.
+	**/
 	public function gradient( seed : Int, x : Float, y : Float ) {
 		return inlineGradient(seed, x, y);
 	}
 
+	/**
+		Inlined version of `gradient`.
+	**/
 	public inline function inlineGradient( seed : Int, x : Float, y : Float ) {
 		var ix = Std.int(x), xs = scurve(x - ix);
 		var iy = Std.int(y), ys = scurve(y - iy);
@@ -100,6 +125,10 @@ class Perlin {
 		return linear(linear(ga, gb, xs), linear(gc, gd, xs), ys);
 	}
 
+	/**
+		Returns fractal 2D noise: the sum of `octaves` layers of `gradient`, each one with its amplitude multiplied by `persist` and its frequency by `lacunarity`.
+		The result is divided by the total amplitude if `normalize` is set.
+	**/
 	public function perlin( seed : Int, x : Float, y : Float, octaves : Int, persist : Float = 0.5, lacunarity = 2.0 ) {
 		var v = 0.;
 		var k = 1.;
@@ -116,6 +145,9 @@ class Perlin {
 		return v;
 	}
 
+	/**
+		Returns fractal 1D noise, like `perlin`.
+	**/
 	public function perlin1D( seed : Int, x : Float, octaves : Int, persist : Float = 0.5, lacunarity = 2.0 ) {
 		var v = 0.;
 		var k = 1.;
@@ -131,6 +163,9 @@ class Perlin {
 		return v;
 	}
 
+	/**
+		Returns ridged multifractal 2D noise, which produces sharp crests (useful for mountains).
+	**/
 	public function ridged( seed : Int, x : Float, y : Float, octaves : Int, offset : Float = 0.5, gain : Float = 2.0, persist : Float = 0.5, lacunarity = 2.0 ) {
 		var v = 0.;
 		var p = 1.;
@@ -163,6 +198,9 @@ class Perlin {
 		return THRESHOLD[ip] * (1 - rp) + THRESHOLD[ip + 1] * rp;
 	}
 
+	/**
+		Returns the total amplitude of `octaves` layers with the given `persist`: the maximum absolute value of a non normalized `perlin`.
+	**/
 	public function maxValue( octaves : Int, persist : Float ) {
 		var tot = 0.;
 		var n = 1.;

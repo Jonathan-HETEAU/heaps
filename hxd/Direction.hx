@@ -1,15 +1,43 @@
 package hxd;
 
+/**
+	One of the 4 directions on a 2D grid, with Y pointing down.
+	The value encodes the offsets as `(x + 1) | ((y + 1) << 2)`.
+**/
 enum abstract Direction(Int) {
 
+	/**
+		`x = 0, y = -1`.
+	**/
 	public var Up = 1;
+	/**
+		`x = -1, y = 0`.
+	**/
 	public var Left = 4;
+	/**
+		`x = 1, y = 0`.
+	**/
 	public var Right = 6;
+	/**
+		`x = 0, y = 1`.
+	**/
 	public var Down = 9;
 
+	/**
+		The X offset of the direction (`-1`, `0` or `1`).
+	**/
 	public var x(get, never) : Int;
+	/**
+		The Y offset of the direction (`-1`, `0` or `1`).
+	**/
 	public var y(get, never) : Int;
+	/**
+		The angle of the direction in radians, as given by `atan2(y, x)`.
+	**/
 	public var angle(get, never) : Float;
+	/**
+		The lowercase name of the direction (`"up"`, `"left"`, `"right"` or `"down"`).
+	**/
 	public var name(get, never) : String;
 
 	inline function new(v) {
@@ -32,6 +60,9 @@ enum abstract Direction(Int) {
 		return Math.atan2(y, x);
 	}
 
+	/**
+		Returns the opposite direction.
+	**/
 	public inline function inverse() {
 		return INVERT[this];
 	}
@@ -42,10 +73,16 @@ enum abstract Direction(Int) {
 		return name;
 	}
 
+	/**
+		Creates a direction from offsets in the `[-1, 1]` range. No check is done, so it can return a diagonal value that is not one of the 4 named directions.
+	**/
 	public static inline function ffrom(dx:Int, dy:Int) {
 		return new Direction((dx + 1) | ((dy + 1) << 2));
 	}
 
+	/**
+		Returns the direction of the vector `(x, y)`, keeping only its dominant axis (the vertical one on ties).
+	**/
 	public static function from(x:Float, y:Float) : Direction {
 		if( x != 0 && y != 0 ) {
 			if( Math.abs(x) > Math.abs(y) )

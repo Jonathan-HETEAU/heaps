@@ -27,6 +27,10 @@ private class GameController {
 #end
 #end
 
+/**
+	The mapping of the buttons and axes of a game pad: each field is the index of the button or axis in `Pad.buttons` and `Pad.values`.
+	`names` gives a display name for each index.
+**/
 typedef PadConfig = {
 	analogX : Int,
 	analogY : Int,
@@ -51,6 +55,10 @@ typedef PadConfig = {
 	names : Array<String>,
 }
 
+/**
+	A game pad (controller). Use `Pad.wait` to be notified of connected pads, and read `buttons`, `values` and the axes every frame.
+	`Pad.createDummy` returns an unconnected pad that can be used before a real one is connected.
+**/
 class Pad {
 
 	#if hlsdl
@@ -165,6 +173,9 @@ class Pad {
 		names : ["A","B","X","Y","LB","RB","LT","RT","Select","Start","LCLK","RCLK","DUp","DDown","DLeft","DRight","LX","LY","RX","RY"],
 	};
 
+	/**
+		Returns the configuration matching the pad name reported by the browser.
+	**/
 	public static function pickConfig( name : String ) : PadConfig {
 		return switch ( name ){
 			//Chrome, DS4 - both revs
@@ -181,26 +192,68 @@ class Pad {
 	#end
 
 	#if hl
+	/**
+		The values at which an analog input (trigger or axis) is considered as pressed and released in `buttons`.
+	**/
 	public static var ANALOG_BUTTON_THRESHOLDS = { press: 0.3, release: 0.25 };
 	#end
 
+	/**
+		The default configuration for the current platform.
+	**/
 	public static var DEFAULT_CONFIG : PadConfig =
 		#if hlsdl CONFIG_SDL
 		#elseif (hldx || usesys) GameController.CONFIG
 		#elseif js  CONFIG_JS_STD
 		#else ({}:Dynamic) #end;
 
+	/**
+		Tells if the pad is connected. It is `false` for a dummy pad and after a disconnection.
+	**/
 	public var connected(default, null) = true;
+	/**
+		The name of the pad, as reported by the system.
+	**/
 	public var name(get, never) : String;
+	/**
+		The index of the pad, or `-1` for a dummy pad.
+	**/
 	public var index : Int = -1;
+	/**
+		The mapping of the buttons and axes, used to read `buttons` and `values` by name, as in `pad.isDown(pad.config.A)`.
+	**/
 	public var config : PadConfig = DEFAULT_CONFIG;
+	/**
+		The X axis of the left stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+	**/
 	public var xAxis(get,never) : Float;
+	/**
+		The Y axis of the left stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+	**/
 	public var yAxis(get,never) : Float;
+	/**
+		The X axis of the right stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+	**/
 	public var rxAxis(get,never) : Float;
+	/**
+		The Y axis of the right stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+	**/
 	public var ryAxis(get,never) : Float;
+	/**
+		The radius around the center under which the sticks report `0`.
+	**/
 	public var axisDeadZone : Float = 0.1;
+	/**
+		The state of each button, indexed as in `config`.
+	**/
 	public var buttons : Array<Bool> = [];
+	/**
+		The value of each button (`0` to `1`) or axis (`-1` to `1`), indexed as in `config`.
+	**/
 	public var values : Array<Float> = [];
+	/**
+		The values of the previous frame.
+	**/
 	public var prevValues : Array<Float> = [];
 	var prevButtons : Array<Bool> = [];
 	var rawXAxis : Float = 0.;
@@ -228,21 +281,36 @@ class Pad {
 		return rawRYAxis;
 	}
 
+	/**
+		Called when the pad is disconnected.
+	**/
 	public dynamic function onDisconnect(){
 	}
 
+	/**
+		Tells if the button is down.
+	**/
 	public function isDown( button : Int ) {
 		return buttons[button];
 	}
 
+	/**
+		Tells if the button was pressed since the previous frame.
+	**/
 	public function isPressed( button : Int ) {
 		return buttons[button] && !prevButtons[button];
 	}
 
+	/**
+		Tells if the button was released since the previous frame.
+	**/
 	public function isReleased( button : Int ) {
 		return !buttons[button] && prevButtons[button];
 	}
 
+	/**
+		Resets all buttons and axes to their released state.
+	**/
 	public function reset() {
 		rawXAxis = rawYAxis = 0;
 		rawRXAxis = rawRYAxis = 0;
@@ -252,6 +320,9 @@ class Pad {
 		for( i in 0...values.length ) prevValues[i] = 0;
 	}
 
+	/**
+		Makes the pad vibrate with the given `strength` (`0` to `1`) for `time_s` seconds, if supported.
+	**/
 	public function rumble( strength : Float, time_s : Float ){
 		#if hlsdl
 		d.rumble( strength, Std.int(time_s*1000.) );

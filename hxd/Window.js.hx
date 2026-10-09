@@ -3,10 +3,25 @@ package hxd;
 import js.Browser;
 import hxd.impl.MouseMode;
 
+/**
+	How the window is displayed (see `Window.displayMode`).
+**/
 enum DisplayMode {
+	/**
+		The canvas is displayed in the page.
+	**/
 	Windowed;
+	/**
+		The browser is in fullscreen mode.
+	**/
 	Borderless;
+	/**
+		The browser is in fullscreen mode.
+	**/
 	Fullscreen;
+	/**
+		The browser is in fullscreen mode.
+	**/
 	FullscreenResize;
 }
 
@@ -26,18 +41,44 @@ private class NativeDroppedFile extends hxd.DropFileEvent.DroppedFile {
 
 }
 
+/**
+	The application window, which receives the input events and resize notifications.
+	On JS, it is a canvas of the page. Use `Window.getInstance()` to get the current window.
+	Each target has its own implementation (`Window.hl.hx`, `Window.js.hx`).
+**/
 class Window {
 
 	var resizeEvents : List<Void -> Void>;
 	var eventTargets : List<Event -> Void>;
 	var dropTargets : List<DropFileEvent -> Void>;
 
+	/**
+		The X position of the window on the screen (of the canvas in the page on JS).
+	**/
 	public var x(get, never) : Int;
+	/**
+		The Y position of the window on the screen (of the canvas in the page on JS).
+	**/
 	public var y(get, never) : Int;
+	/**
+		The width of the drawable area in pixels.
+	**/
 	public var width(get, never) : Int;
+	/**
+		The height of the drawable area in pixels.
+	**/
 	public var height(get, never) : Int;
+	/**
+		The X position of the mouse, relative to the window.
+	**/
 	public var mouseX(get, never) : Int;
+	/**
+		The Y position of the mouse, relative to the window.
+	**/
 	public var mouseY(get, never) : Int;
+	/**
+		Tells if the mouse is locked. Deprecated: use `mouseMode = AbsoluteUnbound(true)`.
+	**/
 	@:deprecated("Use mouseMode = AbsoluteUnbound(true)")
 	public var mouseLock(get, set) : Bool;
 	/**
@@ -50,11 +91,26 @@ class Window {
 		@see `hxd.impl.MouseMode` for more details on each mode.
 	**/
 	public var mouseMode(default, set) : MouseMode = Absolute;
+	/**
+		Tells if the rendering is synchronized with the screen refresh. It can't be disabled on JS.
+	**/
 	public var vsync(get, set) : Bool;
+	/**
+		Tells if the window has the focus.
+	**/
 	public var isFocused(get, never) : Bool;
+	/**
+		If set, key events are not stopped by the canvas and propagate to the rest of the page. Set from the `globalEvents` constructor argument, or the `propagateKeyEvents` canvas attribute.
+	**/
 	public var propagateKeyEvents : Bool;
 
+	/**
+		The title of the window (of the page on JS).
+	**/
 	public var title(get, set) : String;
+	/**
+		The display mode of the window: windowed, borderless or fullscreen. On JS, any mode other than `Windowed` requests the browser fullscreen.
+	**/
 	public var displayMode(get, set) : DisplayMode;
 
 	var curMouseX : Float = 0.;
@@ -91,6 +147,10 @@ class Window {
 	var discardMouseUp : Int = -1;
 	var canLockMouse : Bool = true;
 
+	/**
+		Creates a window for the given canvas, or for the `#webgl` canvas of the page.
+		If `globalEvents` is set (or the canvas has the `globalEvents="1"` attribute), events are captured on the whole page instead of only the canvas.
+	**/
 	public function new( ?canvas : js.html.CanvasElement, ?globalEvents ) : Void {
 		var customCanvas = canvas != null;
 		eventTargets = new List();
@@ -197,6 +257,9 @@ class Window {
 		}
 	}
 
+	/**
+		Stops observing the canvas size and releases the instance.
+	**/
 	public function dispose() {
 		if( inst == this ) inst = null;
 		if ((js.Browser.window:Dynamic).ResizeObserver != null) {
@@ -207,26 +270,45 @@ class Window {
 		}
 	}
 
+	/**
+		Sets the icon of the window (not supported on JS).
+	**/
 	public function setIcon(icon: hxd.BitmapData) : Void {
 	}
 
+	/**
+		Called when the user asks to close the window. Return `false` to keep it open.
+	**/
 	public dynamic function onClose() : Bool {
 		return true;
 	}
 
+	/**
+		Called when `mouseMode` changes, including when only the parameters of the mode change.
+		Returns a mouse mode to use instead of `to`, or `null` to keep it.
+	**/
 	public dynamic function onMouseModeChange( from : MouseMode, to : MouseMode ) : Null<MouseMode> {
 		return null;
 	}
 
+	/**
+		Sends an event to all the event targets.
+	**/
 	public function event( e : hxd.Event ) : Void {
 		for( et in eventTargets )
 			et(e);
 	}
 
+	/**
+		Adds a function called for every input event of the window.
+	**/
 	public function addEventTarget( et : Event->Void ) : Void {
 		eventTargets.add(et);
 	}
 
+	/**
+		Removes a function added with `addEventTarget`.
+	**/
 	public function removeEventTarget( et : Event->Void ) : Void {
 		for( e in eventTargets )
 			if( Reflect.compareMethods(e,et) ) {
@@ -235,10 +317,16 @@ class Window {
 			}
 	}
 
+	/**
+		Adds a function called when the window is resized.
+	**/
 	public function addResizeEvent( f : Void -> Void ) : Void {
 		resizeEvents.push(f);
 	}
 
+	/**
+		Removes a function added with `addResizeEvent`.
+	**/
 	public function removeResizeEvent( f : Void -> Void ) : Void {
 		for( e in resizeEvents )
 			if( Reflect.compareMethods(e,f) ) {
@@ -252,13 +340,22 @@ class Window {
 			r();
 	}
 
+	/**
+		Resizes the window (not supported on JS). In fullscreen mode, it also changes the screen resolution to the closest available one.
+	**/
 	public function resize( width : Int, height : Int ) : Void {
 	}
 
+	/**
+		Moves the window on the screen (not supported on JS).
+	**/
 	public function setPosition(x: Int, y: Int) {
 	}
 
 
+	/**
+		Adds a function called when files are dropped on the window.
+	**/
 	public function addDragAndDropTarget( f : ( event : DropFileEvent ) -> Void ) : Void {
 		if( dropTargets.length == 0 ) {
 			var element = canvas; // Probably should adhere to `globalEvents`?
@@ -268,6 +365,9 @@ class Window {
 		dropTargets.add(f);
 	}
 
+	/**
+		Removes a function added with `addDragAndDropTarget`.
+	**/
 	public function removeDragAndDropTarget( f : ( event : DropFileEvent ) -> Void ) : Void {
 		for( e in dropTargets )
 			if( Reflect.compareMethods(e, f) ) {
@@ -293,6 +393,9 @@ class Window {
 		for( dt in dropTargets ) dt(ev);
 	}
 
+	/**
+		Enables or disables fullscreen mode. Deprecated: use `displayMode`.
+	**/
 	@:deprecated("Use the displayMode property instead")
 	public function setFullScreen( v : Bool ) : Void {
 		var doc = js.Browser.document;
@@ -306,6 +409,9 @@ class Window {
 	}
 
 
+	/**
+		Sets the mouse position, relative to the canvas. Only allowed in relative mouse modes, since the browser can't move the cursor. If `emitEvent` is set, an `EMove` event is sent.
+	**/
 	public function setCursorPos( x : Int, y : Int, emitEvent : Bool = false ) : Void {
 		if ( mouseMode == Absolute ) throw "setCursorPos only allowed in relative mouse modes on this platform.";
 		curMouseX = x + canvasPos.left;
@@ -313,6 +419,9 @@ class Window {
 		if (emitEvent) event(new hxd.Event(EMove, x, y));
 	}
 
+	/**
+		Enables or disables the mouse capture: while enabled, the window keeps receiving mouse events when the cursor leaves it.
+	**/
 	public function captureMouseEvents(enable: Bool) : Void {
 		if (lastPointerId < 0)
 			return;
@@ -327,11 +436,17 @@ class Window {
 		}
 	}
 
+	/**
+		Makes this window the current one, returned by `getInstance`.
+	**/
 	public function setCurrent() {
 		inst = this;
 	}
 
 	static var inst : Window = null;
+	/**
+		Returns the current window, creating it for the `#webgl` canvas if needed.
+	**/
 	public static function getInstance() : Window {
 		if( inst == null ) inst = new Window();
 		return inst;

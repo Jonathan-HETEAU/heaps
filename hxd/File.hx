@@ -1,5 +1,8 @@
 package hxd;
 
+/**
+	Options for `File.browse` and `File.saveAs`.
+**/
 typedef BrowseOptions = {
 	/** The default path in which we browse the file, if supported **/
 	?defaultPath : String,
@@ -19,6 +22,9 @@ typedef BrowseOptions = {
 #end
 };
 
+/**
+	The file selected by `File.browse`.
+**/
 typedef BrowseSelect = {
 	/** might contain only the file name without the full path depending on sandbox restrictions **/
 	var fileName : String;
@@ -26,8 +32,17 @@ typedef BrowseSelect = {
 	function load( onReady : haxe.io.Bytes -> Void ) : Void;
 }
 
+/**
+	Cross-platform file access.
+	`browse` and `saveAs` open a system dialog on HashLink and use the browser on JS.
+	The other functions need a `sys` target (or Node.js) and throw `"Not supported"` otherwise.
+**/
 class File {
 
+	/**
+		Opens a dialog to select a file, then calls `onSelect` with it.
+		On JS, it uses a hidden `<input type="file">` element, and should be called from a user input event.
+	**/
 	public static function browse( onSelect : BrowseSelect -> Void, ?options : BrowseOptions ) {
 		if( options == null ) options = {};
 		#if hl
@@ -112,6 +127,10 @@ class File {
 		#end
 	}
 
+	/**
+		Opens a dialog to choose a path, then saves `dataContent` to it.
+		On JS, it uses the file picker when the browser supports it, and a download otherwise.
+	**/
 	public static function saveAs( dataContent : haxe.io.Bytes, ?options : BrowseOptions ) {
 		if( options == null ) options = { };
 		#if hl
@@ -183,6 +202,9 @@ class File {
 		#end
 	}
 
+	/**
+		Tells if the file or directory exists.
+	**/
 	public static function exists( path : String ) : Bool {
 		#if (sys || nodejs)
 		return sys.FileSystem.exists(path);
@@ -192,6 +214,9 @@ class File {
 		#end
 	}
 
+	/**
+		Deletes the file, ignoring errors.
+	**/
 	public static function delete( path : String ) {
 		#if (sys || nodejs)
 		try sys.FileSystem.deleteFile(path) catch( e : Dynamic ) { };
@@ -200,6 +225,9 @@ class File {
 		#end
 	}
 
+	/**
+		Returns the names of the entries of the directory.
+	**/
 	public static function listDirectory( path : String ) {
 		#if (sys || nodejs)
 		return sys.FileSystem.readDirectory(path);
@@ -208,6 +236,9 @@ class File {
 		#end
 	}
 
+	/**
+		Reads the whole content of the file.
+	**/
 	public static function getBytes( path : String ) : haxe.io.Bytes {
 		#if (sys || nodejs)
 		return sys.io.File.getBytes(path);
@@ -217,6 +248,9 @@ class File {
 		#end
 	}
 
+	/**
+		Writes `data` to the file, replacing its content.
+	**/
 	public static function saveBytes( path : String, data : haxe.io.Bytes ) {
 		#if (sys || nodejs)
 		sys.io.File.saveBytes(path, data);
@@ -225,6 +259,9 @@ class File {
 		#end
 	}
 
+	/**
+		Reads the file and calls `onLoad` with its content, or `onError` if it can't be read. Only supported on `sys` targets.
+	**/
 	public static function load( path : String, onLoad : haxe.io.Bytes -> Void, ?onError : String -> Void ) {
 		if( onError == null ) onError = function(_) { };
 		#if sys
@@ -235,6 +272,9 @@ class File {
 		#end
 	}
 
+	/**
+		Creates the directory, and its missing parents.
+	**/
 	public static function createDirectory( path : String ) {
 		#if (sys || nodejs)
 		sys.FileSystem.createDirectory(path);

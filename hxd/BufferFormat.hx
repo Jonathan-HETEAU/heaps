@@ -1,23 +1,50 @@
 package hxd;
 
 
+/**
+	The storage precision of a buffer input.
+**/
 enum abstract Precision(Int) {
+	/**
+		32 bits float.
+	**/
 	var F32 = 0;
+	/**
+		16 bits float.
+	**/
 	var F16 = 1;
+	/**
+		Unsigned 8 bits, normalized to the `[0, 1]` range.
+	**/
 	var U8 = 2;
+	/**
+		Signed 8 bits, normalized to the `[-1, 1]` range.
+	**/
 	var S8 = 3;
 	inline function new(v) {
 		this = v;
 	}
+	/**
+		Returns the size in bytes of a component.
+	**/
 	public inline function getSize() {
 		return SIZES[this];
 	}
+	/**
+		Returns the integer value of the precision.
+	**/
 	public inline function toInt() {
 		return this;
 	}
+	/**
+		Returns the precision of the given integer value.
+	**/
 	public static inline function fromInt( v : Int ) : Precision {
 		return new Precision(v);
 	}
+	/**
+		Returns the name of the precision.
+	**/
 	public function toString() {
 		return switch( new Precision(this) ) {
 		case F32: "F32";
@@ -29,28 +56,61 @@ enum abstract Precision(Int) {
 	static var SIZES = [4,2,1,1];
 }
 
+/**
+	The type of a buffer input. The value is the number of components (except for `DBytes4`).
+**/
 enum abstract InputFormat(Int) {
 
+	/**
+		A single float.
+	**/
 	public var DFloat = 1;
+	/**
+		A vector of 2 floats.
+	**/
 	public var DVec2 = 2;
+	/**
+		A vector of 3 floats.
+	**/
 	public var DVec3 = 3;
+	/**
+		A vector of 4 floats.
+	**/
 	public var DVec4 = 4;
+	/**
+		A 3x4 matrix (12 floats).
+	**/
 	public var DMat3x4 = 12;
+	/**
+		A 4x4 matrix (16 floats).
+	**/
 	public var DMat4 = 16;
+	/**
+		4 bytes, stored in a single 32 bits component.
+	**/
 	public var DBytes4 = 9;
 
 	inline function new(v) {
 		this = v;
 	}
 
+	/**
+		Returns the number of 32 bits components.
+	**/
 	public inline function getSize() {
 		return this == cast (DBytes4,Int) ? 1 : this;
 	}
 
+	/**
+		Returns the integer value of the format.
+	**/
 	public inline function toInt() {
 		return this;
 	}
 
+	/**
+		Returns the name of the format.
+	**/
 	public function toString() {
 		return switch( new InputFormat(this) ) {
 		case DFloat: "DFloat";
@@ -63,10 +123,16 @@ enum abstract InputFormat(Int) {
 		}
 	}
 
+	/**
+		Returns the format of the given integer value.
+	**/
 	public static inline function fromInt( v : Int ) : InputFormat {
 		return new InputFormat(v);
 	}
 
+	/**
+		Returns the format matching a shader type. Throws if the type can't be used in a buffer.
+	**/
 	public static function fromHXSL( t : hxsl.Ast.Type ) {
 		return switch( t ) {
 		case TVec(2, VFloat): DVec2;
@@ -82,28 +148,64 @@ enum abstract InputFormat(Int) {
 
 }
 
+/**
+	An input (vertex attribute) of a `BufferFormat`: its name, type and precision.
+**/
 @:structInit
 class BufferInput {
+	/**
+		The name of the input, matching the shader input name (such as `"position"`).
+	**/
 	public var name(default,null) : String;
+	/**
+		The type of the input.
+	**/
 	public var type(default,null) : InputFormat;
+	/**
+		The storage precision of the input.
+	**/
 	public var precision(default,null) : Precision;
+	/**
+		Creates an input.
+	**/
 	public inline function new( name : String, type : InputFormat, precision = F32 ) {
 		this.name = name;
 		this.type = type;
 		this.precision = precision;
 	}
+	/**
+		Returns the size of the input in bytes (without alignment).
+	**/
 	public inline function getBytesSize() {
 		return type.getSize() * precision.getSize();
 	}
+	/**
+		Tells if the input has the same name, type and precision as `b`.
+	**/
 	public inline function equals(b:BufferInput) {
 		return type == b.type && name == b.name && precision == b.precision;
 	}
 }
 
+/**
+	The location of a shader input in the buffers of a mesh: the index of the buffer, the byte offset in a vertex, and the precision.
+**/
 abstract BufferMapping(Int) {
+	/**
+		The index of the buffer containing the input.
+	**/
 	public var bufferIndex(get,never) : Int;
+	/**
+		The offset of the input in a vertex, in bytes.
+	**/
 	public var offset(get,never) : Int;
+	/**
+		The storage precision of the input.
+	**/
 	public var precision(get,never) : Precision;
+	/**
+		Creates a mapping.
+	**/
 	public function new(index,offset,prec:Precision) {
 		this = (index << 3) | prec.toInt() | (offset << 16);
 	}
@@ -112,6 +214,11 @@ abstract BufferMapping(Int) {
 	inline function get_offset() return this >> 16;
 }
 
+/**
+	The vertex layout of a `h3d.Buffer`: the list of its inputs.
+	Formats are unique: use `BufferFormat.make` to get the format for a list of inputs, or one of the predefined formats.
+	Each input is aligned to 4 bytes.
+**/
 class BufferFormat {
 
 	static var _UID = 0;
@@ -132,9 +239,21 @@ class BufferFormat {
 
 		return COMPRESSED_CONFIG;
 	}
+	/**
+		The unique identifier of the format.
+	**/
 	public var uid(default,null) : Int;
+	/**
+		The number of 32 bits components of a vertex, ignoring the precision.
+	**/
 	public var stride(default,null) : Int;
+	/**
+		The size of a vertex in bytes.
+	**/
 	public var strideBytes(default,null) : Int;
+	/**
+		Tells if an input has a precision lower than `F32`.
+	**/
 	public var hasLowPrecision(default,null) : Bool;
 	var inputs : Array<BufferInput>;
 	var mappings : Array<Array<BufferMapping>>;
@@ -156,6 +275,9 @@ class BufferFormat {
 		}
 	}
 
+	/**
+		Returns the input of the given name, or `null`.
+	**/
 	public function getInput( name : String ) {
 		for( i in inputs )
 			if( i.name == name )
@@ -163,6 +285,9 @@ class BufferFormat {
 		return null;
 	}
 
+	/**
+		Returns a format with lower precisions for the known inputs (data, color, position, normal and uv), raising some of them back to fill the alignment padding.
+	**/
 	public function getCompressed() : BufferFormat {
 		if ( compressed != null )
 			return compressed;
@@ -241,6 +366,9 @@ class BufferFormat {
 	}
 
 
+	/**
+		Returns the offset in bytes of the input in a vertex. Throws if it is not found.
+	**/
 	public function calculateInputOffset( name : String ) {
 		var offset = 0;
 		for( i in inputs ) {
@@ -252,6 +380,9 @@ class BufferFormat {
 		throw "Input not found : "+name;
 	}
 
+	/**
+		Tells if the format has an input of the given name, and of the given type if set.
+	**/
 	public function hasInput( name : String, ?type : InputFormat ) {
 		for( i in inputs )
 			if( i.name == name )
@@ -259,18 +390,27 @@ class BufferFormat {
 		return false;
 	}
 
+	/**
+		Returns the format with an input added at the end.
+	**/
 	public function append( name : String, type : InputFormat ) {
 		var inputs = inputs.copy();
 		inputs.push({ name : name, type : type });
 		return make(inputs);
 	}
 
+	/**
+		Returns the format without its last input.
+	**/
 	public function pop() {
 		var inputs = inputs.copy();
 		inputs.pop();
 		return make(inputs);
 	}
 
+	/**
+		Tells if the inputs of this format are the first inputs of `fmt`.
+	**/
 	public function isSubSet( fmt : BufferFormat ) {
 		if( fmt == this )
 			return true;
@@ -285,6 +425,9 @@ class BufferFormat {
 		return true;
 	}
 
+	/**
+		Returns where to find each input of `target` in this format. Throws if one is missing.
+	**/
 	public function resolveMapping( target : BufferFormat ) {
 		var m = mappings == null ? null : mappings[target.uid];
 		if( m != null )
@@ -306,10 +449,16 @@ class BufferFormat {
 		return m;
 	}
 
+	/**
+		Returns an iterator on the inputs.
+	**/
 	public inline function getInputs() {
 		return inputs.iterator();
 	}
 
+	/**
+		Returns a description of the inputs.
+	**/
 	public function toString() {
 		return [for( i in inputs ) i.name+":"+i.type.toString()+(i.precision == F32?"":"."+i.precision.toString().toLowerCase())].toString();
 	}
@@ -318,18 +467,54 @@ class BufferFormat {
 		Alias for XY_UV_RGBA
 	**/
 	public static var H2D(get,never) : BufferFormat;
+	/**
+		2D position, UV and color: the format of `h2d` vertices.
+	**/
 	public static var XY_UV_RGBA(get,null) : BufferFormat;
+	/**
+		2D position and UV.
+	**/
 	public static var XY_UV(get,null) : BufferFormat;
+	/**
+		3D position.
+	**/
 	public static var POS3D(get,null) : BufferFormat;
+	/**
+		3D position and normal.
+	**/
 	public static var POS3D_NORMAL(get,null) : BufferFormat;
+	/**
+		3D position and UV.
+	**/
 	public static var POS3D_UV(get,null) : BufferFormat;
+	/**
+		3D position, normal and UV.
+	**/
 	public static var POS3D_NORMAL_UV(get,null) : BufferFormat;
+	/**
+		3D position, normal, UV and color.
+	**/
 	public static var POS3D_NORMAL_UV_RGBA(get,null) : BufferFormat;
+	/**
+		A single `vec4` input named `data`.
+	**/
 	public static var VEC4_DATA(get,null) : BufferFormat;
+	/**
+		A single 4x4 matrix input named `data`.
+	**/
 	public static var MAT4_DATA(get,null) : BufferFormat;
+	/**
+		A single 3x4 matrix input named `data`.
+	**/
 	public static var MAT3x4_DATA(get,null) : BufferFormat;
 
+	/**
+		16 bits indexes.
+	**/
 	public static var INDEX16(get,null) : BufferFormat;
+	/**
+		32 bits indexes.
+	**/
 	public static var INDEX32(get,null) : BufferFormat;
 
 	static inline function get_H2D() return XY_UV_RGBA;
@@ -390,6 +575,9 @@ class BufferFormat {
 
 	static var ALL_FORMATS = new Map<String,Array<BufferFormat>>();
 
+	/**
+		Returns the format with the given `uid`, or `null`.
+	**/
 	public static function fromID( uid : Int ) {
 		for( fl in ALL_FORMATS )
 			for( f in fl )
@@ -401,6 +589,9 @@ class BufferFormat {
 	#if heaps_mt_hxsl_cache
 	static var makeMutex = new sys.thread.Mutex();
 	#end
+	/**
+		Returns the unique format for the list of inputs, creating it if needed.
+	**/
 	public static function make( inputs : Array<BufferInput> ) {
 		#if heaps_mt_hxsl_cache
 		makeMutex.acquire();
@@ -437,6 +628,9 @@ class BufferFormat {
 		return fmt;
 	}
 
+	/**
+		Converts a float to the bits of a 16 bits float.
+	**/
 	public static function float32to16( v : Float, denormalsAreZero : Bool = false ) : Int {
 		var i = haxe.io.FPHelper.floatToI32(v);
 		var sign = (i & 0x80000000) >>> 16;
@@ -451,6 +645,9 @@ class BufferFormat {
 		return 0;
 	}
 
+	/**
+		Converts the bits of a 16 bits float to a float.
+	**/
 	public static function float16to32( v : Int ) : Float {
 		var sign = (v & 0x8000) << 16;
 		var bits = (v & 0x3FF) << 13;
@@ -463,6 +660,9 @@ class BufferFormat {
 		return haxe.io.FPHelper.i32ToFloat(sign | ((bitcount - 37) << 23) | ((bits<<(150-bitcount))&0x7FE000));
 	}
 
+	/**
+		Converts a float in the `[-1, 1]` range to a signed 8 bits value.
+	**/
 	public static function float32toS8( v : Float ) : Int {
 		var i = Math.floor(v * 128);
 		if( i >= 127 )
@@ -472,6 +672,9 @@ class BufferFormat {
 		return i >= 0 ? i : (0x7F + i) | 0x80;
 	}
 
+	/**
+		Converts a signed 8 bits value to a float in the `[-1, 1]` range.
+	**/
 	public static function floatS8to32( v : Int ) : Float {
 		if ( v & 0x80 != 0 )
 			return -1*(0x7F-(v&0x7F))/128;
@@ -479,6 +682,9 @@ class BufferFormat {
 			return (v&0x7F)/128;
 	}
 
+	/**
+		Converts a float in the `[0, 1]` range to an unsigned 8 bits value.
+	**/
 	public static function float32toU8( v : Float ) : Int {
 		if( v < 0 )
 			return 0;
@@ -487,20 +693,32 @@ class BufferFormat {
 		return Math.floor(v * 256);
 	}
 
+	/**
+		Converts an unsigned 8 bits value to a float in the `[0, 1]` range.
+	**/
 	public inline static function floatU8to32( v : Int ) {
 		return (v & 0xFF) / 255;
 	}
 
 }
 
+/**
+	The cache of `MultiFormat.make`, indexed by format uids.
+**/
 typedef MultiFormatCache = Map<Int, { found : MultiFormat, nexts : MultiFormatCache }>;
 
+/**
+	The combination of the formats of several buffers, used to draw a mesh with more than one vertex buffer.
+**/
 class MultiFormat {
 
 	static var UID = 0;
 	static var CACHE = new MultiFormatCache();
 
 	static var _UID = 0;
+	/**
+		The unique identifier of the combination.
+	**/
 	public var uid(default,null) : Int;
 	var formats : Array<BufferFormat>;
 	var mappings : Array<Array<BufferMapping>> = [];
@@ -510,6 +728,9 @@ class MultiFormat {
 		this.formats = formats;
 	}
 
+	/**
+		Returns where to find each input of `format` (the shader inputs) in the buffers. The first buffer containing an input is used.
+	**/
 	public inline function resolveMapping( format : hxd.BufferFormat ) {
 		var m = mappings[format.uid];
 		if( m == null )
@@ -542,7 +763,13 @@ class MultiFormat {
 		return m;
 	}
 
+	/**
+		The maximum number of buffers.
+	**/
 	public static var MAX_FORMATS = 16;
+	/**
+		Returns the unique combination of the formats, creating it if needed.
+	**/
 	public static function make( formats : Array<BufferFormat> ) : MultiFormat {
 		if( formats.length > MAX_FORMATS )
 			throw "Too many formats (addBuffer leak?) "+[for( f in formats ) f.toString()];

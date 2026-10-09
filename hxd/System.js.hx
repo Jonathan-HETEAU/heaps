@@ -1,5 +1,8 @@
 package hxd;
 
+/**
+	The kind of platform the application runs on (see `System.platform`).
+**/
 enum Platform {
 	IOS;
 	Android;
@@ -9,12 +12,18 @@ enum Platform {
 	FlashPlayer;
 }
 
+/**
+	Boolean system properties, queried with `System.getValue`.
+**/
 enum SystemValue {
 	IsTouch;
 	IsWindowed;
 	IsMobile;
 }
 
+/**
+	The detected keyboard layout (see `System.getKeyboardLayout`).
+**/
 enum KeyboardLayout {
 	QWERTY;
 	AZERTY;
@@ -23,17 +32,45 @@ enum KeyboardLayout {
 	Unknown;
 }
 
+/**
+	Platform-specific services: main loop, cursor, clipboard, locale, and screen information.
+	Each target has its own implementation (`System.hl.hx`, `System.js.hx`).
+**/
 class System {
 
+	/**
+		The width of the page in pixels (the body width multiplied by the device pixel ratio).
+	**/
 	public static var width(get,never) : Int;
+	/**
+		The height of the page in pixels (the body height multiplied by the device pixel ratio).
+	**/
 	public static var height(get, never) : Int;
+	/**
+		The language code of the user, such as `"en"`.
+	**/
 	public static var lang(get, never) : String;
+	/**
+		The platform the application runs on.
+	**/
 	public static var platform(get, never) : Platform;
+	/**
+		The resolution of the screen in dots per inch (currently always `72`).
+	**/
 	public static var screenDPI(get,never) : Float;
+	/**
+		Sets the current cursor. It can be replaced by a custom function, which should call `setNativeCursor` with the cursor to display.
+	**/
 	public static var setCursor = setNativeCursor;
+	/**
+		Tells if the infinite loop check is enabled. Set it to `false` to temporarily disable it during long computations.
+	**/
 	public static var allowTimeout(get, set) : Bool;
 	static var CLIPBOARD_TEXT : String = null;
 
+	/**
+		Notifies the infinite loop check that the application is still running. Call it frequently during long computations, or disable `allowTimeout`.
+	**/
 	public static function timeoutTick() : Void {
 	}
 
@@ -47,10 +84,16 @@ class System {
 	/** If greater than 0, this will reduce loop framerate to reduce CPU usage **/
 	public static var fpsLimit = -1;
 
+	/**
+		Returns the function called every frame, set with `setLoop`.
+	**/
 	public static function getCurrentLoop() : Void -> Void {
 		return loopFunc;
 	}
 
+	/**
+		Sets the function called every frame by the main loop.
+	**/
 	public static function setLoop( f : Void -> Void ) : Void {
 		if( !loopInit ) {
 			loopInit = true;
@@ -79,10 +122,16 @@ class System {
 		if( loopFunc != null ) loopFunc();
 	}
 
+	/**
+		Initializes the system (and creates the window on desktop targets), then calls the given function. Called by `hxd.App`.
+	**/
 	public static function start( callb : Void -> Void ) : Void {
 		callb();
 	}
 
+	/**
+		Sets the displayed cursor. Meant to be called by a custom `setCursor`: calling it outside of the automatic interactive cursor update leads to undefined behavior.
+	**/
 	public static function setNativeCursor( c : Cursor ) : Void {
 		if( currentNativeCursor != null && c.equals(currentNativeCursor) )
 			return;
@@ -117,14 +166,23 @@ class System {
 		}
 	}
 
+	/**
+		Returns a description of the device (always `"Unknown"` on JS).
+	**/
 	public static function getDeviceName() : String {
 		return "Unknown";
 	}
 
+	/**
+		Returns the default frame rate of the platform.
+	**/
 	public static function getDefaultFrameRate() : Float {
 		return 60.;
 	}
 
+	/**
+		Returns the value of a system property.
+	**/
 	public static function getValue( s : SystemValue ) : Bool {
 		return switch( s ) {
 		case IsWindowed: true;
@@ -134,9 +192,15 @@ class System {
 		}
 	}
 
+	/**
+		Exits the application (does nothing on JS).
+	**/
 	public static function exit() : Void {
 	}
 
+	/**
+		Opens the URL in the default browser (in a new tab on JS).
+	**/
 	public static function openURL( url : String ) : Void {
 		js.Browser.window.open(url, '_blank');
 	}
@@ -153,24 +217,39 @@ class System {
 		}
 	}
 
+	/**
+		Returns the last text set with `setClipboardText` (the browser clipboard can't be read synchronously).
+	**/
 	public static dynamic function getClipboardText() : String {
 		return CLIPBOARD_TEXT;
 	}
 
+	/**
+		Sets the text in the system clipboard. Returns `false` if not supported.
+	**/
 	public static dynamic function setClipboardText(text:String) : Bool {
 		js.Browser.navigator.clipboard.writeText(text);
 		CLIPBOARD_TEXT = text;
 		return true;
 	}
 
+	/**
+		Returns the locale of the user, based on the browser language.
+	**/
 	public static function getLocale() : String {
 		return js.Browser.navigator.language + "_" + js.Browser.navigator.language.toUpperCase();
 	}
 
+	/**
+		Returns the detected keyboard layout, or `Unknown` if it can't be detected (always on JS). The value isn't reliable on SDL without a window.
+	**/
 	public static function getKeyboardLayout() : KeyboardLayout {
 		return Unknown;
 	}
 
+	/**
+		Called when the keyboard layout changes.
+	**/
 	public static dynamic function onKeyboardLayoutChange() : Void {}
 
 	// getters

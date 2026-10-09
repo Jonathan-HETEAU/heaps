@@ -7,10 +7,19 @@ import hxd.impl.MouseMode;
 #end
 
 #if hlsdl
+/**
+	How the window is displayed (see `Window.displayMode`). It is the display mode type of the native library (SDL or DirectX) when one is used.
+**/
 typedef DisplayMode = sdl.Window.DisplayMode;
 #elseif hldx
+/**
+	How the window is displayed (see `Window.displayMode`). It is the display mode type of the native library (SDL or DirectX) when one is used.
+**/
 typedef DisplayMode = dx.Window.DisplayMode;
 #else
+/**
+	How the window is displayed (see `Window.displayMode`). It is the display mode type of the native library (SDL or DirectX) when one is used.
+**/
 enum DisplayMode {
 	Windowed;
 	Borderless;
@@ -18,12 +27,18 @@ enum DisplayMode {
 }
 #end
 
+/**
+	A monitor, as returned by `Window.getMonitors`.
+**/
 typedef Monitor = {
 	name : String,
 	width : Int,
 	height : Int
 }
 
+/**
+	A display mode of a monitor: resolution and refresh rate.
+**/
 typedef DisplaySetting = {
 	width : Int,
 	height : Int,
@@ -37,6 +52,11 @@ private class NativeDroppedFile extends hxd.DropFileEvent.DroppedFile {
 }
 
 //@:coreApi
+/**
+	The application window, which receives the input events and resize notifications.
+	On JS, it is a canvas of the page. Use `Window.getInstance()` to get the current window.
+	Each target has its own implementation (`Window.hl.hx`, `Window.js.hx`).
+**/
 class Window {
 
 	static var WINDOWS : Array<Window> = [];
@@ -46,13 +66,37 @@ class Window {
 	var dropTargets : List<DropFileEvent -> Void>;
 	var dropFiles : Array<hxd.DropFileEvent.DroppedFile>;
 
+	/**
+		The identifier of the native window (only set with the `multidriver` define).
+	**/
 	public var id : Int;
+	/**
+		The X position of the window on the screen (of the canvas in the page on JS).
+	**/
 	public var x(get, never) : Int;
+	/**
+		The Y position of the window on the screen (of the canvas in the page on JS).
+	**/
 	public var y(get, never) : Int;
+	/**
+		The width of the drawable area in pixels.
+	**/
 	public var width(get, never) : Int;
+	/**
+		The height of the drawable area in pixels.
+	**/
 	public var height(get, never) : Int;
+	/**
+		The X position of the mouse, relative to the window.
+	**/
 	public var mouseX(get, never) : Int;
+	/**
+		The Y position of the mouse, relative to the window.
+	**/
 	public var mouseY(get, never) : Int;
+	/**
+		Tells if the mouse is locked. Deprecated: use `mouseMode = AbsoluteUnbound(true)`.
+	**/
 	@:deprecated("Use mouseMode = AbsoluteUnbound(true)")
 	public var mouseLock(get, set) : Bool;
 	/**
@@ -65,9 +109,21 @@ class Window {
 		@see `hxd.impl.MouseMode` for more details on each mode.
 	**/
 	public var mouseMode(default, set): MouseMode = Absolute;
+	/**
+		The index of the monitor used in fullscreen and borderless modes, or `null` to use the current monitor.
+	**/
 	public var monitor(default, set) : Null<Int> = null;
+	/**
+		The refresh rate to use when changing the resolution in fullscreen mode, or `null` to keep the current one.
+	**/
 	public var framerate : Null<Int> = null;
+	/**
+		Tells if the rendering is synchronized with the screen refresh. It can't be disabled on JS.
+	**/
 	public var vsync(get, set) : Bool;
+	/**
+		Tells if the window has the focus.
+	**/
 	public var isFocused(get, never) : Bool;
 
 	/**
@@ -75,9 +131,18 @@ class Window {
 	**/
 	public var displayScale(get, never) : Float;
 
+	/**
+		The title of the window (of the page on JS).
+	**/
 	public var title(get, set) : String;
+	/**
+		The display mode of the window: windowed, borderless or fullscreen. On JS, any mode other than `Windowed` requests the browser fullscreen.
+	**/
 	public var displayMode(get, set) : DisplayMode;
 	#if (hl_ver >= version("1.12.0"))
+	/**
+		The index of the monitor containing the window.
+	**/
 	public var currentMonitorIndex(get,never) : Int;
 	#end
 
@@ -102,10 +167,17 @@ class Window {
 	#if hlsdl
 	static inline var TOUCH_SCALE = #if (hl_ver >= version("1.12.0")) 10000 #else 100 #end;
 	#if heaps_vulkan
+	/**
+		If set before the window is created, it is created for Vulkan rendering (with the `heaps_vulkan` define).
+	**/
 	public static var USE_VULKAN = false;
 	#end
 	#end
 
+	/**
+		Creates a window with the given title and size. Flags: `fixed` disables resizing, `hidden` creates it hidden, `background` (DirectX) creates it without activating it.
+		The main window is created by `hxd.System.createWindow`.
+	**/
 	public function new(title:String, width:Int, height:Int, ?flags: { ?fixed:Bool, ?hidden:Bool, ?background:Bool }) {
 		this.windowWidth = width;
 		this.windowHeight = height;
@@ -138,17 +210,30 @@ class Window {
 		#end
 	}
 
+	/**
+		Called when the user asks to close the window. Return `false` to keep it open.
+	**/
 	public dynamic function onClose() : Bool {
 		return true;
 	}
 
+	/**
+		Called when the window is moved.
+	**/
 	public dynamic function onMove() : Void {
 	}
 
+	/**
+		Called when `mouseMode` changes, including when only the parameters of the mode change.
+		Returns a mouse mode to use instead of `to`, or `null` to keep it.
+	**/
 	public dynamic function onMouseModeChange( from : MouseMode, to : MouseMode ) : Null<MouseMode> {
 		return null;
 	}
 
+	/**
+		Closes the window.
+	**/
 	public function close() {
 		if( !WINDOWS.remove(this) )
 			return;
@@ -157,15 +242,24 @@ class Window {
 		#end
 	}
 
+	/**
+		Sends an event to all the event targets.
+	**/
 	public function event( e : hxd.Event ) : Void {
 		for( et in eventTargets )
 			et(e);
 	}
 
+	/**
+		Adds a function called for every input event of the window.
+	**/
 	public function addEventTarget(et : Event -> Void) : Void {
 		eventTargets.add(et);
 	}
 
+	/**
+		Removes a function added with `addEventTarget`.
+	**/
 	public function removeEventTarget(et : Event -> Void) : Void {
 		for( e in eventTargets )
 			if( Reflect.compareMethods(e,et) ) {
@@ -174,10 +268,16 @@ class Window {
 			}
 	}
 
+	/**
+		Adds a function called when the window is resized.
+	**/
 	public function addResizeEvent( f : Void -> Void ) : Void {
 		resizeEvents.push(f);
 	}
 
+	/**
+		Removes a function added with `addResizeEvent`.
+	**/
 	public function removeResizeEvent( f : Void -> Void ) : Void {
 		for( e in resizeEvents )
 			if( Reflect.compareMethods(e,f) ) {
@@ -191,6 +291,9 @@ class Window {
 			r();
 	}
 
+	/**
+		Resizes the window (not supported on JS). In fullscreen mode, it also changes the screen resolution to the closest available one.
+	**/
 	public function resize( width : Int, height : Int ) : Void {
 		#if (hldx || hlsdl)
 		if( window.displayMode == Fullscreen ) {
@@ -211,12 +314,18 @@ class Window {
 		for( f in resizeEvents ) f();
 	}
 
+	/**
+		Moves the window on the screen (not supported on JS).
+	**/
 	public function setPosition(x: Int, y: Int) {
 		#if (hldx || hlsdl)
 		window.setPosition(x, y);
 		#end
 	}
 
+	/**
+		Adds a function called when files are dropped on the window.
+	**/
 	public function addDragAndDropTarget( f : ( event : DropFileEvent ) -> Void ) : Void {
 		if (dropTargets.length == 0) {
 			#if (hlsdl >= version("1.14.0"))
@@ -228,6 +337,9 @@ class Window {
 		dropTargets.push(f);
 	}
 
+	/**
+		Removes a function added with `addDragAndDropTarget`.
+	**/
 	public function removeDragAndDropTarget( f : ( event : DropFileEvent ) -> Void ) : Void {
 		for( e in dropTargets )
 			if( Reflect.compareMethods(e, f) ) {
@@ -243,6 +355,9 @@ class Window {
 		}
 	}
 
+	/**
+		Moves the mouse cursor, relative to the window. If `emitEvent` is set, an `EMove` event is sent.
+	**/
 	public function setCursorPos( x : Int, y : Int, emitEvent : Bool = false ) : Void {
 		#if hldx
 		if (mouseMode == Absolute) window.setCursorPosition(x, y);
@@ -256,12 +371,18 @@ class Window {
 		if (emitEvent) event(new hxd.Event(EMove, x, y));
 	}
 
+	/**
+		Enables or disables the mouse capture: while enabled, the window keeps receiving mouse events when the cursor leaves it.
+	**/
 	public function captureMouseEvents(enable: Bool) : Void {
 		#if (hldx >= version("1.16.0") || hlsdl >= version("1.16.0"))
 		window.captureMouseEvents(enable);
 		#end
 	}
 
+	/**
+		Enables or disables fullscreen mode. Deprecated: use `displayMode`.
+	**/
 	@:deprecated("Use the displayMode property instead")
 	public function setFullScreen( v : Bool ) : Void {
 		#if (hldx || hlsdl)
@@ -791,6 +912,9 @@ class Window {
 		return displayMode;
 	}
 
+	/**
+		Applies `displayMode` again, after changing `monitor` or `framerate`.
+	**/
 	public function applyDisplay() {
 		displayMode = displayMode;
 	}
@@ -804,6 +928,9 @@ class Window {
 		return m;
 	}
 
+	/**
+		Sets the icon of the window (not supported on JS).
+	**/
 	public function setIcon(icon: hxd.BitmapData) : Void {
 		#if (hlsdl >= version("1.16.0") || hldx >= version("1.16.0"))
 		var pixels = icon.getPixels();
@@ -820,10 +947,16 @@ class Window {
 	}
 
 	#if (hl_ver >= version("1.12.0"))
+	/**
+		Returns the list of the connected monitors.
+	**/
 	public static function getMonitors() : Array<Monitor> {
 		return [for(m in #if hldx dx.Window.getMonitors() #elseif hlsdl sdl.Sdl.getDisplays() #else [] #end) { name: m.name, width: m.right-m.left, height: m.bottom-m.top}];
 	}
 
+	/**
+		Maximizes or restores the window.
+	**/
 	public function setMaximized(maximized: Bool) : Void {
 		#if (hldx >= version("1.17.0"))
 		window.setZoomed(maximized);
@@ -832,6 +965,9 @@ class Window {
 		#end
 	}
 
+	/**
+		Tells if the window is maximized.
+	**/
 	public function isMaximized() : Bool {
 		#if (hldx >= version("1.17.0"))
 		return window.isZoomed();
@@ -843,6 +979,9 @@ class Window {
 	}
 
 	// If registry is set, return the default DisplaySetting when it's currently modified by the application.
+	/**
+		Returns the current display setting of the monitor (the first one by default). On DirectX, if `registry` is set, returns the default setting instead of the one changed by the application.
+	**/
 	public function getCurrentDisplaySetting(?monitorId : Int, registry : Bool = false) : DisplaySetting {
 		#if hldx
 		var mon = monitorId != null ? getMonitors()[monitorId] : null;
@@ -855,6 +994,9 @@ class Window {
 		#end
 	}
 
+	/**
+		Returns the display settings available on the monitor (`monitor` by default), keeping only the ones of at least 720 pixels high and 60 Hz (or 30 Hz) when there are any.
+	**/
 	public function getDisplaySettings(?monitorId : Int) : Array<DisplaySetting> {
 		var map = new Map<String,DisplaySetting>();
 		var f = [];
@@ -947,6 +1089,9 @@ class Window {
 		return "";
 	}
 
+	/**
+		Makes this window the current one, returned by `getInstance`.
+	**/
 	public function setCurrent() {
 		inst = this;
 		#if hlsdl
@@ -955,10 +1100,16 @@ class Window {
 	}
 
 	static var inst : Window = null;
+	/**
+		Returns the current window.
+	**/
 	public static function getInstance() : Window {
 		return inst;
 	}
 
+	/**
+		Tells if at least one window is open.
+	**/
 	public static function hasWindow() {
 		return WINDOWS.length > 0;
 	}
