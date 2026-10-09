@@ -1,9 +1,19 @@
 package h3d.anim;
 
+/**
+	Plays two animations at once on different parts of a skeleton (for instance the legs from a walk animation and the
+	upper body from an attack animation).
+**/
 class SimpleBlend extends Transition {
 
+	/**
+		The objects (or joints) animated by `anim2`: the objects mapped to `true` take `anim2`, the others take `anim1`.
+	**/
 	public var objectsMap : Map<String,Bool>;
 
+	/**
+		Creates a blend of two animation instances. See `objectsMap`.
+	**/
 	public function new( anim1 : Animation, anim2 : Animation, objects : Map < String, Bool > ) {
 		super("blend", anim1, anim2);
 		this.objectsMap = objects;

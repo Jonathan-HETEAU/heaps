@@ -1,10 +1,23 @@
 package h3d.anim;
 
+/**
+	Base class of the animations combining two animations (`anim1` and `anim2`).
+	Its frame count is the smallest common multiple of the frame counts of both.
+**/
 class Transition extends Animation {
 
+	/**
+		The first animation.
+	**/
 	public var anim1 : Animation;
+	/**
+		The second animation.
+	**/
 	public var anim2 : Animation;
 
+	/**
+		Creates a transition between two animations.
+	**/
 	public function new( transitionName : String, anim1 : Animation, anim2 : Animation ) {
 		var r1 = 1, r2 = 1;
 		while( true ) {

@@ -1,49 +1,122 @@
 package h3d.anim;
 
+/**
+	An object animated by an `Animation`, identified by name, and its target once the animation is bound.
+**/
 class AnimatedObject {
 
+	/**
+		The name of the animated object (or joint) in the model.
+	**/
 	public var objectName : String;
 	#if !(dataOnly || macro)
+	/**
+		The object found by `Animation.bind`, or `null`.
+	**/
 	public var targetObject : h3d.scene.Object;
+	/**
+		The skin containing the animated joint, or `null` if the target is an object.
+	**/
 	public var targetSkin : h3d.scene.Skin;
+	/**
+		The index of the animated joint in `targetSkin`.
+	**/
 	public var targetJoint : Int;
 	#end
 
+	/**
+		Creates an animated object for the object named `name`.
+	**/
 	public function new(name) {
 		this.objectName = name;
 	}
 
+	/**
+		Returns a copy, not bound to any target.
+	**/
 	public function clone() {
 		return new AnimatedObject(objectName);
 	}
 
 }
 
+/**
+	An event of an animation (such as a footstep), triggered when the animation reaches its frame (see `Animation.onEvent`).
+**/
 typedef Event = {
 	name : String,
 	frame : Int,
 	?originalEvent : Event
 }
 
+/**
+	Base class of the animations: a set of animated objects (or joints) with keyframes, played on an object tree.
+
+	An animation loaded from a model is shared data: `Object.playAnimation` creates an instance bound to the object tree
+	(`createInstance`), which is updated every frame by the object `sync`.
+
+	```haxe
+	var anim = cache.loadAnimation(hxd.Res.walk);
+	var inst = obj.playAnimation(anim);
+	inst.speed = 1.5;
+	inst.onAnimEnd = function() trace("loop");
+	```
+**/
 class Animation {
 
 	static inline var EPSILON = 0.000001;
 
+	/**
+		The animation name.
+	**/
 	public var name : String;
+	/**
+		The path of the model file the animation was loaded from.
+	**/
 	public var resourcePath : String;
+	/**
+		The number of frames.
+	**/
 	public var frameCount(default, null) : Int;
+	/**
+		The number of frames per second.
+	**/
 	public var sampling(default,null) : Float;
+	/**
+		The current frame, from `0` to `frameCount`. See `setFrame`.
+	**/
 	public var frame(default, null) : Float;
 
+	/**
+		The playback speed multiplier (`1` by default).
+	**/
 	public var speed : Float;
+	/**
+		Called when the animation reaches its end (each loop if `loop` is set).
+	**/
 	public var onAnimEnd : Void -> Void;
+	/**
+		Called with the event name when the animation passes an event frame.
+	**/
 	public var onEvent : String -> Void;
 
+	/**
+		Pauses the animation.
+	**/
 	public var pause : Bool;
+	/**
+		Restarts the animation from the start when it reaches its end (`true` by default).
+	**/
 	public var loop : Bool;
 
 	// Events extracted from animation source file (FBX for example)
+	/**
+		The events read from the source file.
+	**/
 	public var sourceEvents(default, null) : Array<Event>;
+	/**
+		The events, indexed by frame.
+	**/
 	public var events(default, null) : Array<Array<Event>>;
 
 	var isInstance : Bool;
@@ -63,11 +136,17 @@ class Animation {
 		pause = false;
 	}
 
+	/**
+		Tells if a model file name follows the animation naming convention (starts with `anim_` or contains `_anim_`).
+	**/
 	public static function isAnimation(filename : String) {
 		var lowerCase = filename.toLowerCase();
 		return StringTools.startsWith(lowerCase, "anim_")|| lowerCase.indexOf("_anim_") > 0;
 	}
 
+	/**
+		Returns the duration in seconds, taking `speed` into account.
+	**/
 	public function getDuration() {
 		return frameToTime(frameCount);
 	}
@@ -83,6 +162,9 @@ class Animation {
 		return f;
 	}
 
+	/**
+		Stops animating the object named `objectName`.
+	**/
 	public function unbind( objectName : String ) {
 		for( o in objects )
 			if( o.objectName == objectName ) {
@@ -96,9 +178,18 @@ class Animation {
 	}
 
 
+	/**
+		Returns the events, indexed by frame.
+	**/
 	public function getEvents() return events;
+	/**
+		Returns the events read from the source file.
+	**/
 	public function getSourceEvents() return sourceEvents;
 
+	/**
+		Replaces the events.
+	**/
 	public function setEvents(evts : Array<Event>) {
 		events = [for( i in 0...frameCount ) null];
 		for (e in evts) {
@@ -107,6 +198,9 @@ class Animation {
 		}
 	}
 
+	/**
+		Returns the event `name` at `frame`, or `null`.
+	**/
 	public function getEvent(frame : Int, name : String) : Event {
 		if (events == null || events[frame] == null)
 			return null;
@@ -120,6 +214,9 @@ class Animation {
 		return null;
 	}
 
+	/**
+		Adds an event at `frame`.
+	**/
 	public function addEvent(frame : Int, name : String, ?originalEvent : Event) {
 		if (events == null)
 			events = [];
@@ -130,6 +227,9 @@ class Animation {
 			events[frame].push(e);
 	}
 
+	/**
+		Removes the event `name` at `frame`. Throws if it does not exist.
+	**/
 	public function removeEvent(frame : Int, name : String) {
 		if (events == null || events[frame] == null)
 			throw 'Can\'t delete event $name because it doesn\'t exist at frame $frame';
@@ -144,6 +244,9 @@ class Animation {
 		}
 	}
 
+	/**
+		Returns the time in seconds of the first event `name`, or `null`.
+	**/
 	public function getEventTime(name : String) : Null<Float> {
 		if (events == null)
 			return null;
@@ -160,8 +263,14 @@ class Animation {
 	}
 
 
+	/**
+		Returns the animated objects.
+	**/
 	public function getObjects() return objects;
 
+	/**
+		Moves the animation to the frame `f` (wrapped in the frame range).
+	**/
 	public function setFrame( f : Float ) {
 		frame = f;
 		lastEvent = -1;
@@ -185,6 +294,9 @@ class Animation {
 		isInstance = true;
 	}
 
+	/**
+		Loads the events of the animation from the properties of a model `.props` file.
+	**/
 	public function loadProps(props : Dynamic) {
 		var animationData = Reflect.field(props, "animations");
 		var data = Reflect.field(animationData, resourcePath.split("/").pop());
@@ -229,6 +341,9 @@ class Animation {
 	}
 
 	#if !(dataOnly || macro)
+	/**
+		Returns an instance of the animation bound to the object tree `base`. Prefer `Object.playAnimation`.
+	**/
 	public function createInstance( base : h3d.scene.Object ) {
 		var objects = [for( a in this.objects ) a.clone()];
 		var a = clone();
@@ -296,6 +411,10 @@ class Animation {
 		return frameCount;
 	}
 
+	/**
+		Advances the animation by `dt` seconds. Returns the remaining time if the animation reached its end or an event
+		during the step (the rest is processed by the caller), `0` otherwise. Called by `Object.sync`.
+	**/
 	public function update(dt:Float) : Float {
 		if( !isInstance )
 			throw "You must instantiate this animation first";
@@ -367,6 +486,9 @@ class Animation {
 	}
 	#end
 
+	/**
+		Returns the animation name.
+	**/
 	public function toString() {
 		return name;
 	}

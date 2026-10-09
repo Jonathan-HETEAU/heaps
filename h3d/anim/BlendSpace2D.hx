@@ -69,11 +69,17 @@ class BlendSpace2D extends h3d.anim.Animation {
 		return y = v;
 	}
 
+	/**
+		Creates a blend space from its points.
+	**/
 	public function new(name:String, points: Array<BlendSpace2DPoint>) {
 		super(name, 1, 1.0);
 		this.points = points;
 	}
 
+	/**
+		Moves the smoothed position immediately to `x` and `y`.
+	**/
 	public function resetSmooth() {
 		xSmoothed = x;
 		ySmoothed = y;
@@ -513,18 +519,36 @@ class BlendSpace2D extends h3d.anim.Animation {
 	static var tmpMatrix = new h3d.Matrix();
 }
 
+/**
+	A point of a `BlendSpace2D`: an animation placed at a position of the blend space.
+**/
 @:allow(h3d.anim.BlendSpace2D)
 class BlendSpace2DPoint {
 	// init info
+	/**
+		The X position of the point.
+	**/
 	public var x: Float;
+	/**
+		The Y position of the point.
+	**/
 	public var y: Float;
+	/**
+		The animation played at this point.
+	**/
 	public var animation: h3d.anim.Animation;
+	/**
+		If `true`, the animation is synchronized with the normalized time of the blend space; otherwise it plays at its own pace.
+	**/
 	public var keepSync: Bool;
 
 	// runtime info
 	var objects: Array<BlendSpaceObject> = [];
 
 
+	/**
+		Creates a point.
+	**/
 	public function new(x: Float, y: Float, animation: h3d.anim.Animation, keepSync: Bool = true) {
 		this.x = x;
 		this.y = y;
@@ -533,11 +557,26 @@ class BlendSpace2DPoint {
 	}
 }
 
+/**
+	An object animated by a `BlendSpace2D`, with the transforms of each point animation.
+**/
 @:allow(h3d.anim.BlendSpace2D)
 class BlendSpaceObject extends h3d.anim.Animation.AnimatedObject {
+	/**
+		The transforms of the object in the animations of the current triangle.
+	**/
 	public var matrices : Array<h3d.Matrix> = [];
+	/**
+		The blended transform.
+	**/
 	public var outMatrix = new h3d.Matrix();
+	/**
+		The default transform, used when an animation does not animate the object.
+	**/
 	public var defaultMatrix = new h3d.Matrix();
+	/**
+		`true` if an animation updated the object during the current frame.
+	**/
 	public var touchedThisFrame = false;
 
 	override function clone() {

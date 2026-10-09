@@ -15,14 +15,36 @@ private class SmoothObject extends Animation.AnimatedObject {
 	}
 }
 
+/**
+	Smoothly blends from the current pose of the objects to an animation, over `duration` seconds.
+	`onAnimEnd` is called when the blend is complete; the target animation can then be played directly.
+**/
 class SmoothTarget extends Animation {
 
+	/**
+		The animation instance blended to.
+	**/
 	public var target : Animation;
+	/**
+		The blend progress, from `0` (current pose) to `1` (target).
+	**/
 	public var blend : Float;
+	/**
+		The duration of the blend, in seconds.
+	**/
 	public var duration : Float;
+	/**
+		If `true`, the translations of the target are applied directly, only rotations and scales are blended.
+	**/
 	public var ignoreTranslate = false;
+	/**
+		The easing of the blend (see `hxd.Math.easeFactor`).
+	**/
 	public var easing : Float = 0.;
 
+	/**
+		Creates a blend to `target`, which must be an animation instance.
+	**/
 	public function new( target : h3d.anim.Animation, duration = 0.5 ) {
 		super("SmoothTarget(" + target.name+")", target.frameCount, target.sampling);
 		this.blend = 0;

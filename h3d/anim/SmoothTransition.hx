@@ -1,17 +1,41 @@
 package h3d.anim;
 
+/**
+	An object animated by a `SmoothTransition`.
+**/
 class SmoothedObject extends Animation.AnimatedObject {
+	/**
+		A temporary matrix.
+	**/
 	public var tmpMatrix : h3d.Matrix;
+	/**
+		The blended transform.
+	**/
 	public var outMatrix : h3d.Matrix;
+	/**
+		`true` if the object is animated by the first animation.
+	**/
 	public var isAnim1 : Bool;
+	/**
+		`true` if the object is animated by the second animation.
+	**/
 	public var isAnim2 : Bool;
+	/**
+		The default transform of the object, used when only one animation animates it.
+	**/
 	public var def : h3d.Matrix;
+	/**
+		Creates an object.
+	**/
 	public function new(name) {
 		super(name);
 		outMatrix = h3d.Matrix.I();
 	}
 }
 
+/**
+	Cross-fades from the animation `anim1` to `anim2` over `duration` seconds, both animations playing during the transition.
+**/
 class SmoothTransition extends Transition {
 
 	static var MZERO = h3d.Matrix.L([
@@ -21,9 +45,15 @@ class SmoothTransition extends Transition {
 		0, 0, 0, 1,
 	]);
 
+	/**
+		The transition progress, from `0` (`anim1`) to `1` (`anim2`).
+	**/
 	public var blendFactor : Float;
 	var duration : Float;
 
+	/**
+		Creates a transition between two animation instances, over `duration` seconds.
+	**/
 	public function new(current, target, duration) {
 		super("smooth", current, target);
 		blendFactor = 0.;

@@ -2,29 +2,77 @@ package h3d.anim;
 import h3d.anim.Animation;
 import hxd.impl.Float32;
 
+/**
+	The values stored per frame for an object of a `BufferAnimation`.
+**/
 enum DataLayout {
+	/**
+		3 floats of position.
+	**/
 	Position;
+	/**
+		3 floats of rotation (the X, Y and Z of a normalized quaternion).
+	**/
 	Rotation;
+	/**
+		3 floats of scale.
+	**/
 	Scale;
+	/**
+		2 floats of UV offset.
+	**/
 	UV;
+	/**
+		1 float of alpha.
+	**/
 	Alpha;
+	/**
+		1 float of a custom property.
+	**/
 	Property;
+	/**
+		The values do not change: they are stored once instead of once per frame.
+	**/
 	SingleFrame;
 }
 
+/**
+	An object animated by a `BufferAnimation`: the layout of its values in the animation data.
+**/
 class BufferObject extends AnimatedObject {
 
+	/**
+		The values stored for the object.
+	**/
 	public var layout : haxe.EnumFlags<DataLayout>;
+	/**
+		The offset of the object values in a frame of the animation data.
+	**/
 	public var dataOffset : Int;
+	/**
+		The current value of the custom property.
+	**/
 	public var propCurrentValue : Float;
+	/**
+		The name of the custom property, if any.
+	**/
 	public var propName:  String;
+	/**
+		The current transform, updated by `sync`.
+	**/
 	public var matrix : h3d.Matrix;
 
+	/**
+		Creates the object `objectName` whose values start at `dataOffset`.
+	**/
 	public function new( objectName, dataOffset ) {
 		super(objectName);
 		this.dataOffset = dataOffset;
 	}
 
+	/**
+		Returns the number of floats per frame of the object.
+	**/
 	public function getStride() {
 		var stride = 0;
 		if( layout.has(Position) ) stride += 3;
@@ -44,22 +92,35 @@ class BufferObject extends AnimatedObject {
 	}
 }
 
+/**
+	An animation whose keyframes are stored in a single packed float buffer, as loaded from HMD files.
+	More compact and faster to load than a `LinearAnimation`.
+**/
 class BufferAnimation extends Animation {
 
 	var syncFrame : Float;
 	var data : #if hl hl.BytesAccess<hl.F32> #else hxd.impl.TypedArray.Float32Array #end;
 	var stride : Int;
 
+	/**
+		Creates an empty animation of `frame` frames at `sampling` frames per second.
+	**/
 	public function new(name,frame,sampling) {
 		super(name,frame,sampling);
 		syncFrame = -1;
 	}
 
+	/**
+		Sets the packed animation data and the number of floats per frame.
+	**/
 	public function setData( data, stride ) {
 		this.data = data;
 		this.stride = stride;
 	}
 
+	/**
+		Adds an animated object whose values start at `offset` in each frame, and returns it.
+	**/
 	public function addObject( objName, offset ) {
 		var f = new BufferObject(objName, offset);
 		objects.push(f);

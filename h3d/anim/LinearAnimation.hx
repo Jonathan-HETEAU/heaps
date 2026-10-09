@@ -1,19 +1,58 @@
 package h3d.anim;
 import h3d.anim.Animation;
 
+/**
+	A keyframe of a `LinearAnimation`: a position, a rotation quaternion and a scale.
+**/
 class LinearFrame {
+	/**
+		The X position.
+	**/
 	public var tx : Float;
+	/**
+		The Y position.
+	**/
 	public var ty : Float;
+	/**
+		The Z position.
+	**/
 	public var tz : Float;
+	/**
+		The X component of the rotation quaternion.
+	**/
 	public var qx : Float;
+	/**
+		The Y component of the rotation quaternion.
+	**/
 	public var qy : Float;
+	/**
+		The Z component of the rotation quaternion.
+	**/
 	public var qz : Float;
+	/**
+		The W component of the rotation quaternion.
+	**/
 	public var qw : Float;
+	/**
+		The X scale.
+	**/
 	public var sx : Float;
+	/**
+		The Y scale.
+	**/
 	public var sy : Float;
+	/**
+		The Z scale.
+	**/
 	public var sz : Float;
+	/**
+		Creates an empty frame.
+	**/
 	public function new() {
 	}
+	/**
+		Returns the transform of the frame as a matrix.
+	**/
 	public function toMatrix() {
 		var m = new h3d.Matrix();
 		new h3d.Quat(qx, qy, qz, qw).toMatrix(m);
@@ -23,16 +62,49 @@ class LinearFrame {
 	}
 }
 
+/**
+	An object animated by a `LinearAnimation`: one curve of transforms, alpha, UV offsets or a custom property.
+**/
 class LinearObject extends AnimatedObject {
+	/**
+		The curve animates the position.
+	**/
 	public var hasPosition : Bool = true;
+	/**
+		The curve animates the rotation.
+	**/
 	public var hasRotation : Bool;
+	/**
+		The curve animates the scale.
+	**/
 	public var hasScale : Bool;
+	/**
+		The transform keyframes (one per frame), or `null`.
+	**/
 	public var frames : haxe.ds.Vector<LinearFrame>;
+	/**
+		The alpha keyframes (material color alpha), or `null`.
+	**/
 	public var alphas : haxe.ds.Vector<Float>;
+	/**
+		The UV offset keyframes (2 values per frame), or `null`.
+	**/
 	public var uvs : haxe.ds.Vector<Float>;
+	/**
+		The name of the animated custom property (see `Animation.getPropValue`), or `null`.
+	**/
 	public var propName:  String;
+	/**
+		The custom property keyframes, or `null`.
+	**/
 	public var propValues : haxe.ds.Vector<Float>;
+	/**
+		The current transform, updated by `sync`.
+	**/
 	public var matrix : h3d.Matrix;
+	/**
+		The current value of the custom property.
+	**/
 	public var propCurrentValue : Float;
 	override function clone() : AnimatedObject {
 		var o = new LinearObject(objectName);
@@ -48,15 +120,25 @@ class LinearObject extends AnimatedObject {
 	}
 }
 
+/**
+	An animation sampled at a fixed rate, with one keyframe per frame per object, linearly interpolated (quaternions are
+	interpolated for rotations). This is the format of the animations loaded from models.
+**/
 class LinearAnimation extends Animation {
 
 	var syncFrame : Float;
 
+	/**
+		Creates an empty animation of `frame` frames at `sampling` frames per second.
+	**/
 	public function new(name,frame,sampling) {
 		super(name,frame,sampling);
 		syncFrame = -1;
 	}
 
+	/**
+		Adds the transform keyframes of the object `objName`.
+	**/
 	public function addCurve( objName, frames, hasPos, hasRot, hasScale ) {
 		var f = new LinearObject(objName);
 		f.frames = frames;
@@ -66,18 +148,27 @@ class LinearAnimation extends Animation {
 		objects.push(f);
 	}
 
+	/**
+		Adds the alpha keyframes of the object `objName`.
+	**/
 	public function addAlphaCurve( objName, alphas ) {
 		var f = new LinearObject(objName);
 		f.alphas = alphas;
 		objects.push(f);
 	}
 
+	/**
+		Adds the UV offset keyframes of the object `objName`.
+	**/
 	public function addUVCurve( objName, uvs ) {
 		var f = new LinearObject(objName);
 		f.uvs = uvs;
 		objects.push(f);
 	}
 
+	/**
+		Adds the keyframes of the custom property `propName` of the object `objName`.
+	**/
 	public function addPropCurve( objName, propName, values ) {
 		var f = new LinearObject(objName);
 		f.propName = propName;

@@ -1,18 +1,54 @@
 package h3d.anim;
 
+/**
+	A joint (bone) of a skeleton (`Skin`).
+**/
 class Joint {
 
+	/**
+		The index of the joint in `Skin.allJoints`.
+	**/
 	public var index : Int;
+	/**
+		The joint name, used to bind animations and to find it with `h3d.scene.Skin.getObjectByName`.
+	**/
 	public var name : String;
+	/**
+		The index of the joint in `Skin.boundJoints` (the joints influencing vertexes), or `-1`.
+	**/
 	public var bindIndex : Int;
+	/**
+		The index of the joint in its split group when the skin is split (see `Skin.split`), or `-1`.
+	**/
 	public var splitIndex : Int;
+	/**
+		The default transform of the joint, relative to its parent (bind pose).
+	**/
 	public var defMat : h3d.Matrix; // the default bone matrix
+	/**
+		The inverse of the absolute bind pose transform, used for skinning.
+	**/
 	public var transPos : h3d.Matrix; // inverse pose matrix
+	/**
+		The parent joint, or `null` for a root joint.
+	**/
 	public var parent : Joint;
+	/**
+		If set, the joint is not computed from its animation but follows another joint.
+	**/
 	public var follow : Joint;
+	/**
+		The child joints.
+	**/
 	public var subs : Array<Joint>;
 
+	/**
+		The bounds of the vertexes influenced by the joint, in joint space, used to compute the skin bounds.
+	**/
 	public var offsets : h3d.col.Bounds;
+	/**
+		The radius added around `offsets`, or a negative value if the joint does not influence the bounds.
+	**/
 	public var offsetRay : Float;
 
 	/**
@@ -21,38 +57,81 @@ class Joint {
 	**/
 	public var retargetAnim : Bool;
 
+	/**
+		Creates a joint.
+	**/
 	public function new() {
 		bindIndex = -1;
 		splitIndex = -1;
 		subs = [];
 	}
 
+	/**
+		Tells if animations write the transform of this joint.
+	**/
 	public function shouldReceiveAnimation() {
 		return true;
 	}
 
 	#if !macro
+	/**
+		Creates the runtime state of the joint (see `h3d.scene.Skin.JointData`).
+	**/
 	public function makeRuntimeData() {
 		return new h3d.scene.Skin.JointData();
 	}
 	#end
 }
 
+/**
+	A joint simulated as a spring following its animated position (hair, cloth, tails...).
+	See `h3d.scene.Skin.DynamicJointData`.
+**/
 class DynamicJoint extends Joint {
+	/**
+		Under this squared speed, the joint does not move.
+	**/
 	public static var SLEEP_THRESHOLD : Float = 0.0001;
+	/**
+		Above this squared speed, the speed is reset (to avoid instabilities).
+	**/
 	public static var MAX_THRESHOLD : Float = 1 * 10e5;
 
 	// Global parameters
+	/**
+		A constant force applied to the joint, such as gravity or wind.
+	**/
 	public var globalForce : Vector = new Vector(0.0, 0.0, 0.0);
 
 	// Parameters
+	/**
+		If `true`, the simulation is applied on top of the animation of the joint, otherwise the joint is only simulated.
+	**/
 	public var additive : Bool = false;
+	/**
+		The axes (components greater than `0`) along which the joint does not move relative to its parent.
+	**/
 	public var lockAxis : h3d.Vector = new Vector(0, 0, 0);
+	/**
+		The speed attenuation per step, from `0` (none) to `1` (no inertia).
+	**/
 	public var damping : Float = 1;
+	/**
+		How much the joint is pulled back to its animated position, from `0` to `1`.
+	**/
 	public var stiffness : Float = 1;
+	/**
+		How much the joint resists to `globalForce`, from `0` (none) to `1` (ignores it).
+	**/
 	public var resistance : Float = 1;
+	/**
+		How much the joint can move away from its parent, from `0` (keeps its length) to `1` (free).
+	**/
 	public var slackness : Float = 0;
 
+	/**
+		Creates a dynamic joint.
+	**/
 	public function new() {
 		super();
 	}
@@ -86,27 +165,70 @@ private class Influence {
 	}
 }
 
+/**
+	The skeleton and skinning data of a skinned geometry: the joints and, for each vertex, the joints influencing it and
+	their weights. Used by `h3d.scene.Skin`.
+**/
 class Skin {
 
+	/**
+		The skin name.
+	**/
 	public var name : String;
+	/**
+		The number of vertexes of the geometry.
+	**/
 	public var vertexCount(default, null) : Int;
+	/**
+		The maximum number of joints influencing a vertex.
+	**/
 	public var bonesPerVertex(default,null) : Int;
+	/**
+		The joints influencing each vertex (`bonesPerVertex` per vertex), as `bindIndex` values.
+	**/
 	public var vertexJoints : haxe.ds.Vector<Int>;
+	/**
+		The weights of the joints influencing each vertex.
+	**/
 	public var vertexWeights : haxe.ds.Vector<Float>;
+	/**
+		The joints without parent.
+	**/
 	public var rootJoints(default,null) : Array<Joint>;
+	/**
+		The joints, by name.
+	**/
 	public var namedJoints(default,null) : Map<String,Joint>;
+	/**
+		All the joints, parents before children.
+	**/
 	public var allJoints(default,null) : Array<Joint>;
+	/**
+		The joints influencing at least one vertex.
+	**/
 	public var boundJoints(default, null) : Array<Joint>;
 	#if !(dataOnly || macro)
+	/**
+		The skinned geometry.
+	**/
 	public var primitive : h3d.prim.Primitive;
 	#end
 
 	// spliting
+	/**
+		When the skin has too many joints for a single draw, the groups of joints used by each part of the geometry.
+	**/
 	public var splitJoints(default, null) : Array<{ material : Int, joints : Array<Joint> }>;
+	/**
+		The split group of each triangle, when split.
+	**/
 	public var triangleGroups : haxe.ds.Vector<Int>;
 
 	var envelop : Array<Array<Influence>>;
 
+	/**
+		Creates an empty skin.
+	**/
 	public function new( name, vertexCount, bonesPerVertex ) {
 		this.name = name;
 		this.vertexCount = vertexCount;
@@ -118,6 +240,9 @@ class Skin {
 		}
 	}
 
+	/**
+		Sets the joints of the skeleton.
+	**/
 	public function setJoints( joints : Array<Joint>, roots : Array<Joint> ) {
 		rootJoints = roots;
 		allJoints = joints;
@@ -127,6 +252,9 @@ class Skin {
 				namedJoints.set(j.name, j);
 	}
 
+	/**
+		Adds the influence of joint `j` with weight `w` on vertex `vid`. Call `initWeights` after all influences are added.
+	**/
 	public inline function addInfluence( vid : Int, j : Joint, w : Float ) {
 		var il = envelop[vid];
 		if( il == null )
@@ -138,10 +266,16 @@ class Skin {
 		return i2.w > i1.w ? 1 : -1;
 	}
 
+	/**
+		Tells if the skin is split in several groups of joints.
+	**/
 	public inline function isSplit() {
 		return splitJoints != null;
 	}
 
+	/**
+		Computes `boundJoints`, `vertexJoints` and `vertexWeights` from the influences (keeping the `bonesPerVertex` strongest).
+	**/
 	public function initWeights() {
 		boundJoints = [];
 		var pos = 0;
@@ -223,6 +357,10 @@ class Skin {
 		return diff + (imax - i) + (jmax - j);
 	}
 
+	/**
+		Splits the skin in groups of at most `maxBones` joints, each drawing a part of the triangles. Returns `false` if not
+		needed.
+	**/
 	public function split( maxBones : Int, index : Array<Int>, triangleMaterials : Null<Array<Int>> ) {
 		if( isSplit() )
 			return true;
