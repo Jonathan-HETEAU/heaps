@@ -1,9 +1,24 @@
 package h3d.scene;
 
+/**
+	A model instance placed in a `World` chunk.
+**/
 class WorldElement {
+	/**
+		The model drawn.
+	**/
 	public var model : WorldModel;
+	/**
+		The world transform of the instance.
+	**/
 	public var transform : h3d.Matrix;
+	/**
+		`true` for instances added with `World.add` (only position, uniform scale and Z rotation), which are merged faster.
+	**/
 	public var optimized : Bool;
+	/**
+		Creates an instance of `model` with transform `mat`.
+	**/
 	public function new( model, mat, optimized ) {
 		this.model = model;
 		this.transform = mat;
@@ -11,20 +26,57 @@ class WorldElement {
 	}
 }
 
+/**
+	A square area of a `World`, of `World.chunkSize` units. The meshes of a chunk are built when it becomes visible
+	and released by the garbage collection of the `World`.
+**/
 class WorldChunk {
 
+	/**
+		The X index of the chunk.
+	**/
 	public var cx : Int;
+	/**
+		The Y index of the chunk.
+	**/
 	public var cy : Int;
+	/**
+		The X world position of the chunk.
+	**/
 	public var x : Float;
+	/**
+		The Y world position of the chunk.
+	**/
 	public var y : Float;
 
+	/**
+		The object containing the meshes of the chunk.
+	**/
 	public var root : h3d.scene.Object;
+	/**
+		The meshes of the chunk, one per material (indexed by `WorldMaterial.bits`).
+	**/
 	public var buffers : Map<Int, h3d.scene.Mesh>;
+	/**
+		The world bounds of the elements of the chunk, used for culling.
+	**/
 	public var bounds : h3d.col.Bounds;
+	/**
+		`true` when the meshes of the chunk are built.
+	**/
 	public var initialized = false;
+	/**
+		The last frame the chunk was visible, used to release the least recently seen chunks first.
+	**/
 	public var lastFrame : Int;
+	/**
+		The model instances of the chunk.
+	**/
 	public var elements : Array<WorldElement>;
 
+	/**
+		Creates an empty chunk at the given indexes.
+	**/
 	public function new(cx, cy) {
 		this.cx = cx;
 		this.cy = cy;
@@ -36,33 +88,88 @@ class WorldChunk {
 		root.name = "chunk[" + cx + "-" + cy + "]";
 	}
 
+	/**
+		Removes the chunk meshes from the scene.
+	**/
 	public function dispose() {
 		root.remove();
 	}
 }
 
+/**
+	A material of a `World` model: the geometries sharing the same material bits are merged in the same mesh.
+	Textures are packed in shared big textures (`h3d.mat.BigTexture`).
+**/
 class WorldMaterial {
+	/**
+		A key combining the material settings, computed by `updateBits`. Geometries with the same bits are merged.
+	**/
 	public var bits : Int;
+	/**
+		The diffuse texture area in the big texture.
+	**/
 	public var t : h3d.mat.BigTexture.BigTextureElement;
+	/**
+		The specular texture area, if `World.enableSpecular` is set.
+	**/
 	public var spec : h3d.mat.BigTexture.BigTextureElement;
+	/**
+		The normal map area, if `World.enableNormalMaps` is set.
+	**/
 	public var normal : h3d.mat.BigTexture.BigTextureElement;
+	/**
+		The source material of the model.
+	**/
 	public var mat : hxd.fmt.hmd.Data.Material;
+	/**
+		Enables back face culling.
+	**/
 	public var culling : Bool;
+	/**
+		The blend mode (`Alpha` by default, `None` for jpg textures).
+	**/
 	public var blend : h3d.mat.BlendMode;
+	/**
+		If set, pixels with an alpha below this threshold are discarded.
+	**/
 	public var killAlpha : Null<Float>;
+	/**
+		If set, the emissive intensity of the material.
+	**/
 	public var emissive : Null<Float>;
+	/**
+		If set, the stencil reference value written by the material.
+	**/
 	public var stencil : Null<Int>;
+	/**
+		Enables lighting.
+	**/
 	public var lights : Bool;
+	/**
+		Enables shadow casting and receiving.
+	**/
 	public var shadows : Bool;
+	/**
+		Additional shaders of the material.
+	**/
 	public var shaders : Array<hxsl.Shader>;
+	/**
+		The material name, used as mesh name.
+	**/
 	public var name : String;
 
+	/**
+		Creates a material with lights and shadows enabled.
+	**/
 	public function new() {
 		lights = true;
 		shadows = true;
 		shaders = [];
 	}
 
+	/**
+		Returns a copy of the material (the texture areas are shared).
+	**/
 	public function clone() : WorldMaterial {
 		var wm = new WorldMaterial();
 		wm.bits = this.bits;
@@ -83,6 +190,9 @@ class WorldMaterial {
 	}
 
 
+	/**
+		Recomputes `bits` after changing the settings.
+	**/
 	public function updateBits() {
 		bits = (t.t == null ? 0 : t.t.id   		<< 18)
 			| ((stencil == null ? 0 : stencil)  << 10)
@@ -97,17 +207,41 @@ class WorldMaterial {
 	}
 }
 
+/**
+	A part of a `WorldModel` using one material.
+**/
 class WorldModelGeometry {
+	/**
+		The material of this part.
+	**/
 	public var m : WorldMaterial;
+	/**
+		The first vertex of the part in the model buffer.
+	**/
 	public var startVertex : Int;
+	/**
+		The first index of the part in the model index buffer.
+	**/
 	public var startIndex : Int;
+	/**
+		The number of vertexes of the part.
+	**/
 	public var vertexCount : Int;
+	/**
+		The number of indexes of the part.
+	**/
 	public var indexCount : Int;
+	/**
+		Creates a geometry using material `m`.
+	**/
 	public function new(m) {
 		this.m = m;
 	}
 }
 
+/**
+	Geometry optimizations available for `WorldModel.optimize`.
+**/
 enum OptAlgorithm {
 	None;
 	/**
@@ -116,13 +250,37 @@ enum OptAlgorithm {
 	TopDown;
 }
 
+/**
+	A model loaded by `World.loadModel`: its geometry is kept on the CPU to be merged into the chunks.
+**/
 class WorldModel {
+	/**
+		The model resource.
+	**/
 	public var r : hxd.res.Model;
+	/**
+		The vertex format.
+	**/
 	public var format : hxd.BufferFormat;
+	/**
+		The vertexes of the model.
+	**/
 	public var buf : hxd.FloatBuffer;
+	/**
+		The indexes of the model.
+	**/
 	public var idx : hxd.IndexBuffer;
+	/**
+		The parts of the model, one per material.
+	**/
 	public var geometries : Array<WorldModelGeometry>;
+	/**
+		The local bounds of the model.
+	**/
 	public var bounds : h3d.col.Bounds;
+	/**
+		Creates an empty model for resource `r`.
+	**/
 	public function new(r) {
 		this.r = r;
 		this.buf = new hxd.FloatBuffer();
@@ -131,6 +289,9 @@ class WorldModel {
 		bounds = new h3d.col.Bounds();
 	}
 
+	/**
+		Reorders the geometry with the given algorithm.
+	**/
 	public function optimize( algo : OptAlgorithm ) {
 		switch( algo ) {
 		case None:
@@ -193,24 +354,45 @@ class WorldModel {
 
 }
 
+/**
+	A static world made of many model instances, split in square chunks on the XY plane.
+
+	The instances of each chunk are merged in a few big meshes (one per material) when the chunk becomes visible,
+	and their textures packed in big textures, which makes drawing many static models fast.
+	The meshes of the least recently visible chunks are released when GPU memory is needed (see `garbage`).
+
+	```haxe
+	var world = new h3d.scene.World(64, s3d);
+	var tree = world.loadModel(hxd.Res.tree);
+	for( i in 0...1000 )
+		world.add(tree, Math.random() * 512, Math.random() * 512, 0, 1, Math.random() * Math.PI * 2);
+	world.done();
+	```
+**/
 class World extends Object {
 
+	/**
+		The size of a chunk, in world units.
+	**/
 	public var chunkSize(default,null) : Int;
 
-	/*
+	/**
 		For each texture loaded, will call resolveSpecularTexture and have separate spec texture.
-	*/
+	**/
 	public var enableSpecular = false;
-	/*
+	/**
 		For each texture loaded, will call resolveNormalMap and have separate normal texture.
-	*/
+	**/
 	public var enableNormalMaps = false;
-	/*
+	/**
 		When enableSpecular=true, will store the specular value in the alpha channel instead of a different texture.
 		This will erase alpha value of transparent textures, so should only be used if specular is only on opaque models.
-	*/
+	**/
 	public var specularInAlpha = false;
 
+	/**
+		The wrap mode of the big textures.
+	**/
 	public var wrap(default, set) : h3d.mat.Data.Wrap = Clamp;
 	public function set_wrap(v : h3d.mat.Data.Wrap) {
 		wrap = v;
@@ -238,6 +420,12 @@ class World extends Object {
 	var textures : Map<String, WorldMaterial>;
 	var autoCollect : Bool;
 
+	/**
+		Creates an empty world.
+		@param chunkSize The size of a chunk, in world units.
+		@param parent The parent object.
+		@param autoCollect If `true`, the world registers `garbage` as the GPU memory garbage collector of the engine.
+	**/
 	public function new( chunkSize : Int, parent, ?autoCollect = true ) {
 		super(parent);
 		chunks = [];
@@ -251,6 +439,9 @@ class World extends Object {
 			h3d.Engine.getCurrent().mem.garbage = garbage;
 	}
 
+	/**
+		Releases the meshes of the least recently visible chunk, which are rebuilt when it becomes visible again.
+	**/
 	public function garbage() {
 		var last : WorldChunk = null;
 		for( c in allChunks )
@@ -401,6 +592,9 @@ class World extends Object {
 		return m;
 	}
 
+	/**
+		Finalizes the big textures. Call it after loading all the models.
+	**/
 	public function done() {
 		for( b in bigTextures ) {
 			b.diffuse.done();
@@ -411,6 +605,10 @@ class World extends Object {
 		}
 	}
 
+	/**
+		Loads a model and its textures so that it can be added to the world.
+		@param filter If set, only the parts of the model for which it returns `true` are loaded.
+	**/
 	@:noDebug
 	public function loadModel( r : hxd.res.Model, ?filter : hxd.fmt.hmd.Data.Model -> Bool) : WorldModel {
 		var lib = r.toHmd();
@@ -642,6 +840,9 @@ class World extends Object {
 
 	static function noGarbage() {}
 
+	/**
+		Releases the meshes of all the chunks after the GPU context was lost. They are rebuilt when visible.
+	**/
 	public function onContextLost() {
 		for( c in allChunks )
 			cleanChunk(c);
@@ -651,6 +852,11 @@ class World extends Object {
 		return model.format;
 	}
 
+	/**
+		Adds an instance of `model` at the given world position.
+		@param scale A uniform scale.
+		@param rotation A rotation around the Z axis, in radians.
+	**/
 	public function add( model : WorldModel, x : Float, y : Float, z : Float, scale = 1., rotation = 0. ) {
 		var c = getChunk(x, y, true);
 		var m = new h3d.Matrix();
@@ -661,6 +867,9 @@ class World extends Object {
 		addChunkBounds(c, model, m);
 	}
 
+	/**
+		Adds an instance of `model` with any world transform (slower to merge than `add`).
+	**/
 	public function addTransform( model : WorldModel, mat : h3d.Matrix ) {
 		var c = getChunk(mat.tx, mat.ty, true);
 		c.elements.push(new WorldElement(model, mat, false));
@@ -688,6 +897,10 @@ class World extends Object {
 		}
 	}
 
+	/**
+		Returns the bounds of all the instances of the world.
+		@param b An optional bounds to add the result to.
+	**/
 	public function getWorldBounds( ?b : h3d.col.Bounds ) {
 		if( b == null )
 			b = new h3d.col.Bounds();
