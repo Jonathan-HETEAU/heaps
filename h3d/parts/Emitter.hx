@@ -1,11 +1,26 @@
 package h3d.parts;
 import h3d.parts.Data;
 
+/**
+	A CPU particle emitter configured by a `State`. For large numbers of particles, prefer `GpuParticles`.
+**/
 class Emitter extends Particles implements Randomized {
 
+	/**
+		The time in the emitter life, from `0` to `1` (looping if `State.loop`).
+	**/
 	public var time(default,null) : Float;
+	/**
+		The emitter settings. See `setState`.
+	**/
 	public var state(default, null) : State;
+	/**
+		The playback speed multiplier.
+	**/
 	public var speed : Float = 1.;
+	/**
+		The collision handler used when `State.collide` is set.
+	**/
 	public var collider : Collider;
 
 	var rnd : Float;
@@ -13,6 +28,9 @@ class Emitter extends Particles implements Randomized {
 	var colorMap : ColorKey;
 	var curPart : Particle;
 
+	/**
+		Creates an emitter with the given settings (the defaults if `null`).
+	**/
 	public function new(?state,?parent) {
 		super(null, parent);
 		time = 0;
@@ -33,6 +51,9 @@ class Emitter extends Particles implements Randomized {
 		rnd = Math.random();
 	}
 
+	/**
+		Applies new settings.
+	**/
 	public function setState(s) {
 		this.state = s;
 		material.texture = s.frames == null || s.frames.length == 0 ? null : s.frames[0].getTexture();
@@ -65,6 +86,9 @@ class Emitter extends Particles implements Randomized {
 		return Data.State.eval(v,time, this, curPart);
 	}
 
+	/**
+		Emits and updates the particles for `dt` seconds. Done automatically during sync.
+	**/
 	public function update(dt:Float) {
 		var s = state;
 		var old = time;
@@ -97,6 +121,9 @@ class Emitter extends Particles implements Randomized {
 		curPart = null;
 	}
 
+	/**
+		Returns a random number between `0` and `1`.
+	**/
 	public inline function rand() {
 		return Math.random();
 	}
@@ -265,6 +292,9 @@ class Emitter extends Particles implements Randomized {
 		update(ctx.elapsedTime * speed);
 	}
 
+	/**
+		Tells if the emitter still has particles or will emit more.
+	**/
 	public function isActive() {
 		return count != 0 || time < 1 || state.loop;
 	}

@@ -1,14 +1,35 @@
 package h3d.parts;
 import hxd.Math;
 
+/**
+	The serialized form of a `GpuParticles` (see `GpuParticles.save`).
+**/
 typedef GpuSave = {
+	/**
+		The type of the saved data.
+	**/
 	var type : String;
+	/**
+		The version of the format.
+	**/
 	var version : Int;
+	/**
+		The bounds of the particles.
+	**/
 	var bounds : Array<Float>;
+	/**
+		The saved groups.
+	**/
 	var groups : Array<Dynamic>;
+	/**
+		Extra data saved by the editor.
+	**/
 	@:optional var hide : Dynamic;
 }
 
+/**
+	How the particles of a `GpuPartGroup` are sorted.
+**/
 enum GpuSortMode {
 	/**
 		Particles are not sorted.
@@ -20,6 +41,9 @@ enum GpuSortMode {
 	Dynamic;
 }
 
+/**
+	The shape the particles of a `GpuPartGroup` are emitted from.
+**/
 enum GpuEmitMode {
 	/**
 		A single Point, emit in all directions
@@ -49,37 +73,101 @@ enum GpuEmitMode {
 	Disc;
 }
 
+/**
+	The initial state of a particle of a `GpuPartGroup`, computed on the CPU and uploaded once.
+	The particle is then animated on the GPU.
+**/
 class GpuPart {
 
+	/**
+		The index of the particle.
+	**/
 	public var index : Int;
 
+	/**
+		The current X position (see `updatePos`).
+	**/
 	public var x : Float;
+	/**
+		The current Y position.
+	**/
 	public var y : Float;
+	/**
+		The current Z position.
+	**/
 	public var z : Float;
+	/**
+		The distance used for sorting.
+	**/
 	public var w : Float;
 
 	// params
+	/**
+		The initial X position.
+	**/
 	public var sx : Float;
+	/**
+		The initial Y position.
+	**/
 	public var sy : Float;
+	/**
+		The initial Z position.
+	**/
 	public var sz : Float;
 
+	/**
+		The X velocity.
+	**/
 	public var vx : Float;
+	/**
+		The Y velocity.
+	**/
 	public var vy : Float;
+	/**
+		The Z velocity.
+	**/
 	public var vz : Float;
 
+	/**
+		The time offset of the particle in its life cycle.
+	**/
 	public var time : Float;
+	/**
+		The life duration of the particles, in seconds.
+	**/
 	public var life : Float;
 
+	/**
+		The initial X offset of the quad (size and rotation).
+	**/
 	public var initX : Float;
+	/**
+		The initial Y offset of the quad.
+	**/
 	public var initY : Float;
+	/**
+		The X variation of the quad offset over time (size increase and rotation).
+	**/
 	public var deltaX : Float;
+	/**
+		The Y variation of the quad offset over time.
+	**/
 	public var deltaY : Float;
 
+	/**
+		The next particle of the list.
+	**/
 	public var next : GpuPart;
 
+	/**
+		Creates a particle.
+	**/
 	public function new() {
 	}
 
+	/**
+		Computes the CPU position at `time` (used for sorting and bounds).
+	**/
 	public function updatePos( time : Float, gravity : Float ) {
 		var t = (time + this.time) % this.life;
 		x = sx + vx * t;
@@ -89,6 +177,10 @@ class GpuPart {
 
 }
 
+/**
+	A group of GPU particles sharing the same settings and material, part of a `GpuParticles`.
+	Changing most settings rebuilds the particles.
+**/
 @:allow(h3d.parts.GpuParticles)
 class GpuPartGroup {
 
@@ -116,56 +208,176 @@ class GpuPartGroup {
 	var maxTime : Float = -1.;
 	var lastMove : Float = 0;
 
+	/**
+		A multiplier of the number of particles, from `0` to `1`.
+	**/
 	public var amount = 1.;
 
+	/**
+		The group name.
+	**/
 	public var name : String;
+	/**
+		Enables the group.
+	**/
 	public var enable = true;
+	/**
+		The material properties per `h3d.mat.MaterialSetup` name.
+	**/
 	public var material = {};
+	/**
+		How the particles are sorted.
+	**/
 	public var sortMode(default, set) : GpuSortMode = None;
 
+	/**
+		The number of particles.
+	**/
 	public var nparts(default, set) : Int 		= 100;
+	/**
+		If `true`, particles are emitted again when they die; otherwise each particle lives once.
+	**/
 	public var emitLoop(default, set) : Bool 	= true;
+	/**
+		The shape the particles are emitted from.
+	**/
 	public var emitMode(default, set):GpuEmitMode = Point;
+	/**
+		The minimum distance from the emitter at which particles appear.
+	**/
 	public var emitStartDist(default, set) : Float = 0.;
+	/**
+		The size of the emission area, added to `emitStartDist`.
+	**/
 	public var emitDist(default, set) : Float	= 1.;
+	/**
+		The opening of the emission cone, in radians (negative values emit backwards).
+	**/
 	public var emitAngle(default,set) : Float 	= 1.5;
+	/**
+		How synchronized the particle births are, from `0` (spread over their life) to `1` (all born at once).
+	**/
 	public var emitSync(default, set) : Float	= 0;
+	/**
+		The delay before the first particles appear, in seconds.
+	**/
 	public var emitDelay(default, set) : Float	= 0;
+	/**
+		Emits on the border of the disc only (`Disc` mode).
+	**/
 	public var emitOnBorder(default, set) : Bool = false;
 
 
+	/**
+		Wraps the particles in the volume bounds (always enabled in `CameraBounds` mode).
+	**/
 	public var clipBounds : Bool				= false;
+	/**
+		Orients the particle quads in 3D instead of facing the camera.
+	**/
 	public var transform3D : Bool				= false;
 
+	/**
+		The size of the particles.
+	**/
 	public var size(default, set) : Float		= 1;
+	/**
+		The size increase per second.
+	**/
 	public var sizeIncr(default, set) : Float	= 0;
+	/**
+		The random variation of the size (fraction of `size`).
+	**/
 	public var sizeRand(default, set) : Float	= 0;
 
+	/**
+		The life duration of the particles, in seconds.
+	**/
 	public var life(default, set) : Float		= 1;
+	/**
+		The random variation of the life (fraction of `life`).
+	**/
 	public var lifeRand(default, set) : Float	= 0;
 
+	/**
+		The speed of the particles.
+	**/
 	public var speed(default, set) : Float		= 1;
+	/**
+		The random variation of the speed (fraction of `speed`).
+	**/
 	public var speedRand(default, set) : Float	= 0;
+	/**
+		The speed increase over time.
+	**/
 	public var speedIncr(default, set) : Float	= 0;
+	/**
+		The gravity applied to the particles.
+	**/
 	public var gravity(default, set) : Float	= 0;
 
+	/**
+		The random initial rotation, as a fraction of a half turn.
+	**/
 	public var rotInit(default, set) : Float	= 0;
+	/**
+		The rotation speed.
+	**/
 	public var rotSpeed(default, set) : Float	= 0;
+	/**
+		The random variation of the rotation speed.
+	**/
 	public var rotSpeedRand(default, set):Float = 0;
 
+	/**
+		The fraction of the life during which the particles fade in.
+	**/
 	public var fadeIn : Float					= 0.2;
+	/**
+		The fraction of the life after which the particles fade out.
+	**/
 	public var fadeOut : Float					= 0.8;
+	/**
+		The exponent of the fade curves.
+	**/
 	public var fadePower : Float				= 1;
 
+	/**
+		The number of animation frames in the texture (`0` for all the cells).
+	**/
 	public var frameCount : Int					= 0;
+	/**
+		The number of animation cells horizontally in the texture.
+	**/
 	public var frameDivisionX : Int				= 1;
+	/**
+		The number of animation cells vertically in the texture.
+	**/
 	public var frameDivisionY : Int				= 1;
+	/**
+		The number of times the animation plays during a particle life (`0` uses a random fixed frame per particle).
+	**/
 	public var animationRepeat : Float			= 1;
+	/**
+		The particle texture.
+	**/
 	public var texture : h3d.mat.Texture		= null;
+	/**
+		A texture giving the color over the life (horizontally) and per particle (vertically).
+	**/
 	public var colorGradient : h3d.mat.Texture	= null;
 
+	/**
+		If `true`, the particles move with the emitter instead of staying in world space.
+	**/
 	public var isRelative(default, set) : Bool	= false;
+	/**
+		Places the emitter in front of the camera, at `distanceToCam`.
+	**/
 	public var attachToCam(default, set) : Bool	= false;
+	/**
+		The distance from the camera when `attachToCam` is set.
+	**/
 	public var distanceToCam(default, set) : Float	= 0;
 
 	inline function set_sortMode(v) { needRebuild = true; return sortMode = v; }
@@ -194,10 +406,16 @@ class GpuPartGroup {
 	inline function set_attachToCam(v) { needRebuild = true; return attachToCam = v; }
 	inline function set_distanceToCam(v) { needRebuild = true; return distanceToCam = v; }
 
+	/**
+		Creates a group of the particles `parent`.
+	**/
 	public function new(parent) {
 		this.parent = parent;
 	}
 
+	/**
+		Updates the shader parameters from the settings.
+	**/
 	public function syncParams() {
 		pshader.speedIncr = speedIncr;
 		pshader.fadeIn = fadeIn;
@@ -217,6 +435,9 @@ class GpuPartGroup {
 		pshader.maxTime = maxTime < 0 ? 1e10 : maxTime;
 	}
 
+	/**
+		Returns the material properties for the current material setup.
+	**/
 	public function getMaterialProps() {
 		var name = h3d.mat.MaterialSetup.current.name;
 		var p = Reflect.field(material, name);
@@ -227,6 +448,9 @@ class GpuPartGroup {
 		return p;
 	}
 
+	/**
+		Returns the settings of the group as a serializable object.
+	**/
 	public function save() : Dynamic {
 		var o = {
 			sortMode : sortMode.getIndex(),
@@ -245,6 +469,9 @@ class GpuPartGroup {
 		return @:privateAccess parent.loadTexture(path);
 	}
 
+	/**
+		Loads the settings of the group saved with the given format version.
+	**/
 	public function load( version : Int, o : Dynamic ) {
 		for( f in getFields(this) )
 			if( Reflect.hasField(o,f) )
@@ -268,6 +495,9 @@ class GpuPartGroup {
 		}
 	}
 
+	/**
+		Adds the bounds of the particles to `bounds`.
+	**/
 	public function updateBounds( bounds : h3d.col.Bounds ) {
 		var life = life * (1 + lifeRand);
 		var speedMin = speed * hxd.Math.max(1 - speedRand, 0.);
@@ -320,6 +550,9 @@ class GpuPartGroup {
 		}
 	}
 
+	/**
+		Computes the initial state of the particle `pt`.
+	**/
 	public function emitPart( rnd : hxd.Rand, pt : GpuPart, absPos : h3d.Matrix ) {
 		var g = this;
 		inline function rand() return rnd.rand();
@@ -448,6 +681,11 @@ class GpuPartGroup {
 
 }
 
+/**
+	A particle system animated on the GPU: the initial state of each particle is computed once, then the shader computes
+	its position, size and color over time. Supports very large numbers of particles. Made of one or several `GpuPartGroup`.
+	Usually edited in Hide and loaded with `load`.
+**/
 class GpuParticles extends h3d.scene.MultiMaterial {
 
 	static inline var VERSION = 2;
@@ -473,10 +711,25 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 	var prevZ : Float = 0;
 	var hideProps : Dynamic;
 
+	/**
+		The random seed of the particles.
+	**/
 	public var seed(default, set) : Int	= Std.random(0x1000000);
+	/**
+		The emission volume in `VolumeBounds` and `CameraBounds` modes.
+	**/
 	public var volumeBounds(default, set) : h3d.col.Bounds;
+	/**
+		The current time of the particle system, in seconds.
+	**/
 	public var currentTime : Float = 0.;
+	/**
+		The duration of the effect, in seconds, computed from the groups (`0` if a group loops).
+	**/
 	public var duration(default, null) : Float = 0.;
+	/**
+		The bounds of the particles, used for culling.
+	**/
 	public var bounds(default, null) : h3d.col.Bounds;
 
 	/**
@@ -495,6 +748,9 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 	**/
 	public var count(get,never) : Int;
 
+	/**
+		Creates an empty particle system.
+	**/
 	public function new( ?parent ) {
 		super(null, [], parent);
 		bounds = new h3d.col.Bounds();
@@ -530,10 +786,16 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		super.addBoundsRec(b, relativeTo);
 	}
 
+	/**
+		Called when `currentTime` reaches `duration`. By default restarts the effect.
+	**/
 	public dynamic function onEnd() {
 		if( duration > 0 ) currentTime = -1;
 	}
 
+	/**
+		Returns the settings of all the groups as a serializable object.
+	**/
 	public function save() : Dynamic {
 		var bounds = null;
 		for( g in groups )
@@ -551,6 +813,9 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		return save;
 	}
 
+	/**
+		Loads the groups from saved settings.
+	**/
 	public function load( _o : Dynamic, ?resourcePath : String ) {
 		this.resourcePath = resourcePath;
 		var o : GpuSave = _o;
@@ -562,6 +827,11 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		hideProps = o.hide;
 	}
 
+	/**
+		Adds a group (a new one if `g` is `null`) and returns it.
+		@param material The material of the group.
+		@param index The position of the group.
+	**/
 	public function addGroup( ?g : GpuPartGroup, ?material : h3d.mat.Material, ?index ) {
 		if( g == null )
 			g = new GpuPartGroup(this);
@@ -598,10 +868,16 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		return volumeBounds = v;
 	}
 
+	/**
+		Rebuilds all the particles.
+	**/
 	public function rebuild() {
 		for( g in groups ) g.needRebuild = true;
 	}
 
+	/**
+		Removes a group.
+	**/
 	public function removeGroup( g : GpuPartGroup ) {
 		var idx = groups.indexOf(g);
 		if( idx < 0 ) return;
@@ -610,6 +886,9 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		if( materials.length == 0 ) material = null;
 	}
 
+	/**
+		Returns the group named `name`, or `null`.
+	**/
 	public function getGroup( name : String ) {
 		for( g in groups )
 			if( g.name == name )
@@ -617,6 +896,9 @@ class GpuParticles extends h3d.scene.MultiMaterial {
 		return null;
 	}
 
+	/**
+		Returns an iterator on the groups.
+	**/
 	public inline function getGroups() {
 		return groups.iterator();
 	}

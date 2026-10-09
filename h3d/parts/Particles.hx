@@ -15,15 +15,37 @@ private class ParticleIterator {
 	}
 }
 
+/**
+	A set of camera facing particles (sprites) drawn in a single draw call. Particles are added with `alloc` and
+	updated by the user (or by an `Emitter`).
+**/
 @:access(h3d.parts.Particle)
 class Particles extends h3d.scene.Mesh {
 
 	var pshader : h3d.shader.ParticleShader;
+	/**
+		The tiles of the particle texture, selected by `Particle.frame`.
+	**/
 	public var frames : Array<h2d.Tile>;
+	/**
+		The number of particles.
+	**/
 	public var count(default, null) : Int = 0;
+	/**
+		Enables the per particle colors.
+	**/
 	public var hasColor(default, set) : Bool;
+	/**
+		The drawing order of the particles.
+	**/
 	public var sortMode : Data.SortMode;
+	/**
+		A size multiplier of all the particles.
+	**/
 	public var globalSize : Float = 1;
+	/**
+		Draws the particles as a continuous trail.
+	**/
 	public var emitTrail : Bool;
 
 	var head : Particle;
@@ -33,6 +55,9 @@ class Particles extends h3d.scene.Mesh {
 	var tmp : h3d.Vector;
 	var tmpBuf : hxd.FloatBuffer;
 
+	/**
+		Creates an empty set of particles using `texture`.
+	**/
 	public function new( ?texture, ?parent) {
 		super(null, null, parent);
 		material.props = material.getDefaultProps("particles3D");
@@ -70,11 +95,17 @@ class Particles extends h3d.scene.Mesh {
 		}
 	}
 
+	/**
+		Removes all the particles.
+	**/
 	public function clear() {
 		while( head != null )
 			kill(head);
 	}
 
+	/**
+		Adds a white particle at the position of the object and returns it.
+	**/
 	public function alloc() {
 		var p = emitParticle();
 		if( posChanged ) syncPos();
@@ -89,6 +120,9 @@ class Particles extends h3d.scene.Mesh {
 		return p;
 	}
 
+	/**
+		Adds an existing particle and returns it.
+	**/
 	public function add(p) {
 		emitParticle(p);
 		return p;
@@ -145,6 +179,9 @@ class Particles extends h3d.scene.Mesh {
 		return haxe.ds.ListSort.sort(list, function(p1, p2) return p1.w < p2.w ? -1 : 1);
 	}
 
+	/**
+		Returns an iterator on the particles.
+	**/
 	public inline function getParticles() {
 		return new ParticleIterator(head);
 	}
