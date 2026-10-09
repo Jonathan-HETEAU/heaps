@@ -1,16 +1,46 @@
 package h3d.scene;
 
+/**
+	Options of a `MeshBatch`, set with its `enable*` methods.
+**/
 enum MeshBatchFlag {
+	/**
+		Shrinks the instance buffers when much fewer instances are emitted.
+	**/
 	EnableResizeDown;
+	/**
+		The per instance parameters can be written by compute shaders. See `MeshBatch.enableGpuUpdate`.
+	**/
 	EnableGpuUpdate;
+	/**
+		The per instance parameters are stored in a storage buffer. See `MeshBatch.enableStorageBuffer`.
+	**/
 	EnableStorageBuffer;
+	/**
+		Internal: instances store an offset in the primitive (used with sub meshes).
+	**/
 	HasPrimitiveOffset;
+	/**
+		The level of detail is chosen per instance on the CPU. See `MeshBatch.enableCpuLod`.
+	**/
 	EnableCpuLod;
+	/**
+		The per instance parameters are only written by compute shaders. See `MeshBatch.forceGpuUpdate`.
+	**/
 	ForceGpuUpdate;
+	/**
+		Instances draw parts of the primitive. See `MeshBatch.enableSubMesh`.
+	**/
 	EnableSubMesh;
+	/**
+		Instances can use different textures (bindless). See `MeshBatch.enablePerInstanceTexture`.
+	**/
 	EnablePerInstanceTexture;
 }
 
+/**
+	The indirect draw commands of one material, built on the CPU when using sub meshes.
+**/
 typedef CpuIndirectCallBuffer = { bytes : haxe.io.Bytes, count : Int };
 
 /**
@@ -52,6 +82,9 @@ class MeshBatch extends MultiMaterial {
 		Tells the mesh batch to draw only a subpart of the primitive.
 	**/
 	public var primitiveSubMeshes : Array<SubMesh>;
+	/**
+		The index in `primitiveSubMeshes` of the sub mesh drawn by the next `emitInstance`.
+	**/
 	public var curSubMesh : Int = -1;
 
 	/**
@@ -72,6 +105,12 @@ class MeshBatch extends MultiMaterial {
 	**/
 	public var curLod : Int = -1;
 
+	/**
+		Creates a mesh batch drawing instances of `primitive`. The batch does not support colliders.
+		@param primitive The primitive drawn by each instance.
+		@param material The material, or `null` for a default one.
+		@param parent An optional parent object.
+	**/
 	public function new( primitive, ?material, ?parent ) {
 		instanced = new h3d.prim.Instanced();
 		instanced.commands = new h3d.impl.InstanceBuffer();
@@ -129,6 +168,10 @@ class MeshBatch extends MultiMaterial {
 		meshBatchFlags.set(EnablePerInstanceTexture);
 	}
 
+	/**
+		Selects the level of detail of each instance on the CPU, according to its screen size (or `curLod` if set).
+		Has no effect if the primitive has a single level of detail. Enables the storage buffer.
+	**/
 	public function enableCpuLod() {
 		var prim = getPrimitive();
 		var lodCount = prim.lodCount();
@@ -153,6 +196,22 @@ class MeshBatch extends MultiMaterial {
 		return meshBatchFlags.has(EnableResizeDown) && currentSize > minSize << 1;
 	}
 
+	/**
+		Starts emitting instances: removes the previous instances and prepares the buffers.
+		Call it, then for each instance set the batch transform (or `worldPosition`) and the shader parameters,
+		and call `emitInstance`.
+
+		```haxe
+		batch.begin(units.length);
+		for( u in units ) {
+			batch.setPosition(u.x, u.y, 0);
+			colorShader.color.setColor(u.color);
+			batch.emitInstance();
+		}
+		```
+		@param emitCountTip The expected number of instances, used to size the buffers (128 by default).
+		@return The number of instances the buffers were sized for.
+	**/
 	public function begin( emitCountTip = -1 ) : Int {
 		instanceCount = 0;
 
@@ -366,6 +425,10 @@ class MeshBatch extends MultiMaterial {
 		b.bufferFormat = hxd.BufferFormat.make(fmt);
 	}
 
+	/**
+		Adds an instance using the current transform of the batch (or `worldPosition` if set) and the current values of
+		the parameters of its shaders.
+	**/
 	public function emitInstance() {
 		// When using sub meshes we need to fill the indirect call buffers for multi draw
 		if( hasSubMeshes() )
@@ -477,6 +540,9 @@ class MeshBatch extends MultiMaterial {
 		}
 	}
 
+	/**
+		Uploads the emitted instances to the GPU. Called automatically during sync.
+	**/
 	public function flush() {
 		var p = dataPasses;
 		var alloc = hxd.impl.Allocator.get();
@@ -751,6 +817,9 @@ class MeshBatch extends MultiMaterial {
 		cleanPasses();
 	}
 
+	/**
+		Releases the GPU buffers of the instances. They are reallocated by the next `flush`.
+	**/
 	public function disposeBuffers() {
 		if( instanceCount == 0 ) return;
 		var p = dataPasses;
@@ -783,25 +852,73 @@ class MeshBatch extends MultiMaterial {
 	}
 }
 
+/**
+	The instance data of one material pass of a `MeshBatch`.
+**/
 class BatchData {
 
+	/**
+		The number of 4-floats vectors of parameters per instance.
+	**/
 	public var paramsCount : Int;
+	/**
+		The maximum number of instances per buffer.
+	**/
 	public var maxInstance : Int;
+	/**
+		The index of the material of the batch this pass belongs to.
+	**/
 	public var matIndex : Int;
+	/**
+		The indirect draw commands, one per buffer.
+	**/
 	public var indirectCallBuffers : Array<h3d.impl.InstanceBuffer>;
+	/**
+		The GPU buffers storing the per instance parameters.
+	**/
 	public var buffers : Array<h3d.Buffer> = [];
+	/**
+		The format of the per instance data.
+	**/
 	public var bufferFormat : hxd.BufferFormat;
+	/**
+		The bindless texture handles used by the instances (with `enablePerInstanceTexture`).
+	**/
 	public var textureHandles : Array<h3d.mat.TextureHandle>;
+	/**
+		The per instance parameters filled on the CPU before upload.
+	**/
 	public var data : hxd.FloatBuffer;
+	/**
+		The shader parameters copied for each instance.
+	**/
 	public var params : hxsl.RuntimeShader.AllocParam;
+	/**
+		The generated shader reading the per instance parameters.
+	**/
 	public var shader : hxsl.BatchShader;
+	/**
+		The shaders whose parameters are stored per instance.
+	**/
 	public var shaders : Array<hxsl.Shader>;
+	/**
+		The material pass drawn.
+	**/
 	public var pass : h3d.mat.Pass;
+	/**
+		The next pass in the list.
+	**/
 	public var next : BatchData;
 
+	/**
+		Creates empty pass data.
+	**/
 	public function new() {
 	}
 
+	/**
+		Releases the buffers and removes the generated shader from the pass.
+	**/
 	public function clean() {
 		var alloc = hxd.impl.Allocator.get();
 
@@ -818,21 +935,60 @@ class BatchData {
 	}
 }
 
+/**
+	A part of the primitive of a `MeshBatch` which can be drawn by an instance (see `MeshBatch.primitiveSubMeshes`).
+**/
 class SubMesh {
+	/**
+		The index ranges of the sub mesh, one per material.
+	**/
 	public var subParts : Array<SubPart>;
+	/**
+		The local bounds of the sub mesh.
+	**/
 	public var bounds : h3d.col.Bounds;
+	/**
+		The number of levels of detail of the sub mesh.
+	**/
 	public var lodCount : Int;
+	/**
+		The screen ratios at which each level of detail is selected.
+	**/
 	public var lodConfig : Array<Float>;
+	/**
+		Creates an empty sub mesh.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	An index range of the primitive, for one material and its levels of detail.
+**/
 class SubPart {
+	/**
+		The first index of the range.
+	**/
 	public var indexStart : Int;
+	/**
+		The number of indexes of the range.
+	**/
 	public var indexCount : Int;
+	/**
+		The first index of the range for each level of detail.
+	**/
 	public var lodIndexStart : Array<Int>;
+	/**
+		The number of indexes of the range for each level of detail.
+	**/
 	public var lodIndexCount : Array<Int>;
+	/**
+		The index of the material drawing this range.
+	**/
 	public var matIndex : Int = 0;
+	/**
+		Creates an empty index range.
+	**/
 	public function new() {
 	}
 }
