@@ -1,0 +1,40 @@
+diff --git a/src/dox/Processor.hx b/src/dox/Processor.hx
+index 5deae0c..ce640f5 100644
+--- a/src/dox/Processor.hx
++++ b/src/dox/Processor.hx
+@@ -362,21 +362,21 @@ class Processor {
+ 				config.setRootPath(t.path);
+ 				t.doc = processDoc(t.path, t.doc);
+ 
+-				var mergedTypes = new Map<String, CType>();
+-				for (platform => typeA in t.types) {
+-					var found = false;
+-					for (platforms => typeB in mergedTypes) {
+-						if (Serializer.run(typeA) == Serializer.run(typeB)) {
+-							mergedTypes.remove(platforms);
+-							mergedTypes[platforms + ", " + platform] = typeB;
+-							found = true;
+-							break;
+-						}
+-					}
+-					if (!found) {
+-						mergedTypes[platform] = typeA;
+-					}
++				// group identical platform types (no map mutation during iteration, portable to HashLink)
++				var groups:Array<{platforms:Array<String>, type:CType}> = [];
++				var platformNames = [for (p in t.types.keys()) p];
++				platformNames.sort(Reflect.compare);
++				for (platform in platformNames) {
++					var typeA = t.types[platform];
++					var group = Lambda.find(groups, g -> haxe.rtti.CType.TypeApi.typeEq(g.type, typeA));
++					if (group != null)
++						group.platforms.push(platform);
++					else
++						groups.push({platforms: [platform], type: typeA});
+ 				}
++				var mergedTypes = new Map<String, CType>();
++				for (g in groups)
++					mergedTypes[g.platforms.join(", ")] = g.type;
+ 				t.types = mergedTypes;
+ 
+ 				function processFields(type:CType) {
