@@ -2,14 +2,33 @@ package h3d.scene;
 
 /** Batcher API **/
 
+/**
+	Options of a `Batcher`.
+**/
 enum BatcherFlags {
+	/**
+		The compute passes building the draw commands are not run automatically: call `Batcher.syncGPU` and
+		`Batcher.emitGPU` yourself.
+	**/
 	ManualEmitGPU;
 }
 
+/**
+	A model registered in a `Batcher` with `Batcher.addInstance`, which can then be emitted many times.
+**/
 @:allow(h3d.scene.Batcher)
 class ObjectInstance {
+	/**
+		The meshes of the model, with their transform relative to the model root.
+	**/
 	public var meshes : Array<MeshInstance>;
+	/**
+		The materials of the meshes.
+	**/
 	public var materials : Array<MaterialInstance>;
+	/**
+		The draw passes of the materials.
+	**/
 	public var draws : Array<DrawInstance>;
 	function new(meshes : Array<MeshInstance>, materials : Array<MaterialInstance>, draws : Array<DrawInstance>) {
 		this.meshes = meshes;
@@ -18,6 +37,10 @@ class ObjectInstance {
 	}
 }
 
+/**
+	The geometry storage shared by `Batcher` instances: the models are packed in one big primitive per vertex format.
+	Share a library between several batchers drawing the same models to avoid duplicating the geometry.
+**/
 @:allow(h3d.scene.Batcher)
 class BatchLibrary {
 	static final BATCH_START_FMT = hxd.BufferFormat.make([{ name : "Batch_Start", type : DFloat }]);
@@ -26,6 +49,11 @@ class BatchLibrary {
 	var maxUploadSize : Int;
 	var isDynamic : Bool = true;
 
+	/**
+		Creates an empty library.
+		@param isDynamic If `true`, models can be added after the first upload.
+		@param maxUploadSize The maximum number of bytes uploaded per frame, or `-1` for no limit.
+	**/
 	public function new(isDynamic = true, maxUploadSize = -1) {
 		this.maxUploadSize = maxUploadSize;
 		this.isDynamic = isDynamic;
@@ -40,16 +68,25 @@ class BatchLibrary {
 		return p;
 	}
 
+	/**
+		Adds the geometry of a model to the library.
+	**/
 	public function addModel( m : h3d.prim.HMDModel ) {
 		var prim = getPrimitive(@:privateAccess m.data.vertexFormat);
 		prim.addModel(m);
 	}
 
+	/**
+		Adds the geometry of a polygon to the library.
+	**/
 	public function addPolygon( m : h3d.prim.Polygon ) {
 		var prim = getPrimitive(m.getBufferFormat());
 		prim.addModel(m);
 	}
 
+	/**
+		Releases the GPU resources of the library.
+	**/
 	public function dispose() {
 		for ( p in primitives )
 			p.dispose();
@@ -57,6 +94,9 @@ class BatchLibrary {
 		instancesOffset?.dispose();
 	}
 
+	/**
+		Makes sure the per instance index buffer can hold `instanceCount` instances.
+	**/
 	public function checkOffsetBuffer( instanceCount : Int ) {
 		if ( instancesOffset == null || instancesOffset.vertices < instanceCount || instancesOffset.isDisposed() ) {
 			if ( instancesOffset != null ) {
@@ -75,24 +115,39 @@ class BatchLibrary {
 	}
 }
 
+/**
+	A group of instances of a `Batcher` which can be removed together. Created with `Batcher.createGroup`.
+**/
 @:allow(h3d.scene.Batcher)
 class BatchGroup {
 	var batcher : Batcher;
 	var groupID : Int;
 
+	/**
+		Creates a group. Use `Batcher.createGroup` instead.
+	**/
 	public inline function new(b:Batcher, groupID : Int) {
 		batcher = b;
 		this.groupID = groupID;
 	}
 
+	/**
+		Adds an instance of `obj` to this group. See `Batcher.emitInstance`.
+	**/
 	public inline function emitInstance( obj : ObjectInstance, worldPosition : h3d.Matrix, syncID : Int = 0 ) {
 		batcher.emitInstance( obj, worldPosition, syncID, groupID );
 	}
 
+	/**
+		Preallocates `count` instances of `obj` in this group. See `Batcher.reserveInstances`.
+	**/
 	public inline function reserveInstances( obj : ObjectInstance, count : Int ) {
 		batcher.reserveInstances( obj, count, groupID );
 	}
 
+	/**
+		Removes all the instances of this group and releases it.
+	**/
 	public inline function remove() {
 		if ( batcher != null) {
 			batcher.removeGroup(this);
@@ -101,14 +156,50 @@ class BatchGroup {
 	}
 }
 
+/**
+	A GPU driven renderer for very large numbers of static instances of many different models.
+
+	Register each model once with `addInstance`, then add as many instances as needed with `emitInstance`.
+	Instances are kept from frame to frame: they stay until their group is removed (see `createGroup`).
+	The culling (frustum, distance and optionally occlusion with `hzbCulling`) and the level of detail selection are
+	done on the GPU by compute shaders, and the instances are drawn with indirect draw calls, with all the meshes of the
+	same vertex format in a single primitive.
+
+	Requires a driver supporting bindless resources (throws otherwise).
+**/
 @:allow(h3d.scene.Batch)
 class Batcher extends h3d.scene.Object {
+	/**
+		If positive, instances farther than this distance are not drawn in the shadow passes.
+	**/
 	public var shadowMaxDistance = -1.0;
+	/**
+		If `true`, the shadow passes only draw the instances inside the camera frustum (aggressive culling, faster but
+		shadows of objects outside the view can disappear). Otherwise they draw the instances inside the area seen by the
+		camera, extended towards the light by `shadowCullingOffset`.
+	**/
 	public var shadowCameraFrustumCulling = false; // Aggressive culling inside Shadow passes, using player camera frustum
+	/**
+		The distance the shadow casting area is extended towards the light, so that objects outside the view still cast
+		shadows inside it.
+	**/
 	public var shadowCullingOffset = 100.0;
+	/**
+		Enables GPU occlusion culling using the hierarchical depth buffer built by the renderer (`RenderContext.hzb`).
+	**/
 	public var hzbCulling = false;
+	/**
+		If `true`, the instance positions are relative to the batcher transform, so the batcher can be moved.
+		Otherwise they are in world space.
+	**/
 	public var isRelative : Bool = false;
+	/**
+		The options of the batcher.
+	**/
 	public var batchFlags = new haxe.EnumFlags<BatcherFlags>();
+	/**
+		An optional compute shader updating the instance transforms on the GPU each frame (see `BaseSync`), run by `syncGPU`.
+	**/
 	public var syncShader : SyncShaderInterface;
 	var applyTransformShader : h3d.shader.ApplyTransformShader;
 
@@ -124,10 +215,17 @@ class Batcher extends h3d.scene.Object {
 	var renderer : h3d.scene.Renderer;
 	var globalShaders : Map<String, Array<hxsl.Shader>>;
 
+	/**
+		Tells if the `syncShader` uses per instance sync IDs.
+	**/
 	public function hasSyncIDs() : Bool {
 		return (syncShader != null && syncShader.hasSyncIDs());
 	}
 
+	/**
+		Adds a shader to all the instances.
+		@param pass The name of the material pass to add the shader to, or `""` for the main pass of every material.
+	**/
 	public function addShader( s : hxsl.Shader, pass = "" ) {
 		if( globalShaders == null )
 			globalShaders = [];
@@ -145,6 +243,9 @@ class Batcher extends h3d.scene.Object {
 					@:privateAccess p.pass.addSelfShader(s);
 	}
 
+	/**
+		Removes a shader added with `addShader`.
+	**/
 	public function removeShader( s : hxsl.Shader, pass = "" ) {
 		if( globalShaders == null )
 			return;
@@ -158,6 +259,13 @@ class Batcher extends h3d.scene.Object {
 						p.pass.removeShader(s);
 	}
 
+	/**
+		Creates a batcher.
+		@param parent The parent object.
+		@param renderer The renderer of the scene, used to set up the material passes.
+		@param library The geometry library, or `null` to create one owned by this batcher.
+		@param batchFlags The options of the batcher.
+	**/
 	public function new( parent : h3d.scene.Object, renderer : h3d.scene.Renderer, library : BatchLibrary = null, batchFlags = null ) {
 		if ( !h3d.Engine.getCurrent().driver.hasFeature(Bindless) )
 			throw "h3d.scene.Batcher requires Bindless support.";
@@ -181,6 +289,11 @@ class Batcher extends h3d.scene.Object {
 		return batchID;
 	}
 
+	/**
+		Registers the meshes of `obj` (their primitives must be `h3d.prim.HMDModel` or `h3d.prim.Polygon`) and returns a
+		model which can be emitted with `emitInstance`. `obj` itself is not modified and does not need to be in the scene.
+		@param recChildren If `true`, also registers the meshes of all its descendants.
+	**/
 	public function addInstance( obj : h3d.scene.Object, recChildren : Bool = true ) : ObjectInstance {
 		var meshes = [];
 		var materials = [];
@@ -222,6 +335,9 @@ class Batcher extends h3d.scene.Object {
 		return new ObjectInstance(meshes, materials, draws);
 	}
 
+	/**
+		Creates a group of instances, which can be removed together with `BatchGroup.remove`.
+	**/
 	public function createGroup() : BatchGroup {
 		var groupID = freeGroupIDs.length > 0 ? freeGroupIDs.pop() : highestGroupID++;
 		var group = new BatchGroup(this, groupID);
@@ -229,6 +345,9 @@ class Batcher extends h3d.scene.Object {
 		return group;
 	}
 
+	/**
+		Removes all the instances of `group`.
+	**/
 	public function removeGroup(group : BatchGroup) {
 		var groupID = group.groupID;
 		groups.remove(group);
@@ -237,12 +356,21 @@ class Batcher extends h3d.scene.Object {
 			b.disposeGroup(groupID);
 	}
 
+	/**
+		Preallocates `count` instances of `instance` before emitting them, to avoid reallocations.
+	**/
 	public function reserveInstances( instance : ObjectInstance, count : Int, groupID : Int = 0 ) {
 		for ( mesh in instance.meshes )
 			batches[mesh.batchID].reserve(mesh, instance.materials, instance.draws, count, groupID);
 	}
 
 	var tmpMat = new h3d.Matrix();
+	/**
+		Adds an instance of a model registered with `addInstance`.
+		@param worldPosition The transform of the instance (relative to the batcher if `isRelative` is set).
+		@param syncID A value stored per instance, read by the `syncShader`.
+		@param groupID The group of the instance: prefer `BatchGroup.emitInstance`.
+	**/
 	public function emitInstance( instance : ObjectInstance, worldPosition : h3d.Matrix, syncID : Int = 0, groupID : Int = 0 ) {
 		for ( mesh in instance.meshes ) {
 			var batch = batches[mesh.batchID];
@@ -251,6 +379,9 @@ class Batcher extends h3d.scene.Object {
 		}
 	}
 
+	/**
+		With the `ManualEmitGPU` flag: runs the `syncShader` on all the instances.
+	**/
 	public function syncGPU(ctx : h3d.scene.RenderContext) {
 		if ( !batchFlags.has(ManualEmitGPU) )
 			throw "Can't call syncGPU without flag ManualEmitGPU";
@@ -259,6 +390,9 @@ class Batcher extends h3d.scene.Object {
 		ctx.memoryBarrier();
 	}
 
+	/**
+		With the `ManualEmitGPU` flag: runs the compute passes culling the instances and building the draw commands.
+	**/
 	public function emitGPU(ctx : h3d.scene.RenderContext) {
 		if ( !batchFlags.has(ManualEmitGPU) )
 			throw "Can't call emitGPU without flag ManualEmitGPU";
@@ -308,6 +442,9 @@ class Batcher extends h3d.scene.Object {
 		batches[ctx.drawPass.index & 0xFFFF].draw(ctx);
 	}
 
+	/**
+		Writes a text report of the primitives, models and instances of the batcher to the file `path` (debug).
+	**/
 	public function dump( path : String = "batcher_dump.txt" ) @:privateAccess {
 		var sb = new StringBuf();
 		var primLines : Array<{format : String, hmds : Array<String>, refCount : Int}> = [];
@@ -380,6 +517,10 @@ class Batcher extends h3d.scene.Object {
 	}
 }
 
+/**
+	Base class of the compute shaders updating the instance transforms on the GPU (see `Batcher.syncShader`).
+	It provides `getModelView` and `fillModelView` to read and write the transform of an instance.
+**/
 class BaseSync extends hxsl.Shader {
 	static var SRC = {
 		@param var instancesData : RWBuffer<Vec4>;
@@ -408,12 +549,34 @@ class BaseSync extends hxsl.Shader {
 	}
 }
 
+/**
+	The parameters of a `Batcher.syncShader`, filled by the batcher before running it. Implemented by shaders
+	extending `BaseSync`.
+**/
 interface SyncShaderInterface {
+	/**
+		The per instance data buffer.
+	**/
 	var instancesData(get,set) : h3d.Buffer;
+	/**
+		The number of 4-floats vectors per instance in `instancesData`.
+	**/
 	var instanceStride(get,set) : Int;
+	/**
+		The offset of the transform matrix in the data of an instance.
+	**/
 	var modelViewOffset(get,set) : Int;
+	/**
+		The number of instances.
+	**/
 	var instanceCount(get,set) : Int;
+	/**
+		The sync IDs of the instances, given to `Batcher.emitInstance`.
+	**/
 	var syncIDs(get,set) : h3d.Buffer;
+	/**
+		Tells if the shader uses the sync IDs.
+	**/
 	public function hasSyncIDs() : Bool;
 }
 
