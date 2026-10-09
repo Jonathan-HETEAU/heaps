@@ -1,20 +1,61 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	A level of detail of a `Polygon`.
+**/
 typedef PolygonLod = {
+	/**
+		The geometry of this level.
+	**/
 	var prim : Polygon;
+	/**
+		The screen ratio under which this level is used.
+	**/
 	var screenRatio : Float;
 }
 
+/**
+	A primitive built from arrays of points, with optional indexes, normals, tangents, UVs and colors, kept on the CPU
+	until uploaded. It is the base of the procedural primitives (`Cube`, `Sphere`, `Disc`...).
+
+	```haxe
+	var p = new h3d.prim.Polygon([new h3d.col.Point(0, 0, 0), new h3d.col.Point(1, 0, 0), new h3d.col.Point(0, 1, 0)]);
+	p.addNormals();
+	p.addUVs();
+	new h3d.scene.Mesh(p, s3d);
+	```
+**/
 class Polygon extends MeshPrimitive {
 
+	/**
+		The lower levels of detail (used by `BatchPrimitive`).
+	**/
 	public var lods : Array<PolygonLod>;
+	/**
+		The vertex positions.
+	**/
 	public var points : Array<Point>;
+	/**
+		The vertex normals, or `null`. See `addNormals`.
+	**/
 	public var normals : Array<Point>;
+	/**
+		The vertex tangents, or `null`. See `addTangents`.
+	**/
 	public var tangents : Array<Point>;
+	/**
+		The vertex texture coordinates, or `null`. See `addUVs`.
+	**/
 	public var uvs : Array<UV>;
 	var additionalUVs = 0;
+	/**
+		The triangle indexes, or `null` if every 3 points form a triangle.
+	**/
 	public var idx : hxd.IndexBuffer;
+	/**
+		The vertex colors (RGB), or `null`.
+	**/
 	public var colors : Array<Point>;
 	var scaled = 1.;
 	var translatedX = 0.;
@@ -22,6 +63,9 @@ class Polygon extends MeshPrimitive {
 	var translatedZ = 0.;
 	var bounds : h3d.col.Bounds;
 
+	/**
+		Creates a polygon from points and optional triangle indexes.
+	**/
 	public function new( points, ?idx ) {
 		this.points = points;
 		this.idx = idx;
@@ -36,6 +80,9 @@ class Polygon extends MeshPrimitive {
 		return bounds;
 	}
 
+	/**
+		Returns the vertex format matching the available data (positions, normals, tangents, UVs, colors).
+	**/
 	public function getBufferFormat() : hxd.BufferFormat {
 		var format = hxd.BufferFormat.POS3D;
 		if( normals != null )
@@ -55,6 +102,9 @@ class Polygon extends MeshPrimitive {
 		return format;
 	}
 
+	/**
+		Returns the vertex data interleaved in the `getBufferFormat` format.
+	**/
 	public function getCPUBuffer() : hxd.FloatBuffer {
 		var buf = new hxd.FloatBuffer();
 		for( k in 0...points.length ) {
@@ -104,6 +154,9 @@ class Polygon extends MeshPrimitive {
 	}
 
 
+	/**
+		Duplicates the shared points so that each triangle has its own 3 vertexes (needed for flat normals or per-face UVs).
+	**/
 	public function unindex() {
 		if( idx != null && points.length != idx.length ) {
 			var p = [];
@@ -139,6 +192,9 @@ class Polygon extends MeshPrimitive {
 		}
 	}
 
+	/**
+		Moves the points.
+	**/
 	public function translate( dx : Float, dy : Float, dz : Float ) {
 		translatedX += dx;
 		translatedY += dy;
@@ -151,6 +207,9 @@ class Polygon extends MeshPrimitive {
 		}
 	}
 
+	/**
+		Scales the points uniformly.
+	**/
 	public function scale( s : Float ) {
 		scaled *= s;
 		if( bounds != null ) {
@@ -163,6 +222,9 @@ class Polygon extends MeshPrimitive {
 		}
 	}
 
+	/**
+		Computes per-point normals from the triangles.
+	**/
 	public function addNormals() {
 		// make per-point normal
 		normals = new Array();
@@ -195,6 +257,9 @@ class Polygon extends MeshPrimitive {
 			n.normalize();
 	}
 
+	/**
+		Computes per-point tangents from the triangles and UVs (needed by normal maps).
+	**/
 	public function addTangents() {
 		if( normals == null )
 			addNormals();
@@ -242,6 +307,9 @@ class Polygon extends MeshPrimitive {
 			t.normalize();
 	}
 
+	/**
+		Adds texture coordinates. The base implementation uses the X and Y of the points; procedural primitives provide better ones.
+	**/
 	public function addUVs() {
 		uvs = [];
 		for( i in 0 ... points.length )
@@ -264,6 +332,9 @@ class Polygon extends MeshPrimitive {
 		additionalUVs = count - 1;
 	}
 
+	/**
+		Multiplies the texture coordinates.
+	**/
 	public function uvScale( su : Float, sv : Float ) {
 		if( uvs == null )
 			throw "Missing UVs";

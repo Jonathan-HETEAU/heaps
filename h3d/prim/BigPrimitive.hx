@@ -6,6 +6,9 @@ package h3d.prim;
 **/
 class BigPrimitive extends Primitive {
 
+	/**
+		The vertex format.
+	**/
 	public var format(default,null) : hxd.BufferFormat;
 	var buffers : Array<Buffer>;
 	var allIndexes : Array<Indexes>;
@@ -20,12 +23,23 @@ class BigPrimitive extends Primitive {
 
 	var allocator : hxd.impl.Allocator;
 
+	/**
+		Tells that the format contains tangents, so that `addSub` transforms them too.
+	**/
 	public var hasTangents = false;
+	/**
+		If `true`, the temporary buffers are allocated for the maximum size at once (faster for large static geometry).
+		Set it to `false` for geometry rebuilt often.
+	**/
 	public var isStatic = true;
 
 	static var PREV_BUFFER : hxd.FloatBuffer;
 	static var PREV_INDEX : hxd.IndexBuffer;
 
+	/**
+		Creates an empty primitive with the given vertex format.
+		@param alloc An optional allocator used for the GPU buffers.
+	**/
 	public function new(format, ?alloc) {
 		this.format = format;
 		buffers = [];
@@ -82,14 +96,23 @@ class BigPrimitive extends Primitive {
 		bounds.addPos(x, y, z);
 	}
 
+	/**
+		Adds a point to the bounds, without adding a vertex.
+	**/
 	public inline function addBounds(x, y, z) {
 		bounds.addPos(x, y, z);
 	}
 
+	/**
+		Adds a raw value to the current vertex (after a `begin`).
+	**/
 	public inline function addVertexValue(v) {
 		tmpBuf[bufPos++] = v;
 	}
 
+	/**
+		Adds an index, relative to the first vertex added since the last `begin`.
+	**/
 	public inline function addIndex(i) {
 		tmpIdx[idxPos++] = i + startIndex;
 	}
@@ -162,6 +185,9 @@ class BigPrimitive extends Primitive {
 		clear();
 	}
 
+	/**
+		Removes all the geometry.
+	**/
 	public function clear() {
 
 		if( flushing )

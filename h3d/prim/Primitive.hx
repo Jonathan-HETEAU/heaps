@@ -94,10 +94,16 @@ class Primitive {
 		return { start : getMaterialIndexStart(material, lod), count : getMaterialIndexCount(material, lod) };
 	}
 
+	/**
+		Returns the first index of the given material group and level of detail.
+	**/
 	public function getMaterialIndexStart( material : Int, lod : Int = 0 ) : Int {
 		return 0;
 	}
 
+	/**
+		Returns the number of indexes of the given material group and level of detail.
+	**/
 	public function getMaterialIndexCount( material : Int, lod : Int = 0 ) : Int {
 		return indexes == null ? triCount() * 3 : indexes.count;
 	}
@@ -146,10 +152,16 @@ class Primitive {
 		return 1;
 	}
 
+	/**
+		Returns the level of detail to use for an object covering `screenRatio` of the screen (see `h3d.scene.Mesh.screenRatio`).
+	**/
 	public function screenRatioToLod( screenRatio : Float ) : Int {
 		return 0;
 	}
 
+	/**
+		Returns the screen ratio under which the meshes using this primitive are not drawn at all (`0` to always draw them).
+	**/
 	public function getCullingScreenRatio() : Float {
 		return 0.;
 	}

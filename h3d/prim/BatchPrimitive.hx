@@ -1,11 +1,27 @@
 package h3d.prim;
 
+/**
+	A growable list of byte chunks, used to accumulate geometry data before uploading it.
+**/
 class BytesArray {
+	/**
+		The chunks.
+	**/
 	public var bytes(default, null) : Array<haxe.io.Bytes>;
+	/**
+		The number of bytes used in each chunk.
+	**/
 	public var pos(default, null) : Array<Int>;
+	/**
+		The total number of bytes allocated.
+	**/
 	public var totalSize(default, null) : Int;
 	var maxSize : Int;
 
+	/**
+		Creates the array with a first chunk of `bSize` bytes.
+		@param maxSize The maximum size of a chunk, or a negative value for no limit.
+	**/
 	public function new(bSize: Int, maxSize : Int) {
 		if ( bSize > maxSize && maxSize > 0 )
 			throw "assert";
@@ -14,6 +30,9 @@ class BytesArray {
 		pos = [0];
 	}
 
+	/**
+		Reserves `bSize` bytes and returns the chunk and position to write them at.
+	**/
 	public function alloc(bSize : Int) : { b : haxe.io.Bytes, pos : Int } {
 		if ( bSize > maxSize && maxSize > 0 )
 			throw "assert";
@@ -36,6 +55,9 @@ class BytesArray {
 		return { b : b, pos : bStart };
 	}
 
+	/**
+		Uploads all the chunks to `buffer`, starting at the element `vStart`.
+	**/
 	public function upload( buffer : h3d.Buffer, vStart : Int = 0 ) {
 		for ( i => b in bytes ) {
 			var vCount = Std.int(pos[i] / buffer.format.strideBytes);
@@ -45,31 +67,77 @@ class BytesArray {
 	}
 }
 
+/**
+	A model packed in a `BatchPrimitive`.
+**/
 class SubMesh {
+	/**
+		The index ranges of the model, one per material.
+	**/
 	public var subParts : Array<SubPart>;
+	/**
+		The index of the first sub part of the model in the GPU sub part infos.
+	**/
 	public var subPartStart : Int;
+	/**
+		The local bounds of the model.
+	**/
 	public var bounds : h3d.col.Bounds;
+	/**
+		The number of levels of detail.
+	**/
 	public var lodCount : Int;
+	/**
+		The screen ratios at which each level of detail is selected.
+	**/
 	public var lodConfig : Array<Float>;
+	/**
+		The screen ratio under which the model is not drawn.
+	**/
 	public var cullingScreenRatio : Float;
+	/**
+		Creates an empty sub mesh.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The index ranges of a material of a `SubMesh`, one per level of detail.
+**/
 class SubPart {
+	/**
+		The first index of each level of detail.
+	**/
 	public var indexStarts : Array<Int>;
+	/**
+		The number of indexes of each level of detail.
+	**/
 	public var indexCounts : Array<Int>;
+	/**
+		Creates an empty sub part.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	A primitive packing many models of the same vertex format in a single vertex and index buffer, with the information
+	needed by GPU culling and level of detail selection (see `h3d.scene.Batcher` and `h3d.scene.Batcher.BatchLibrary`).
+**/
 @:access(h3d.prim.HMDModel)
 class BatchPrimitive extends MeshPrimitive {
 	static var SUBMESH_INFOS_FMT = hxd.BufferFormat.make([{ name : "boundingSphere", type : DVec4 }, { name : "lodInfos", type : DVec4 }]);
 	static var SUBPART_INFOS_FMT = hxd.BufferFormat.make([{ name : "indexCount", type : DFloat }, { name : "indexStart", type : DFloat }]);
 	static var LOD_INFOS_FMT = hxd.BufferFormat.make([{ name : "screenRatio", type : DFloat }]);
 
+	/**
+		The vertex format of the packed models.
+	**/
 	public var vertexFormat(default, null) : hxd.BufferFormat;
+	/**
+		The packed models.
+	**/
 	public var subMeshes(default, null) : Array<SubMesh> = [];
 	var models(default, null) : Array<MeshPrimitive> = [];
 	var bounds = new h3d.col.Bounds();
@@ -80,24 +148,53 @@ class BatchPrimitive extends MeshPrimitive {
 	var maxByteSize = -1;
 
 	var subMeshCount : Int = 0;
+	/**
+		The bounding sphere and level of detail info of each model, on the CPU.
+	**/
 	public var cpuSubMeshInfos : haxe.io.Bytes;
+	/**
+		The bounding sphere and level of detail info of each model, read by the culling compute shader.
+	**/
 	public var gpuSubMeshInfos : h3d.Buffer;
 	var subPartCount : Int = 0;
+	/**
+		The index ranges of each model material and level of detail, on the CPU.
+	**/
 	public var cpuSubPartInfos : haxe.io.Bytes;
+	/**
+		The index ranges of each model material and level of detail, read by the culling compute shader.
+	**/
 	public var gpuSubPartInfos : h3d.Buffer;
 	var totalLodCount : Int = 0;
+	/**
+		The level of detail screen ratios, on the CPU.
+	**/
 	public var cpuLodInfos : hxd.FloatBuffer;
+	/**
+		The level of detail screen ratios, read by the culling compute shader.
+	**/
 	public var gpuLodInfos : h3d.Buffer;
 
+	/**
+		`true` if a `logicNormal` vertex input was added (see `addLogicNormal`).
+	**/
 	public var hasLogicNormal : Bool = false;
 	var logicNormals : hxd.FloatBuffer;
 
+	/**
+		Creates an empty batch primitive.
+		@param isDynamic If `true`, models can be added after the first upload (their data is kept on the CPU).
+		@param maxByteSize The maximum number of bytes uploaded per chunk, or `-1` for no limit.
+	**/
 	public function new(format, isDynamic = true, maxByteSize = -1) {
 		vertexFormat = format;
 		this.maxByteSize = maxByteSize;
 		this.isDynamic = isDynamic;
 	}
 
+	/**
+		Adds a model (if not already added) and returns its sub mesh index.
+	**/
 	public function addModel( model : MeshPrimitive ) : Int {
 		var subMeshID = models.indexOf(model);
 		if ( subMeshID >= 0 )
@@ -113,6 +210,9 @@ class BatchPrimitive extends MeshPrimitive {
 		return subMeshID;
 	}
 
+	/**
+		Adds a `logicNormal` vertex input holding the original normals of the models.
+	**/
 	public function addLogicNormal() {
 		if ( hasLogicNormal )
 			return;
@@ -127,6 +227,9 @@ class BatchPrimitive extends MeshPrimitive {
 		}
 	}
 
+	/**
+		Returns the sub mesh index of `model`, or `-1`.
+	**/
 	public function getSubMeshID( model : MeshPrimitive ) {
 		return models.indexOf(model);
 	}

@@ -1,6 +1,9 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	A UV sphere centered on the origin, made of `segsW` meridians and `segsH` parallels.
+**/
 class Sphere extends Polygon {
 
 	var ray : Float;
@@ -10,6 +13,13 @@ class Sphere extends Polygon {
 	// Use 1 for a full sphere, 0.5 for a half sphere
 	var portion : Float;
 
+	/**
+		Creates a sphere. Call `addNormals()` and `addUVs()` if needed.
+		@param ray The radius.
+		@param segsW The number of horizontal segments.
+		@param segsH The number of vertical segments.
+		@param portion The vertical portion of the sphere built, from the top: `0.5` builds a hemisphere.
+	**/
 	public function new( ray = 1., segsW = 8, segsH = 6, portion = 1. ) {
 		this.ray = ray;
 		this.segsH = segsH;
@@ -68,6 +78,9 @@ class Sphere extends Polygon {
 				uvs.push(new UV(1 - x / segsW, y / segsH));
 	}
 
+	/**
+		Returns a shared sphere of radius 1 (16x16 segments) with normals and UVs.
+	**/
 	public static function defaultUnitSphere() {
 		var engine = h3d.Engine.getCurrent();
 		var s : Sphere = @:privateAccess engine.resCache.get(Sphere);

@@ -1,12 +1,26 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	A box of `x` by `y` by `z` units, from the origin (or centered on it). Call `addNormals()` and `addUVs()` if needed.
+
+	```haxe
+	var cube = new h3d.prim.Cube(1, 1, 1, true);
+	cube.addNormals();
+	cube.addUVs();
+	new h3d.scene.Mesh(cube, s3d);
+	```
+**/
 class Cube extends Polygon {
 
 	var sizeX : Float;
 	var sizeY : Float;
 	var sizeZ : Float;
 
+	/**
+		Creates a box.
+		@param centered If `true`, the box is centered on the origin, otherwise it goes from `0` to the sizes.
+	**/
 	public function new( x = 1., y = 1., z = 1., centered = false )
 	{
 		this.sizeX = x;
@@ -63,6 +77,9 @@ class Cube extends Polygon {
 		];
 	}
 
+	/**
+		Adds UVs proportional to the face sizes (a texture keeps the same scale on all faces), multiplied by `scale`.
+	**/
 	public function addUniformUVs(scale = 1.) {
 		unindex();
 
@@ -87,6 +104,9 @@ class Cube extends Polygon {
 		return h3d.col.Bounds.fromValues(translatedX, translatedY, translatedZ, sizeX * scaled, sizeY * scaled, sizeZ * scaled);
 	}
 
+	/**
+		Returns a shared unit cube centered on the origin, with normals, uniform UVs and tangents.
+	**/
 	public static function defaultUnitCube() {
 		var engine = h3d.Engine.getCurrent();
 		var c : Cube = @:privateAccess engine.resCache.get(Cube);

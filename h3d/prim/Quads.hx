@@ -1,6 +1,9 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	A primitive made of quads (4 points each, drawn as 2 triangles), with optional UVs and normals.
+**/
 class Quads extends Primitive {
 
 	var pts : Array<Point>;
@@ -31,6 +34,9 @@ class Quads extends Primitive {
 		return pts.length;
 	}
 
+	/**
+		Transforms the points (and normals) by `m`.
+	**/
 	public function transform( m : h3d.Matrix ) {
 		for( p in pts )
 			p.transform(m);
@@ -41,6 +47,9 @@ class Quads extends Primitive {
 			}
 	}
 
+	/**
+		Moves the points.
+	**/
 	public function translate( dx : Float, dy : Float, dz : Float ) {
 		for( p in pts ) {
 			p.x += dx;
@@ -49,6 +58,9 @@ class Quads extends Primitive {
 		}
 	}
 
+	/**
+		Scales the points.
+	**/
 	public function scale( x : Float, y : Float, z : Float ) {
 		for( p in pts ) {
 			p.x *= x;
@@ -105,6 +117,9 @@ class Quads extends Primitive {
 		buffer = h3d.Buffer.ofFloats(v, format);
 	}
 
+	/**
+		Computes per-point normals from the faces.
+	**/
 	public function addNormals() {
 		// make per-point normal
 		normals = new Array();
@@ -141,6 +156,9 @@ class Quads extends Primitive {
 			n.normalize();
 	}
 
+	/**
+		Returns the points.
+	**/
 	public function getPoints() {
 		return pts;
 	}

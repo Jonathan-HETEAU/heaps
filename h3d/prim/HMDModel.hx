@@ -1,5 +1,10 @@
 package h3d.prim;
 
+/**
+	The primitive of a model geometry loaded from a HMD file (the format FBX and other models are converted to),
+	with its levels of detail, blend shapes and collision data. Created by `hxd.fmt.hmd.Library` when making the
+	objects of a model.
+**/
 class HMDModel extends MeshPrimitive {
 
 	var model : hxd.fmt.hmd.Data.Model;
@@ -9,6 +14,9 @@ class HMDModel extends MeshPrimitive {
 	var dataPosition : Int;
 	var indexCount : Int;
 	var indexesTriPos : Array<Int>;
+	/**
+		The library (loaded model file) the geometry comes from.
+	**/
 	public var lib(default,null) : hxd.fmt.hmd.Library;
 	var curMaterial : Int;
 	var collider : h3d.col.Collider;
@@ -19,6 +27,10 @@ class HMDModel extends MeshPrimitive {
 	var cullingScreenRatio : Float = 0.;
 	var colliderData : ColliderData;
 
+	/**
+		Creates the primitive of `model`. Done by `hxd.fmt.hmd.Library`.
+		@param lods The models of the lower levels of detail.
+	**/
 	public function new( model : hxd.fmt.hmd.Data.Model, dataPos, lib, lods : Array<hxd.fmt.hmd.Data.Model> = null ) {
 		this.model = model;
 		this.lods = [lib.header.geometries[model.geometry]];
@@ -35,6 +47,9 @@ class HMDModel extends MeshPrimitive {
 			this.colliderData = ColliderData.fromHmd(this);
 	}
 
+	/**
+		Returns the path of the model file.
+	**/
 	public function getPath() {
 		return lib.resource.entry.path;
 	}
@@ -67,14 +82,25 @@ class HMDModel extends MeshPrimitive {
 		return lods[lod].indexCounts[material];
 	}
 
+	/**
+		Returns the geometry data (of the most detailed level) converted to the format `fmt`.
+		@param defaults The values of the inputs missing in the file.
+		@param material If set, only the triangles of this material group.
+	**/
 	public function getDataBuffers(fmt, ?defaults, ?material) {
 		return getLodBuffers(fmt, 0, defaults, material);
 	}
 
+	/**
+		Returns the geometry data of the level of detail `lodIdx` converted to the format `fmt`.
+	**/
 	public function getLodBuffers(fmt, lodIdx, ?defaults, ?material) {
 		return lib.getBuffers(lods[lodIdx], fmt, defaults, material);
 	}
 
+	/**
+		Loads the skinning data (joint weights) of the geometry into `skin`.
+	**/
 	public function loadSkin(skin) {
 		lib.loadSkin(data, skin);
 	}
@@ -150,6 +176,10 @@ class HMDModel extends MeshPrimitive {
 		}
 	}
 
+	/**
+		Computes smooth normals for the geometry and stores them in the vertex input `name` (`"normal"` by default),
+		unless the file already provides this input.
+	**/
 	public function recomputeNormals( ?name : String ) {
 
 		if( normalsRecomputed != null )
@@ -215,6 +245,9 @@ class HMDModel extends MeshPrimitive {
 		normalsRecomputed = name;
 	}
 
+	/**
+		Computes the tangents of the geometry (needed by normal maps), unless it already has them.
+	**/
 	public function addTangents() {
 		if( hasInput("tangent") )
 			return;
@@ -292,6 +325,9 @@ class HMDModel extends MeshPrimitive {
 		return collider;
 	}
 
+	/**
+		Returns a collider made of the triangles of the geometry (precise but slow).
+	**/
 	public function getRawPolygonCollider() {
 		if (polygonCollider != null)
 			return polygonCollider;
@@ -370,6 +406,9 @@ class HMDModel extends MeshPrimitive {
 		return cullingScreenRatio;
 	}
 
+	/**
+		Returns the screen ratios at which each level of detail is selected, or `null` for the defaults.
+	**/
 	public function getLodConfig() {
 		return lodConfig;
 	}

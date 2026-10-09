@@ -1,8 +1,14 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	A sphere of radius 1 built by subdividing an octahedron: its triangles are more regular than those of `Sphere`.
+**/
 class GeoSphere extends Polygon {
 
+	/**
+		Creates a geodesic sphere. Each subdivision level multiplies the number of triangles by 4.
+	**/
 	public function new( subdiv = 2 ) {
 		var a = 1 / Math.sqrt(2);
 		var p = [new Point(0, 0, 1), new Point(0, 0, -1), new Point(-a, -a, 0), new Point(a, -a, 0), new Point(a, a, 0), new Point( -a, a, 0)];

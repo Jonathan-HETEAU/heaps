@@ -2,11 +2,25 @@ package h3d.prim;
 
 import h3d.col.Point;
 
+/**
+	A flat disc (or disc sector) in the XY plane, centered on the origin.
+**/
 class Disc extends Polygon {
 
+	/**
+		The radius.
+	**/
 	public var radius(default,null) : Float;
+	/**
+		The number of segments of the border.
+	**/
 	public var segments(default,null) : Int;
 
+	/**
+		Creates a disc.
+		@param thetaStart The start angle of the sector, in radians.
+		@param thetaLength The angle of the sector, in radians (a full disc by default).
+	**/
 	public function new( radius = 0.5, segments = 8, thetaStart = 0.0, ?thetaLength : Float ) {
 		if( segments < 3 ) segments = 3;
 		if( thetaLength == null ) thetaLength = Math.PI * 2;

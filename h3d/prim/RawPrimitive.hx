@@ -1,12 +1,23 @@
 package h3d.prim;
 
+/**
+	A primitive created from raw vertex data (and optional indexes) in any buffer format.
+**/
 class RawPrimitive extends Primitive {
 
 	var vcount : Int;
 	var tcount : Int;
 	var bounds : h3d.col.Bounds;
+	/**
+		If set, called to get the data again when the GPU buffers must be reallocated.
+	**/
 	public var onContextLost : Void -> { vbuf : hxd.FloatBuffer, format : hxd.BufferFormat, ?ibuf : hxd.IndexBuffer };
 
+	/**
+		Creates the primitive and uploads its data.
+		@param inf The vertexes (`vbuf` in `format`), optional indexes (`ibuf`, otherwise every 3 vertexes form a triangle) and bounds.
+		@param persist If `true`, keeps a reference to the data to reupload it after a context loss.
+	**/
 	public function new( inf : { vbuf : hxd.FloatBuffer, format : hxd.BufferFormat, ?ibuf : hxd.IndexBuffer, ?bounds : h3d.col.Bounds }, persist = false ) {
 		onContextLost = function() return inf;
 		this.bounds = inf.bounds;

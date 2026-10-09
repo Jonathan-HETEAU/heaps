@@ -1,18 +1,31 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	The axis of a `Capsule`.
+**/
 enum abstract Axis(Int) to Int {
 	var X;
 	var Y;
 	var Z;
 }
 
+/**
+	A capsule centered on the origin: a cylinder of `length` along `axis`, capped by two half spheres of radius `ray`.
+**/
 class Capsule extends Polygon {
 
 	var ray : Float;
 	var length : Float;
 	var segs : Int;
 
+	/**
+		Creates a capsule.
+		@param ray The radius.
+		@param length The length of the cylindrical part.
+		@param segs The number of segments around the axis.
+		@param axis The axis of the capsule.
+	**/
 	public function new( ray = 1., length = 1., segs = 8, axis: Axis = X ) {
 		this.ray = ray;
 		this.length = length;
@@ -113,6 +126,9 @@ class Capsule extends Polygon {
 	override function addNormals() {
 	}
 
+	/**
+		Returns a shared capsule of radius 1 and length 1 along `axis`.
+	**/
 	public static function defaultUnitCapsule(axis: Axis = X) {
 		var engine = h3d.Engine.getCurrent();
 		var axisCache = @:privateAccess engine.resCache.get(Capsule);

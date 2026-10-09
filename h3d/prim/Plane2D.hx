@@ -1,7 +1,13 @@
 package h3d.prim;
 
+/**
+	A full screen quad (two triangles covering clip space from -1 to 1), used to draw screen passes (see `h3d.pass.ScreenFx`).
+**/
 class Plane2D extends Primitive {
 
+	/**
+		Creates the quad. Use the shared instance returned by `get` instead.
+	**/
 	public function new() {
 	}
 
@@ -43,6 +49,9 @@ class Plane2D extends Primitive {
 		engine.renderQuadBuffer(buffer);
 	}
 
+	/**
+		Returns the shared instance.
+	**/
 	public static function get() {
 		var engine = h3d.Engine.getCurrent();
 		var inst = @:privateAccess engine.resCache.get(Plane2D);

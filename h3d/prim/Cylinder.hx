@@ -1,6 +1,9 @@
 package h3d.prim;
 import h3d.col.Point;
 
+/**
+	An open cylinder (without caps) along the Z axis.
+**/
 class Cylinder extends Quads {
 
 	var ray : Float;
@@ -8,6 +11,13 @@ class Cylinder extends Quads {
 	var centered : Bool;
 	var segs : Int;
 
+	/**
+		Creates a cylinder.
+		@param segs The number of sides.
+		@param ray The radius.
+		@param height The height along Z.
+		@param centered If `true`, the cylinder goes from `-height/2` to `height/2`, otherwise from `0` to `height`.
+	**/
 	public function new( segs : Int, ray = 1.0, height = 1.0, centered = false ) {
 		this.ray = ray;
 		this.height = height;

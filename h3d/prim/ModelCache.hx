@@ -1,21 +1,43 @@
 package h3d.prim;
 
+/**
+	The extra properties of a model stored in the `.props` file next to it (edited in Hide).
+**/
 typedef HideProps = {
+	/**
+		The events of each animation, by animation name.
+	**/
 	var animations : haxe.DynamicAccess<{ events : Array<h3d.anim.Animation.Event> }>;
 }
 
+/**
+	Loads and caches models, their textures and animations, so that the same model file is only parsed once.
+
+	```haxe
+	var cache = new h3d.prim.ModelCache();
+	var obj = cache.loadModel(hxd.Res.character);
+	s3d.addChild(obj);
+	obj.playAnimation(cache.loadAnimation(hxd.Res.character_walk));
+	```
+**/
 class ModelCache {
 
 	var models : Map<String, { lib : hxd.fmt.hmd.Library, props : HideProps, col : Array<h3d.col.TransformCollider>, textures : Map<String, h3d.mat.Texture>, lastTime : Float }>;
 	var textures : Map<String, h3d.mat.Texture>;
 	var anims : Map<String, h3d.anim.Animation>;
 
+	/**
+		Creates an empty cache.
+	**/
 	public function new() {
 		models = new Map();
 		textures = new Map();
 		anims = new Map();
 	}
 
+	/**
+		Disposes all the cached models and textures.
+	**/
 	public function dispose() {
 		for( m in models ) {
 			m.lib.dispose();
@@ -29,6 +51,9 @@ class ModelCache {
 		textures = new Map();
 	}
 
+	/**
+		Returns the parsed model file (cached).
+	**/
 	public function loadLibrary(res) : hxd.fmt.hmd.Library {
 		return loadLibraryData(res).lib;
 	}
@@ -61,6 +86,10 @@ class ModelCache {
 		return m;
 	}
 
+	/**
+		Creates a new object tree (meshes, skins, joints) from the model. Geometries and textures are shared between the
+		objects created from the same model.
+	**/
 	public function loadModel( res : hxd.res.Model ) : h3d.scene.Object {
 		var m = loadLibraryData(res);
 		var cache = m.textures;
@@ -70,6 +99,9 @@ class ModelCache {
 		});
 	}
 
+	/**
+		Returns the colliders of the geometries of the model, in model space (cached).
+	**/
 	public function loadCollider( res : hxd.res.Model ) {
 		var m = loadLibraryData(res);
 		var lib = m.lib;
@@ -95,6 +127,11 @@ class ModelCache {
 		return m.col;
 	}
 
+	/**
+		Loads a texture referenced by a model (cached). If not found at its path, it is searched in the model directory.
+		@param model The model referencing the texture, or `null` for a texture not related to a model.
+		@param async If `true`, the texture is loaded asynchronously when possible.
+	**/
 	public function loadTexture( model : hxd.res.Model, texturePath : String, async = false ) : h3d.mat.Texture {
 		var cache = model == null ? textures : loadLibraryData(model).textures;
 		var t = cache.get(texturePath);
@@ -134,6 +171,11 @@ class ModelCache {
 		return t;
 	}
 
+	/**
+		Loads an animation from a model file (cached), with the events of its `.props` file.
+		@param name The name of the animation in the file, or `null` for the first one.
+		@param forModel The model the animation is played on, whose `.props` file events are also loaded.
+	**/
 	public function loadAnimation( anim : hxd.res.Model, ?name : String, ?forModel : hxd.res.Model ) : h3d.anim.Animation {
 		var path = anim.entry.path;
 		if( name != null ) path += ":" + name;
@@ -158,6 +200,9 @@ class ModelCache {
 		return a;
 	}
 
+	/**
+		Disposes the models not loaded during the last `lastUseTime` seconds and not used by any object anymore.
+	**/
 	public function cleanModels( lastUseTime = 180 ) {
 		var now = haxe.Timer.stamp();
 		var lastT = now - lastUseTime;
@@ -181,6 +226,9 @@ class ModelCache {
 		}
 	}
 
+	/**
+		Resets the level of detail settings of the cached geometries, so that they are read again.
+	**/
 	public function refreshLodConfig() {
 		for ( model in models )
 			for ( p in @:privateAccess model.lib.cachedPrimitives ) {
@@ -192,6 +240,9 @@ class ModelCache {
 
 	#if hide
 
+	/**
+		With Hide: instantiates a prefab and returns its root object (or `null` if several objects were added to `parent`).
+	**/
 	public function loadPrefab( res : hxd.res.Prefab, ?p : hrt.prefab.Prefab, ?parent : h3d.scene.Object ) {
 		if( p == null )
 			p = res.load();

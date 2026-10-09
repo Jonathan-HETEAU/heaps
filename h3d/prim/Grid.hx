@@ -1,12 +1,30 @@
 package h3d.prim;
 
+/**
+	A flat grid in the XY plane of `width` x `height` cells, starting at the origin.
+**/
 class Grid extends Polygon {
 
+	/**
+		The number of cells along X.
+	**/
 	public var width (default, null) : Int;
+	/**
+		The number of cells along Y.
+	**/
 	public var height (default, null)  : Int;
+	/**
+		The size of a cell along X.
+	**/
 	public var cellWidth (default, null) : Float;
+	/**
+		The size of a cell along Y.
+	**/
 	public var cellHeight (default, null)  : Float;
 
+	/**
+		Creates a grid.
+	**/
 	public function new( width : Int, height : Int, cellWidth = 1., cellHeight = 1. ) {
 		this.width = width;
 		this.height = height;

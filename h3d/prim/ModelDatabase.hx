@@ -3,36 +3,89 @@ package h3d.prim;
 import hxd.fs.FileConfig;
 
 #if !macro
+/**
+	The model being configured by `ModelDatabase.loadModelProps` and `saveModelProps`.
+**/
 typedef ModelDataInput = {
+	/**
+		The directory of the model file.
+	**/
 	var resourceDirectory : String;
+	/**
+		The name of the model file.
+	**/
 	var resourceName : String;
+	/**
+		The name of the object in the model file.
+	**/
 	var objectName : String;
+	/**
+		The geometry of the object.
+	**/
 	var hmd : HMDModel;
+	/**
+		The skin of the object, if any (for the dynamic bones settings).
+	**/
 	var skin : h3d.scene.Skin;
+	/**
+		The collision settings of the object.
+	**/
 	var collide : Dynamic;
 }
 #end
 
+/**
+	The model settings stored in the `model.props` files.
+**/
 typedef ModelProps = {
 	lodConfig: Array<Float>,
 	dynamicBones: Array<Dynamic>
 }
 
+/**
+	Stores per-model settings (levels of detail, culling ratio, dynamic bones, collisions) in `model.props` JSON files.
+	A `model.props` file applies to its directory and subdirectories, with a `default` entry and per-model entries.
+	These settings are usually edited in Hide.
+**/
 class ModelDatabase {
 
+	/**
+		The name of the settings files.
+	**/
 	public static var FILE_NAME = "model.props";
+	/**
+		The entry holding the default settings of a directory.
+	**/
 	public static var DEFAULT_CONFIG_ENTRY = "default";
 
+	/**
+		The field of the levels of detail screen ratios.
+	**/
 	public static var LOD_CONFIG = "lodConfig";
+	/**
+		The field of the culling screen ratio.
+	**/
 	public static var CULLING_RATIO_CONFIG = "cullingRatio";
+	/**
+		The field of the dynamic bones settings.
+	**/
 	public static var DYN_BONES_CONFIG = "dynamicBones";
+	/**
+		The field of the collision settings.
+	**/
 	public static var COLLIDE_CONFIG = "collide";
 
+	/**
+		The default settings: levels of detail at screen ratios 0.5, 0.2 and 0.01, no dynamic bones.
+	**/
 	public var defaultProps = {
 		lodConfig: [ 0.5, 0.2, 0.01],
 		dynamicBones: null
 	}
 
+	/**
+		The loaded settings files, by path.
+	**/
 	public static var db : Map<String, Dynamic> = new Map();
 	var baseDir(get, never) : String;
 	var fileConfig : FileConfig<Dynamic>;
@@ -312,15 +365,24 @@ class ModelDatabase {
 			Reflect.setField(data, COLLIDE_CONFIG, Reflect.field(input.collide, COLLIDE_CONFIG));
 	}
 
+	/**
+		Returns the default levels of detail screen ratios of the directory `dir`.
+	**/
 	public function getDefaultLodConfig( dir : String ) : Array<Float> {
 		return fileConfig.getConfig(dir).lodConfig;
 	}
 
+	/**
+		Returns the default dynamic bones settings of the directory `dir`.
+	**/
 	public function getDefaultDynamicBonesConfig( dir : String ) : Array<Dynamic> {
 		return fileConfig.getConfig(dir).dynamicBones;
 	}
 
 
+	/**
+		Applies the stored settings to the model: levels of detail, dynamic bones and culling ratio.
+	**/
 	public function loadModelProps( input : ModelDataInput ) {
 		var data : Dynamic = getModelData(input.resourceDirectory, input.resourceName, input.objectName);
 		if (data == null)
@@ -331,6 +393,9 @@ class ModelDatabase {
 		loadCullingRatio(input, data);
 	}
 
+	/**
+		Saves the current settings of the model (only on platforms with file system access).
+	**/
 	public function saveModelProps( input : ModelDataInput ) {
 		var data : Dynamic = getModelData(input.resourceDirectory, input.resourceName, input.objectName);
 		if( data == null )
@@ -345,5 +410,8 @@ class ModelDatabase {
 	}
 	#end
 
+	/**
+		The database used by the engine.
+	**/
 	public static var current = new ModelDatabase();
 }

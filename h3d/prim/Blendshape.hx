@@ -1,5 +1,8 @@
 package h3d.prim;
 
+/**
+	The blend shape weights of a mesh using a `Blendshape` geometry, applied on the GPU. See `h3d.scene.Mesh.setBlendshapeWeight`.
+**/
 @:access(h3d.prim.Blendshape)
 class BlendshapeInstance {
 	var mesh : h3d.scene.Mesh;
@@ -11,6 +14,9 @@ class BlendshapeInstance {
 	var gpuWeights : h3d.Buffer;
 	#end
 
+	/**
+		Creates the instance of `blendshape` for `mesh`.
+	**/
 	public function new(blendshape: Blendshape, mesh: h3d.scene.Mesh) {
 		this.blendshape = blendshape;
 		this.mesh = mesh;
@@ -22,6 +28,9 @@ class BlendshapeInstance {
 		alloc();
 	}
 
+	/**
+		Sets the weight of the blend shape `name`.
+	**/
 	public function setBlendshapeWeight(name : String, weight : Float) {
 		var idx = blendshape.getBlendShapeIndex(name);
 		if (idx == -1)
@@ -41,6 +50,9 @@ class BlendshapeInstance {
 		#end
 	}
 
+	/**
+		Sets the weights of the blend shapes, by index.
+	**/
 	public function setBlendshapeWeights(weights: Array<Float>) {
 		#if js
 		uploadBlendshapeBytes(weights);
@@ -56,6 +68,9 @@ class BlendshapeInstance {
 	}
 
 	#if js
+	/**
+		WebGL: computes the blended geometry on the CPU and uploads it.
+	**/
 	public function uploadBlendshapeBytes(weights : Array<Float>) @:privateAccess {
 		var hmdModel = blendshape.hmdModel;
 		if (hmdModel.buffer == null || hmdModel.buffer.isDisposed())
@@ -159,6 +174,9 @@ class BlendshapeInstance {
 	}
 	#end
 
+	/**
+		Allocates the GPU resources.
+	**/
 	public function alloc() {
 		blendshape.incref();
 		#if !js
@@ -168,6 +186,9 @@ class BlendshapeInstance {
 		#end
 	}
 
+	/**
+		Releases the GPU resources.
+	**/
 	public function dispose() {
 		blendshape.decref();
 		#if !js
@@ -176,9 +197,16 @@ class BlendshapeInstance {
 	}
 }
 
+/**
+	The blend shapes (morph targets) of a `HMDModel`: alternative vertex positions and normals that are blended with the
+	base geometry according to weights.
+**/
 @:access(h3d.prim.HMDModel)
 class Blendshape {
 
+	/**
+		The number of users of the GPU data.
+	**/
 	public var refCount(default, null) : Int = 0;
 
 	var hmdModel : HMDModel;
@@ -191,6 +219,9 @@ class Blendshape {
 	var gpuOffsets : h3d.Buffer;
 	#end
 
+	/**
+		Creates the blend shapes of a model geometry.
+	**/
 	public function new(hmdModel) {
 		this.hmdModel = hmdModel;
 
@@ -235,12 +266,18 @@ class Blendshape {
 		}
 	}
 
+	/**
+		Increases the reference count.
+	**/
 	public function incref() {
 		refCount++;
 		if (refCount == 1)
 			alloc();
 	}
 
+	/**
+		Decreases the reference count, disposing the GPU data when it reaches 0.
+	**/
 	public function decref() {
 		refCount--;
 		if ( refCount <= 0 ) {
@@ -249,6 +286,9 @@ class Blendshape {
 		}
 	}
 
+	/**
+		Releases the GPU data.
+	**/
 	public function dispose() {
 		#if !js
 		hxd.impl.Allocator.get().disposeFloats(offsetsBuffer);
@@ -256,6 +296,9 @@ class Blendshape {
 		#end
 	}
 
+	/**
+		Uploads the blend shape offsets to the GPU.
+	**/
 	public function alloc() {
 		#if !js
 		offsetsBuffer = hxd.impl.Allocator.get().allocFloats(3 * hmdModel.data.vertexCount * shapes.length);
@@ -308,6 +351,9 @@ class Blendshape {
 		#end
 	}
 
+	/**
+		Returns the index of the blend shape `name`, or `-1`.
+	**/
 	public function getBlendShapeIndex(name: String) : Int {
 		for (idx => s in shapes) {
 			if (s.name == name) {
@@ -318,10 +364,16 @@ class Blendshape {
 		return -1;
 	}
 
+	/**
+		Returns the name of the blend shape `idx`.
+	**/
 	public function getBlendshapeName(idx: Int) : String {
 		return shapes[idx].name;
 	}
 
+	/**
+		Returns the number of blend shapes.
+	**/
 	public function getBlendshapeCount() {
 		if (hmdModel.lib.header.shapes == null)
 			return 0;
@@ -329,6 +381,9 @@ class Blendshape {
 		return shapes.length;
 	}
 
+	/**
+		Creates the weights instance of a mesh.
+	**/
 	public function getBlendshapeInstance(mesh: h3d.scene.Mesh) {
 		return new BlendshapeInstance(this, mesh);
 	}
