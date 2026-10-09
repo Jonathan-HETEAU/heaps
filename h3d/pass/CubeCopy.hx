@@ -12,6 +12,9 @@ private class CubeCopyShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Copies the 6 faces of a cube texture to another cube texture.
+**/
 class CubeCopy extends ScreenFx<CubeCopyShader> {
 
 	var cubeDir = [ h3d.Matrix.L([0,0,-1,0, 0,-1,0,0, 1,0,0,0]),
@@ -21,10 +24,16 @@ class CubeCopy extends ScreenFx<CubeCopyShader> {
 				 	h3d.Matrix.L([1,0,0,0, 0,-1,0,0, 0,0,1,0]),
 				 	h3d.Matrix.L([-1,0,0,0, 0,-1,0,0, 0,0,-1,0]) ];
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new CubeCopyShader());
 	}
 
+	/**
+		Copies the faces of `from` to the mip level `mip` of `to`, with an optional blend mode.
+	**/
 	public function apply( from, to, ?blend : h3d.mat.BlendMode, mip : Int = 0 ) {
 		shader.texture = from;
 		for(i in 0 ... 6){
@@ -39,6 +48,9 @@ class CubeCopy extends ScreenFx<CubeCopyShader> {
 		shader.texture = null;
 	}
 
+	/**
+		Copies the faces of `from` to `to` using a shared instance (or a direct GPU copy when possible).
+	**/
 	public static function run( from : h3d.mat.Texture, to : h3d.mat.Texture, ?blend : h3d.mat.BlendMode, mip : Int = 0 ) {
 		var engine = h3d.Engine.getCurrent();
 		if( to != null && from != null && (blend == null || blend == None) && mip == 0 && engine.driver.copyTexture(from, to) )

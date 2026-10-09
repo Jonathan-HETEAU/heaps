@@ -1,6 +1,14 @@
 package h3d.pass;
 
 @ignore("shader")
+/**
+	A separable blur: a horizontal then a vertical pass, gaussian by default. Works with 2D and cube textures.
+
+	```haxe
+	var blur = new h3d.pass.Blur(5);
+	blur.apply(ctx, texture); // blurs texture in place
+	```
+**/
 class Blur extends ScreenFx<h3d.shader.Blur> {
 
 	var cubeDir = [ h3d.Matrix.L([0,0,-1,0, 0,-1,0,0, 1,0,0,0]),
@@ -30,11 +38,17 @@ class Blur extends ScreenFx<h3d.shader.Blur> {
 	**/
 	public var quality(default,set) : Float;
 
+	/**
+		If `true`, the blurred result is added to the output instead of replacing it.
+	**/
 	public var additive : Bool = false;
 
 	var values : Array<Float>;
 	var offsets : Array<Float>;
 
+	/**
+		Creates a blur. See `radius`, `gain`, `linear` and `quality`.
+	**/
 	public function new( radius = 1., gain = 1., linear = 0., quality = 1. ) {
 		super(new h3d.shader.Blur());
 		this.radius = radius;
@@ -120,11 +134,18 @@ class Blur extends ScreenFx<h3d.shader.Blur> {
 		}
 	}
 
+	/**
+		Returns the number of samples of each pass.
+	**/
 	public function getKernelSize() {
 		if( values == null ) calcValues();
 		return radius <= 0 ? 0 : values.length * 2 - 1;
 	}
 
+	/**
+		Blurs `src` into `output` (or into `src` itself if `output` is `null`).
+		@param layer The layer of `src` to blur.
+	**/
 	public function apply( ctx : h3d.impl.RenderContext, src : h3d.mat.Texture, ?output : h3d.mat.Texture, layer = 0 ) {
 
 		if( radius <= 0 && shader.fixedColor == null ) {

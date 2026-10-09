@@ -1,8 +1,16 @@
 package h3d.pass;
 
+/**
+	A render pass of a renderer: draws a list of object passes (`PassList`) to the current render target, linking each
+	object shaders with the output shader of the pass (which writes the given values, such as `output.color`, to the
+	targets).
+**/
 @:access(h3d.mat.Pass)
 class Output {
 
+	/**
+		The name of the pass, matching the material pass names it draws (such as `"default"` or `"shadow"`).
+	**/
 	public var name(default, null) : String;
 	var ctx : h3d.scene.RenderContext;
 	var output : OutputShader;
@@ -11,15 +19,25 @@ class Output {
 
 	inline function get_globals() return ctx.globals;
 
+	/**
+		Creates a pass.
+		@param output The values written to the render targets (`output.color` by default).
+	**/
 	public function new(name, ?output) {
 		this.name = name;
 		this.output = new OutputShader(output);
 	}
 
+	/**
+		Sets the render context used by the next `draw`. Done by the renderer.
+	**/
 	public function setContext( ctx ) {
 		this.ctx = ctx;
 	}
 
+	/**
+		Releases the resources of the pass.
+	**/
 	public function dispose() {
 	}
 
@@ -74,8 +92,15 @@ class Output {
 		@:privateAccess p.obj.draw(ctx);
 	}
 
+	/**
+		If set, called when the driver fails to select the shader of an object (instead of throwing the error); the object is then skipped.
+	**/
 	public static var onShaderError : Dynamic -> PassObject -> Void;
 
+	/**
+		Draws the object passes to the current target.
+		@param sort A function sorting the passes before drawing them (by material by default).
+	**/
 	@:access(h3d.scene)
 	public function draw( passes : h3d.pass.PassList, ?sort : h3d.pass.PassList -> Void ) {
 		if( passes.isEmpty() )

@@ -1,11 +1,20 @@
 package h3d.pass;
 
+/**
+	Scalable ambient obscurance: computes a screen space ambient occlusion from the depth and normal textures.
+**/
 class ScalableAO extends h3d.pass.ScreenFx<h3d.shader.SAO> {
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new h3d.shader.SAO());
 	}
 
+	/**
+		Renders the ambient occlusion to the current target.
+	**/
 	public function apply( depthTexture : h3d.mat.Texture, normalTexture : h3d.mat.Texture, camera : h3d.Camera ) {
 		var oldFilter = depthTexture.filter;
 		// Nearest filtering introduce artefacts on low resolution with our implementation.

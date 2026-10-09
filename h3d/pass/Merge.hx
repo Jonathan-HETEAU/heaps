@@ -2,8 +2,14 @@ package h3d.pass;
 
 #if macro
 
+/**
+	Unavailable in macros.
+**/
 class Merge {
 
+	/**
+		Unavailable in macros.
+	**/
 	public static function run( tex1 : h3d.mat.Texture, tex2 : h3d.mat.Texture, ?blend : h3d.mat.BlendMode, ?pass : h3d.mat.Pass ) {
 		throw "assert";
 	}
@@ -12,6 +18,9 @@ class Merge {
 
 #else
 
+/**
+	Interpolates between two textures.
+**/
 class MergeShader extends h3d.shader.ScreenShader {
 	static var SRC = {
 		@param var tex1 : Sampler2D;
@@ -25,12 +34,21 @@ class MergeShader extends h3d.shader.ScreenShader {
 	};
 }
 
+/**
+	Interpolates between two textures (or two layers) into an output texture.
+**/
 class Merge extends ScreenFx<MergeShader> {
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new MergeShader());
 	}
 
+	/**
+		Renders the interpolation between `tex1` and `tex2` (`t` from `0` to `1`) into `output`.
+	**/
 	public function apply(tex1 : h3d.mat.Texture, tex2 : h3d.mat.Texture, t : Float, output : h3d.mat.Texture) {
 		shader.tex1 = tex1;
 		shader.tex2 = tex2;
@@ -64,6 +82,9 @@ class Merge extends ScreenFx<MergeShader> {
 		e.driver.endEvent();
 	}
 
+	/**
+		Renders the interpolation between `tex1` and `tex2` into `output` using a shared instance.
+	**/
 	public static function run(tex1 : h3d.mat.Texture, tex2 : h3d.mat.Texture, t : Float, output : h3d.mat.Texture) {
 		var engine = h3d.Engine.getCurrent();
 		if (tex1 == null || tex2 == null || t < 0 || t > 1 || output == null)

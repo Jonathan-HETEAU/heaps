@@ -1,13 +1,34 @@
 package h3d.pass;
 
 @ignore("shader")
+/**
+	Draws an outline around the opaque pixels of a texture (based on its alpha).
+**/
 class Outline extends ScreenFx<h3d.shader.Outline2D> {
+	/**
+		The outline width, in pixels.
+	**/
 	public var size : Float;
+	/**
+		The outline color, in `0xRRGGBB` format.
+	**/
 	public var color : Int;
+	/**
+		The outline opacity.
+	**/
 	public var alpha : Float = 1.;
+	/**
+		The sampling quality, from `0` to `1`.
+	**/
 	public var quality : Float;
+	/**
+		Multiplies the outline color by the alpha of the source.
+	**/
 	public var multiplyAlpha : Bool;
 
+	/**
+		Creates the pass.
+	**/
 	public function new(size = 4.0, color = 0x000000, quality = 0.3, multiplyAlpha = true) {
 		super(new h3d.shader.Outline2D());
 		this.size = size;
@@ -16,6 +37,9 @@ class Outline extends ScreenFx<h3d.shader.Outline2D> {
 		this.multiplyAlpha = multiplyAlpha;
 	}
 
+	/**
+		Renders the outline of `src` into `output` (or into `src` if `null`).
+	**/
 	public function apply(ctx : h3d.impl.RenderContext, src : h3d.mat.Texture, ?output : h3d.mat.Texture) {
 		if (output == null)
 			output = src;

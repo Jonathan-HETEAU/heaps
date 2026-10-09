@@ -1,5 +1,8 @@
 package h3d.pass;
 
+/**
+	The shadow map of a `h3d.scene.pbr.RectangleLight`: a perspective projection from the light.
+**/
 class RectangleShadowMap extends ProjectedShadowMap {
 
 	override function targetName() : String {

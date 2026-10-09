@@ -1,5 +1,8 @@
 package h3d.pass;
 
+/**
+	The faces of a cube shadow map.
+**/
 enum CubeFaceFlag {
 	Right;
 	Left;
@@ -9,9 +12,15 @@ enum CubeFaceFlag {
 	Bottom;
 }
 
+/**
+	Base class of the omnidirectional shadow maps: the shadows are rendered in the 6 faces of a cube texture around the light.
+**/
 class CubeShadowMap extends Shadows {
 
 	var mergePass = new h3d.pass.ScreenFx(new h3d.shader.MinMaxShader.CubeMinMaxShader());
+	/**
+		The faces which are rendered.
+	**/
 	public var faceMask(default, null) : haxe.EnumFlags<CubeFaceFlag>;
 	var linearDepth = new h3d.shader.LinearShadowDepth();
 
@@ -22,6 +31,9 @@ class CubeShadowMap extends Shadows {
 				 	h3d.Matrix.L([1,0,0,0, 0,-1,0,0, 0,0,1,0]),
 				 	h3d.Matrix.L([-1,0,0,0, 0,-1,0,0, 0,0,-1,0]) ];
 
+	/**
+		Creates the shadow map of `light`.
+	**/
 	public function new( light : h3d.scene.Light ) {
 		super(light);
 		lightCamera = new h3d.Camera();

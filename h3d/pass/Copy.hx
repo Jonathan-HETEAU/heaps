@@ -2,8 +2,14 @@ package h3d.pass;
 
 #if macro
 
+/**
+	Unavailable in macros.
+**/
 class Copy {
 
+	/**
+		Unavailable in macros.
+	**/
 	public static function run( from : h3d.mat.Texture, to : h3d.mat.Texture, ?blend : h3d.mat.BlendMode, ?pass : h3d.mat.Pass ) {
 		throw "assert";
 	}
@@ -23,12 +29,21 @@ private class ArrayCopyShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Copies a layer of a texture array to a texture.
+**/
 class ArrayCopy extends ScreenFx<ArrayCopyShader> {
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new ArrayCopyShader());
 	}
 
+	/**
+		Copies the layer `fromLayer` of `from` to the layer `layer` of `to` (or to the current target if `to` is `null`).
+	**/
 	public function apply( from : h3d.mat.TextureArray, fromLayer : Int, to, ?blend : h3d.mat.BlendMode, ?customPass : h3d.mat.Pass, ?layer : Int) {
 		if( to != null )
 			engine.pushTarget(to, layer != null ? layer : 0);
@@ -55,6 +70,9 @@ class ArrayCopy extends ScreenFx<ArrayCopyShader> {
 			engine.popTarget();
 	}
 
+	/**
+		Copies a layer of a texture array using a shared instance.
+	**/
 	public static function run( from : h3d.mat.TextureArray, fromLayer : Int, to : h3d.mat.Texture, ?blend : h3d.mat.BlendMode, ?pass : h3d.mat.Pass, ?layer : Int ) {
 		var engine = h3d.Engine.getCurrent();
 		if( to != null && from != null && (blend == null || blend == None) && pass == null && engine.driver.copyTexture(from, to) )
@@ -78,12 +96,30 @@ private class CopyShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Copies a texture to another texture (or to the current target), with an optional blend mode.
+
+	```haxe
+	h3d.pass.Copy.run(source, destination);
+	```
+**/
 class Copy extends ScreenFx<CopyShader> {
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new CopyShader());
 	}
 
+	/**
+		Copies `from` to `to` (or to the current target if `to` is `null`).
+		@param blend The blend mode used to draw.
+		@param customPass A pass whose render states are used instead.
+		@param layer The layer of `to` to draw to.
+		@param toMip The mip level of `to` to draw to.
+		@param fromMip The mip level of `from` to read.
+	**/
 	public function apply( from, to, ?blend : h3d.mat.BlendMode, ?customPass : h3d.mat.Pass, ?layer :Int, ?toMip :Int, ?fromMip :Int) {
 		if( to != null )
 			engine.pushTarget(to, layer ?? 0, toMip ?? 0, NotBound);
@@ -112,6 +148,9 @@ class Copy extends ScreenFx<CopyShader> {
 			engine.popTarget();
 	}
 
+	/**
+		Copies `from` to `to` using a shared instance, or a direct GPU copy when no option is given.
+	**/
 	public static function run( from : h3d.mat.Texture, to : h3d.mat.Texture, ?blend : h3d.mat.BlendMode, ?pass : h3d.mat.Pass, ?layer : Int, ?toMip :Int, ?fromMip :Int ) {
 		var engine = h3d.Engine.getCurrent();
 		if( to != null && from != null && (blend == null || blend == None) && pass == null && layer == null && toMip == null && fromMip == null && engine.driver.copyTexture(from, to) )

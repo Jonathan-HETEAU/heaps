@@ -44,12 +44,21 @@ private class FXAAShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Fast approximate anti-aliasing: smooths the edges of an image as a post process.
+**/
 class FXAA extends ScreenFx<FXAAShader> {
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		super(new FXAAShader());
 	}
 
+	/**
+		Draws `texture` to the current target with anti-aliasing.
+	**/
 	public function apply( texture : h3d.mat.Texture ) {
 		shader.texture = texture;
 		shader.delta.set(1 / texture.width, 1 / texture.height);

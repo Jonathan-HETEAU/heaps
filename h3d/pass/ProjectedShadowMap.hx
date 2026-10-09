@@ -1,10 +1,16 @@
 package h3d.pass;
 
+/**
+	Base class of the shadow maps rendered with a perspective projection from the light (spot and rectangle lights).
+**/
 class ProjectedShadowMap extends Shadows {
 
 	var sshader : h3d.shader.SpotShadow;
 	var mergePass = new h3d.pass.ScreenFx(new h3d.shader.MinMaxShader());
 
+	/**
+		Creates the shadow map of `light`.
+	**/
 	public function new( light : h3d.scene.Light ) {
 		format = R32F;
 		super(light);

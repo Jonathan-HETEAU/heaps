@@ -1,9 +1,15 @@
 package h3d.pass;
 
+/**
+	The shadow map of a `h3d.scene.pbr.PointLight`: a cube shadow map rendered from the light position.
+**/
 class PointShadowMap extends CubeShadowMap {
 
 	var pshader : h3d.shader.PointShadow;
 
+	/**
+		Creates the shadow map of `light`.
+	**/
 	public function new( light : h3d.scene.Light ) {
 		super(light);
 		shader = pshader = new h3d.shader.PointShadow();

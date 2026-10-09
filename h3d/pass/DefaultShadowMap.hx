@@ -1,5 +1,9 @@
 package h3d.pass;
 
+/**
+	The shadow map of the forward renderer (`h3d.scene.fwd.Renderer`): a directional shadow map from the shadow light,
+	exposed to the shaders through the `shadow.*` globals.
+**/
 class DefaultShadowMap extends DirShadowMap {
 
 	var shadowMapId : Int;
@@ -8,8 +12,14 @@ class DefaultShadowMap extends DirShadowMap {
 	var shadowPowerId : Int;
 	var shadowBiasId : Int;
 
+	/**
+		The color of the shadows (black by default).
+	**/
 	public var color : h3d.Vector;
 
+	/**
+		Creates a shadow map of `size` x `size` pixels, in dynamic mode.
+	**/
 	public function new(size=1024,?format:hxd.PixelFormat) {
 		if( format != null )
 			this.format = format;

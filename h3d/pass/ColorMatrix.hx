@@ -1,5 +1,8 @@
 package h3d.pass;
 
+/**
+	Transforms the colors of a texture by a matrix, with an optional mask.
+**/
 class ColorMatrixShader extends h3d.shader.ScreenShader {
 
 	static var SRC = {
@@ -39,11 +42,23 @@ class ColorMatrixShader extends h3d.shader.ScreenShader {
 
 }
 
+/**
+	Transforms the colors of a texture by a color matrix (see the `color*` methods of `h3d.Matrix`).
+**/
 class ColorMatrix extends ScreenFx<ColorMatrixShader> {
 
+	/**
+		The color matrix.
+	**/
 	public var matrix(get, set) : h3d.Matrix;
+	/**
+		The power applied to the mask value.
+	**/
 	public var maskPower(get, set) : Float;
 
+	/**
+		Creates the pass with the matrix `m` (identity by default).
+	**/
 	public function new( ?m : h3d.Matrix ) {
 		super(new ColorMatrixShader());
 		if( m != null ) shader.matrix = m else shader.matrix.identity();
@@ -56,6 +71,11 @@ class ColorMatrix extends ScreenFx<ColorMatrixShader> {
 	inline function get_maskPower() return shader.maskPower;
 	inline function set_maskPower(p) return shader.maskPower = p;
 
+	/**
+		Renders `src` transformed by the matrix into `out`.
+		@param mask An optional texture whose red channel limits where the matrix is applied.
+		@param maskMatrix An optional transform of the mask coordinates.
+	**/
 	public function apply( src : h3d.mat.Texture, out : h3d.mat.Texture, ?mask : h3d.mat.Texture, ?maskMatrix : h2d.col.Matrix ) {
 		engine.pushTarget(out);
 		shader.texture = src;

@@ -1,5 +1,9 @@
 package h3d.pass;
 
+/**
+	The shadow map of a directional light: an orthographic projection from the light covering the visible scene
+	(or the bounds given by `calcShadowBounds`).
+**/
 class DirShadowMap extends Shadows {
 
 	var depth : h3d.mat.Texture;
@@ -25,6 +29,9 @@ class DirShadowMap extends Shadows {
 	**/
 	public var minDist = -1.0;
 
+	/**
+		Creates the shadow map of `light`.
+	**/
 	public function new( light : h3d.scene.Light ) {
 		if( format == null ) format = R32F;
 		super(light);
@@ -56,6 +63,10 @@ class DirShadowMap extends Shadows {
 		return ctx.engine.driver.hasFeature(DepthClamp);
 	}
 
+	/**
+		Computes the orthographic bounds of the shadow camera, by default from the visible shadow casters and receivers.
+		Can be replaced to use custom bounds.
+	**/
 	public dynamic function calcShadowBounds( camera : h3d.Camera ) {
 		var bounds = camera.orthoBounds;
 		var zMax = -1e9, zMin = 1e9;

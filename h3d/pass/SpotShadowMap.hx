@@ -1,5 +1,8 @@
 package h3d.pass;
 
+/**
+	The shadow map of a `h3d.scene.pbr.SpotLight`: a perspective projection matching the spot cone.
+**/
 class SpotShadowMap extends ProjectedShadowMap {
 
 	override function targetName() : String {

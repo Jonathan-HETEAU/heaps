@@ -1,13 +1,25 @@
 package h3d.pass;
 
+/**
+	An iterator on a `PassList`.
+**/
 class PassListIterator {
 	var o : PassObject;
+	/**
+		Creates an iterator starting at `o`.
+	**/
 	public inline function new(o) {
 		this.o = o;
 	}
+	/**
+		Tells if there are more passes.
+	**/
 	public inline function hasNext() {
 		return o != null;
 	}
+	/**
+		Returns the next pass.
+	**/
 	public inline function next() {
 		var tmp = o;
 		o = @:privateAccess o.next;
@@ -15,6 +27,10 @@ class PassListIterator {
 	}
 }
 
+/**
+	A linked list of `PassObject` to draw, with a list of discarded passes which can be restored.
+	Renderers filter it (for instance by culling) before drawing it with an `Output`.
+**/
 @:access(h3d.pass.PassObject)
 class PassList {
 
@@ -22,6 +38,9 @@ class PassList {
 	var discarded : PassObject;
 	var lastDisc : PassObject;
 
+	/**
+		Creates a list starting with `current`.
+	**/
 	public function new(?current) {
 		init(current);
 	}
@@ -82,6 +101,9 @@ class PassList {
 		}
 	}
 
+	/**
+		Tells if there is no pass to draw.
+	**/
 	public inline function isEmpty() {
 		return current == null;
 	}
@@ -102,6 +124,9 @@ class PassList {
 		current = null;
 	}
 
+	/**
+		Sorts the passes with the comparison function `f`.
+	**/
 	public inline function sort( f : PassObject -> PassObject -> Int ) {
 		current = haxe.ds.ListSort.sortSingleLinked(current, f);
 	}
@@ -142,6 +167,9 @@ class PassList {
 		lastDisc = discQueue;
 	}
 
+	/**
+		Returns an iterator on the passes to draw.
+	**/
 	public inline function iterator() {
 		return new PassListIterator(current);
 	}

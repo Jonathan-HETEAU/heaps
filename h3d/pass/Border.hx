@@ -12,12 +12,19 @@ private class BorderShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Draws a solid frame of `size` pixels along the edges of a `width` x `height` target (used for instance to avoid
+	sampling outside of shadow maps).
+**/
 class Border extends ScreenFx<BorderShader> {
 
 	var width(default, null) : Int;
 	var height(default, null) : Int;
 	var size(default, null) : Int;
 
+	/**
+		Creates a white border for a target of the given size.
+	**/
 	public function new( width : Int, height : Int, size : Int = 1 ) {
 		super(new BorderShader());
 		this.width = width;

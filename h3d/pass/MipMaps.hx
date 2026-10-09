@@ -27,11 +27,20 @@ private class GenerateMipMapsShader extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Generates the mip levels of a texture with shaders (each level averages 2x2 pixels of the previous one).
+**/
 class MipMaps extends ScreenFx<GenerateMipMapsShader> {
+    /**
+    	Creates the pass.
+    **/
     public function new() {
 		super(new GenerateMipMapsShader());
 	}
 
+    /**
+    	Generates the mip levels of `from`.
+    **/
     public function apply( from : h3d.mat.Texture ) {
         var texCopy = new Texture(from.width, from.height, [Target, Writable, MipMapped, ManualMipMapGen], from.format);
         texCopy.filter = Nearest;
@@ -55,6 +64,9 @@ class MipMaps extends ScreenFx<GenerateMipMapsShader> {
         from.startingMip = 0;
     }
 
+    /**
+    	Generates the mip levels of `from` using a shared instance.
+    **/
     public static function generate( from : h3d.mat.Texture ) {
         if ( from == null )
             return;
