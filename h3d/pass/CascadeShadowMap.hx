@@ -1,19 +1,56 @@
 package h3d.pass;
 
+/**
+	The depth bias settings of a cascade.
+**/
 typedef CascadeParams = {
+	/**
+		The constant depth bias multiplier of the cascade.
+	**/
 	var depthBias : Float;
+	/**
+		The slope scaled depth bias of the cascade.
+	**/
 	var slopeBias : Float;
 }
 
+/**
+	The shadow camera of a cascade.
+**/
 typedef CascadeCamera = {
+	/**
+		The view matrix.
+	**/
 	var view : h3d.Matrix;
+	/**
+		The projection matrix.
+	**/
 	var proj : h3d.Matrix;
+	/**
+		The view-projection matrix.
+	**/
 	var viewProj : h3d.Matrix;
+	/**
+		The scale from the shared shadow space to the cascade (W stores the far distance of the cascade).
+	**/
 	var scale : h3d.Vector4;
+	/**
+		The offset from the shared shadow space to the cascade.
+	**/
 	var offset : h3d.Vector4;
+	/**
+		The orthographic bounds of the cascade.
+	**/
 	var orthoBounds : h3d.col.Bounds;
 }
 
+/**
+	Cascaded shadow maps of a directional light: the view frustum is split in `cascade` ranges of distance, each with its
+	own shadow map, so that near shadows get more resolution than far ones. Used by `h3d.scene.pbr.DirLight` with `cascade = true`.
+
+	The first cascade covers `firstCascadeSize` units from the camera, the others share the remaining distance up to
+	`maxDist` (or the camera far plane), distributed by `distributionPower`.
+**/
 class CascadeShadowMap extends Shadows {
 
 	var cshader : h3d.shader.CascadeShadow;
@@ -22,15 +59,44 @@ class CascadeShadowMap extends Shadows {
 	var tmpCorners : Array<h3d.Vector> = [for (i in 0...8) new h3d.Vector()];
 	var tmpFrustum = new h3d.col.Frustum();
 
+	/**
+		The view-projection matrix shared by the cascades.
+	**/
 	public var cascadeViewProj = new h3d.Matrix();
+	/**
+		The depth bias settings of each cascade.
+	**/
 	public var params : Array<CascadeParams> = [];
+	/**
+		How the distances of the cascades after the first one are distributed: `1` is linear, higher values give more
+		resolution to the near cascades.
+	**/
 	public var distributionPower : Float = 1.0;
 	// minimum count of pixels for an object to be drawn in cascade
+	/**
+		The minimum size, in shadow map pixels, of an object to be drawn in the cascades after the first one.
+	**/
 	public var minPixelSize : Int = 1;
+	/**
+		The distance from the camera covered by the first cascade.
+	**/
 	public var firstCascadeSize : Float = 10.0;
+	/**
+		If positive, how far beyond the cascade bounds (towards the light) shadow casters are drawn. Otherwise `maxDist`
+		or the camera far plane is used.
+	**/
 	public var castingMaxDist : Float = 0.0;
+	/**
+		The fraction of each cascade blended with the next one, to hide the transitions (`0` to disable).
+	**/
 	public var transitionFraction : Float = 0.15;
+	/**
+		The number of cascades.
+	**/
 	public var cascade(default, set) = 1;
+	/**
+		Uses a 32-bit depth buffer instead of a 16-bit one when rendering the cascades.
+	**/
 	public var highPrecision : Bool = false;
 	public function set_cascade(v) {
 		cascade = v;
@@ -41,6 +107,9 @@ class CascadeShadowMap extends Shadows {
 			ctx.updateNumViews(cascade + 1);
 		return cascade;
 	}
+	/**
+		Colors each cascade differently (debug).
+	**/
 	public var debugShader : Bool = false;
 
 	static var debugColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0x00ffff, 0xff00ff, 0x000000];
@@ -50,6 +119,9 @@ class CascadeShadowMap extends Shadows {
 	**/
 	public var maxDist = -1.0;
 
+	/**
+		Creates the cascaded shadow map of `light`.
+	**/
 	public function new( light : h3d.scene.Light ) {
 		super(light);
 		format = R32F;
@@ -86,6 +158,9 @@ class CascadeShadowMap extends Shadows {
 		return {near : near, far : far};
 	}
 
+	/**
+		Computes the shadow camera of each cascade from the current camera.
+	**/
 	public function calcCascadeMatrices() {
 		var invCamera = ctx.camera.getInverseView();
 		var invG = hxd.Math.tan(hxd.Math.degToRad( ctx.camera.fovY ) / 2.0);
@@ -221,26 +296,41 @@ class CascadeShadowMap extends Shadows {
 		}
 	}
 
+	/**
+		Returns the view matrix of the cascade `i`.
+	**/
 	public function getCascadeView(i:Int) {
 		var i = hxd.Math.imin(i, lightCameras.length - 1);
 		return lightCameras[i].view;
 	}
 
+	/**
+		Returns the projection matrix of the cascade `i`.
+	**/
 	public function getCascadeProj(i:Int) {
 		var i = hxd.Math.imin(i, lightCameras.length - 1);
 		return lightCameras[i].proj;
 	}
 
+	/**
+		Returns the view-projection matrix of the cascade `i`.
+	**/
 	public function getCascadeViewProj(i:Int) {
 		var i = hxd.Math.imin(i, lightCameras.length - 1);
 		return lightCameras[i].viewProj;
 	}
 
+	/**
+		Returns the offset from the shared shadow space to the cascade `i`.
+	**/
 	public function getCascadeOffset(i:Int) {
 		var i = hxd.Math.imin(i, lightCameras.length - 1);
 		return lightCameras[i].offset;
 	}
 
+	/**
+		Returns the scale from the shared shadow space to the cascade `i`.
+	**/
 	public function getCascadeScale(i:Int) {
 		var i = hxd.Math.imin(i, lightCameras.length - 1);
 		return lightCameras[i].scale;
@@ -307,6 +397,10 @@ class CascadeShadowMap extends Shadows {
 		return getCascadeViewProj(currentCascadeIndex);
 	}
 
+	/**
+		Removes from `passes` the shadow casters which do not need to be drawn in the cascade `i`: by default, the objects
+		smaller than `minSize` in the cascades after the first one. Can be replaced for custom culling.
+	**/
 	public dynamic function customCullPasses(passes : h3d.pass.PassList, frustum : h3d.col.Frustum, i : Int, minSize : Float) {
 		if ( minSize > 0.0 && i > 0 ) {
 			passes.filter(function(p) {

@@ -1,28 +1,75 @@
 package h3d.pass;
 
+/**
+	Screen space reflections for the PBR renderer: reflections are found by marching rays in the depth buffer, after the
+	forward passes. Add it to the renderer effects:
+
+	```haxe
+	s3d.renderer.effects.push(new h3d.pass.SSR());
+	```
+**/
 @:access(h3d.scene.Renderer)
 @:access(h3d.scene.pbr.Renderer)
 class SSR implements h3d.impl.RendererFX {
 
+	/**
+		Enables the effect.
+	**/
 	public var enabled = true;
 
+	/**
+		The number of steps of each reflection ray: more steps are more precise but slower.
+	**/
 	public var stepCount : Int = 64;
+	/**
+		The exponent of the fade in of the reflections along the ray, near the reflecting surface (`0` to disable).
+	**/
 	public var fadeInExponent : Float = 0.2;
+	/**
+		The exponent of the fade out of the reflections at the end of the ray (`0` to disable).
+	**/
 	public var fadeOutExponent : Float = 2.0;
+	/**
+		The maximum depth difference for a ray to hit a surface.
+	**/
 	public var depthTolerance : Float = 0.5;
+	/**
+		Increases the depth tolerance with the distance from the camera (`distanceBias * distance ^ distancePowerBias`).
+	**/
 	public var distanceBias : Float = 0.0;
+	/**
+		The exponent of the distance used by `distanceBias`.
+	**/
 	public var distancePowerBias : Float = 1.0;
+	/**
+		The size, relative to the screen, of the margin where the reflections fade out near the screen edges.
+	**/
 	public var marginSize : Float = 0.1;
 
+	/**
+		Debug: displays the ray marched under the mouse cursor.
+	**/
 	public var debugEnabled : Bool = false;
+	/**
+		Debug: the roughness factor used for the debug display.
+	**/
 	public var debugRoughnessFactor : Float = 1.0;
+	/**
+		Debug: the iteration displayed.
+	**/
 	public var debugIteration : Int = 0;
 
+	/**
+		The pass combining the reflections with the lit image.
+	**/
 	public var ssrResolve : h3d.pass.ScreenFx<h3d.shader.pbr.SSR.SSRResolve>;
 	var ssrFilter :  h3d.pass.ScreenFx<h3d.shader.pbr.SSR.SSRFilter>;
 	var ssrShader : h3d.shader.pbr.SSR;
 	var copyPass : h3d.pass.Copy;
 
+	/**
+		Creates the effect.
+	**/
 	public function new() {
 		ssrResolve = new h3d.pass.ScreenFx(new h3d.shader.pbr.SSR.SSRResolve());
 		ssrFilter = new h3d.pass.ScreenFx(new h3d.shader.pbr.SSR.SSRFilter());
@@ -32,6 +79,9 @@ class SSR implements h3d.impl.RendererFX {
 		copyPass = new h3d.pass.Copy();
 	}
 
+	/**
+		Computes and applies the reflections. Called automatically after the forward passes.
+	**/
 	public function apply( r : h3d.scene.pbr.Renderer ) {
 		var ctx = r.ctx;
 		r.mark("SSR");
@@ -132,12 +182,21 @@ class SSR implements h3d.impl.RendererFX {
 			h3d.pass.Copy.run(ssrDebug, hdr, Alpha);
 	}
 
+	/**
+		See `h3d.impl.RendererFX.start`.
+	**/
 	public function start( r : h3d.scene.Renderer ) {
 	}
 
+	/**
+		See `h3d.impl.RendererFX.begin`.
+	**/
 	public function begin( r : h3d.scene.Renderer, step : h3d.impl.RendererFX.Step ) {
 	}
 
+	/**
+		See `h3d.impl.RendererFX.end`. Applies the reflections after the `Forward` step.
+	**/
 	public function end( r : h3d.scene.Renderer, step : h3d.impl.RendererFX.Step ) {
 		if( !enabled || step != Forward )
 			return;
@@ -146,13 +205,22 @@ class SSR implements h3d.impl.RendererFX {
 			apply(r);
 	}
 
+	/**
+		See `h3d.impl.RendererFX.dispose`.
+	**/
 	public function dispose() {
 	}
 
+	/**
+		See `h3d.impl.RendererFX.modulate`. Returns the effect unchanged.
+	**/
 	public function modulate( t : Float ) : h3d.impl.RendererFX {
 		return this;
 	}
 
+	/**
+		See `h3d.impl.RendererFX.transition`. Switches directly to `r2`.
+	**/
 	public function transition( r1 : h3d.impl.RendererFX, r2 : h3d.impl.RendererFX ) : h3d.impl.RendererFX.RFXTransition {
 		return { effect : r2, setFactor : (f : Float) -> {} };
 	}
