@@ -1,18 +1,42 @@
 package hxd.res;
 
+/**
+	The file format of an image.
+**/
 enum abstract ImageFormat(Int) {
+	/**
+		JPEG.
+	**/
 	var Jpg = 0;
+	/**
+		PNG.
+	**/
 	var Png = 1;
+	/**
+		GIF (only the first frame).
+	**/
 	var Gif = 2;
+	/**
+		Targa.
+	**/
 	var Tga = 3;
+	/**
+		DirectDraw Surface, which can contain compressed formats, mip levels, cube maps and texture arrays.
+	**/
 	var Dds = 4;
+	/**
+		Square raw float data with the `.raw` extension (32 or 16 bits per pixel, single channel), such as height maps.
+	**/
 	var Raw = 5;
+	/**
+		Radiance HDR.
+	**/
 	var Hdr = 6;
 
-	/*
+	/**
 		Tells if we might not be able to directly decode the image without going through a loadBitmap async call.
 		This for example occurs when we want to decode progressive JPG in JS.
-	 */
+	 **/
 	public var useLoadBitmap(get, never):Bool;
 
 	inline function get_useLoadBitmap() {
@@ -26,6 +50,9 @@ enum abstract ImageFormat(Int) {
 	inline function toInt()
 		return this;
 
+	/**
+		Returns the name of the format, such as `"PNG"`.
+	**/
 	public function getName() {
 		return switch ((cast this : ImageFormat)) {
 			case Jpg: "JPG";
@@ -39,27 +66,70 @@ enum abstract ImageFormat(Int) {
 	}
 }
 
+/**
+	Flags of an `ImageInfo`.
+**/
 enum ImageInfoFlag {
+	/**
+		The image is a cube map (DDS only).
+	**/
 	IsCube;
+	/**
+		The DDS file has a DX10 extended header.
+	**/
 	Dxt10Header;
 }
 
+/**
+	The information read from the header of an image file.
+**/
 @:allow(hxd.res.Image)
 class ImageInfo {
+	/**
+		The width of the image, after skipping the mip levels above `Image.MIPMAP_MAX_SIZE`.
+	**/
 	public var width(default, null):Int = 0;
+	/**
+		The height of the image, after skipping the mip levels above `Image.MIPMAP_MAX_SIZE`.
+	**/
 	public var height(default, null):Int = 0;
+	/**
+		The number of mip levels used.
+	**/
 	public var mipLevels(default, null):Int = 1;
+	/**
+		The number of mip levels of the file skipped to respect `Image.MIPMAP_MAX_SIZE`.
+	**/
 	public var mipOffset(default, null):Int = 0;
+	/**
+		The number of layers of a texture array.
+	**/
 	public var layerCount(default, null):Int = 1;
+	/**
+		The flags of the image.
+	**/
 	public var flags(default, null):haxe.EnumFlags<ImageInfoFlag>;
+	/**
+		The file format.
+	**/
 	public var dataFormat(default, null):ImageFormat;
+	/**
+		The format of the decoded pixels.
+	**/
 	public var pixelFormat(default, null):PixelFormat;
 
+	/**
+		Creates empty information.
+	**/
 	public function new() {
 		flags = new haxe.EnumFlags();
 	}
 }
 
+/**
+	An image resource (PNG, JPEG, GIF, TGA, DDS, HDR or RAW).
+	Use `toTile` for 2D, `toTexture` for 3D, or `getPixels` to read its pixels.
+**/
 @:access(h3d.mat.Texture)
 @:access(hxd.res.TextureStream)
 class Image extends Resource {
@@ -70,6 +140,9 @@ class Image extends Resource {
 	var texFormat:h3d.mat.Data.TextureFormat;
 	var loadedData:haxe.io.Bytes;
 
+	/**
+		Currently unused.
+	**/
 	public var enableAsyncLoading:Bool;
 
 	/**
@@ -83,18 +156,30 @@ class Image extends Resource {
 	**/
 	public var disableStreaming = false;
 
+	/**
+		Returns the file format of the image.
+	**/
 	public inline function getFormat() {
 		return getInfo().dataFormat;
 	}
 
+	/**
+		Returns the pixel format of the decoded image.
+	**/
 	public inline function getPixelFormat() {
 		return getInfo().pixelFormat;
 	}
 
+	/**
+		Returns the information of the image, to read its `width` and `height`.
+	**/
 	public inline function getSize() {
 		return getInfo();
 	}
 
+	/**
+		Reads the header of the image file (once) and returns its information.
+	**/
 	public function getInfo() {
 		if (inf != null)
 			return inf;
@@ -311,6 +396,10 @@ class Image extends Resource {
 		return inf;
 	}
 
+	/**
+		Decodes the image and returns its pixels, converted to `fmt` if set.
+		For a DDS file, `index` selects the image: `layer * mipLevels + mipLevel`.
+	**/
 	public function getPixels(?fmt:PixelFormat, ?index:Int) {
 		var pixels:hxd.Pixels;
 		if (index == null)
@@ -512,6 +601,9 @@ class Image extends Resource {
 	}
 	#end
 
+	/**
+		Decodes the image into a `BitmapData`.
+	**/
 	public function toBitmap():hxd.BitmapData {
 		getInfo();
 		var bmp = new hxd.BitmapData(inf.width, inf.height);
@@ -654,6 +746,9 @@ class Image extends Resource {
 			entry.load(load);
 	}
 
+	/**
+		Returns the texture of the image, created on the first call. Depending on the texture flags, it may be loaded or streamed asynchronously (see `stream`).
+	**/
 	public function toTexture():h3d.mat.Texture {
 		if (tex != null)
 			return tex;
@@ -702,7 +797,7 @@ class Image extends Resource {
 	}
 
 	/**
-		Specify if we will automatically convert non-power-of-two textures to power-of-two.
+		The filter of the loaded textures.
 	**/
 	public static var DEFAULT_FILTER:h3d.mat.Data.Filter = Linear;
 
@@ -718,6 +813,12 @@ class Image extends Resource {
 	**/
 	public static var ASYNC_LOADING = true;
 
+	/**
+		Called when a texture is created, before it is loaded. Can be replaced to set texture flags, such as `AsyncLoading`.
+	**/
 	public static dynamic function setupTextureFlags(tex:h3d.mat.Texture) {}
+	/**
+		Returns the maximum size of the loaded mip levels of the image. Can be replaced to use a different size per image.
+	**/
 	public static dynamic function getMipMapMaxSize(img:Image) return MIPMAP_MAX_SIZE;
 }

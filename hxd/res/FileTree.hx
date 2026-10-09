@@ -5,14 +5,35 @@ import haxe.macro.Expr;
 
 private typedef FileEntry = { e : Expr, t : ComplexType, ?doc:String };
 
+/**
+	A directory scanned by `FileTree`.
+**/
 typedef FileTreeData = {
+	/**
+		The name of the directory.
+	**/
 	var name : String;
+	/**
+		The path of the directory, relative to the resources root.
+	**/
 	var relPath : String;
+	/**
+		The identifier of the directory in the generated fields.
+	**/
 	var ident : String;
+	/**
+		The sub directories, by name.
+	**/
 	var dirs : Map<String, FileTreeData>;
+	/**
+		The files, by identifier.
+	**/
 	var files : Map<String, { relPath : String, fullPath : String, file : String, ident : String, noExt : String, ext : String }>;
 }
 
+/**
+	The macro generating the typed resource fields of `hxd.Res` from the resources directory, and embedding the files.
+**/
 class FileTree {
 
 	var paths : Array<String>;
@@ -27,6 +48,9 @@ class FileTree {
 	var rootPack: String;
 	var checkTmp : Bool;
 
+	/**
+		Creates a file tree for the given directories (see `resolvePaths`). The generated types are put in the `rootPack._res` package.
+	**/
 	public function new(dir, rootPack = "hxd") {
 		this.rootPack = rootPack;
 		this.paths = resolvePaths(dir);
@@ -35,6 +59,9 @@ class FileTree {
 		defaultExt = { t : macro : hxd.res.Resource, e : macro hxd.res.Resource };
 	}
 
+	/**
+		Returns the full paths of the resource directories: `dir` (a `;` separated list), or the `-D resourcesPath` define, or `res`.
+	**/
 	public static function resolvePaths( ?dir:String ) {
 		var resolve = true;
 		if( dir == null ) {
@@ -91,6 +118,9 @@ class FileTree {
 		return ident;
 	}
 
+	/**
+		Tells if a directory is ignored by the scan. By default, the directories starting with `.` or `_` are ignored.
+	**/
 	public dynamic static function ignoreDirectory(dirname: String) {
 		return dirname.charCodeAt(0) == ".".code || dirname.charCodeAt(0) == "_".code;
 	}
@@ -142,6 +172,9 @@ class FileTree {
 		}
 	}
 
+	/**
+		Converts and embeds all the resource files in the application.
+	**/
 	public function embed(options:EmbedOptions) {
 		if( options == null ) options = { };
 		checkTmp = false;
@@ -182,6 +215,9 @@ class FileTree {
 	}
 
 
+	/**
+		Returns the build fields with a field added for each file and directory of the resources.
+	**/
 	public function buildFields() {
 		var fields = Context.getBuildFields();
 		var dict = new Map();
@@ -370,6 +406,9 @@ class FileTree {
 		};
 	}
 
+	/**
+		Build macro adding the resource fields, used by `hxd.Res`.
+	**/
 	public static function build( ?dir : String, ?rootPack: String ) {
 		return new FileTree(dir, rootPack).buildFields();
 	}

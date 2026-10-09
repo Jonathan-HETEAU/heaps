@@ -18,8 +18,17 @@
 /* Ported to Haxe by Nicolas Cannasse */
 package hxd.res;
 
+/**
+	The chroma upsampling filter of `NanoJpeg`.
+**/
 enum Filter {
+	/**
+		Pixel duplication: faster, lower quality.
+	**/
 	Fast;
+	/**
+		Bilinear upsampling (the default).
+	**/
 	Chromatic;
 }
 
@@ -51,6 +60,9 @@ private class Component {
 	}
 }
 
+/**
+	A pure Haxe baseline JPEG decoder (progressive and lossless JPEG are not supported).
+**/
 @:noDebug
 class NanoJpeg {
 
@@ -722,6 +734,9 @@ class NanoJpeg {
 	}
 
 	static var inst : NanoJpeg = null;
+	/**
+		Decodes the JPEG data at `position` in `bytes` and returns its pixels in BGRA format, with its size.
+	**/
 	public static function decode( bytes : haxe.io.Bytes, ?filter, position : Int = 0, size : Int = -1 ) {
 		if( inst == null ) inst = new NanoJpeg();
 		inst.njInit(bytes, position, size, filter);

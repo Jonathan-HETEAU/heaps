@@ -1,16 +1,23 @@
 package hxd.res;
 import hxd.fmt.grd.Data;
 
+/**
+	A Photoshop gradients file (`.grd`), converted to textures of horizontal gradients.
+**/
 class Gradients extends Resource {
 	var data : Data;
 
-	// creates a texture for the specified "name" gradient
+	/**
+		Creates a texture for the gradient of the given name. `resolution` is the texture width, and must be a power of two.
+	**/
 	public function toTexture(name : String, ?resolution = 256) : h3d.mat.Texture {
 		var data = getData();
 		return createTexture([data.get(name)], resolution);
 	}
 
-	// creates a texture for each gradient
+	/**
+		Creates a texture for each gradient, by name.
+	**/
 	public function toTextureMap(?resolution = 256) : Map<String, h3d.mat.Texture> {
 		var map  = new Map<String, h3d.mat.Texture>();
 		var data = getData();
@@ -18,7 +25,9 @@ class Gradients extends Resource {
 		return map;
 	}
 
-	// all gradients are written into the same texture
+	/**
+		Writes all the gradients into a single texture, and returns a 1 pixel high tile for each of them, by name.
+	**/
 	public function toTileMap(?resolution = 256) : Map<String, h2d.Tile> {
 		var data  = getData();
 		var grads = [for (d in data) d];

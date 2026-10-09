@@ -7,6 +7,9 @@ package hxd.res;
 **/
 class Font extends Resource {
 
+	/**
+		Builds a bitmap font of the given size from the vector font. Only supported on JS.
+	**/
 	public function build( size : Int, ?options ) : h2d.Font {
 		#if js
 		var name = "R_" + ~/[^A-Za-z0-9_]/g.replace(entry.path, "_");

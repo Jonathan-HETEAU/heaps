@@ -1,21 +1,54 @@
 package hxd.res;
 import haxe.xml.Access;
 
+/**
+	A layer of a Tiled map.
+**/
 typedef TiledMapLayer = {
+	/**
+		The tile ids of the cells, row by row, or `null` for an object layer.
+	**/
 	var data : Array<Int>;
+	/**
+		The name of the layer.
+	**/
 	var name : String;
+	/**
+		The opacity of the layer.
+	**/
 	var opacity : Float;
+	/**
+		The named objects of an object layer.
+	**/
 	var objects : Array<{ x: Int, y : Int, name : String, type : String }>;
 }
 
+/**
+	The content of a Tiled map.
+**/
 typedef TiledMapData = {
+	/**
+		The width of the map, in tiles.
+	**/
 	var width : Int;
+	/**
+		The height of the map, in tiles.
+	**/
 	var height : Int;
+	/**
+		The tile layers, followed by the object layers.
+	**/
 	var layers : Array<TiledMapLayer>;
 }
 
+/**
+	A map made with the Tiled editor (`.tmx`). Only base64 encoded and zlib compressed layers are supported.
+**/
 class TiledMap extends Resource {
 
+	/**
+		Parses the map.
+	**/
 	public function toMap() : TiledMapData {
 		var data = entry.getText();
 		var base = new haxe.crypto.BaseCode(haxe.io.Bytes.ofString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"));

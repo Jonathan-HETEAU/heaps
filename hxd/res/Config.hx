@@ -1,8 +1,20 @@
 package hxd.res;
 
+/**
+	The platform for which the resources are compiled.
+**/
 enum Platform {
+	/**
+		HashLink.
+	**/
 	HL;
+	/**
+		JavaScript.
+	**/
 	JS;
+	/**
+		Another platform.
+	**/
 	Unknown;
 }
 
@@ -32,6 +44,9 @@ class Config {
 		#end
 	];
 
+	/**
+		Maps a comma separated list of extensions to a resource class.
+	**/
 	public static function addExtension( extension, className) {
 		extensions.set(extension, className);
 	}
@@ -69,6 +84,9 @@ class Config {
 		"css" => "less,css.map",
 	];
 
+	/**
+		Adds `shadow` extensions to the files paired with the `main` extension.
+	**/
 	public static function addPairedExtension( main, shadow) {
 		if (pairedExtensions.exists(main))
 			pairedExtensions.set(main, pairedExtensions.get(main) + "," + shadow);
@@ -98,6 +116,9 @@ class Config {
 		return pf;
 	}
 
+	/**
+		The platform for which the resources are compiled.
+	**/
 	public static var platform : Platform = init();
 
 }

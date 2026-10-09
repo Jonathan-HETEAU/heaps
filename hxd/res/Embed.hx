@@ -2,6 +2,9 @@ package hxd.res;
 import haxe.macro.Context;
 
 #if js @:keep #end
+/**
+	Macros to embed files and fonts in the compiled application.
+**/
 class Embed {
 
 	#if macro
@@ -18,6 +21,9 @@ class Embed {
 		return null;
 	}
 
+	/**
+		Embeds the font file as a CSS font of the given name (JS only).
+	**/
 	public static function doEmbedFont( name : String, file : String, chars : String ) : haxe.macro.Expr {
 
 		var m = Context.getLocalClass().get().module;
@@ -57,6 +63,9 @@ class Embed {
 
 	#end
 
+	/**
+		Returns the content of the text file, read at compile time.
+	**/
 	public static macro function getFileContent( file : String ) {
 		var file = Context.resolvePath(file);
 		var m = Context.getLocalClass().get().module;
@@ -64,6 +73,9 @@ class Embed {
 		return macro $v{sys.io.File.getContent(file)};
 	}
 
+	/**
+		Returns a resource (as `hxd.res.Any`) for the file, embedded at compile time.
+	**/
 	public static macro function getResource( file : String ) {
 		var path = Context.resolvePath(file);
 		var m = Context.getLocalClass().get().module;
@@ -72,6 +84,9 @@ class Embed {
 		return macro hxd.res.Any.fromBytes($v{file},haxe.Unserializer.run($v{str}));
 	}
 
+	/**
+		Embeds the TTF font file (searched in the class path, then in the Windows fonts directory) and returns the font name to use with `hxd.res.FontBuilder` (JS only).
+	**/
 	public macro static function embedFont( file : String, ?chars : String, ?skipErrors : Bool ) {
 		var ok = true;
 		var path = locateFont(file);

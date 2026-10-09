@@ -12,7 +12,13 @@ package hxd.res;
 @:access(h3d.mat.Texture)
 class TextureStream {
 
+	/**
+		The image being loaded.
+	**/
 	public var image(default, null) : Image;
+	/**
+		The texture of the image.
+	**/
 	public var texture(get, never) : h3d.mat.Texture;
 	/**
 		Tells if the texture mip levels are streamed.
@@ -33,6 +39,9 @@ class TextureStream {
 	var onRead : haxe.io.Bytes -> Void;
 	var readBuffer : haxe.io.Bytes;
 
+	/**
+		Creates the stream for the image. Done by `Image` when needed.
+	**/
 	public function new( image : Image ) {
 		this.image = image;
 		update();

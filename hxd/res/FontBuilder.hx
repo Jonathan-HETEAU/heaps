@@ -1,8 +1,20 @@
 package hxd.res;
 
+/**
+	Options for `FontBuilder.getFont`.
+**/
 typedef FontBuildOptions = {
+	/**
+		Enables anti-aliasing (default `true`).
+	**/
 	?antiAliasing : Bool,
+	/**
+		The characters to include in the font (default `hxd.Charset.DEFAULT_CHARS`).
+	**/
 	?chars : String,
+	/**
+		Enables kerning (currently unused).
+	**/
 	?kerning : Bool,
 };
 
@@ -145,6 +157,9 @@ class FontBuilder {
 
 	#end
 
+	/**
+		Returns a bitmap font built from the font of the given name, cached by name and size.
+	**/
 	public static function getFont( name : String, size : Int, ?options : FontBuildOptions ) {
 		var key = name + "#" + size;
 		var f = FONTS.get(key);
@@ -155,6 +170,9 @@ class FontBuilder {
 		return f;
 	}
 
+	/**
+		Disposes all the built fonts.
+	**/
 	public static function dispose() {
 		for( f in FONTS )
 			f.dispose();

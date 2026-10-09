@@ -1,12 +1,19 @@
 package hxd.res;
 import haxe.xml.Access;
 
+/**
+	A bitmap font: a font description file (`.fnt`, in BMFont text or XML format, or other supported formats) with its image.
+	Use `toFont` to get the `h2d.Font`.
+**/
 class BitmapFont extends Resource {
 
 	var loader : Loader;
 	var font : h2d.Font;
 	var sdfFonts:Array<h2d.Font>;
 
+	/**
+		Creates the resource for the font description file entry.
+	**/
 	public function new( entry ) {
 		super(entry);
 		this.loader = hxd.res.Loader.currentInstance;

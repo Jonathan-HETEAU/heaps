@@ -1,7 +1,13 @@
 package hxd.res;
 
+/**
+	The default font embedded in Heaps.
+**/
 class DefaultFont {
 
+	/**
+		Returns the default font, loaded once per engine.
+	**/
 	public static function get() : h2d.Font {
 		var engine = h3d.Engine.getCurrent();
 		var fnt : h2d.Font = engine.resCache.get(DefaultFont);

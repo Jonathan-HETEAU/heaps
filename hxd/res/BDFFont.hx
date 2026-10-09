@@ -7,16 +7,46 @@ using StringTools;
  * parsing a BDF font file.
  */
  class BDFFontChar {
+	/**
+		The character code.
+	**/
 	public var code : Int;
+	/**
+		The X position of the glyph in the generated texture.
+	**/
 	public var x : Int;
+	/**
+		The Y position of the glyph in the generated texture.
+	**/
 	public var y : Int;
+	/**
+		The width of the glyph in pixels.
+	**/
 	public var width : Int;
+	/**
+		The height of the glyph in pixels.
+	**/
 	public var height : Int;
+	/**
+		The horizontal offset of the glyph from the origin.
+	**/
 	public var xoffset : Int;
+	/**
+		The vertical offset of the glyph from the baseline.
+	**/
 	public var yoffset : Int;
+	/**
+		The number of bytes per row in `bits`.
+	**/
 	public var stride : Int;
+	/**
+		The bitmap of the glyph, one bit per pixel.
+	**/
 	public var bits : Array<Int>;
 
+	/**
+		Creates a glyph.
+	**/
 	public function new( code, width, height, xoffset, yoffset, stride ) {
 		this.code = code;
 		this.width = width;
@@ -27,6 +57,9 @@ using StringTools;
 		this.bits = new Array();
 	}
 
+	/**
+		Sorts glyphs by decreasing height, to pack them in the texture.
+	**/
 	static public function sortOnHeight( a : BDFFontChar, b : BDFFontChar ) {
 		return b.height - a.height; // Largest first
 	}

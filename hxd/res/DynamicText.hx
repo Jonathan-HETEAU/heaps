@@ -5,23 +5,48 @@ import haxe.macro.Expr;
 #end
 import haxe.xml.Access;
 
+/**
+	The metadata of the texts of a group, by id.
+**/
 typedef DynamicTextMeta = Map<String,DynamicTextMetaContent>;
+/**
+	The metadata of a text: `skip` is set by the `skip` attribute, `sub` is the metadata of a group's children.
+**/
 typedef DynamicTextMetaContent = { skip : Bool, sub : DynamicTextMeta };
 
+/**
+	The argument type of the `Key` of a text without parameters.
+**/
 abstract NoArg({}) {
 }
 
+/**
+	A reference to a text by its path, created by `makeID`. `T` is the type of the text parameters.
+**/
 abstract Key<T>(String) {
+	/**
+		Creates a key for the text path `id`.
+	**/
 	public function new( id : String, f : T -> String ) {
 		this = id;
 	}
+	/**
+		Returns the path of the text.
+	**/
 	public function getID() : String {
 		return this;
 	}
 }
 
+/**
+	Typed texts loaded from an XML file, for localization.
+	The `build` macro creates a static field for each `<t>` text and `<g>` group of the file. Texts containing `::param::` become functions taking an object with these parameters.
+**/
 class DynamicText {
 
+	/**
+		Parses the XML texts into an object, with a field per id.
+	**/
 	public static function parse( data : String ) : Dynamic {
 		var x = new Access(Xml.parse(data).firstElement());
 		var obj = {};
@@ -30,6 +55,9 @@ class DynamicText {
 		return obj;
 	}
 
+	/**
+		Parses the metadata (the `skip` attributes) of the XML texts.
+	**/
 	public static function parseMetaData( data : String ) : DynamicTextMeta {
 		var x = new Access(Xml.parse(data).firstElement());
 		var m = new DynamicTextMeta();
@@ -71,6 +99,9 @@ class DynamicText {
 		applyRec([], obj, x, ref, onMissing);
 	}
 
+	/**
+		Matches the `::param::` parameters of a text.
+	**/
 	public static var r_attr = ~/::(.+?)::/g;
 
 	static function applyText( path : Array<String>, old : Dynamic, x : Access, ref : Access, onMissing : Array<String> -> String -> String ) {
@@ -121,6 +152,10 @@ class DynamicText {
 		return parseText(str, ref);
 	}
 
+	/**
+		Replaces the texts of `obj` by the texts of `data` (a translation), keeping the original texts that are missing or invalid.
+		If `ref` is set, a translation is only used if the original text is still the same as in `ref`. `onMissing` is called with the path and a message for each problem.
+	**/
 	public static function applyRec( path : Array<String>, obj : Dynamic, data : Access, ref : Access, onMissing ) {
 		var fields = new Map();
 		for( f in Reflect.fields(obj) ) fields.set(f, true);
@@ -337,6 +372,9 @@ class DynamicText {
 		return null;
 	}
 
+	/**
+		Macro helper creating a `Key` for the text `ident` of the class `path`.
+	**/
 	public static function makeID( path : String, ident : Expr ) {
 		var ipath = haxe.macro.ExprTools.toString(ident);
 		var path = (path + "." + ipath).split(".");
@@ -354,6 +392,9 @@ class DynamicText {
 
 	@:persistent static var BUILD_CACHE = new Map<String,{time:Float,fields:Array<Field>}>();
 
+	/**
+		Build macro adding the static fields of the texts of the XML file, searched in the resource directories.
+	**/
 	public static function build( file : String ) {
 		var paths = FileTree.resolvePaths();
 		var fullPath = null;

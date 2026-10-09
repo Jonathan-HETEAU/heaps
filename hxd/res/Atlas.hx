@@ -1,5 +1,9 @@
 package hxd.res;
 
+/**
+	A texture atlas in the libGDX/Spine `.atlas` text format, giving named tiles in one or more images.
+	Several tiles with the same name and different `index` values form an animation.
+**/
 class Atlas extends Resource {
 
 	var contents : Map<String,Array<{ t : h2d.Tile, width : Int, height : Int }>>;
@@ -25,6 +29,10 @@ class Atlas extends Resource {
 		return t.sub(0, 0, t.width, t.height, t.dx - dx, t.dy - dy);
 	}
 
+	/**
+		Returns the tile of the given name (the first frame of an animation), or `null`.
+		The alignment sets the tile pivot relative to the original (untrimmed) size: top left by default.
+	**/
 	public function get( name : String, ?horizontalAlign : h2d.Flow.FlowAlign, ?verticalAlign : h2d.Flow.FlowAlign ) : h2d.Tile {
 		var c = getContents().get(name);
 		if( c == null )
@@ -35,6 +43,9 @@ class Atlas extends Resource {
 		return tileAlign(t.t, horizontalAlign, verticalAlign, t.width, t.height);
 	}
 
+	/**
+		Returns the frames of the animation of the given name, or `null`. If `name` is not set, the atlas must contain a single animation.
+	**/
 	public function getAnim( ?name : String, ?horizontalAlign : h2d.Flow.FlowAlign, ?verticalAlign : h2d.Flow.FlowAlign ) : Array<h2d.Tile> {
 		if( name == null ) {
 			var cont = getContents().keys();
@@ -48,6 +59,9 @@ class Atlas extends Resource {
 		return [for( t in c ) if( t == null ) null else tileAlign(t.t, horizontalAlign, verticalAlign, t.width, t.height)];
 	}
 
+	/**
+		Returns all the tiles of the atlas, by name. The atlas is parsed on the first call.
+	**/
 	public function getContents() {
 		if( contents != null )
 			return contents;
