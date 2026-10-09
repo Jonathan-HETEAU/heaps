@@ -8,10 +8,25 @@ private typedef ThreadLoop = sys.thread.EventLoop;
 private typedef ThreadLoop = Dynamic;
 #end
 
+/**
+	The state of an `AsyncRead`.
+**/
 enum abstract AsyncReadState(Int) {
+	/**
+		Waiting to be read.
+	**/
 	var Pending;
+	/**
+		Being read.
+	**/
 	var Reading;
+	/**
+		Read, and the callback was called.
+	**/
 	var Done;
+	/**
+		Cancelled with `AsyncRead.cancel`.
+	**/
 	var Cancelled;
 }
 
@@ -21,15 +36,33 @@ enum abstract AsyncReadState(Int) {
 **/
 class AsyncRead {
 
+	/**
+		The file being read.
+	**/
 	public var entry(default, null) : FileEntry;
+	/**
+		The bytes receiving the data.
+	**/
 	public var out(default, null) : haxe.io.Bytes;
+	/**
+		The position in `out` where the data is written.
+	**/
 	public var outPos(default, null) : Int;
+	/**
+		The position in the file where the read starts.
+	**/
 	public var pos(default, null) : Int;
+	/**
+		The number of bytes to read.
+	**/
 	public var len(default, null) : Int;
 	/**
 		Requests with higher priority are read first. Can be modified while the request is pending.
 	**/
 	public var priority : Float;
+	/**
+		The state of the read.
+	**/
 	public var state(default, null) : AsyncReadState = Pending;
 	/**
 		Number of bytes read, once the read is done.
@@ -106,10 +139,16 @@ class AsyncReader {
 		#end
 	}
 
+	/**
+		Tells if the reads are really asynchronous (on threaded targets when `ENABLED` is set), or emulated.
+	**/
 	public static function isAsync() {
 		return #if target.threaded ENABLED #else false #end;
 	}
 
+	/**
+		Requests the read of `len` bytes at `pos` in the file into `out` at `outPos`. `onDone` is called with the number of bytes read.
+	**/
 	public static function read( entry : FileEntry, out : haxe.io.Bytes, outPos : Int, pos : Int, len : Int, onDone : Int -> Void, priority : Float ) {
 		var r = new AsyncRead(entry, out, outPos, pos, len, onDone, priority);
 		r.loop = currentLoop();

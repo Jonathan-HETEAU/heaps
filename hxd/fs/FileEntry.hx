@@ -1,16 +1,46 @@
 package hxd.fs;
 
+/**
+	A file or directory of a `FileSystem`. Subclasses implement the access for each kind of file system.
+**/
 class FileEntry {
 
+	/**
+		The name of the file, with its extension.
+	**/
 	public var name(default, null) : String;
+	/**
+		The path of the file, relative to the file system root.
+	**/
 	public var path(get, never) : String;
+	/**
+		The path of the parent directory.
+	**/
 	public var directory(get, never) : String;
+	/**
+		The extension of the file name, in lowercase, without the dot.
+	**/
 	public var extension(get, never) : String;
+	/**
+		The size of the file in bytes.
+	**/
 	public var size(get, never) : Int;
+	/**
+		Tells if the entry is a directory.
+	**/
 	public var isDirectory(get, never) : Bool;
+	/**
+		Tells if the content is available. When it is not (files loaded on demand), call `load` first.
+	**/
 	public var isAvailable(get, never) : Bool;
 
+	/**
+		Returns the whole content of the file.
+	**/
 	public function getBytes() : haxe.io.Bytes return null;
+	/**
+		Reads `len` bytes at `pos` in the file into `out` at `outPos`, and returns the number of bytes read.
+	**/
 	public function readBytes( out : haxe.io.Bytes, outPos : Int, pos : Int, len : Int ) : Int { throw "readBytes() not implemented"; }
 
 	/**
@@ -47,6 +77,9 @@ class FileEntry {
 		return bytes;
 	}
 
+	/**
+		Reads `len` bytes at `pos` in the file into `bytes`. Throws `haxe.io.Eof` if fewer bytes are available.
+	**/
 	public function readFull( bytes, pos, len ) {
 		if( readBytes(bytes,0,pos,len) < len )
 			throw new haxe.io.Eof();
@@ -60,18 +93,45 @@ class FileEntry {
 		return bytes.get(0) | (bytes.get(1) << 8) | (bytes.get(2) << 16) | (bytes.get(3) << 24);
 	}
 
+	/**
+		Returns the content of the file as text.
+	**/
 	public function getText() return getBytes().toString();
+	/**
+		Returns an input to read the file.
+	**/
 	public function open() return @:privateAccess new FileInput(this);
 
+	/**
+		Makes the content available, then calls `onReady`.
+	**/
 	public function load( ?onReady : Void -> Void ) : Void { if( !isAvailable ) throw "load() not implemented"; else if( onReady != null ) onReady(); }
+	/**
+		Decodes the image file with the platform decoder (asynchronously on JS).
+	**/
 	public function loadBitmap( onLoaded : LoadedBitmap -> Void ) : Void { throw "loadBitmap() not implemented"; }
+	/**
+		Calls `onChanged` when the file changes, if the file system supports it. Set `null` to stop watching.
+	**/
 	public function watch( onChanged : Null<Void -> Void> ) { }
 	#if multidriver
+	/**
+		Stops watching the file for the engine of the given id (with the `multidriver` define).
+	**/
 	public function unwatch( id : Int ) { }
 	#end
+	/**
+		For a directory, tells if it contains an entry with the given name.
+	**/
 	public function exists( name : String ) : Bool return false;
+	/**
+		For a directory, returns the entry with the given name.
+	**/
 	public function get( name : String ) : FileEntry return null;
 
+	/**
+		For a directory, iterates over its entries.
+	**/
 	public function iterator() : hxd.impl.ArrayIterator<FileEntry> return null;
 
 	function get_isAvailable() return true;

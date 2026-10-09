@@ -2,21 +2,54 @@ package hxd.fs;
 
 #if (sys || nodejs)
 
+/**
+	The conversion rules of a directory.
+**/
 typedef ConvertConfig = {
+	/**
+		The merged `props.json` content.
+	**/
 	var obj : Dynamic;
+	/**
+		The conversion rules, sorted by priority.
+	**/
 	var rules : Array<ConvertRule>;
 }
 
+/**
+	A conversion rule: the files matching `pt` are converted with `cmd`. `version` comes from `fs.convertVersion` and forces a new conversion when changed.
+**/
 typedef ConvertRule = { pt : ConvertPattern, cmd : ConvertCommand, priority : Int, version : Int };
 
+/**
+	The files matched by a conversion rule, from the key of the `fs.convert` entry.
+**/
 enum ConvertPattern {
+	/**
+		A file name.
+	**/
 	Filename( name : String );
+	/**
+		A regular expression on the file name or path (keys starting with `^`).
+	**/
 	Regexp( r : EReg );
+	/**
+		A file extension.
+	**/
 	Ext( e : String );
+	/**
+		A list of extensions (keys such as `png,jpg`).
+	**/
 	Exts( e : Array<String> );
+	/**
+		All files (the `*` key).
+	**/
 	Wildcard;
 }
 
+/**
+	The conversions of a rule, with their parameters, and the next command applied to the result.
+**/
 typedef ConvertCommand = {
 	conv : Array<Convert>,
 	?params : Dynamic,
@@ -24,6 +57,9 @@ typedef ConvertCommand = {
 	?then : ConvertCommand
 }
 
+/**
+	A conversion stored in the cache (`.tmp/cache.dat`), used to skip the conversion when the source file did not change.
+**/
 typedef ConvertCacheItem = {
 	out : String,
 	ver : Null<Int>,
@@ -34,12 +70,25 @@ typedef ConvertCacheItem = {
 	localContextJson : Null<String>,
 }
 
+/**
+	Converts the resource files of a `LocalFileSystem` according to the `fs.convert` rules of the `props.json` files, and caches the results in the `.tmp` directory.
+	A rule maps a pattern to the destination extension of a `Convert`, such as `"fbx": "hmd"`, or `"png": { "convert": "dds", "format": "BC3" }`. Rules from `fs.convert.<configuration>` override the default ones.
+**/
 class FileConverter {
 
 	// Date implementation has a second resolution on some platforms.
+	/**
+		The precision of the file modification times, in milliseconds: some platforms have a one second resolution.
+	**/
 	public static final FILE_TIME_PRECISION = 1000;
+	/**
+		The number of cache changes after which the cache file is saved immediately.
+	**/
 	public static var CACHE_SAVE_MAX_PENDING = 50;
 
+	/**
+		The name of the configuration selecting the `fs.convert.<configuration>` rules.
+	**/
 	public var configuration(default,null) : String;
 
 	var baseDir : String;
@@ -76,6 +125,9 @@ class FileConverter {
 		return conf;
 	}
 
+	/**
+		Creates a converter for the resources directory.
+	**/
 	public function new(baseDir,configuration) {
 		this.baseDir = baseDir;
 		this.configuration = configuration;
@@ -94,6 +146,9 @@ class FileConverter {
 		defaultConfig = makeConfig(defaultCfg);
 	}
 
+	/**
+		Called before each conversion.
+	**/
 	public dynamic function onConvert( c : Convert ) {
 	}
 
@@ -267,6 +322,9 @@ class FileConverter {
 		return null;
 	}
 
+	/**
+		Converts the file of the entry if a rule matches it, unless the cached result is up to date, and makes the entry point to the converted file.
+	**/
 	public function run( e : LocalFileSystem.LocalEntry ) {
 		if( e.originalFile == null )
 			e.originalFile = e.file;

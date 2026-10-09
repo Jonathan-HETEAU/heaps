@@ -100,6 +100,9 @@ private class EmbedEntry extends FileEntry {
 
 #end
 
+/**
+	A read-only file system whose files are embedded in the application as Haxe resources. Created with `create`, used by `hxd.Res.initEmbed`.
+**/
 class EmbedFileSystem #if !macro implements FileSystem #end {
 
 	#if !macro
@@ -110,6 +113,9 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 		this.root = root;
 	}
 
+	/**
+		Returns the root directory.
+	**/
 	public function getRoot() : FileEntry {
 		return new EmbedEntry(this,"root",".",null);
 	}
@@ -141,6 +147,9 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 		return r != null && r != true;
 	}
 
+	/**
+		Tells if a file or directory exists at the path.
+	**/
 	public function exists( path : String ) {
 		var r = root;
 		for( p in splitPath(path) ) {
@@ -150,6 +159,9 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 		return true;
 	}
 
+	/**
+		Returns the file entry at the path. Throws `NotFound` if it does not exist.
+	**/
 	public function get( path : String ) {
 		if( !exists(path) )
 			throw new NotFound(path);
@@ -170,6 +182,9 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 	}
 	#end
 
+	/**
+		Converts and embeds all the files of the resource directory, and returns a file system to access them.
+	**/
 	public static macro function create( ?basePath : String, ?options : hxd.res.EmbedOptions ) {
 		var f = new hxd.res.FileTree(basePath);
 		var data = f.embed(options);
@@ -181,9 +196,15 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 		return macro { $types; @:privateAccess new hxd.fs.EmbedFileSystem(haxe.Unserializer.run($v { sdata } )); };
 	}
 
+	/**
+		Does nothing.
+	**/
 	public function dispose() {
 	}
 
+	/**
+		Returns the entries of the directory, sorted by name.
+	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		#if macro
 		throw "Not Supported";
@@ -192,6 +213,9 @@ class EmbedFileSystem #if !macro implements FileSystem #end {
 		#end
 	}
 
+	/**
+		Not supported.
+	**/
 	public function delete( path : String ) : Bool {
 		throw "Not supported";
 	}

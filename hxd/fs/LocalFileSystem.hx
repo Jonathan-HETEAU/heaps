@@ -2,6 +2,9 @@ package hxd.fs;
 
 #if (sys || nodejs)
 
+/**
+	A file or directory of a `LocalFileSystem`.
+**/
 @:allow(hxd.fs.LocalFileSystem)
 @:allow(hxd.fs.FileConverter)
 @:access(hxd.fs.LocalFileSystem)
@@ -315,15 +318,32 @@ class LocalEntry extends FileEntry {
 	#end
 }
 
+/**
+	A file system reading the files of a local directory, converting them when needed (see `FileConverter`) and watching their changes.
+	Only available on `sys` targets and Node.js.
+**/
 class LocalFileSystem implements FileSystem {
 
 	var root : FileEntry;
 	var fileCache = new Map<String,{r:LocalEntry}>();
+	/**
+		The full path of the root directory, ending with `/`.
+	**/
 	public var baseDir(default,null) : String;
+	/**
+		The converter applied to the files when they are opened.
+	**/
 	public var convert(default,null) : FileConverter;
 	static var isWindows = Sys.systemName() == "Windows";
+	/**
+		The maximum number of watched files checked for changes per frame, when the platform does not notify the changes.
+	**/
 	public static var FILES_CHECK_MAX = 5;
 
+	/**
+		Creates a file system for the directory, searched relative to the executable (or `storagePath`) then to the current directory.
+		`configuration` selects the conversion rules (`"default"` if `null`).
+	**/
 	public function new( dir : String, configuration : String, ?storagePath ) {
 		baseDir = dir;
 		if( configuration == null )
@@ -349,11 +369,17 @@ class LocalFileSystem implements FileSystem {
 		root = new LocalEntry(this, "root", null, baseDir);
 	}
 
+	/**
+		Returns the absolute path of the (converted) file of the entry.
+	**/
 	public function getAbsolutePath( f : FileEntry ) : String {
 		var f = cast(f, LocalEntry);
 		return f.file;
 	}
 
+	/**
+		Returns the root directory.
+	**/
 	public function getRoot() : FileEntry {
 		return root;
 	}
@@ -420,6 +446,9 @@ class LocalFileSystem implements FileSystem {
 		});
 	}
 
+	/**
+		Removes the files that were not found from the cache, so they are searched again.
+	**/
 	public function clearCache() {
 		Exclusive.lock(function() {
 			for( path in fileCache.keys() ) {
@@ -430,15 +459,24 @@ class LocalFileSystem implements FileSystem {
 		});
 	}
 
+	/**
+		Removes the entry of the path from the cache.
+	**/
 	public function removePathFromCache(path : String) {
 		Exclusive.lock(() -> fileCache.remove(path));
 	}
 
+	/**
+		Tells if a file exists at the path. The case of the path must match the file name.
+	**/
 	public function exists( path : String ) {
 		var f = open(path);
 		return f != null;
 	}
 
+	/**
+		Returns the file entry at the path. Throws `NotFound` if it does not exist.
+	**/
 	public function get( path : String ) {
 		var f = open(path);
 		if( f == null )
@@ -446,10 +484,16 @@ class LocalFileSystem implements FileSystem {
 		return f;
 	}
 
+	/**
+		Clears the cache.
+	**/
 	public function dispose() {
 		Exclusive.lock(() -> fileCache = new Map());
 	}
 
+	/**
+		Returns the entries of the directory.
+	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		if( !sys.FileSystem.exists(baseDir + path) || !sys.FileSystem.isDirectory(baseDir + path) )
 			throw new NotFound(baseDir + path);
@@ -463,6 +507,9 @@ class LocalFileSystem implements FileSystem {
 		return r;
 	}
 
+	/**
+		Deletes the file. Returns `false` if it can't be deleted.
+	**/
 	public function delete( path : String ) : Bool {
 		removePathFromCache(path);
 		try sys.FileSystem.deleteFile(baseDir + path) catch( e : Dynamic ) { return false; };
@@ -473,33 +520,60 @@ class LocalFileSystem implements FileSystem {
 
 #else
 
+/**
+	The local file system is not supported on this platform: creating one throws an error.
+**/
 class LocalFileSystem implements FileSystem {
 
+	/**
+		Not supported.
+	**/
 	public var baseDir(default,null) : String;
 
+	/**
+		Throws an error.
+	**/
 	public function new( dir : String ) {
 		throw "Local file system is not supported for this platform";
 	}
 
+	/**
+		Not supported.
+	**/
 	public function exists(path:String) {
 		return false;
 	}
 
+	/**
+		Not supported.
+	**/
 	public function get(path:String) : FileEntry {
 		return null;
 	}
 
+	/**
+		Not supported.
+	**/
 	public function getRoot() : FileEntry {
 		return null;
 	}
 
+	/**
+		Not supported.
+	**/
 	public function dispose() {
 	}
 
+	/**
+		Not supported.
+	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		return null;
 	}
 
+	/**
+		Not supported.
+	**/
 	public function delete( path : String ) : Bool {
 		return false;
 	}

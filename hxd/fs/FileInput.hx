@@ -1,5 +1,8 @@
 package hxd.fs;
 
+/**
+	A buffered input reading a file entry, returned by `FileEntry.open`.
+**/
 class FileInput extends haxe.io.Input {
 
 	static var PREFETCH_CACHE : haxe.io.Bytes = null;
@@ -10,6 +13,9 @@ class FileInput extends haxe.io.Input {
 	var cacheLen : Int = 0;
 	var nextReadPos : Int = 0;
 
+	/**
+		The position of the next byte to read in the file.
+	**/
 	public var position(get, never) : Int;
 	inline function get_position() : Int {
 		return nextReadPos - cacheLen;
@@ -19,6 +25,9 @@ class FileInput extends haxe.io.Input {
 		this.entry = entry;
 	}
 
+	/**
+		Reads the next `dataSize` bytes in the buffer. Throws `haxe.io.Eof` at the end of the file.
+	**/
 	public function fetch( dataSize:Int = 256 ) {
 		var prev = cache;
 		if( cache == null || cache.length < dataSize ) {
@@ -43,6 +52,9 @@ class FileInput extends haxe.io.Input {
 			throw new haxe.io.Eof();
 	}
 
+	/**
+		Skips `nbytes` bytes.
+	**/
 	public function skip( nbytes : Int ) {
 		if( cacheLen > 0 ) {
 			var k = hxd.Math.imin(cacheLen, nbytes);

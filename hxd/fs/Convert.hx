@@ -1,8 +1,18 @@
 package hxd.fs;
 
+/**
+	A resource file conversion, such as FBX to HMD. Subclasses implement `convert` and are registered with `Convert.register`.
+	The conversions applied to the files are selected by the `fs.convert` rules of the `props.json` files (see `FileConverter`).
+**/
 @:keep @:keepSub
 class Convert {
+	/**
+		The extensions of the files this conversion accepts, or `null` for any file.
+	**/
 	public var sourceExts(default, null):Array<String>;
+	/**
+		The extension of the converted files, which also identifies the conversion in the rules.
+	**/
 	public var destExt(default, null):String;
 
 	/**
@@ -10,13 +20,34 @@ class Convert {
 		When incremented, all files processed by this Convert would be rebuilt. **/
 	public var version(default, null):Int;
 
+	/**
+		The parameters of the conversion, set by the rule.
+	**/
 	public var params:Dynamic;
+	/**
+		The parameters computed from the file content by `computeLocalParams`.
+	**/
 	public var localParams:Dynamic;
 
+	/**
+		The path of the file to convert.
+	**/
 	public var srcPath(get, never):String;
+	/**
+		The path of the converted file to write.
+	**/
 	public var dstPath:String;
+	/**
+		The root directory of the resources.
+	**/
 	public var baseDir:String;
+	/**
+		The path of the original resource file, relative to `baseDir`.
+	**/
 	public var originalFilename:String;
+	/**
+		The content of the file to convert, read on demand.
+	**/
 	public var srcBytes(get, never):haxe.io.Bytes;
 
 	@:noCompletion var _srcPath:String;
@@ -32,6 +63,9 @@ class Convert {
 		return _srcBytes;
 	}
 
+	/**
+		Sets the file to convert.
+	**/
 	public function setSource(path:String) {
 		if (path == _srcPath)
 			return;
@@ -39,17 +73,23 @@ class Convert {
 		_srcBytes = null;
 	}
 
-	/*
+	/**
 		The calculated hash for the input source file content.
-	*/
+	**/
 	public var hash : String;
 
+	/**
+		Creates a conversion from the comma separated `sourceExts` (`null` for any) to `destExt`.
+	**/
 	public function new(sourceExts:String, destExt:String) {
 		this.sourceExts = sourceExts == null ? null : sourceExts.split(",");
 		this.destExt = destExt;
 		this.version = 0;
 	}
 
+	/**
+		Clears the state of the conversion after it ran.
+	**/
 	public function cleanup() {
 		params = null;
 		localParams = null;
@@ -60,6 +100,9 @@ class Convert {
 		hash = null;
 	}
 
+	/**
+		Converts `srcPath` and writes the result to `dstPath`.
+	**/
 	public function convert() {
 		throw "Not implemented";
 	}
@@ -80,6 +123,9 @@ class Convert {
 		return null;
 	}
 
+	/**
+		Returns the parameters that depend on the file content (see `hasLocalParams` and `getLocalContext`).
+	**/
 	public function computeLocalParams(context:Dynamic):Dynamic {
 		return null;
 	}
@@ -112,6 +158,9 @@ class Convert {
 
 	@:persistent static var converts = new Map<String, Array<Convert>>();
 
+	/**
+		Registers a conversion. The last registered conversion for an extension has priority, which allows overriding the defaults.
+	**/
 	public static function register(c:Convert):Int {
 		var dest = converts.get(c.destExt);
 		if (dest == null) {
@@ -127,6 +176,9 @@ class Convert {
 
 private typedef MatCollideInfo = { ignoreCollide : Bool, ref : Null<String>, name : Null<String> };
 
+/**
+	Converts FBX models to the HMD format.
+**/
 class ConvertFBX2HMD extends Convert {
 
 	// computeLocalParams -> convert
@@ -134,6 +186,9 @@ class ConvertFBX2HMD extends Convert {
 	// context
 	var matNames : Array<String>;
 
+	/**
+		Creates the conversion.
+	**/
 	public function new() {
 		super("fbx", "hmd");
 	}
@@ -366,10 +421,16 @@ class ConvertFBX2HMD extends Convert {
 	static var _ = Convert.register(new ConvertFBX2HMD());
 }
 
+/**
+	A conversion running an external command. `%SRC` and `%DST` in the arguments are replaced by the source and destination paths.
+**/
 class Command extends Convert {
 	var cmd:String;
 	var args:Array<String>;
 
+	/**
+		Creates a conversion from the `fr` to the `to` extensions, running `cmd` with `args`.
+	**/
 	public function new(fr, to, cmd:String, args:Array<String>) {
 		super(fr, to);
 		this.cmd = cmd;
@@ -381,7 +442,13 @@ class Command extends Convert {
 	}
 }
 
+/**
+	Converts WAV to MP3 with the `lame` command. Parameters: `samplerate` (default 44100), `mono`, `bitrate`.
+**/
 class ConvertWAV2MP3 extends Convert {
+	/**
+		Creates the conversion.
+	**/
 	public function new() {
 		super("wav", "mp3");
 	}
@@ -413,7 +480,13 @@ class ConvertWAV2MP3 extends Convert {
 	static var _ = Convert.register(new ConvertWAV2MP3());
 }
 
+/**
+	Converts WAV to Ogg Vorbis with the `oggenc` command (`oggenc2` on Windows). Parameters: `samplerate` (default 44100), `mono`, `bitrate`.
+**/
 class ConvertWAV2OGG extends Convert {
+	/**
+		Creates the conversion.
+	**/
 	public function new() {
 		super("wav", "ogg");
 	}
@@ -446,7 +519,13 @@ class ConvertWAV2OGG extends Convert {
 	static var _ = Convert.register(new ConvertWAV2OGG());
 }
 
+/**
+	Converts uncompressed 32 bits TGA images to PNG.
+**/
 class ConvertTGA2PNG extends Convert {
+	/**
+		Creates the conversion.
+	**/
 	public function new() {
 		super("tga", "png");
 	}
@@ -479,9 +558,15 @@ class ConvertTGA2PNG extends Convert {
 	static var _ = Convert.register(new ConvertTGA2PNG());
 }
 
+/**
+	Converts bitmap font descriptions to the binary BFNT format.
+**/
 class ConvertFNT2BFNT extends Convert {
 	var emptyTile:h2d.Tile;
 
+	/**
+		Creates the conversion.
+	**/
 	public function new() {
 		// Fake tile create subs before discarding the font.
 		emptyTile = @:privateAccess new h2d.Tile(null, 0, 0, 0, 0, 0, 0);
@@ -505,6 +590,10 @@ class ConvertFNT2BFNT extends Convert {
 	static var _ = Convert.register(new ConvertFNT2BFNT());
 }
 
+/**
+	Converts images to compressed DDS textures with the `texconv` or `CompressonatorCLI` commands.
+	Parameters: `format` (required, such as `BC1`, `BC3` or `RGBA`), `mips`, `size` (maximum size), `alpha` (BC1 alpha threshold).
+**/
 class CompressIMG extends Convert {
 	static var TEXCONV_FMT = [
 		"R16F" => "R16_FLOAT",
@@ -675,6 +764,9 @@ class CompressIMG extends Convert {
 	static var _ = Convert.register(new CompressIMG("png,tga,jpg,jpeg,dds,envd,envs", "dds"));
 }
 
+/**
+	Replaces the file by an empty one. Registered as `dummy` and `remove`, to exclude files from the resources.
+**/
 class DummyConvert extends Convert {
 	override function convert() {
 		save(haxe.io.Bytes.alloc(0));
@@ -686,6 +778,9 @@ class DummyConvert extends Convert {
 	];
 }
 
+/**
+	Converts JSON files (and Hide files such as prefabs) to the binary HBSON format.
+**/
 class ConvertBinJSON extends Convert {
 	override function convert() {
 		var json = haxe.Json.parse(srcBytes.toString());
@@ -697,6 +792,9 @@ class ConvertBinJSON extends Convert {
 	static var _ = [Convert.register(new ConvertBinJSON("json,prefab,l3d,fx,shgraph", "hbson"))];
 }
 
+/**
+	Converts SVG images to multi-channel signed distance field PNG images with the `msdfgen` command. Parameter: `size` (default 128).
+**/
 class ConvertSVGToMSDF extends Convert {
 	override function convert() {
 		var size = hasParam("size") ? getParam("size") : 128;

@@ -51,22 +51,37 @@ private class MultiFileEntry extends FileEntry {
 
 }
 
+/**
+	Combines several file systems: a file is searched in each of them, in order. Directories merge their contents.
+**/
 class MultiFileSystem implements FileSystem {
 
 	var cache : Map<String, MultiFileEntry>;
 	var root : MultiFileEntry;
+	/**
+		The file systems, by priority order.
+	**/
 	public var fs : Array<FileSystem>;
 
+	/**
+		Creates a file system combining the given ones.
+	**/
 	public function new(fs) {
 		this.fs = fs;
 		cache = new Map();
 		root = new MultiFileEntry(this,[for( f in fs ) f.getRoot()]);
 	}
 
+	/**
+		Returns the root directory, merging the roots of all the file systems.
+	**/
 	public function getRoot() {
 		return root;
 	}
 
+	/**
+		Returns the entry at the path, from the first file system containing it. Throws `NotFound` if none does.
+	**/
 	public function get( path : String ) : FileEntry {
 		var f = cache.get(path);
 		if( f != null )
@@ -88,6 +103,9 @@ class MultiFileSystem implements FileSystem {
 		return f;
 	}
 
+	/**
+		Tells if one of the file systems contains the path.
+	**/
 	public function exists( path : String ) : Bool {
 		for( f in fs )
 			if( f.exists(path) )
@@ -95,15 +113,24 @@ class MultiFileSystem implements FileSystem {
 		return false;
 	}
 
+	/**
+		Disposes all the file systems.
+	**/
 	public function dispose() {
 		for( f in fs )
 			f.dispose();
 	}
 
+	/**
+		Not supported: use `get(path)` and iterate over the entry.
+	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		throw "Not Supported";
 	}
 
+	/**
+		Not supported.
+	**/
 	public function delete( path : String ) : Bool {
 		throw "Not supported";
 	}

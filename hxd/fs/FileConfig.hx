@@ -1,11 +1,17 @@
 package hxd.fs;
 
+/**
+	Per directory configuration read from JSON files (such as `props.json`) in the resources: the configuration of a directory is merged with the one of its parent directories.
+**/
 class FileConfig<T> {
 	var baseDir : String;
 	var fileName : String;
 	var cache : Map<String, T>;
 	var def : T;
 
+	/**
+		Creates a configuration reader for the files named `fileName` under `baseDir`, with the default configuration `def`.
+	**/
 	public function new (baseDir : String = "", fileName : String = "props.json", def : T) {
 		this.baseDir = baseDir;
 		this.fileName = fileName;
@@ -14,6 +20,9 @@ class FileConfig<T> {
 	}
 
 	#if !macro
+	/**
+		Returns the configuration of the directory, merged with its parents and cached.
+	**/
 	public function getConfig(dir : String) : T {
 		var loader = hxd.res.Loader.currentInstance;
 		var c = cache.get(dir);
@@ -52,6 +61,9 @@ class FileConfig<T> {
 		return cp;
 	}
 
+	/**
+		Merges a configuration file content with the parent configuration. By default, the fields of objects are merged recursively.
+	**/
 	public dynamic function loadConfig(parent : T, obj : T) : T {
 		return mergeRec(parent, obj);
 	};
