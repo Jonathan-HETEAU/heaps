@@ -2,13 +2,31 @@ package h3d.scene.pbr;
 
 import h3d.pass.CascadeShadowMap;
 
+/**
+	Packs the lights of the frame in a GPU buffer read by the forward shader (`h3d.shader.pbr.DefaultForward`), so that
+	the objects drawn in the forward passes (such as transparent objects) are lit by the PBR lights.
+
+	When compute shaders are available, the lights can be sorted into a grid of clusters covering the camera view
+	(16x9 tiles and 24 depth slices), so that each pixel only evaluates the lights affecting its cluster.
+	A limited number of lights of each kind can cast shadows in the forward passes.
+**/
 class LightBuffer {
 
+	/**
+		The forward lighting shader added to the forward objects which do not already have one.
+	**/
 	public var defaultForwardShader = new h3d.shader.pbr.DefaultForward();
 
 	var useBindless : Bool;
 	var useDynamicSamplerIndex : Bool;
+	/**
+		The bindless handles of the shadow maps used in the frame.
+	**/
 	public var shadowHandles : Array<h3d.mat.TextureHandle> = [];
+	/**
+		If `true` (default on JavaScript), the forward shader declares only the shadow samplers used by the current lights
+		instead of the maximum count. This saves texture units but compiles more shader variants. Ignored with bindless.
+	**/
 	public var tightShadowSamplers = #if js true #else false #end;
 
 	var MAX_DIR_SHADOW = 1;
@@ -49,8 +67,18 @@ class LightBuffer {
 	final CLUSTER_Z = 24;
 	final CLUSTER_STRIDE = 128;
 
+	/**
+		If positive, the distance covered by the clusters; farther objects use the last depth slice.
+		Otherwise the clusters cover the camera range up to `zFar`.
+	**/
 	public var clusterMaxDistance = 0.;
+	/**
+		Enables the light clustering when compute shaders are supported.
+	**/
 	public var enableClustering = true;
+	/**
+		Uses the hierarchical depth buffer to skip the clusters and lights hidden by the opaque geometry.
+	**/
 	public var enableClusterHZB = true;
 	var cullShader : h3d.shader.pbr.ClusterCull;
 	var occlusionShader : h3d.shader.pbr.ClusterCull.ClusterLightOcclusion;
@@ -64,6 +92,9 @@ class LightBuffer {
 	var clusterNear = 0.;
 	var clusterFar = 0.;
 
+	/**
+		Creates the light buffer.
+	**/
 	public function new() {
 		var engine = h3d.Engine.getCurrent();
 		useBindless = engine != null && engine.driver.hasFeature(Bindless);
@@ -78,6 +109,9 @@ class LightBuffer {
 		defaultForwardShader.lightInfos = new h3d.Buffer(BUFFER_MAX_SIZE, hxd.BufferFormat.make([{ name : "uniformData", type : DVec4 }]), [UniformBuffer, Dynamic]);
 	}
 
+	/**
+		Copies the light buffer and counts of the frame to a custom forward shader `s`.
+	**/
 	public function setBuffers( s : h3d.shader.pbr.DefaultForward ) {
 		s.cameraPosition = defaultForwardShader.cameraPosition;
 		s.emissivePower = defaultForwardShader.emissivePower;
@@ -180,6 +214,10 @@ class LightBuffer {
 
 	var tmpLights = [];
 
+	/**
+		Returns the lights of the frame enabled for the forward passes (see `Light.enableForward`) and inside the camera
+		frustum, sorted with the directional lights first, then by distance to the camera target.
+	**/
 	public function sortLights ( ctx : h3d.scene.RenderContext ) : Array<Light> @:privateAccess {
 		var l = Std.downcast(ctx.lights, Light);
 		if ( l == null )
@@ -196,6 +234,10 @@ class LightBuffer {
 		return tmpLights;
 	}
 
+	/**
+		Writes `lights` into the light buffer, within the buffer size and shadow limits.
+		@param shadows If `false`, the lights are written without their shadows.
+	**/
 	public function fillLights (lights : Array<Light>, shadows : Bool) {
 		if (lights == null)
 			return;
@@ -265,6 +307,9 @@ class LightBuffer {
 		}
 	}
 
+	/**
+		Updates the light buffer and the clusters for the current frame. Called by the PBR renderer before the forward passes.
+	**/
 	public function sync( ctx : h3d.scene.RenderContext ) {
 		shadowHandles.resize(0);
 
@@ -633,6 +678,10 @@ class LightBuffer {
 		s.CLUSTERED = true;
 	}
 
+	/**
+		Debug: draws the clusters of the last frame as lines, colored by their number of lights.
+		Returns `null` if no clusters were built.
+	**/
 	public function createClusterDebug( ?parent : h3d.scene.Object ) : h3d.scene.Graphics {
 		if( clusterBuffer == null || clusterBuffer.isDisposed() || !hasClusterCamera )
 			return null;
@@ -694,6 +743,9 @@ class LightBuffer {
 		return g;
 	}
 
+	/**
+		Releases the GPU buffers.
+	**/
 	public function dispose() {
 		defaultForwardShader.lightInfos.dispose();
 		if( clusterBuffer != null ) {
