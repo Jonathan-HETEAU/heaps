@@ -358,58 +358,58 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.prim.SubMesh](api/md/h3d/prim/SubMesh.md)
 - [h3d.prim.SubPart](api/md/h3d/prim/SubPart.md)
 - [h3d.prim.UV](api/md/h3d/prim/UV.md)
-- [h3d.scene.AnimMeshBatch](api/md/h3d/scene/AnimMeshBatch.md)
-- [h3d.scene.AnimMeshBatchShader](api/md/h3d/scene/AnimMeshBatchShader.md)
-- [h3d.scene.AnimMeshBatcher](api/md/h3d/scene/AnimMeshBatcher.md)
-- [h3d.scene.BaseSync](api/md/h3d/scene/BaseSync.md)
-- [h3d.scene.BatchData](api/md/h3d/scene/BatchData.md)
-- [h3d.scene.BatchGroup](api/md/h3d/scene/BatchGroup.md)
-- [h3d.scene.BatchLibrary](api/md/h3d/scene/BatchLibrary.md)
-- [h3d.scene.Batcher](api/md/h3d/scene/Batcher.md)
-- [h3d.scene.BatcherFlags](api/md/h3d/scene/BatcherFlags.md): Batcher API
-- [h3d.scene.Box](api/md/h3d/scene/Box.md)
-- [h3d.scene.CameraController](api/md/h3d/scene/CameraController.md)
-- [h3d.scene.Capsule](api/md/h3d/scene/Capsule.md)
-- [h3d.scene.CpuIndirectCallBuffer](api/md/h3d/scene/CpuIndirectCallBuffer.md)
-- [h3d.scene.DynamicJointData](api/md/h3d/scene/DynamicJointData.md)
-- [h3d.scene.FPSCameraController](api/md/h3d/scene/FPSCameraController.md)
-- [h3d.scene.GPUMeshBatch](api/md/h3d/scene/GPUMeshBatch.md)
-- [h3d.scene.Graphics](api/md/h3d/scene/Graphics.md)
-- [h3d.scene.HierarchicalWorld](api/md/h3d/scene/HierarchicalWorld.md)
-- [h3d.scene.Interactive](api/md/h3d/scene/Interactive.md)
-- [h3d.scene.Joint](api/md/h3d/scene/Joint.md)
-- [h3d.scene.JointData](api/md/h3d/scene/JointData.md)
-- [h3d.scene.Light](api/md/h3d/scene/Light.md)
-- [h3d.scene.LightSystem](api/md/h3d/scene/LightSystem.md)
+- [h3d.scene.AnimMeshBatch](api/md/h3d/scene/AnimMeshBatch.md): A `MeshBatch` whose instances all follow the animated transform of a source mesh (see `AnimMeshBatcher`).
+- [h3d.scene.AnimMeshBatchShader](api/md/h3d/scene/AnimMeshBatchShader.md): Shader applying the animated transform of the source object to all the instances of an `AnimMeshBatch`.
+- [h3d.scene.AnimMeshBatcher](api/md/h3d/scene/AnimMeshBatcher.md): Draws many copies of an animated object with instancing: one `MeshBatch` is created per mesh of the object, and all the copies play the same animation in sync.
+- [h3d.scene.BaseSync](api/md/h3d/scene/BaseSync.md): Base class of the compute shaders updating the instance transforms on the GPU (see `Batcher.syncShader`).
+- [h3d.scene.BatchData](api/md/h3d/scene/BatchData.md): The instance data of one material pass of a `MeshBatch`.
+- [h3d.scene.BatchGroup](api/md/h3d/scene/BatchGroup.md): A group of instances of a `Batcher` which can be removed together.
+- [h3d.scene.BatchLibrary](api/md/h3d/scene/BatchLibrary.md): The geometry storage shared by `Batcher` instances: the models are packed in one big primitive per vertex format.
+- [h3d.scene.Batcher](api/md/h3d/scene/Batcher.md): A GPU driven renderer for very large numbers of static instances of many different models.
+- [h3d.scene.BatcherFlags](api/md/h3d/scene/BatcherFlags.md): Options of a `Batcher`.
+- [h3d.scene.Box](api/md/h3d/scene/Box.md): A debug wireframe box, drawn with 12 lines.
+- [h3d.scene.CameraController](api/md/h3d/scene/CameraController.md): Base class of the mouse/keyboard camera controllers.
+- [h3d.scene.Capsule](api/md/h3d/scene/Capsule.md): A debug wireframe capsule aligned on the X axis: a cylinder of `length` capped by two half spheres of `radius`.
+- [h3d.scene.CpuIndirectCallBuffer](api/md/h3d/scene/CpuIndirectCallBuffer.md): The indirect draw commands of one material, built on the CPU when using sub meshes.
+- [h3d.scene.DynamicJointData](api/md/h3d/scene/DynamicJointData.md): The runtime state of a dynamic joint (`h3d.anim.Skin.DynamicJoint`): a joint simulated as a spring following its animated position, for hair, cloth or other secondary motion.
+- [h3d.scene.FPSCameraController](api/md/h3d/scene/FPSCameraController.md): A free flying "first person" camera controller: - right button drag: looks around; - while holding the right or middle button: arrow keys or ZQSD move forward/backward/sideways (W, S and D also work),   A moves down a...
+- [h3d.scene.GPUMeshBatch](api/md/h3d/scene/GPUMeshBatch.md): A `MeshBatch` using GPU driven rendering: the level of detail selection and the frustum culling of each instance can be computed by a compute shader (see `enableGpuLod` and `enableGpuCulling`), and the instances are d...
+- [h3d.scene.Graphics](api/md/h3d/scene/Graphics.md): Draws 3D lines with an API similar to `h2d.Graphics`: set a style with `lineStyle`, then `moveTo` / `lineTo`.
+- [h3d.scene.HierarchicalWorld](api/md/h3d/scene/HierarchicalWorld.md): A streamed world split in a quadtree of square chunks on the XY plane.
+- [h3d.scene.Interactive](api/md/h3d/scene/Interactive.md): A 3D object receiving mouse, touch and keyboard events through a collision shape.
+- [h3d.scene.Joint](api/md/h3d/scene/Joint.md): A temporary object representing a joint (bone) of a `Skin`, returned by `Skin.getObjectByName`.
+- [h3d.scene.JointData](api/md/h3d/scene/JointData.md): The runtime state of a joint of a `Skin` (one per joint of the skin data).
+- [h3d.scene.Light](api/md/h3d/scene/Light.md): Base class for all 3D lights.
+- [h3d.scene.LightSystem](api/md/h3d/scene/LightSystem.md): Base class of the lighting setup used by a `Renderer`.
 - [h3d.scene.Mesh](api/md/h3d/scene/Mesh.md): h3d.scene.Mesh is the base class for all 3D objects displayed on screen.
 - [h3d.scene.MeshBatch](api/md/h3d/scene/MeshBatch.md): h3d.scene.MeshBatch allows to draw multiple meshed in a single draw call.
-- [h3d.scene.MeshBatchFlag](api/md/h3d/scene/MeshBatchFlag.md)
-- [h3d.scene.MultiMaterial](api/md/h3d/scene/MultiMaterial.md)
+- [h3d.scene.MeshBatchFlag](api/md/h3d/scene/MeshBatchFlag.md): Options of a `MeshBatch`, set with its `enable*` methods.
+- [h3d.scene.MultiMaterial](api/md/h3d/scene/MultiMaterial.md): A `Mesh` using several materials, one per material group of its primitive.
 - [h3d.scene.Object](api/md/h3d/scene/Object.md): h3d.scene.Object is the base 3D class that all scene tree elements inherit from.
-- [h3d.scene.ObjectFlags](api/md/h3d/scene/ObjectFlags.md)
-- [h3d.scene.ObjectInstance](api/md/h3d/scene/ObjectInstance.md)
-- [h3d.scene.OptAlgorithm](api/md/h3d/scene/OptAlgorithm.md)
-- [h3d.scene.OrbitCameraController](api/md/h3d/scene/OrbitCameraController.md)
-- [h3d.scene.PassObjects](api/md/h3d/scene/PassObjects.md)
-- [h3d.scene.RenderContext](api/md/h3d/scene/RenderContext.md)
-- [h3d.scene.RenderMode](api/md/h3d/scene/RenderMode.md)
-- [h3d.scene.Renderer](api/md/h3d/scene/Renderer.md)
+- [h3d.scene.ObjectFlags](api/md/h3d/scene/ObjectFlags.md): Bit flags storing the boolean state of an `Object`.
+- [h3d.scene.ObjectInstance](api/md/h3d/scene/ObjectInstance.md): A model registered in a `Batcher` with `Batcher.addInstance`, which can then be emitted many times.
+- [h3d.scene.OptAlgorithm](api/md/h3d/scene/OptAlgorithm.md): Geometry optimizations available for `WorldModel.optimize`.
+- [h3d.scene.OrbitCameraController](api/md/h3d/scene/OrbitCameraController.md): A camera controller orbiting around a target, as in 3D editors: - right button drag: pans the target; - middle button drag (or Alt + left button drag): rotates around the target; - mouse wheel: zooms (see `enableZoom`...
+- [h3d.scene.PassObjects](api/md/h3d/scene/PassObjects.md): The list of draw passes emitted for one pass name (such as `"default"`, `"alpha"` or `"shadow"`) during a frame, handed to the `Renderer` by the `Scene`.
+- [h3d.scene.RenderContext](api/md/h3d/scene/RenderContext.md): The per-frame state of a 3D `Scene` rendering, shared by the scene objects, the `Renderer` and the render passes.
+- [h3d.scene.RenderMode](api/md/h3d/scene/RenderMode.md): The rendering mode of a `Renderer`.
+- [h3d.scene.Renderer](api/md/h3d/scene/Renderer.md): Base class of the scene renderers.
 - [h3d.scene.Scene](api/md/h3d/scene/Scene.md): h3d.scene.Scene is the root class for a 3D scene.
-- [h3d.scene.Skin](api/md/h3d/scene/Skin.md)
-- [h3d.scene.Sphere](api/md/h3d/scene/Sphere.md)
-- [h3d.scene.SubMesh](api/md/h3d/scene/SubMesh.md)
-- [h3d.scene.SubPart](api/md/h3d/scene/SubPart.md)
-- [h3d.scene.SubSkin](api/md/h3d/scene/SubSkin.md)
-- [h3d.scene.SyncShaderInterface](api/md/h3d/scene/SyncShaderInterface.md)
-- [h3d.scene.Trail](api/md/h3d/scene/Trail.md)
-- [h3d.scene.View](api/md/h3d/scene/View.md)
-- [h3d.scene.World](api/md/h3d/scene/World.md)
-- [h3d.scene.WorldChunk](api/md/h3d/scene/WorldChunk.md)
-- [h3d.scene.WorldData](api/md/h3d/scene/WorldData.md)
-- [h3d.scene.WorldElement](api/md/h3d/scene/WorldElement.md)
-- [h3d.scene.WorldMaterial](api/md/h3d/scene/WorldMaterial.md)
-- [h3d.scene.WorldModel](api/md/h3d/scene/WorldModel.md)
-- [h3d.scene.WorldModelGeometry](api/md/h3d/scene/WorldModelGeometry.md)
+- [h3d.scene.Skin](api/md/h3d/scene/Skin.md): A skinned mesh: a mesh deformed by a skeleton of joints (bones), driven by skeletal animations.
+- [h3d.scene.Sphere](api/md/h3d/scene/Sphere.md): A debug wireframe sphere, drawn as three orthogonal circles of 32 segments.
+- [h3d.scene.SubMesh](api/md/h3d/scene/SubMesh.md): A part of the primitive of a `MeshBatch` which can be drawn by an instance (see `MeshBatch.primitiveSubMeshes`).
+- [h3d.scene.SubPart](api/md/h3d/scene/SubPart.md): An index range of the primitive, for one material and its levels of detail.
+- [h3d.scene.SubSkin](api/md/h3d/scene/SubSkin.md): A skin following the skeleton of another skin: the joints with the same name copy the pose of `baseSkin`.
+- [h3d.scene.SyncShaderInterface](api/md/h3d/scene/SyncShaderInterface.md): The parameters of a `Batcher.syncShader`, filled by the batcher before running it.
+- [h3d.scene.Trail](api/md/h3d/scene/Trail.md): A ribbon following the movements of the object, such as a sword or projectile trail.
+- [h3d.scene.View](api/md/h3d/scene/View.md): A rendering view: the frustum used to cull objects for the current view (see `RenderContext.currentView`).
+- [h3d.scene.World](api/md/h3d/scene/World.md): A static world made of many model instances, split in square chunks on the XY plane.
+- [h3d.scene.WorldChunk](api/md/h3d/scene/WorldChunk.md): A square area of a `World`, of `World.chunkSize` units.
+- [h3d.scene.WorldData](api/md/h3d/scene/WorldData.md): The parameters of a node of a `HierarchicalWorld`.
+- [h3d.scene.WorldElement](api/md/h3d/scene/WorldElement.md): A model instance placed in a `World` chunk.
+- [h3d.scene.WorldMaterial](api/md/h3d/scene/WorldMaterial.md): A material of a `World` model: the geometries sharing the same material bits are merged in the same mesh.
+- [h3d.scene.WorldModel](api/md/h3d/scene/WorldModel.md): A model loaded by `World.loadModel`: its geometry is kept on the CPU to be merged into the chunks.
+- [h3d.scene.WorldModelGeometry](api/md/h3d/scene/WorldModelGeometry.md): A part of a `WorldModel` using one material.
 - [h3d.scene.fwd.DepthPass](api/md/h3d/scene/fwd/DepthPass.md)
 - [h3d.scene.fwd.DirLight](api/md/h3d/scene/fwd/DirLight.md)
 - [h3d.scene.fwd.Light](api/md/h3d/scene/fwd/Light.md)

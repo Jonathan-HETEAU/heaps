@@ -4,6 +4,10 @@
 
 Extends: [`h3d.scene.JointData`](JointData.md)
 
+The runtime state of a dynamic joint (`h3d.anim.Skin.DynamicJoint`): a joint simulated as a spring
+following its animated position, for hair, cloth or other secondary motion.
+The simulation runs at the fixed time step `Skin.FIXED_DT`.
+
 ## Constructor
 
 ### new
@@ -11,6 +15,8 @@ Extends: [`h3d.scene.JointData`](JointData.md)
 ```haxe
 function new():Void
 ```
+
+Creates the state of a dynamic joint.
 
 ## Variables
 
@@ -20,6 +26,8 @@ function new():Void
 var curTargetWorld:h3d.Matrix
 ```
 
+The current simulated world transform of the joint.
+
 ## Methods
 
 ### initData
@@ -27,6 +35,8 @@ var curTargetWorld:h3d.Matrix
 ```haxe
 function initData(skin:Skin, j:h3d.anim.Joint):Void
 ```
+
+Initializes the simulation from the current joint position.
 
 ### sync
 

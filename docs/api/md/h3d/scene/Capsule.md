@@ -4,6 +4,10 @@
 
 Extends: [`h3d.scene.Graphics`](Graphics.md) → [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
+A debug wireframe capsule aligned on the X axis: a cylinder of `length` capped by two half spheres of `radius`.
+
+It has no collider and is meant for visualizing capsule colliders (see `h3d.col.Capsule`).
+
 ## Constructor
 
 ### new
@@ -11,6 +15,13 @@ Extends: [`h3d.scene.Graphics`](Graphics.md) → [`h3d.scene.Mesh`](Mesh.md) →
 ```haxe
 function new(?color:Int = 0xFFFF0000, ?radius:Float = 1.0, ?length:Float = 2.0, ?depth:Bool = true, ?parent:Object):Void
 ```
+
+Creates a wireframe capsule.
+- **param** `color` The line color, in `0xRRGGBB` format (red by default, the alpha byte is ignored).
+- **param** `radius` The capsule radius.
+- **param** `length` The length of the cylindrical part along the X axis.
+- **param** `depth` If `false`, the capsule is always drawn on top of the scene (depth test disabled).
+- **param** `parent` An optional parent object.
 
 ## Variables
 
@@ -20,17 +31,23 @@ function new(?color:Int = 0xFFFF0000, ?radius:Float = 1.0, ?length:Float = 2.0, 
 var color:Int
 ```
 
+The line color, in `0xRRGGBB` format. Changes are applied the next time `radius` or `length` is set.
+
 ### radius
 
 ```haxe
 var radius(default, set):Float
 ```
 
+The capsule radius. Setting it redraws the lines.
+
 ### length
 
 ```haxe
 var length(default, set):Float
 ```
+
+The length of the cylindrical part along the X axis, excluding the caps. Setting it redraws the lines.
 
 ## Methods
 

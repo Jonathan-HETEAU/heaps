@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Shader applying the animated transform of the source object to all the instances of an `AnimMeshBatch`.
+
 ## Constructor
 
 ### new

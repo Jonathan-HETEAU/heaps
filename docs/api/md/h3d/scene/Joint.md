@@ -4,6 +4,11 @@
 
 Extends: [`h3d.scene.Object`](Object.md)
 
+A temporary object representing a joint (bone) of a `Skin`, returned by `Skin.getObjectByName`.
+
+Its absolute position follows the joint, which allows attaching objects to bones or reading their position.
+It is not part of the scene tree: it is recreated by each `getObjectByName` call.
+
 ## Constructor
 
 ### new
@@ -11,6 +16,8 @@ Extends: [`h3d.scene.Object`](Object.md)
 ```haxe
 function new(skin:Skin, j:h3d.anim.Joint):Void
 ```
+
+Creates an object following the joint `j` of `skin`.
 
 ## Variables
 
@@ -20,11 +27,15 @@ function new(skin:Skin, j:h3d.anim.Joint):Void
 var skin:Skin
 ```
 
+The skin this joint belongs to.
+
 ### index
 
 ```haxe
 var index:Int
 ```
+
+The index of the joint in `h3d.anim.Skin.allJoints`.
 
 ## Methods
 

@@ -6,6 +6,23 @@ Extends: [`h3d.scene.Object`](Object.md)
 
 Implements: [`hxd.Interactive`](../../hxd/Interactive.md)
 
+A 3D object receiving mouse, touch and keyboard events through a collision shape.
+
+The `Scene` casts a ray from the cursor through the camera and sends the events to the interactives whose `shape`
+is hit, nearest first (see `Scene.rayCastEventTargets` and `priority`).
+
+The shape is expressed in the interactive local space. `Object.getCollider()` returns a world space snapshot of
+an object shape, so such an interactive is added at the scene root (it will not follow the object if it moves).
+To follow a moving object, add the interactive as its child with a shape in the object local space
+(for instance a `h3d.col.Sphere` or `h3d.col.Bounds`), or keep it at the scene root with a `h3d.col.ObjectCollider(obj, localShape)`,
+which applies the current object transform to its shape.
+
+```haxe
+var mesh = new h3d.scene.Mesh(prim, s3d);
+var i = new h3d.scene.Interactive(mesh.getCollider(), s3d); // world space shape, at the scene root
+i.onClick = function(e) trace("clicked at local position " + e.relX + "," + e.relY + "," + e.relZ);
+```
+
 ## Constructor
 
 ### new
@@ -13,6 +30,10 @@ Implements: [`hxd.Interactive`](../../hxd/Interactive.md)
 ```haxe
 function new(shape:h3d.col.Collider, ?parent:Object):Void
 ```
+
+Creates an interactive using the given collision shape.
+- **param** `shape` The collision shape, see `shape`.
+- **param** `parent` An optional parent object.
 
 ## Static methods
 
@@ -22,6 +43,9 @@ function new(shape:h3d.col.Collider, ?parent:Object):Void
 static dynamic function setupDebugMaterial(debugObj:Object):Void
 ```
 
+Sets up the materials of the debug object displayed by `showDebug`: semi transparent, without shadows,
+and in wireframe when the driver supports it. Can be replaced to customize the debug display.
+
 ## Variables
 
 ### shape
@@ -29,6 +53,8 @@ static dynamic function setupDebugMaterial(debugObj:Object):Void
 ```haxe
 var shape:h3d.col.Collider
 ```
+
+The collision shape tested against the mouse ray, relative to this interactive transform (or in world space if `isAbsoluteShape` is set).
 
 ### preciseShape
 
@@ -51,6 +77,8 @@ In case of conflicting shapes, usually the one in front of the camera is priorit
 ```haxe
 var cursor(default, set):Null<hxd.Cursor>
 ```
+
+Cursor used when the Interactive is under the mouse cursor (`Button` by default).
 
 ### cancelEvents
 
@@ -115,6 +143,8 @@ var isAbsoluteShape:Bool
 var emittedLastFrame:Bool
 ```
 
+Set to `true` when the interactive was emitted (visible and not culled) during the last rendered frame.
+
 ## Methods
 
 ### getPoint
@@ -122,6 +152,9 @@ var emittedLastFrame:Bool
 ```haxe
 function getPoint(ray:h3d.col.Ray, bestMatch:Bool):Null<h3d.Vector>
 ```
+
+Returns the world position where `ray` (in world space) hits the shape, or `null` if it does not hit it.
+- **param** `bestMatch` If `true`, finds the nearest hit point on complex shapes instead of any hit point (slower).
 
 ### set_showDebug
 
@@ -143,11 +176,19 @@ This can be called during or after a push event in order to prevent the release 
 function focus():Void
 ```
 
+Sets focus on this `Interactive`.
+If Interactive was not already focused and it receives focus - `onFocus` event is sent.
+Interactive won't become focused if during `onFocus` call it will set `Event.cancel` to `true`.
+
 ### blur
 
 ```haxe
 function blur():Void
 ```
+
+Removes focus from interactive if it's focused.
+If Interactive is currently focused - `onFocusLost` event will be sent.
+Interactive won't lose focus if during `onFocusLost` call it will set `Event.cancel` to `true`.
 
 ### isOver
 
@@ -155,11 +196,15 @@ function blur():Void
 function isOver():Bool
 ```
 
+Checks if Interactive is currently hovered by the mouse.
+
 ### hasFocus
 
 ```haxe
 function hasFocus():Bool
 ```
+
+Checks if Interactive is currently focused.
 
 ### onOver
 
@@ -225,11 +270,20 @@ This event fired only on Interactive that user pressed and released when mouse i
 dynamic function onMove(e:hxd.Event):Void
 ```
 
+Sent when user moves within the Interactive hitbox area.
+See `Interactive.onCheck` for event when user does not move the mouse.
+
+Cancelling the `Event` will prevent interactive from becoming overed,
+causing `Interactive.onOut` if it was overed previously.
+Interactive would be treated as not overed as long as event is cancelled even if mouse is within the hitbox area.
+
 ### onWheel
 
 ```haxe
 dynamic function onWheel(e:hxd.Event):Void
 ```
+
+Sent when user scrolls mouse wheel above the Interactive. Wheel delta can be obtained through the `Event.wheelDelta`.
 
 ### onFocus
 
@@ -237,11 +291,19 @@ dynamic function onWheel(e:hxd.Event):Void
 dynamic function onFocus(e:hxd.Event):Void
 ```
 
+Sent when Interactive receives focus during `Interactive.focus` call.
+
+Cancelling the `Event` will prevent the Interactive from becoming focused.
+
 ### onFocusLost
 
 ```haxe
 dynamic function onFocusLost(e:hxd.Event):Void
 ```
+
+Sent when Interactive lost focus either via `Interactive.blur` call or when user clicks on another Interactive/outside this Interactive hitbox area.
+
+Cancelling the `Event` will prevent the Interactive from losing focus.
 
 ### onKeyUp
 
@@ -249,11 +311,17 @@ dynamic function onFocusLost(e:hxd.Event):Void
 dynamic function onKeyUp(e:hxd.Event):Void
 ```
 
+Sent when this Interactive is focused and user unpressed a keyboard key.
+Unpressed key can be accessed through `Event.keyCode`.
+
 ### onKeyDown
 
 ```haxe
 dynamic function onKeyDown(e:hxd.Event):Void
 ```
+
+Sent when this Interactive is focused and user pressed a keyboard key.
+Pressed key can be accessed through `Event.keyCode`.
 
 ### onCheck
 
@@ -261,11 +329,20 @@ dynamic function onKeyDown(e:hxd.Event):Void
 dynamic function onCheck(e:hxd.Event):Void
 ```
 
+Sent every frame when user hovers an Interactive but does not move the mouse.
+See `Interactive.onMove` for event when user moves the mouse.
+
+Cancelling the `Event` will prevent interactive from becoming overed,
+causing `Interactive.onOut` if it was overed previously.
+Interactive would be treated as not overed as long as event is cancelled even if mouse is within the hitbox area.
+
 ### onTextInput
 
 ```haxe
 dynamic function onTextInput(e:hxd.Event):Void
 ```
+
+Sent when this Interactive is focused and user inputs text. Character added can be accessed through `Event.charCode`.
 
 ## Inherited members
 

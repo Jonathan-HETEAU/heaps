@@ -4,6 +4,12 @@
 
 Extends: [`h3d.scene.MeshBatch`](MeshBatch.md) → [`h3d.scene.MultiMaterial`](MultiMaterial.md) → [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
+A `MeshBatch` using GPU driven rendering: the level of detail selection and the frustum culling of each instance
+can be computed by a compute shader (see `enableGpuLod` and `enableGpuCulling`), and the instances are drawn with
+indirect draw calls.
+
+Requires compute shaders and indirect draws: not available on JavaScript and DirectX 11 (`hldx` without `dx12`).
+
 ## Constructor
 
 ### new
@@ -11,6 +17,8 @@ Extends: [`h3d.scene.MeshBatch`](MeshBatch.md) → [`h3d.scene.MultiMaterial`](M
 ```haxe
 function new(primitive:h3d.prim.MeshPrimitive, ?material:h3d.mat.Material, ?parent:Object):Void
 ```
+
+Creates a GPU driven mesh batch. Throws on platforms without compute shaders support.
 
 ## Variables
 
@@ -20,17 +28,23 @@ function new(primitive:h3d.prim.MeshPrimitive, ?material:h3d.mat.Material, ?pare
 var computePass:h3d.mat.Pass
 ```
 
+The pass holding the compute shaders run by `dispatch`.
+
 ### commandBuffer
 
 ```haxe
 var commandBuffer:h3d.Buffer
 ```
 
+The indirect draw commands written by the compute pass, one per material and instance.
+
 ### gpuCounter
 
 ```haxe
 var gpuCounter:h3d.GPUCounter
 ```
+
+The GPU counter of the draw commands written by the compute pass.
 
 ### maxDistance
 
@@ -84,6 +98,9 @@ override function flush():Void
 ```haxe
 function dispatch(ctx:RenderContext):Void
 ```
+
+Runs the compute pass which selects the level of detail and culls the instances, writing the draw commands.
+Called automatically when the batch is emitted.
 
 ## Inherited members
 

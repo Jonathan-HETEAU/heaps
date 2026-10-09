@@ -4,6 +4,11 @@
 
 Extends: [`h3d.scene.Graphics`](Graphics.md) → [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
+A debug wireframe sphere, drawn as three orthogonal circles of 32 segments.
+
+It is meant for visualizing positions, radii or colliders: it has no collider itself and is not a solid mesh
+(use `h3d.prim.Sphere` with a `Mesh` for that).
+
 ## Constructor
 
 ### new
@@ -11,6 +16,12 @@ Extends: [`h3d.scene.Graphics`](Graphics.md) → [`h3d.scene.Mesh`](Mesh.md) →
 ```haxe
 function new(?color:Int = 0xFFFF0000, ?radius:Float = 1.0, ?depth:Bool = true, ?parent:Object):Void
 ```
+
+Creates a wireframe sphere.
+- **param** `color` The line color, in `0xRRGGBB` format (red by default, the alpha byte is ignored).
+- **param** `radius` The sphere radius.
+- **param** `depth` If `false`, the sphere is always drawn on top of the scene (depth test disabled).
+- **param** `parent` An optional parent object.
 
 ## Variables
 
@@ -20,11 +31,15 @@ function new(?color:Int = 0xFFFF0000, ?radius:Float = 1.0, ?depth:Bool = true, ?
 var color:Int
 ```
 
+The line color, in `0xRRGGBB` format. Changes are applied the next time `radius` is set.
+
 ### radius
 
 ```haxe
 var radius(default, set):Float
 ```
+
+The sphere radius. Setting it redraws the lines.
 
 ## Methods
 

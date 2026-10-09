@@ -84,11 +84,18 @@ Remove a previously added event listener, return false it was not part of our ev
 function syncEventTargets():Void
 ```
 
+Updates the physics shapes of the interactives (only with `-D hlphysics`, otherwise does nothing).
+Called automatically before ray casts, at most once per frame.
+
 ### rayCastEventTargets
 
 ```haxe
 function rayCastEventTargets(r:h3d.col.Ray):Array<{ i:Interactive, distance:Float }>
 ```
+
+Returns the visible interactives hit by the ray `r` (in world space), sorted from the nearest to the farthest.
+Only the interactives with the highest `Interactive.priority` among the hits are returned.
+`Interactive.hitPoint` is updated with the local hit position; `distance` is the distance from the camera.
 
 ### clone
 
@@ -151,6 +158,8 @@ Render the scene on screen. Internal usage only.
 dynamic function mark(name:String):Void
 ```
 
+Called during rendering at the beginning of each named step (forwards to the renderer). Can be overridden for profiling.
+
 ### setOutputTarget
 
 ```haxe
@@ -167,6 +176,9 @@ Call `setOutputTarget()` after `render()` has been called.
 ```haxe
 function getRenderCamera():h3d.Camera
 ```
+
+Returns the camera of the render context: a copy of `camera` made at the start of each frame,
+with the render settings applied (such as reverse depth).
 
 ## Inherited members
 

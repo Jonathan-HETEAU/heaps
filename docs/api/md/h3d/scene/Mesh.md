@@ -28,6 +28,12 @@ If material is not specified, a new default material is created for the current 
 static function screenRatio(absPos:h3d.Matrix, bounds:h3d.col.Bounds, camera:h3d.Camera):Float
 ```
 
+Computes the approximate size of `bounds` on screen, relative to the screen size (`1.0` means the bounding
+sphere covers the screen height or width). Used to select the level of detail of meshes.
+- **param** `absPos` The absolute transform of the object.
+- **param** `bounds` The local bounds of the object.
+- **param** `camera` The camera rendering the object.
+
 ## Variables
 
 ### primitive
@@ -110,11 +116,16 @@ override function getMaterials(?a:Array<h3d.mat.Material>, ?recursive:Bool = tru
 function getLodIndex():Int
 ```
 
+Returns the level of detail currently used to draw this mesh: `forcedLod` if set (not `-1`), otherwise the LOD
+selected by the primitive from the screen ratio computed during the last frame.
+
 ### setBlendshapeWeight
 
 ```haxe
 function setBlendshapeWeight(name:String, weight:Float):Void
 ```
+
+Sets the weight of the blend shape (morph target) `name`. The primitive must be a `h3d.prim.HMDModel` with blend shapes.
 
 ### setBlendshapeWeights
 
@@ -122,17 +133,23 @@ function setBlendshapeWeight(name:String, weight:Float):Void
 function setBlendshapeWeights(weights:Array<Float>):Void
 ```
 
+Sets the weights of all the blend shapes at once, in the order returned by `getBlenshapeNames`.
+
 ### getBlenshapeNames
 
 ```haxe
 function getBlenshapeNames():Array<String>
 ```
 
+Returns the names of the blend shapes of the primitive, or an empty array if it has none.
+
 ### hasBlendshapes
 
 ```haxe
 function hasBlendshapes():Bool
 ```
+
+Tells if the primitive of this mesh has blend shapes (morph targets).
 
 ## Inherited members
 

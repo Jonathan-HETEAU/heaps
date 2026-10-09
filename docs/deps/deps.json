@@ -10462,8 +10462,8 @@
   "h3d.scene.AnimMeshBatcher": {
    "file": "h3d/scene/AnimMeshBatcher.hx",
    "package": "h3d.scene",
-   "lines": 69,
-   "doc_blocks": 0,
+   "lines": 91,
+   "doc_blocks": 5,
    "types": [
     "class AnimMeshBatchShader",
     "class AnimMeshBatch",
@@ -10520,8 +10520,8 @@
   "h3d.scene.Batcher": {
    "file": "h3d/scene/Batcher.hx",
    "package": "h3d.scene",
-   "lines": 1401,
-   "doc_blocks": 2,
+   "lines": 1564,
+   "doc_blocks": 47,
    "types": [
     "enum BatcherFlags",
     "class ObjectInstance",
@@ -10662,8 +10662,8 @@
   "h3d.scene.Box": {
    "file": "h3d/scene/Box.hx",
    "package": "h3d.scene",
-   "lines": 82,
-   "doc_blocks": 0,
+   "lines": 104,
+   "doc_blocks": 5,
    "types": [
     "class Box"
    ],
@@ -10695,8 +10695,8 @@
   "h3d.scene.CameraController": {
    "file": "h3d/scene/CameraController.hx",
    "package": "h3d.scene",
-   "lines": 485,
-   "doc_blocks": 4,
+   "lines": 599,
+   "doc_blocks": 34,
    "types": [
     "class CameraController",
     "class OrbitCameraController",
@@ -10765,8 +10765,8 @@
   "h3d.scene.Capsule": {
    "file": "h3d/scene/Capsule.hx",
    "package": "h3d.scene",
-   "lines": 69,
-   "doc_blocks": 0,
+   "lines": 91,
+   "doc_blocks": 5,
    "types": [
     "class Capsule"
    ],
@@ -10791,8 +10791,8 @@
   "h3d.scene.GPUMeshBatch": {
    "file": "h3d/scene/GPUMeshBatch.hx",
    "package": "h3d.scene",
-   "lines": 337,
-   "doc_blocks": 4,
+   "lines": 360,
+   "doc_blocks": 6,
    "types": [
     "class GPUMeshBatch"
    ],
@@ -10848,8 +10848,8 @@
   "h3d.scene.Graphics": {
    "file": "h3d/scene/Graphics.hx",
    "package": "h3d.scene",
-   "lines": 311,
-   "doc_blocks": 1,
+   "lines": 356,
+   "doc_blocks": 10,
    "types": [
     "class GPoint",
     "class Graphics"
@@ -10908,8 +10908,8 @@
   "h3d.scene.HierarchicalWorld": {
    "file": "h3d/scene/HierarchicalWorld.hx",
    "package": "h3d.scene",
-   "lines": 309,
-   "doc_blocks": 0,
+   "lines": 390,
+   "doc_blocks": 24,
    "types": [
     "typedef WorldData",
     "class HierarchicalWorld"
@@ -10953,8 +10953,8 @@
   "h3d.scene.Interactive": {
    "file": "h3d/scene/Interactive.hx",
    "package": "h3d.scene",
-   "lines": 296,
-   "doc_blocks": 15,
+   "lines": 392,
+   "doc_blocks": 34,
    "types": [
     "class Interactive"
    ],
@@ -11012,8 +11012,8 @@
   "h3d.scene.Light": {
    "file": "h3d/scene/Light.hx",
    "package": "h3d.scene",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 50,
+   "doc_blocks": 3,
    "types": [
     "class Light"
    ],
@@ -11057,8 +11057,8 @@
   "h3d.scene.LightSystem": {
    "file": "h3d/scene/LightSystem.hx",
    "package": "h3d.scene",
-   "lines": 38,
-   "doc_blocks": 0,
+   "lines": 69,
+   "doc_blocks": 8,
    "types": [
     "class LightSystem"
    ],
@@ -11092,8 +11092,8 @@
   "h3d.scene.Mesh": {
    "file": "h3d/scene/Mesh.hx",
    "package": "h3d.scene",
-   "lines": 207,
-   "doc_blocks": 8,
+   "lines": 230,
+   "doc_blocks": 14,
    "types": [
     "class Mesh"
    ],
@@ -11168,8 +11168,8 @@
   "h3d.scene.MeshBatch": {
    "file": "h3d/scene/MeshBatch.hx",
    "package": "h3d.scene",
-   "lines": 838,
-   "doc_blocks": 10,
+   "lines": 994,
+   "doc_blocks": 55,
    "types": [
     "enum MeshBatchFlag",
     "typedef CpuIndirectCallBuffer",
@@ -11272,8 +11272,8 @@
   "h3d.scene.MultiMaterial": {
    "file": "h3d/scene/MultiMaterial.hx",
    "package": "h3d.scene",
-   "lines": 62,
-   "doc_blocks": 0,
+   "lines": 78,
+   "doc_blocks": 3,
    "types": [
     "class MultiMaterial"
    ],
@@ -11310,8 +11310,8 @@
   "h3d.scene.Object": {
    "file": "h3d/scene/Object.hx",
    "package": "h3d.scene",
-   "lines": 1107,
-   "doc_blocks": 78,
+   "lines": 1190,
+   "doc_blocks": 105,
    "types": [
     "enum_abstract ObjectFlags",
     "class Object"
@@ -11422,8 +11422,8 @@
   "h3d.scene.RenderContext": {
    "file": "h3d/scene/RenderContext.hx",
    "package": "h3d.scene",
-   "lines": 373,
-   "doc_blocks": 0,
+   "lines": 544,
+   "doc_blocks": 51,
    "types": [
     "class SharedGlobal",
     "class View",
@@ -11557,8 +11557,8 @@
   "h3d.scene.Renderer": {
    "file": "h3d/scene/Renderer.hx",
    "package": "h3d.scene",
-   "lines": 222,
-   "doc_blocks": 1,
+   "lines": 298,
+   "doc_blocks": 23,
    "types": [
     "class PassObjects",
     "enum RenderMode",
@@ -11629,8 +11629,8 @@
   "h3d.scene.Scene": {
    "file": "h3d/scene/Scene.hx",
    "package": "h3d.scene",
-   "lines": 615,
-   "doc_blocks": 16,
+   "lines": 640,
+   "doc_blocks": 23,
    "types": [
     "enum_abstract CollisionGroup",
     "class Scene"
@@ -11734,8 +11734,8 @@
   "h3d.scene.Skin": {
    "file": "h3d/scene/Skin.hx",
    "package": "h3d.scene",
-   "lines": 697,
-   "doc_blocks": 0,
+   "lines": 810,
+   "doc_blocks": 30,
    "types": [
     "class Joint",
     "class JointData",
@@ -11860,8 +11860,8 @@
   "h3d.scene.Sphere": {
    "file": "h3d/scene/Sphere.hx",
    "package": "h3d.scene",
-   "lines": 54,
-   "doc_blocks": 0,
+   "lines": 73,
+   "doc_blocks": 4,
    "types": [
     "class Sphere"
    ],
@@ -11886,8 +11886,8 @@
   "h3d.scene.Trail": {
    "file": "h3d/scene/Trail.hx",
    "package": "h3d.scene",
-   "lines": 275,
-   "doc_blocks": 0,
+   "lines": 328,
+   "doc_blocks": 15,
    "types": [
     "class TrailElement",
     "class Trail"
@@ -11943,8 +11943,8 @@
   "h3d.scene.World": {
    "file": "h3d/scene/World.hx",
    "package": "h3d.scene",
-   "lines": 699,
-   "doc_blocks": 2,
+   "lines": 912,
+   "doc_blocks": 69,
    "types": [
     "class WorldElement",
     "class WorldChunk",

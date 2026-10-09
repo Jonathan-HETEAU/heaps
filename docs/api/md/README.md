@@ -19,7 +19,7 @@
 | [`h3d.parts`](h3d/parts/README.md) | 19 | 0 |
 | [`h3d.pass`](h3d/pass/README.md) | 38 | 0 |
 | [`h3d.prim`](h3d/prim/README.md) | 32 | 2 |
-| [`h3d.scene`](h3d/scene/README.md) | 52 | 5 |
+| [`h3d.scene`](h3d/scene/README.md) | 52 | 52 |
 | [`h3d.scene.fwd`](h3d/scene/fwd/README.md) | 7 | 0 |
 | [`h3d.scene.pbr`](h3d/scene/pbr/README.md) | 21 | 0 |
 | [`h3d.shader`](h3d/shader/README.md) | 75 | 2 |

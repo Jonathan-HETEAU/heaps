@@ -2,7 +2,7 @@
 
 > Généré par `tools/docgen/deps.py` (analyse statique, sans compilateur Haxe). Ne pas éditer à la main.
 
-- Modules (fichiers `.hx`) : **554** — lignes : **131215** — packages : **44**
+- Modules (fichiers `.hx`) : **554** — lignes : **132800** — packages : **44**
 - Dépendances module→module : **2779**
 - Cycles de modules (SCC > 1) : **18**
 
@@ -26,7 +26,7 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 | [`h3d.parts`](modules/h3d.parts.md) | 6 | 2024 | 12 | h2d, h3d, h3d.col, h3d.mat, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.impl, hxd.res | 0 |
 | [`h3d.pass`](modules/h3d.pass.md) | 28 | 3081 | 17 | h2d.col, h3d, h3d.col, h3d.impl, h3d.mat, h3d.prim, h3d.scene, h3d.scene.pbr, h3d.shader, h3d.shader.pbr, hxd, hxsl | 8 |
 | [`h3d.prim`](modules/h3d.prim.md) | 23 | 3772 | 30 | h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.scene, h3d.shader, hxd, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.res | 10 |
-| [`h3d.scene`](modules/h3d.scene.md) | 22 | 8578 | 141 | h2d.col, h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene.pbr, h3d.shader, hxd, hxd.fmt.hmd, hxd.impl, hxd.res, hxsl | 15 |
+| [`h3d.scene`](modules/h3d.scene.md) | 22 | 10163 | 573 | h2d.col, h3d, h3d.anim, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene.pbr, h3d.shader, hxd, hxd.fmt.hmd, hxd.impl, hxd.res, hxsl | 15 |
 | [`h3d.scene.fwd`](modules/h3d.scene.fwd.md) | 5 | 304 | 1 | h3d, h3d.col, h3d.pass, h3d.scene, h3d.shader, hxd, hxsl | 1 |
 | [`h3d.scene.pbr`](modules/h3d.scene.pbr.md) | 11 | 3022 | 2 | h3d, h3d.col, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene, h3d.shader, h3d.shader.pbr, hxd, hxd.res, hxsl | 4 |
 | [`h3d.shader`](modules/h3d.shader.md) | 68 | 3586 | 6 | h3d, h3d.mat, hxd.impl, hxsl | 15 |
@@ -596,7 +596,7 @@ Ordre topologique (les dépendances d'abord). Les modules entre crochets forment
 | [`h3d.Matrix`](modules/h3d.md#h3dmatrix) | 66 | 4 | 963 |
 | [`h2d.Tile`](modules/h2d.md#h2dtile) | 57 | 3 | 445 |
 | [`h3d.Vector`](modules/h3d.md#h3dvector) | 57 | 5 | 340 |
-| [`h3d.scene.Object`](modules/h3d.scene.md#h3dsceneobject) | 49 | 16 | 1107 |
+| [`h3d.scene.Object`](modules/h3d.scene.md#h3dsceneobject) | 49 | 16 | 1190 |
 | [`hxd.BufferFormat`](modules/hxd.md#hxdbufferformat) | 49 | 2 | 565 |
 | [`h3d.col.Point`](modules/h3d.col.md#h3dcolpoint) | 47 | 1 | 3 |
 | [`h2d.RenderContext`](modules/h2d.md#h2drendercontext) | 44 | 21 | 825 |
@@ -607,7 +607,7 @@ Ordre topologique (les dépendances d'abord). Les modules entre crochets forment
 | [`h2d.Object`](modules/h2d.md#h2dobject) | 33 | 13 | 1133 |
 | [`h3d.col.Collider`](modules/h3d.col.md#h3dcolcollider) | 32 | 6 | 159 |
 | [`h3d.shader.ScreenShader`](modules/h3d.shader.md#h3dshaderscreenshader) | 30 | 1 | 31 |
-| [`h3d.scene.RenderContext`](modules/h3d.scene.md#h3dscenerendercontext) | 29 | 27 | 373 |
+| [`h3d.scene.RenderContext`](modules/h3d.scene.md#h3dscenerendercontext) | 29 | 27 | 544 |
 | [`hxd.FloatBuffer`](modules/hxd.md#hxdfloatbuffer) | 29 | 2 | 118 |
 | [`hxsl.Ast`](modules/hxsl.md#hxslast) | 29 | 3 | 776 |
 | [`h2d.col.Bounds`](modules/h2d.col.md#h2dcolbounds) | 28 | 6 | 425 |
@@ -622,7 +622,7 @@ Ordre topologique (les dépendances d'abord). Les modules entre crochets forment
 | [`hxsl.RuntimeShader`](modules/hxsl.md#hxslruntimeshader) | 21 | 4 | 160 |
 | [`h3d.col.Frustum`](modules/h3d.col.md#h3dcolfrustum) | 20 | 7 | 186 |
 | [`hxd.res.Resource`](modules/hxd.res.md#hxdresresource) | 20 | 1 | 32 |
-| [`h3d.scene.Mesh`](modules/h3d.scene.md#h3dscenemesh) | 19 | 12 | 207 |
+| [`h3d.scene.Mesh`](modules/h3d.scene.md#h3dscenemesh) | 19 | 12 | 230 |
 | [`hxd.Pad`](modules/hxd.md#hxdpad) | 19 | 1 | 560 |
 | [`h3d.impl.Driver`](modules/h3d.impl.md#h3dimpldriver) | 18 | 21 | 420 |
 | [`h3d.pass.Copy`](modules/h3d.pass.md#h3dpasscopy) | 18 | 7 | 129 |

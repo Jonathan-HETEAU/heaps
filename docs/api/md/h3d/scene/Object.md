@@ -26,6 +26,9 @@ Create a new empty object, and adds it to the parent object if not null.
 var currentAnimation(default, null):h3d.anim.Animation
 ```
 
+The animation currently played on this object, or `null`. Set by `playAnimation` and `switchToAnimation`,
+cleared by `stopAnimation`.
+
 ### parent
 
 ```haxe
@@ -528,6 +531,8 @@ Set the position of the object relative to its parent.
 ```haxe
 function setTransform(mat:h3d.Matrix):Void
 ```
+
+Set the position, scale and rotation of the object relative to its parent based on the specified transform matrix.
 
 ### getTransform
 

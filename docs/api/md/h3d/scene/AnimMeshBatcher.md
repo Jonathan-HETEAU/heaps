@@ -4,6 +4,11 @@
 
 Extends: [`h3d.scene.Object`](Object.md)
 
+Draws many copies of an animated object with instancing: one `MeshBatch` is created per mesh of the object, and
+all the copies play the same animation in sync.
+
+Only the transform of each mesh is animated (rigid animations): skeletal deformation is not supported.
+
 ## Constructor
 
 ### new
@@ -11,6 +16,12 @@ Extends: [`h3d.scene.Object`](Object.md)
 ```haxe
 function new(object:Object, spawn:() -> Bool, ?parent:Object):Void
 ```
+
+Creates the batches from `object`, which becomes a hidden child used as animation source.
+- **param** `object` The object to copy. Play animations on the batcher with `playAnimation`.
+- **param** `spawn` Called repeatedly to place the copies: it must fill the given matrix with the world transform of the
+next copy and return `true`, or return `false` when there are no more copies.
+- **param** `parent` An optional parent object.
 
 ## Methods
 

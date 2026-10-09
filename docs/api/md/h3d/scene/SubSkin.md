@@ -4,6 +4,12 @@
 
 Extends: [`h3d.scene.Skin`](Skin.md) → [`h3d.scene.MultiMaterial`](MultiMaterial.md) → [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
+A skin following the skeleton of another skin: the joints with the same name copy the pose of `baseSkin`.
+
+Used for separate skinned parts sharing a skeleton, such as clothes or equipment on a character.
+Animations bound to the hierarchy are not applied to it, but animations played directly on it are
+(for instance facial animations on top of the body animation).
+
 ## Constructor
 
 ### new
@@ -11,6 +17,8 @@ Extends: [`h3d.scene.Skin`](Skin.md) → [`h3d.scene.MultiMaterial`](MultiMateri
 ```haxe
 function new(baseSkin:Skin, subSkin:Skin, ?parent:Object):Void
 ```
+
+Creates a skin using the skin data and materials of `subSkin`, posed by the skeleton of `baseSkin`.
 
 ## Methods
 

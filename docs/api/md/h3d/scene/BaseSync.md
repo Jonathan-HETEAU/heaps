@@ -4,6 +4,9 @@
 
 Extends: [`hxsl.Shader`](../../hxsl/Shader.md)
 
+Base class of the compute shaders updating the instance transforms on the GPU (see `Batcher.syncShader`).
+It provides `getModelView` and `fillModelView` to read and write the transform of an instance.
+
 ## Constructor
 
 ### new

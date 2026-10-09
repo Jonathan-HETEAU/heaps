@@ -6,6 +6,11 @@ Extends: [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
 Subclasses: [`h3d.parts.GpuParticles`](../parts/GpuParticles.md), [`h3d.scene.MeshBatch`](MeshBatch.md), [`h3d.scene.Skin`](Skin.md)
 
+A `Mesh` using several materials, one per material group of its primitive.
+
+The primitive must split its indexes per material (for instance a `h3d.prim.HMDModel` loaded from a model
+with several materials): each material `i` is drawn with the indexes of group `i`.
+
 ## Constructor
 
 ### new
@@ -14,6 +19,11 @@ Subclasses: [`h3d.parts.GpuParticles`](../parts/GpuParticles.md), [`h3d.scene.Me
 function new(prim:h3d.prim.Primitive, ?mats:Array<Null<h3d.mat.Material>>, ?parent:Object):Void
 ```
 
+Creates a multi-material mesh.
+- **param** `prim` The primitive to draw, with one index group per material.
+- **param** `mats` The materials. If `null`, a single default material is created.
+- **param** `parent` An optional parent object.
+
 ## Variables
 
 ### materials
@@ -21,6 +31,9 @@ function new(prim:h3d.prim.Primitive, ?mats:Array<Null<h3d.mat.Material>>, ?pare
 ```haxe
 var materials:Array<h3d.mat.Material>
 ```
+
+The materials, indexed by primitive material group. `null` entries are not drawn.
+`Mesh.material` refers to the first one.
 
 ## Methods
 

@@ -4,6 +4,12 @@
 
 Extends: [`h3d.scene.CameraController`](CameraController.md) → [`h3d.scene.Object`](Object.md)
 
+A free flying "first person" camera controller:
+- right button drag: looks around;
+- while holding the right or middle button: arrow keys or ZQSD move forward/backward/sideways (W, S and D also work),
+  A moves down and E moves up;
+- mouse wheel while holding a button: changes `moveSpeed`.
+
 ## Constructor
 
 ### new
@@ -11,6 +17,10 @@ Extends: [`h3d.scene.CameraController`](CameraController.md) → [`h3d.scene.Obj
 ```haxe
 function new(?distance:Float, ?parent:Object):Void
 ```
+
+Creates a first person controller.
+- **param** `distance` The initial distance between the camera and the point it looks at.
+- **param** `parent` The parent object, usually the scene.
 
 ## Variables
 
@@ -20,17 +30,23 @@ function new(?distance:Float, ?parent:Object):Void
 var zNear:Float
 ```
 
+The camera near plane distance, applied every frame.
+
 ### zFar
 
 ```haxe
 var zFar:Float
 ```
 
+The camera far plane distance, applied every frame.
+
 ### snapToGround
 
 ```haxe
 var snapToGround:Bool
 ```
+
+Currently unused.
 
 ## Inherited members
 

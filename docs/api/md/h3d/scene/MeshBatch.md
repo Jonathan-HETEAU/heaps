@@ -17,6 +17,11 @@ See samples/MeshBatch.hx for an example.
 function new(primitive:h3d.prim.MeshPrimitive, ?material:h3d.mat.Material, ?parent:Object):Void
 ```
 
+Creates a mesh batch drawing instances of `primitive`. The batch does not support colliders.
+- **param** `primitive` The primitive drawn by each instance.
+- **param** `material` The material, or `null` for a default one.
+- **param** `parent` An optional parent object.
+
 ## Variables
 
 ### shadersChanged
@@ -56,6 +61,8 @@ Tells the mesh batch to draw only a subpart of the primitive.
 ```haxe
 var curSubMesh:Int
 ```
+
+The index in `primitiveSubMeshes` of the sub mesh drawn by the next `emitInstance`.
 
 ### calcBounds
 
@@ -126,11 +133,29 @@ function enablePerInstanceTexture():Void
 function enableCpuLod():Void
 ```
 
+Selects the level of detail of each instance on the CPU, according to its screen size (or `curLod` if set).
+Has no effect if the primitive has a single level of detail. Enables the storage buffer.
+
 ### begin
 
 ```haxe
 function begin(?emitCountTip:Int = -1):Int
 ```
+
+Starts emitting instances: removes the previous instances and prepares the buffers.
+Call it, then for each instance set the batch transform (or `worldPosition`) and the shader parameters,
+and call `emitInstance`.
+
+```haxe
+batch.begin(units.length);
+for( u in units ) {
+    batch.setPosition(u.x, u.y, 0);
+    colorShader.color.setColor(u.color);
+    batch.emitInstance();
+}
+```
+- **param** `emitCountTip` The expected number of instances, used to size the buffers (128 by default).
+- **returns** The number of instances the buffers were sized for.
 
 ### emitInstance
 
@@ -138,17 +163,24 @@ function begin(?emitCountTip:Int = -1):Int
 function emitInstance():Void
 ```
 
+Adds an instance using the current transform of the batch (or `worldPosition` if set) and the current values of
+the parameters of its shaders.
+
 ### flush
 
 ```haxe
 function flush():Void
 ```
 
+Uploads the emitted instances to the GPU. Called automatically during sync.
+
 ### disposeBuffers
 
 ```haxe
 function disposeBuffers():Void
 ```
+
+Releases the GPU buffers of the instances. They are reallocated by the next `flush`.
 
 ## Inherited members
 

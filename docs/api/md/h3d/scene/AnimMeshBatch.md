@@ -4,6 +4,8 @@
 
 Extends: [`h3d.scene.MeshBatch`](MeshBatch.md) → [`h3d.scene.MultiMaterial`](MultiMaterial.md) → [`h3d.scene.Mesh`](Mesh.md) → [`h3d.scene.Object`](Object.md)
 
+A `MeshBatch` whose instances all follow the animated transform of a source mesh (see `AnimMeshBatcher`).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.scene.MeshBatch`](MeshBatch.md) → [`h3d.scene.MultiMaterial`](M
 ```haxe
 function new(primitive:h3d.prim.MeshPrimitive, material:Null<h3d.mat.Material>, copyObject:Object, ?parent:Object):Void
 ```
+
+Creates a batch of `primitive` whose instances copy the animated local transform of `copyObject`.
 
 ## Inherited members
 
