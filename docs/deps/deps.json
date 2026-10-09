@@ -23639,254 +23639,254 @@
  "package_edges": {
   "h2d": {
    "h2d.col": 26,
-   "hxd": 46,
-   "hxd.res": 6,
-   "h3d.shader": 7,
-   "hxsl": 9,
-   "h3d": 18,
+   "h2d.filter": 1,
    "h2d.impl": 3,
-   "hxd.impl": 5,
-   "hxd.poly2tri": 1,
+   "h3d": 18,
+   "h3d.impl": 6,
+   "h3d.mat": 11,
+   "h3d.pass": 2,
    "h3d.prim": 2,
+   "h3d.scene": 4,
+   "h3d.shader": 7,
+   "hxd": 46,
    "hxd.earcut": 1,
    "hxd.fmt": 1,
-   "h3d.pass": 2,
-   "h3d.mat": 11,
-   "h2d.filter": 1,
-   "h3d.scene": 4,
-   "h3d.impl": 6
-  },
-  "h2d.impl": {
-   "h3d": 2,
-   "h2d": 2,
-   "h3d.mat": 1
+   "hxd.impl": 5,
+   "hxd.poly2tri": 1,
+   "hxd.res": 6,
+   "hxsl": 9
   },
   "h2d.col": {
-   "hxd": 17,
    "h2d.impl": 2,
+   "h3d.col": 1,
+   "hxd": 17,
    "hxd.clipper": 2,
-   "hxd.impl": 5,
    "hxd.earcut": 1,
-   "h3d.col": 1
+   "hxd.impl": 5
   },
   "h2d.domkit": {
-   "h2d.filter": 7,
-   "hxd.res": 8,
    "h2d": 19,
+   "h2d.col": 1,
+   "h2d.filter": 7,
    "h3d": 2,
-   "hxd": 8,
    "h3d.mat": 1,
    "h3d.scene": 1,
+   "hxd": 8,
    "hxd.fs": 2,
-   "h2d.col": 1
+   "hxd.res": 8
   },
   "h2d.filter": {
    "h2d": 38,
    "h2d.col": 5,
    "h3d": 2,
+   "h3d.mat": 1,
    "h3d.pass": 14,
    "h3d.shader": 7,
-   "hxd": 2,
+   "hxd": 2
+  },
+  "h2d.impl": {
+   "h2d": 2,
+   "h3d": 2,
    "h3d.mat": 1
   },
   "h3d": {
-   "hxd": 14,
-   "h3d.impl": 11,
-   "hxd.impl": 3,
+   "h2d.col": 2,
+   "h2d.impl": 1,
    "h3d.col": 5,
-   "h3d.scene": 1,
-   "h3d.mat": 3,
-   "hxd.res": 1,
-   "hxsl": 1,
-   "h2d.col": 2,
-   "h2d.impl": 1
-  },
-  "h3d.scene": {
-   "h3d.mat": 36,
-   "h3d.prim": 20,
-   "hxsl": 31,
-   "h3d.anim": 4,
-   "h3d": 66,
-   "hxd": 60,
-   "h3d.shader": 32,
    "h3d.impl": 11,
-   "hxd.impl": 7,
-   "h3d.col": 40,
-   "h2d.col": 2,
-   "h3d.pass": 27,
-   "hxd.res": 8,
-   "hxd.fmt": 1
-  },
-  "h3d.impl": {
-   "h3d": 33,
-   "hxd": 44,
-   "h2d": 12,
-   "hxd.res": 2,
-   "h3d.scene": 5,
-   "h3d.mat": 34,
-   "h2d.col": 3,
-   "hxsl": 20,
-   "h3d.shader": 3,
+   "h3d.mat": 3,
+   "h3d.scene": 1,
+   "hxd": 14,
    "hxd.impl": 3,
-   "h3d.pass": 1
+   "hxd.res": 1,
+   "hxsl": 1
+  },
+  "h3d.anim": {
+   "h2d.col": 3,
+   "h3d": 12,
+   "h3d.col": 1,
+   "h3d.prim": 1,
+   "h3d.scene": 10,
+   "h3d.shader": 2,
+   "hxd": 3,
+   "hxd.impl": 2
   },
   "h3d.col": {
-   "hxd": 15,
-   "h3d": 21,
-   "h3d.scene": 22,
-   "h3d.prim": 8,
-   "hxd.impl": 4,
-   "h2d.impl": 1,
    "h2d.col": 1,
-   "hxd.fs": 1
+   "h2d.impl": 1,
+   "h3d": 21,
+   "h3d.prim": 8,
+   "h3d.scene": 22,
+   "hxd": 15,
+   "hxd.fs": 1,
+   "hxd.impl": 4
+  },
+  "h3d.impl": {
+   "h2d": 12,
+   "h2d.col": 3,
+   "h3d": 33,
+   "h3d.mat": 34,
+   "h3d.pass": 1,
+   "h3d.scene": 5,
+   "h3d.shader": 3,
+   "hxd": 44,
+   "hxd.impl": 3,
+   "hxd.res": 2,
+   "hxsl": 20
+  },
+  "h3d.mat": {
+   "h2d": 1,
+   "h2d.col": 1,
+   "h3d": 7,
+   "h3d.col": 3,
+   "h3d.impl": 3,
+   "h3d.pass": 6,
+   "h3d.scene": 9,
+   "h3d.shader": 16,
+   "hxd": 10,
+   "hxd.fs": 1,
+   "hxd.impl": 5,
+   "hxd.res": 6,
+   "hxsl": 7
+  },
+  "h3d.parts": {
+   "h2d": 2,
+   "h3d": 6,
+   "h3d.col": 2,
+   "h3d.mat": 3,
+   "h3d.prim": 3,
+   "h3d.scene": 5,
+   "h3d.shader": 3,
+   "hxd": 7,
+   "hxd.impl": 1,
+   "hxd.res": 3
   },
   "h3d.pass": {
+   "h2d.col": 1,
+   "h3d": 26,
+   "h3d.col": 12,
    "h3d.impl": 5,
    "h3d.mat": 28,
+   "h3d.prim": 4,
+   "h3d.scene": 20,
    "h3d.shader": 22,
    "hxd": 14,
-   "h3d": 26,
-   "h3d.prim": 4,
-   "h3d.col": 12,
-   "h3d.scene": 20,
-   "h2d.col": 1,
    "hxsl": 15
   },
   "h3d.prim": {
-   "hxd": 37,
    "h3d": 37,
-   "h3d.col": 42,
-   "hxd.impl": 7,
-   "h3d.scene": 3,
-   "hxd.fmt": 6,
-   "h3d.shader": 1,
-   "h3d.impl": 1,
    "h3d.anim": 2,
-   "hxd.res": 6,
+   "h3d.col": 42,
+   "h3d.impl": 1,
    "h3d.mat": 1,
-   "hxd.fs": 2
+   "h3d.scene": 3,
+   "h3d.shader": 1,
+   "hxd": 37,
+   "hxd.fmt": 6,
+   "hxd.fs": 2,
+   "hxd.impl": 7,
+   "hxd.res": 6
   },
-  "h3d.parts": {
-   "h3d": 6,
-   "h2d": 2,
-   "hxd.res": 3,
-   "h3d.scene": 5,
-   "hxd": 7,
-   "h3d.mat": 3,
-   "h3d.prim": 3,
-   "h3d.shader": 3,
-   "h3d.col": 2,
-   "hxd.impl": 1
-  },
-  "h3d.anim": {
-   "h3d.scene": 10,
-   "h3d": 12,
-   "hxd": 3,
-   "h2d.col": 3,
-   "hxd.impl": 2,
-   "h3d.shader": 2,
-   "h3d.prim": 1,
-   "h3d.col": 1
+  "h3d.scene": {
+   "h2d.col": 2,
+   "h3d": 66,
+   "h3d.anim": 4,
+   "h3d.col": 40,
+   "h3d.impl": 11,
+   "h3d.mat": 36,
+   "h3d.pass": 27,
+   "h3d.prim": 20,
+   "h3d.shader": 32,
+   "hxd": 60,
+   "hxd.fmt": 1,
+   "hxd.impl": 7,
+   "hxd.res": 8,
+   "hxsl": 31
   },
   "h3d.shader": {
-   "hxsl": 72,
    "h3d": 7,
    "h3d.mat": 5,
-   "hxd.impl": 1
-  },
-  "h3d.mat": {
-   "hxd.impl": 5,
-   "hxsl": 7,
-   "hxd": 10,
-   "hxd.res": 6,
-   "h2d": 1,
-   "h3d.shader": 16,
-   "h3d.col": 3,
-   "h3d": 7,
-   "hxd.fs": 1,
-   "h3d.scene": 9,
-   "h3d.pass": 6,
-   "h3d.impl": 3,
-   "h2d.col": 1
+   "hxd.impl": 1,
+   "hxsl": 72
   },
   "hxd": {
-   "h3d.scene": 1,
-   "h3d": 8,
    "h2d": 2,
-   "hxsl": 1,
-   "hxd.impl": 8,
+   "h3d": 8,
+   "h3d.scene": 1,
+   "hxd.fmt": 1,
    "hxd.fs": 2,
+   "hxd.impl": 8,
    "hxd.res": 3,
-   "hxd.fmt": 1
+   "hxsl": 1
   },
   "hxd.clipper": {
    "h2d.col": 4,
    "hxd": 1
   },
-  "hxd.snd": {
-   "hxd.res": 3,
-   "hxd": 8,
-   "h3d": 6,
-   "hxd.impl": 3
-  },
-  "hxd.res": {
-   "hxd.fs": 7,
-   "hxd.impl": 1,
-   "h2d": 12,
-   "hxd": 13,
-   "hxd.fmt": 6,
-   "h3d": 3,
-   "h3d.mat": 6,
-   "hxd.snd": 7,
-   "h3d.impl": 1
-  },
-  "hxd.fmt": {
-   "hxd": 29,
-   "hxd.fs": 3,
-   "hxd.res": 5,
-   "hxd.snd": 1,
-   "hxd.impl": 4,
-   "hxd.net": 1,
-   "h2d": 12,
-   "h3d": 18,
-   "h3d.col": 10,
-   "h3d.anim": 11,
-   "h3d.scene": 10,
-   "h3d.prim": 7,
-   "hxd.tools": 3,
-   "h3d.mat": 5,
-   "h3d.shader": 4
-  },
-  "hxd.fs": {
-   "hxd.impl": 4,
-   "hxd": 7,
-   "hxd.fmt": 7,
-   "h3d.anim": 1,
-   "h3d.prim": 1,
-   "h2d": 1,
-   "hxd.res": 5,
-   "h3d": 1
-  },
-  "hxd.impl": {
-   "hxd": 13,
-   "h3d": 9
-  },
-  "hxd.poly2tri": {
-   "hxd": 3
-  },
   "hxd.earcut": {
    "hxd": 1
   },
+  "hxd.fmt": {
+   "h2d": 12,
+   "h3d": 18,
+   "h3d.anim": 11,
+   "h3d.col": 10,
+   "h3d.mat": 5,
+   "h3d.prim": 7,
+   "h3d.scene": 10,
+   "h3d.shader": 4,
+   "hxd": 29,
+   "hxd.fs": 3,
+   "hxd.impl": 4,
+   "hxd.net": 1,
+   "hxd.res": 5,
+   "hxd.snd": 1,
+   "hxd.tools": 3
+  },
+  "hxd.fs": {
+   "h2d": 1,
+   "h3d": 1,
+   "h3d.anim": 1,
+   "h3d.prim": 1,
+   "hxd": 7,
+   "hxd.fmt": 7,
+   "hxd.impl": 4,
+   "hxd.res": 5
+  },
+  "hxd.impl": {
+   "h3d": 9,
+   "hxd": 13
+  },
+  "hxd.net": {},
+  "hxd.poly2tri": {
+   "hxd": 3
+  },
+  "hxd.res": {
+   "h2d": 12,
+   "h3d": 3,
+   "h3d.impl": 1,
+   "h3d.mat": 6,
+   "hxd": 13,
+   "hxd.fmt": 6,
+   "hxd.fs": 7,
+   "hxd.impl": 1,
+   "hxd.snd": 7
+  },
+  "hxd.snd": {
+   "h3d": 6,
+   "hxd": 8,
+   "hxd.impl": 3,
+   "hxd.res": 3
+  },
+  "hxd.tools": {},
   "hxsl": {
    "h3d": 14,
-   "hxd.res": 4,
-   "hxd": 5,
    "h3d.impl": 5,
    "h3d.mat": 5,
    "h3d.shader": 1,
-   "hxd.fs": 2
-  },
-  "hxd.net": {},
-  "hxd.tools": {}
+   "hxd": 5,
+   "hxd.fs": 2,
+   "hxd.res": 4
+  }
  }
 }

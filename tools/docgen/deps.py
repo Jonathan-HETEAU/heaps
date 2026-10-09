@@ -258,7 +258,7 @@ json.dump({
                         deps={d: sorted(k) for d, k in sorted(edges[m].items())},
                         used_by=sorted(rev[m])) for m, i in sorted(modules.items())},
     "doc_order": mod_sccs,
-    "package_edges": {a: dict(b) for a, b in pkg_edges.items()},
+    "package_edges": {a: dict(sorted(b.items())) for a, b in sorted(pkg_edges.items())},
 }, open(os.path.join(OUT, "deps.json"), "w"), indent=1, ensure_ascii=False)
 
 print(f"modules={len(modules)} edges={sum(len(d) for d in edges.values())} "
