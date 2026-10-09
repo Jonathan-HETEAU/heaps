@@ -1,0 +1,21 @@
+# h3d.impl.Query
+
+**typedef** · package [`h3d.impl`](README.md) · module `h3d.impl.Driver` · source [`h3d/impl/Driver.hx`](../../../../../h3d/impl/Driver.hx)
+
+## On js, hl/directx
+
+
+## On hl/sdl
+
+
+### q
+
+```haxe
+var q:sdl.Query
+```
+
+### kind
+
+```haxe
+var kind:QueryKind
+```

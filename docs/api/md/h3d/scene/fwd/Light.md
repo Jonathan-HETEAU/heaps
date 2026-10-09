@@ -1,0 +1,34 @@
+# h3d.scene.fwd.Light
+
+**class** · package [`h3d.scene.fwd`](README.md) · source [`h3d/scene/fwd/Light.hx`](../../../../../../h3d/scene/fwd/Light.hx)
+
+Extends: [`h3d.scene.Light`](../Light.md) → [`h3d.scene.Object`](../Object.md)
+
+Subclasses: [`h3d.scene.fwd.DirLight`](DirLight.md), [`h3d.scene.fwd.PointLight`](PointLight.md)
+
+## Constructor
+
+### new
+
+```haxe
+function new(shader:hxsl.Shader, ?parent:h3d.scene.Object):Void
+```
+
+## Variables
+
+### priority
+
+```haxe
+var priority:Int
+```
+
+### enableSpecular
+
+```haxe
+var enableSpecular(get, set):Bool
+```
+
+## Inherited members
+
+- from [`h3d.scene.Light`](../Light.md): `color`, `getShadowDirection`
+- from [`h3d.scene.Object`](../Object.md): `currentAnimation`, `parent`, `numChildren`, `visible`, `culled`, `alwaysSyncAnimation`, `inheritCulled`, `ignoreBounds`, `forceBounds`, `ignoreCollide`, `modelRoot`, `ignoreParentTransform`, `lightCameraCenter`, `fixedPosition`, `alwaysSync`, `drawn`, `cullingCollider`, `x`, `y`, `z`, `scaleX`, `scaleY`, `scaleZ`, `follow`, `followPositionOnly`, `defaultTransform`, `name`, `playAnimation`, `switchToAnimation`, `stopAnimation`, `applyAnimationTransform`, `getObjectsCount`, `getMaterialByName`, `contains`, `find`, `findAll`, `getMaterials`, `localToGlobal`, `globalToLocal`, `getInvPos`, `getBounds`, `getMeshes`, `getMeshByName`, `getObjectByName`, `clone`, `addChild`, `addChildAt`, `iterVisibleMeshes`, `removeChild`, `removeChildren`, `remove`, `getScene`, `getAbsPos`, `getRelPos`, `isMesh`, `toMesh`, `getCollider`, `getGlobalCollider`, `getLocalCollider`, `getPosition`, `setPosition`, `setTransform`, `getTransform`, `rotate`, `setRotation`, `setRotationAxis`, `setDirection`, `getLocalDirection`, `getRotationQuat`, `setRotationQuat`, `scale`, `setScale`, `toString`, `getChildAt`, `getChildIndex`, `iterator`

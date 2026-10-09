@@ -53,3 +53,8 @@ rm -rf docs/api/html
 (cd /opt/haxesrc/dox && hl run.hl -i $IN -o $ROOT/docs/api/html --title "Heaps API" -in "^(h2d|h3d|hxd|hxsl)(\.|$)" \
 	-D source-path https://github.com/HeapsIO/heaps/blob/master/)
 rm -rf $IN
+rm -rf $ROOT/docs/api/html/hashes
+
+# Markdown reference + llms.txt index, and the file dependency map
+python3 tools/docgen/xml2md.py
+python3 tools/docgen/deps.py

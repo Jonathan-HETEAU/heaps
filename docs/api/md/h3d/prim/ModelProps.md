@@ -1,0 +1,17 @@
+# h3d.prim.ModelProps
+
+**typedef** · package [`h3d.prim`](README.md) · module `h3d.prim.ModelDatabase` · source [`h3d/prim/ModelDatabase.hx`](../../../../../h3d/prim/ModelDatabase.hx)
+
+## Fields
+
+### lodConfig
+
+```haxe
+var lodConfig:Array<Float>
+```
+
+### dynamicBones
+
+```haxe
+var dynamicBones:Array<Dynamic>
+```
