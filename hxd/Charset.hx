@@ -1,5 +1,9 @@
 package hxd;
 
+/**
+	Character set helpers used by the fonts: the default characters, the fallback characters used when a glyph is missing
+	(for instance curly quotes replaced by straight ones), and line breaking rules (spaces, CJK characters).
+**/
 class Charset {
 
 	/**
@@ -37,6 +41,9 @@ class Charset {
 	public static var UNICODE_SPECIALS = "�□";
 
 
+	/**
+		The characters included by default when generating fonts: ASCII and Latin-1.
+	**/
 	public static var DEFAULT_CHARS = ASCII + LATIN1;
 
 	var map : Map<Int,Int>;
@@ -98,6 +105,9 @@ class Charset {
 		m("–".code, "-".code);
 	}
 
+	/**
+		Returns the glyph of `code`, or of its fallback characters if missing, or `null`.
+	**/
 	public function resolveChar<T>( code : Int, glyphs : Map<Int,T> ) : Null<T> {
 		var c : Null<Int> = code;
 		while( c != null ) {
@@ -108,6 +118,9 @@ class Charset {
 		return null;
 	}
 
+	/**
+		Tells if `code` is a CJK (Chinese, Japanese, Korean) character, where lines can break.
+	**/
 	public function isCJK(code) {
 		// ID class line-break characters based off Unicode specification.
 		// Ref: https://www.unicode.org/reports/tr14/tr14-34.html#ID
@@ -130,10 +143,16 @@ class Charset {
 
 	}
 
+	/**
+		Tells if `code` is a space (including the ideographic space).
+	**/
 	public function isSpace(code) {
 		return code == ' '.code || code == 0x3000;
 	}
 
+	/**
+		Tells if a line can break at `code`.
+	**/
 	public function isBreakChar(code) {
 		return isSpace(code) || isCJK(code);
 	}
@@ -143,11 +162,17 @@ class Charset {
 		[for( i in 0...str.length ) str.charCodeAt(i) => true];
 	}
 
+	/**
+		Tells if `code` is a Japanese or punctuation character which must not start a line.
+	**/
 	public function isComplementChar(code) {
 		return complementChars.exists(code);
 	}
 
 	static var inst : Charset;
+	/**
+		Returns the default charset.
+	**/
 	public static function getDefault() {
 		if( inst == null ) inst = new Charset();
 		return inst;

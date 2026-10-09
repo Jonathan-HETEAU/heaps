@@ -1,5 +1,9 @@
 package hxd;
 
+/**
+	The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed
+	formats (`S3TC`, `ASTC`, `ETC`...) and depth formats.
+**/
 enum PixelFormat {
 	ARGB;
 	BGRA;

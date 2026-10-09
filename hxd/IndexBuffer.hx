@@ -19,10 +19,19 @@ private class InnerIterator {
 	}
 }
 
+/**
+	A growable array of integer indexes, used to build index data.
+**/
 abstract IndexBuffer(InnerData) {
 
+	/**
+		The number of indexes.
+	**/
 	public var length(get, never) : Int;
 
+	/**
+		Creates a buffer of `length` zeros.
+	**/
 	public inline function new(length = 0) {
 		#if js
 		this = js.Syntax.construct(Array, length);
@@ -32,10 +41,16 @@ abstract IndexBuffer(InnerData) {
 		#end
 	}
 
+	/**
+		Adds an index at the end.
+	**/
 	public inline function push( v : Int ) {
 		this.push(v);
 	}
 
+	/**
+		Makes the buffer at least `v` indexes long, filling with zeros.
+	**/
 	public inline function grow( v : Int ) {
 		#if js
 		while( this.length < v ) this.push(0);
@@ -44,6 +59,9 @@ abstract IndexBuffer(InnerData) {
 		#end
 	}
 
+	/**
+		Changes the length to `v`, truncating or filling with zeros.
+	**/
 	public inline function resize( v : Int ) {
 		#if js
 		this.resize(v);
@@ -60,10 +78,16 @@ abstract IndexBuffer(InnerData) {
 		return this[key] = value;
 	}
 
+	/**
+		Returns the native array.
+	**/
 	public inline function getNative() : InnerData {
 		return this;
 	}
 
+	/**
+		Returns an iterator on the indexes.
+	**/
 	public inline function iterator() {
 		return new InnerIterator(this);
 	}

@@ -19,6 +19,9 @@ abstract class DroppedFile {
 
 	#end
 
+	/**
+		Creates a dropped file of the given path.
+	**/
 	public function new( file : String ) {
 		this.file = file;
 	}
@@ -56,6 +59,9 @@ class DropFileEvent {
 	**/
 	public var dropY(default, null): Int;
 	
+	/**
+		Creates a drop event of `files` at the position (`dx`, `dy`).
+	**/
 	public function new( files : Array<DroppedFile>, dx : Int, dy : Int ) {
 		this.files = files;
 		this.dropX = dx;

@@ -26,10 +26,16 @@ class Rand {
 	}
 
 	// this is the Murmur3 hashing function which has both excellent distribution and good randomness
+	/**
+		Returns a well distributed hash of the integer `n` (Murmur3 mixing), useful as a stateless random value.
+	**/
 	public static function hash(n, seed = 5381) {
 		return inlineHash(n, seed);
 	}
 
+	/**
+		Inline version of `hash`.
+	**/
 	public static inline function inlineHash(n:Int, seed:Int) : Int {
 		var n : haxe.Int32 = n;
 		n *= 0xcc9e2d51;

@@ -37,6 +37,9 @@ class App implements h3d.IDrawable {
 
 	static var UI_CLEAR_COLOR = new h3d.Vector4(0, 0, 0, 0);
 
+	/**
+		Creates the application: initializes the engine (if not already done), then calls `init` once it is ready.
+	**/
 	public function new() {
 		var engine = h3d.Engine.getCurrent();
 		if( engine != null ) {
@@ -126,6 +129,9 @@ class App implements h3d.IDrawable {
 		this.s3d = s3d;
 	}
 
+	/**
+		Renders the 3D scene then the 2D scene. Called every frame; override it to customize the rendering.
+	**/
 	public function render(e:h3d.Engine) {
 		s3d.render(e);
 		var upscaling = e.driver.upscaling;

@@ -1,5 +1,8 @@
 package hxd;
 
+/**
+	A mouse cursor (see `hxd.System.setCursor` and `h2d.Interactive.cursor`).
+**/
 enum Cursor {
 	Default;
 	Button;
@@ -17,6 +20,9 @@ enum Cursor {
 	Callback( f : Void -> Void );
 }
 
+/**
+	A cursor made of bitmaps, possibly animated.
+**/
 @:allow(hxd.System)
 class CustomCursor {
 
@@ -43,6 +49,13 @@ class CustomCursor {
 	var frameIndex : Int;
 	#end
 
+	/**
+		Creates a cursor.
+		@param frames The images of the cursor.
+		@param speed The number of frames per second.
+		@param offsetX The X position of the cursor hot spot in the images.
+		@param offsetY The Y position of the cursor hot spot in the images.
+	**/
 	public function new( frames, speed, offsetX, offsetY ) {
 		this.frames = frames;
 		this.speed = speed;
@@ -56,11 +69,17 @@ class CustomCursor {
 	}
 
 	#if (hlsdl || hldx || js)
+	/**
+		Restarts the animation.
+	**/
 	public function reset() : Void {
 		frameTime = 0;
 		frameIndex = 0;
 	}
 
+	/**
+		Advances the animation by `dt` seconds and returns the current frame index.
+	**/
 	public function update( dt : Float ) : Int {
 		var newTime : Float = frameTime + dt;
 		var delay : Float = frameDelay;
@@ -80,6 +99,9 @@ class CustomCursor {
 	}
 	#end
 
+	/**
+		Releases the native cursors.
+	**/
 	public function dispose() {
 		for( f in frames )
 			f.dispose();
@@ -103,6 +125,9 @@ class CustomCursor {
 	}
 
 	#if js
+	/**
+		JavaScript: returns a cursor using the CSS cursor `name`.
+	**/
 	public static function getNativeCursor( name : String ) {
 		var c = new CustomCursor([],0,0,0);
 		c.alloc = [name];

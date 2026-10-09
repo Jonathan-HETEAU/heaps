@@ -60,10 +60,19 @@ private class InnerIterator {
 	}
 }
 
+/**
+	A growable array of 32-bit floats, used to build vertex data.
+**/
 abstract FloatBuffer(InnerData) {
 
+	/**
+		The number of floats.
+	**/
 	public var length(get, never) : Int;
 
+	/**
+		Creates a buffer of `length` zeros.
+	**/
 	public inline function new(length = 0) {
 		#if js
 		this = new InnerData(length);
@@ -73,10 +82,16 @@ abstract FloatBuffer(InnerData) {
 		#end
 	}
 
+	/**
+		Adds a float at the end.
+	**/
 	public inline function push( v : hxd.impl.Float32 ) {
 		this.push(v);
 	}
 
+	/**
+		Makes the buffer at least `v` floats long, filling with zeros.
+	**/
 	public inline function grow( v : Int ) {
 		#if js
 		for( i in this.length...v )
@@ -86,6 +101,9 @@ abstract FloatBuffer(InnerData) {
 		#end
 	}
 
+	/**
+		Changes the length to `v`, truncating or filling with zeros.
+	**/
 	public inline function resize( v : Int ) {
 		#if js
 		this.length = v;
@@ -103,10 +121,16 @@ abstract FloatBuffer(InnerData) {
 		return this[key] = value;
 	}
 
+	/**
+		Returns the native array.
+	**/
 	public inline function getNative() : InnerData {
 		return this;
 	}
 
+	/**
+		Returns an iterator on the floats.
+	**/
 	public inline function iterator() {
 		return new InnerIterator(this);
 	}
