@@ -3,10 +3,25 @@ package h3d.scene;
 import haxe.Timer;
 import h3d.anim.Skin.DynamicJoint;
 
+/**
+	A temporary object representing a joint (bone) of a `Skin`, returned by `Skin.getObjectByName`.
+
+	Its absolute position follows the joint, which allows attaching objects to bones or reading their position.
+	It is not part of the scene tree: it is recreated by each `getObjectByName` call.
+**/
 class Joint extends Object {
+	/**
+		The skin this joint belongs to.
+	**/
 	public var skin : Skin;
+	/**
+		The index of the joint in `h3d.anim.Skin.allJoints`.
+	**/
 	public var index : Int;
 
+	/**
+		Creates an object following the joint `j` of `skin`.
+	**/
 	public function new(skin, j : h3d.anim.Skin.Joint ) {
 		super(null);
 		name = j.name;
@@ -44,16 +59,35 @@ class Joint extends Object {
 
 }
 
+/**
+	The runtime state of a joint of a `Skin` (one per joint of the skin data).
+**/
 @:access(h3d.scene.Skin)
 class JointData {
+	/**
+		The current transform of the joint relative to its parent, written by animations. `null` uses the default pose.
+	**/
 	public var currentRelPos : h3d.Matrix;
+	/**
+		The absolute transform of the joint computed during the last joints sync.
+	**/
 	public var currentAbsPos : h3d.Matrix;
+	/**
+		An optional transform applied on top of the animated pose (see `Skin.setJointRelPosition` with `additive`).
+	**/
 	public var additivePose : h3d.Matrix;
 
+	/**
+		Creates the state of a joint.
+	**/
 	public function new() {
 		this.currentAbsPos = h3d.Matrix.I();
 	}
 
+	/**
+		Computes the absolute transform of the joint and its skinning matrix.
+		@param syncDyn `true` when a dynamic joint simulation step must be performed.
+	**/
 	public function sync(skin: h3d.scene.Skin, j: h3d.anim.Skin.Joint, syncDyn : Bool) {
 		if ( j.follow != null ) return;
 		var m = currentAbsPos;
@@ -79,12 +113,20 @@ class JointData {
 	}
 }
 
+/**
+	The runtime state of a dynamic joint (`h3d.anim.Skin.DynamicJoint`): a joint simulated as a spring
+	following its animated position, for hair, cloth or other secondary motion.
+	The simulation runs at the fixed time step `Skin.FIXED_DT`.
+**/
 @:access(h3d.scene.Skin)
 class DynamicJointData extends JointData {
 	static var tmpVec = new Vector(0, 0, 0);
 	static var tmpVec2 = new Vector(0, 0, 0);
 	static var tmpQ = new Quat();
 
+	/**
+		The current simulated world transform of the joint.
+	**/
 	public var curTargetWorld : h3d.Matrix;
 	var curTargetLocal : h3d.Matrix;
 	var prevTargetLocal : h3d.Matrix;
@@ -92,10 +134,16 @@ class DynamicJointData extends JointData {
 	var parentQuat : h3d.Quat;
 	var prevParentQuat : h3d.Quat;
 
+	/**
+		Creates the state of a dynamic joint.
+	**/
 	public function new() {
 		super();
 	}
 
+	/**
+		Initializes the simulation from the current joint position.
+	**/
 	public function initData( skin : h3d.scene.Skin, j : h3d.anim.Skin.Joint ) {
 		curTargetWorld = currentAbsPos.clone();
 		curTargetLocal = new h3d.Matrix();
@@ -226,10 +274,30 @@ class DynamicJointData extends JointData {
 	}
 }
 
+/**
+	A skinned mesh: a mesh deformed by a skeleton of joints (bones), driven by skeletal animations.
+
+	Skins are created when loading a model with a skeleton (see `hxd.res.Model.toHmd` and `h3d.prim.ModelCache`),
+	and animated with `Object.playAnimation`. The skinning is performed on the GPU by `h3d.shader.Skin`.
+	Use `getObjectByName` with a joint name to get an object following that joint.
+**/
 class Skin extends MultiMaterial {
+	/**
+		The fixed time step, in seconds, of the dynamic joints simulation.
+	**/
 	public static var FIXED_DT = 1. / 60.;
+	/**
+		The minimum number of bones allocated in the skinning shader (the actual size is the next power of two of the
+		number of bones, which limits the number of shader variants).
+	**/
 	public static var MIN_SHADER_BONES = 32;
+	/**
+		The maximum number of bones per skinning draw. Skins with more bones must be split per material (see `h3d.anim.Skin.splitJoints`).
+	**/
 	public final MAX_SHADER_BONES = 256;
+	/**
+		The time accumulated for the dynamic joints simulation, consumed by steps of `FIXED_DT`.
+	**/
 	public var accumulator = FIXED_DT;
 
 	var skinData : h3d.anim.Skin;
@@ -250,10 +318,26 @@ class Skin extends MultiMaterial {
 	var skinShader : h3d.shader.SkinBase;
 	var jointsGraphics : Graphics;
 
+	/**
+		Displays the skeleton joints and bones with lines (debug).
+	**/
 	public var showJoints : Bool;
+	/**
+		When enabled, joints flagged for retargeting keep their bind pose translation instead of the animated one,
+		which allows playing an animation made for a skeleton with different proportions.
+	**/
 	public var enableRetargeting : Bool = true;
+	/**
+		The value of `enableRetargeting` at the last joints sync.
+	**/
 	public var prevEnableRetargeting : Bool = true;
 
+	/**
+		Creates a skinned mesh.
+		@param s The skin data (skeleton and skinned primitive), or `null` to set it later with `setSkinData`.
+		@param mat The materials.
+		@param parent An optional parent object.
+	**/
 	public function new(s, ?mat, ?parent) {
 		super(null, mat, parent);
 		if( s != null )
@@ -301,6 +385,9 @@ class Skin extends MultiMaterial {
 		}
 	}
 
+	/**
+		Returns the bounds of the current positions of the bound joints, in world space.
+	**/
 	public function getCurrentSkeletonBounds() {
 		syncJoints();
 		var b = new h3d.col.Bounds();
@@ -353,10 +440,17 @@ class Skin extends MultiMaterial {
 		jointsUpdated = true;
 	}
 
+	/**
+		Returns the skin data: the skeleton and the skinned primitive.
+	**/
 	public function getSkinData() {
 		return skinData;
 	}
 
+	/**
+		Returns the current transform of joint `name` relative to its parent, or `null` if the joint does not exist.
+		@param additive If `true`, returns the additive pose of the joint instead (or `null` if none).
+	**/
 	public function getJointRelPosition( name : String, additive = false ) : Null<h3d.Matrix> {
 		var j = skinData.namedJoints.get(name);
 		if( j == null ) return null;
@@ -365,6 +459,11 @@ class Skin extends MultiMaterial {
 		return jointsData[j.index].currentRelPos ?? j.defMat;
 	}
 
+	/**
+		Overrides the transform of joint `name` relative to its parent. Animations overwrite it when they update the joint.
+		@param additive If `true`, sets a transform applied on top of the animated pose instead, which is kept
+		until set to `null`.
+	**/
 	public function setJointRelPosition( name : String, pos : h3d.Matrix, additive = false ) {
 		var j = skinData.namedJoints.get(name);
 		if( j == null ) return;
@@ -375,6 +474,10 @@ class Skin extends MultiMaterial {
 		jointsUpdated = true;
 	}
 
+	/**
+		Sets the skin data (skeleton and skinned primitive) and reallocates the joint states.
+		@param shaderInit If `true`, (re)creates the skinning shader of the materials.
+	**/
 	public function setSkinData( s, shaderInit = true ) {
 		skinData = s;
 		jointsUpdated = true;
@@ -609,11 +712,21 @@ class Skin extends MultiMaterial {
 
 }
 
+/**
+	A skin following the skeleton of another skin: the joints with the same name copy the pose of `baseSkin`.
+
+	Used for separate skinned parts sharing a skeleton, such as clothes or equipment on a character.
+	Animations bound to the hierarchy are not applied to it, but animations played directly on it are
+	(for instance facial animations on top of the body animation).
+**/
 class SubSkin extends h3d.scene.Skin {
 
 	var baseSkin : h3d.scene.Skin;
 	var bindMap : Array<Int> = null;
 
+	/**
+		Creates a skin using the skin data and materials of `subSkin`, posed by the skeleton of `baseSkin`.
+	**/
 	public function new( baseSkin : h3d.scene.Skin, subSkin : h3d.scene.Skin, ?parent) {
 		this.baseSkin = baseSkin;
 		super(null, subSkin.materials, parent);

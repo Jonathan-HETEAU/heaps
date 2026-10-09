@@ -20,6 +20,22 @@ private class GPoint {
 	}
 }
 
+/**
+	Draws 3D lines with an API similar to `h2d.Graphics`: set a style with `lineStyle`, then `moveTo` / `lineTo`.
+	Mostly used for debug display (see `Box`, `Sphere` and `Capsule`).
+
+	By default lines are drawn in screen space: their width is in pixels whatever the distance.
+	With `is3D`, consecutive `lineTo` points form polylines whose width is in world units; they are only
+	tesselated in the XY plane (as seen from above).
+	Lines are not lit and do not cast shadows.
+
+	```haxe
+	var g = new h3d.scene.Graphics(s3d);
+	g.lineStyle(2, 0xFF0000);
+	g.moveTo(0, 0, 0);
+	g.lineTo(0, 0, 10);
+	```
+**/
 class Graphics extends Mesh {
 
 	var bprim : h3d.prim.BigPrimitive;
@@ -39,6 +55,9 @@ class Graphics extends Mesh {
 	**/
 	public var is3D(default, set) : Bool;
 
+	/**
+		Creates an empty graphics object.
+	**/
 	public function new(?parent) {
 		bprim = new h3d.prim.BigPrimitive(hxd.BufferFormat.POS3D_NORMAL_UV_RGBA);
 		bprim.isStatic = false;
@@ -205,11 +224,20 @@ class Graphics extends Mesh {
 		super.draw(ctx);
 	}
 
+	/**
+		Removes all the lines drawn so far.
+	**/
 	public function clear() {
 		flush();
 		bprim.clear();
 	}
 
+	/**
+		Sets the style of the next lines.
+		@param size The line width: in pixels, or in world units when `is3D` is set. `0` keeps the current width.
+		@param color The line color, in `0xRRGGBB` format.
+		@param alpha The line opacity, from `0` to `1`.
+	**/
 	public function lineStyle( size = 0., color = 0, alpha = 1. ) {
 		flush();
 		if( size > 0 && lineSize != size ) {
@@ -219,6 +247,9 @@ class Graphics extends Mesh {
 		setColor(color, alpha);
 	}
 
+	/**
+		Sets the color of the next lines with float components, from `0` to `1`.
+	**/
 	public function setColorF( r : Float, g : Float, b : Float, a : Float = 1.) {
 		curA = a;
 		curR = r;
@@ -226,6 +257,11 @@ class Graphics extends Mesh {
 		curB = b;
 	}
 
+	/**
+		Sets the color of the next lines.
+		@param color The color, in `0xRRGGBB` format.
+		@param alpha The opacity, from `0` to `1`.
+	**/
 	public function setColor( color : Int, alpha = 1. ) {
 		curA = alpha;
 		curR = ((color >> 16) & 0xFF) / 255.;
@@ -233,11 +269,17 @@ class Graphics extends Mesh {
 		curB = (color & 0xFF) / 255.;
 	}
 
+	/**
+		Draws a single line from `p1` to `p2`.
+	**/
 	public inline function drawLine( p1 : h3d.col.Point, p2 : h3d.col.Point ) {
 		moveTo(p1.x, p1.y, p1.z);
 		lineTo(p2.x, p2.y, p2.z);
 	}
 
+	/**
+		Moves the pen to the given local position without drawing. With `is3D`, it also ends the current polyline.
+	**/
 	public function moveTo( x : Float, y : Float, z : Float ) {
 		if( is3D ) {
 			flush();
@@ -253,6 +295,9 @@ class Graphics extends Mesh {
 		tmpPoints.push(new GPoint(x, y, z, r, g, b, a));
 	}
 
+	/**
+		Draws a line from the pen position to the given local position, and moves the pen there.
+	**/
 	public function lineTo( x : Float, y : Float, z : Float ) {
 		if( is3D ) {
 			bprim.addBounds(curX, curY, curZ);
