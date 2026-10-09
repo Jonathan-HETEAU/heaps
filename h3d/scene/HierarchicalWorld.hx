@@ -1,19 +1,62 @@
 package h3d.scene;
 
+/**
+	The parameters of a node of a `HierarchicalWorld`. The root data is given by the user, the children data is
+	derived from it when nodes are subdivided.
+**/
 typedef WorldData = {
+	/**
+		The X position of the node center, relative to its parent node.
+	**/
 	var x : Int;
+	/**
+		The Y position of the node center, relative to its parent node.
+	**/
 	var y : Int;
+	/**
+		A node is subdivided when the camera is closer (on the XY plane) than `size * subdivPow` from its center.
+	**/
 	var subdivPow : Float;
+	/**
+		The width of the square covered by the node, in world units. Each subdivision halves it.
+	**/
 	var size : Int;
+	/**
+		The depth of the node: `0` for the root.
+	**/
 	var depth : Int;
+	/**
+		The depth of the leaf nodes, which are never subdivided.
+	**/
 	var maxDepth : Int;
+	/**
+		Called when a node is created, to populate it (for instance load the content of the chunk).
+		For the root node it is only called by the private `init` method, which subclasses are expected to call.
+	**/
 	var onCreate : HierarchicalWorld -> Void;
+	/**
+		The root node. Set automatically.
+	**/
 	var root : HierarchicalWorld;
 }
 
+/**
+	A streamed world split in a quadtree of square chunks on the XY plane.
+
+	The root node covers the whole world. Each frame, the nodes close to the camera are subdivided in 4 children
+	(at most one subdivision per frame, through a loading queue), and the subdivisions of far nodes are removed.
+	Use `WorldData.onCreate` to populate the nodes when they are created. Nodes can be locked to keep them loaded
+	while editing.
+**/
 class HierarchicalWorld extends Object {
 
+	/**
+		If `true`, all the nodes are subdivided whatever the camera distance (loads the whole world).
+	**/
 	static public var FULL = false;
+	/**
+		If `true`, displays the bounds of the nodes (locked leaves are shown in red).
+	**/
 	static public var DEBUG = false;
 
 	static inline final UNLOCK_COLOR = 0xFFFFFF;
@@ -22,6 +65,9 @@ class HierarchicalWorld extends Object {
 	var loadingQueue : Array<h3d.scene.RenderContext -> Bool>;
 	var loading : Bool = false;
 
+	/**
+		The parameters of this node.
+	**/
 	public var data : WorldData;
 	var logicBounds : h3d.col.Bounds;
 	var objectBounds : h3d.col.Bounds;
@@ -39,6 +85,9 @@ class HierarchicalWorld extends Object {
 		updateGraphics();
 		return locked;
 	}
+	/**
+		The number of subdivision levels below this node: `0` for the leaves.
+	**/
 	public var level(get, never) : Int;
 	public function get_level() {
 		return data.maxDepth - data.depth;
@@ -68,6 +117,9 @@ class HierarchicalWorld extends Object {
 		updateGraphics();
 	}
 
+	/**
+		Creates a node. Create the root with `depth = 0`: its children are then created automatically.
+	**/
 	public function new(parent, data : WorldData) {
 		super(parent);
 		this.data = data;
@@ -199,6 +251,9 @@ class HierarchicalWorld extends Object {
 		super.emitRec(ctx);
 	}
 
+	/**
+		Returns the center of the chunk containing the world position (`x`, `y`) at the given depth (the leaf depth by default).
+	**/
 	public function getChunkPos(x : Float, y : Float, depth = -1) {
 		var root = getRoot();
 		var depth = depth;
@@ -209,10 +264,17 @@ class HierarchicalWorld extends Object {
 			(Math.floor(y / chunkSize) + 0.5) * chunkSize);
 	}
 
+	/**
+		Tells if the world position (`x`, `y`) is inside this node.
+	**/
 	public function containsAt(x : Float, y : Float) {
 		return logicBounds.contains(new h3d.col.Point(x, y, 0.0));
 	}
 
+	/**
+		Immediately subdivides the nodes containing the world position (`x`, `y`) down to the leaves.
+		@param lock If `true`, also locks these nodes so that they are kept whatever the camera distance.
+	**/
 	public function requestCreateAt(x : Float, y : Float, lock : Bool) {
 		if ( !containsAt(x, y) )
 			return;
@@ -231,6 +293,10 @@ class HierarchicalWorld extends Object {
 	}
 
 	// Get the chunk at the given position, creating it if it doesn't exist
+	/**
+		Returns the leaf node containing the world position (`x`, `y`), creating and locking it if needed.
+		Returns `null` if the position is outside this node.
+	**/
 	public function getChunkAtLock(x: Float, y: Float) : HierarchicalWorld {
 		requestCreateAt(x,y, true);
 
@@ -253,6 +319,9 @@ class HierarchicalWorld extends Object {
 		return rec(this,x,y);
 	}
 
+	/**
+		Locks the existing nodes containing the world position (`x`, `y`): they are not removed when the camera moves away.
+	**/
 	public function lockAt(x : Float, y : Float) {
 		if ( !containsAt(x, y) )
 			return;
@@ -265,6 +334,9 @@ class HierarchicalWorld extends Object {
 		}
 	}
 
+	/**
+		Unlocks the nodes containing the world position (`x`, `y`).
+	**/
 	public function unlockAt(x : Float, y : Float) {
 		if ( !containsAt(x, y) )
 			return;
@@ -277,6 +349,9 @@ class HierarchicalWorld extends Object {
 		}
 	}
 
+	/**
+		Unlocks this node and all its descendants.
+	**/
 	public function unlockAll() {
 		locked = false;
 		for ( c in children ) {
@@ -287,10 +362,16 @@ class HierarchicalWorld extends Object {
 		}
 	}
 
+	/**
+		Returns the root node.
+	**/
 	public function getRoot() : h3d.scene.HierarchicalWorld {
 		return data.root;
 	}
 
+	/**
+		Removes the children nodes so that they are recreated (and repopulated with `onCreate`) when needed.
+	**/
 	public function refresh() {
 		subdivided = false;
 		var i = children.length;
