@@ -40,7 +40,12 @@ def scan(path):
             # members only at class body level (depth 1), types at depth 0
             relevant = (is_type and depth == 0 and "private" not in mods) or \
                        (not is_type and depth == 1 and ("public" in mods or interface_ctx))
-            if "override" in mods or "@:noCompletion" in line or "@:dox(hide)" in line:
+            k = i - 1
+            prev_meta = ""
+            while k >= 0 and lines[k].strip().startswith(("@:", "#")):
+                prev_meta += lines[k]
+                k -= 1
+            if "override" in mods or any(x in line + prev_meta for x in ("@:noCompletion", "@:dox(hide)")):
                 relevant = False
             if relevant and not name.startswith("get_") and not name.startswith("set_"):
                 total += 1

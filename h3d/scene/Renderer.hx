@@ -1,19 +1,53 @@
 package h3d.scene;
 
+/**
+	The list of draw passes emitted for one pass name (such as `"default"`, `"alpha"` or `"shadow"`) during a frame,
+	handed to the `Renderer` by the `Scene`.
+**/
 class PassObjects {
+	/**
+		The pass name, matching `h3d.mat.Pass.name`.
+	**/
 	public var name : String;
+	/**
+		The object passes to draw for this pass name.
+	**/
 	public var passes : h3d.pass.PassList;
+	/**
+		Set to `true` when the renderer retrieved these passes. In debug builds, the scene traces a warning for passes left unrendered (see `Scene.checkPasses`).
+	**/
 	public var rendered : Bool;
+	/**
+		Creates an empty pass list.
+	**/
 	public function new() {
 		passes = new h3d.pass.PassList();
 	}
 }
 
+/**
+	The rendering mode of a `Renderer`.
+**/
 enum RenderMode{
+	/**
+		Regular rendering.
+	**/
 	Default;
+	/**
+		Rendering for light probe baking: only diffuse lighting is computed and the environment is used as sky.
+	**/
 	LightProbe;
 }
 
+/**
+	Base class of the scene renderers.
+
+	Each frame, the `Scene` syncs its objects, sorts the emitted draw passes by pass name into `PassObjects` and calls
+	`process`. The renderer then decides in which order and to which render targets each pass name is drawn, and
+	applies the post-processing `effects`.
+	This class only provides the helpers: the concrete renderers are `h3d.scene.fwd.Renderer` (forward, the default)
+	and `h3d.scene.pbr.Renderer` (physically based). The active renderer is created by `h3d.mat.MaterialSetup.current`.
+**/
 @:allow(hrt.prefab.rfx.RendererFX)
 @:allow(h3d.pass.Shadows)
 class Renderer extends hxd.impl.AnyProps {
@@ -29,15 +63,32 @@ class Renderer extends hxd.impl.AnyProps {
 	var debugging = false;
 
 	#if (editor || editor_hl)
+	/**
+		Editor only (`-D editor`): when enabled, the PBR renderer draws the editor debug geometry passes (`debuggeom` and `debuggeom_alpha`).
+	**/
 	public var showEditorGuides = false;
 	#end
 
+	/**
+		The renderer effects (post processes and render hooks) applied in order during the frame.
+		See `h3d.impl.RendererFX`.
+	**/
 	public var effects : Array<h3d.impl.RendererFX> = [];
 
+	/**
+		The rendering mode. `LightProbe` is used while baking light probes: the PBR renderer then only renders the
+		diffuse lighting and uses the environment map as sky.
+	**/
 	public var renderMode : RenderMode = Default;
 
+	/**
+		Enables shadow casting. When `false`, the shadow passes are not drawn.
+	**/
 	public var shadows : Bool = true;
 
+	/**
+		Creates the renderer and initializes its properties with `getDefaultProps()`.
+	**/
 	public function new() {
 		allPasses = [];
 		passObjects = new Map();
@@ -47,6 +98,9 @@ class Renderer extends hxd.impl.AnyProps {
 		backToFront = depthSort.bind(false);
 	}
 
+	/**
+		Returns the first effect of `effects` which is an instance of `cl`, or `null` if there is none.
+	**/
 	public function getEffect<T:h3d.impl.RendererFX>( cl : Class<T> ) : T {
 		for( f in effects ) {
 			var f = Std.downcast(f, cl);
@@ -55,6 +109,9 @@ class Renderer extends hxd.impl.AnyProps {
 		return null;
 	}
 
+	/**
+		Disposes the render passes, effects and light system resources of this renderer.
+	**/
 	public function dispose() {
 		for( p in allPasses )
 			p.dispose();
@@ -74,6 +131,9 @@ class Renderer extends hxd.impl.AnyProps {
 	public function addShader( s : hxsl.Shader ) {
 	}
 
+	/**
+		Returns the first render pass which is an instance of `c`, or `null` if there is none.
+	**/
 	public function getPass<T:h3d.pass.Output>( c : Class<T> ) : T {
 		for( p in allPasses )
 			if( Std.isOfType(p, c) )
@@ -81,6 +141,9 @@ class Renderer extends hxd.impl.AnyProps {
 		return null;
 	}
 
+	/**
+		Returns the render pass named `name`, or `null` if there is none.
+	**/
 	public function getPassByName( name : String ) {
 		for( p in allPasses )
 			if( p.name == name )
@@ -191,15 +254,25 @@ class Renderer extends hxd.impl.AnyProps {
 		throw "Not implemented";
 	}
 
+	/**
+		Called by the `Scene` at the beginning of the frame, before objects are synchronized and emitted.
+	**/
 	public function start() {
 	}
 
+	/**
+		Calls `RendererFX.start` on each enabled effect. Called by the `Scene` right after `start`.
+	**/
 	public function startEffects() {
 		for ( e in effects )
 			if ( e.enabled )
 				e.start(this);
 	}
 
+	/**
+		Renders the frame from the draw passes emitted by the scene objects. Called by `Scene.render`.
+		Calls `computeStatic` instead of `render` when `RenderContext.computingStatic` is set (see `Scene.computeStatic`).
+	**/
 	public function process( passes : Array<PassObjects> ) {
 		hasSetTarget = false;
 		for( p in allPasses )
@@ -216,6 +289,9 @@ class Renderer extends hxd.impl.AnyProps {
 			passObjects.set(p.name, null);
 	}
 
+	/**
+		Dispatches a compute shader with the given number of work groups. Requires a driver supporting compute shaders.
+	**/
 	public function computeDispatch( shader, x = 1, y = 1, z = 1 ) {
 		ctx.computeDispatch(shader, x, y, z);
 	}

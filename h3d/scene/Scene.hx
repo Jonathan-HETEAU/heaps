@@ -1,6 +1,9 @@
 package h3d.scene;
 
 #if hlphysics
+/**
+	Collision groups used for the interactive shapes when Heaps is compiled with `-D hlphysics`.
+**/
 enum abstract CollisionGroup(Int) from Int to Int {
 	var Invisible = 1;
 	var AnyMatch = 2;
@@ -54,6 +57,9 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 	var eventListeners : Array<hxd.Event -> Void>;
 	var window : hxd.Window;
 	#if debug
+	/**
+		Debug builds only: when enabled, `render` traces a warning for each pass name emitted by the objects but not drawn by the renderer.
+	**/
 	public var checkPasses = true;
 	#end
 
@@ -204,6 +210,10 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 		return null;
 	}
 
+	/**
+		Updates the physics shapes of the interactives (only with `-D hlphysics`, otherwise does nothing).
+		Called automatically before ray casts, at most once per frame.
+	**/
 	public function syncEventTargets() {
 		#if hlphysics
 		if( lastSyncFrame == hxd.Timer.frameCount )
@@ -269,6 +279,11 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 		#end
 	}
 
+	/**
+		Returns the visible interactives hit by the ray `r` (in world space), sorted from the nearest to the farthest.
+		Only the interactives with the highest `Interactive.priority` among the hits are returned.
+		`Interactive.hitPoint` is updated with the local hit position; `distance` is the distance from the camera.
+	**/
 	public function rayCastEventTargets( r : h3d.col.Ray ) : Array<{ i : Interactive, distance : Float }> {
 		var hits : Array<Interactive> = [];
 
@@ -387,6 +402,9 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 	}
 
 	#if hlphysics
+	/**
+		Returns the interactives whose shape intersects the given frustum (only with `-D hlphysics`).
+	**/
 	public function getEventTargetsInFrustum( shape : physics.collision.shapes.FrustumShape ) : Array<Interactive> {
 		var hits = [];
 		syncEventTargets();
@@ -576,6 +594,9 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 		tmpPasses.resize(0);
 	}
 
+	/**
+		Called during rendering at the beginning of each named step (forwards to the renderer). Can be overridden for profiling.
+	**/
 	public dynamic function mark(name : String) {
 		@:privateAccess renderer.mark(name);
 	}
@@ -608,6 +629,10 @@ class Scene extends Object implements h3d.IDrawable implements hxd.SceneEvents.I
 		}
 	}
 
+	/**
+		Returns the camera of the render context: a copy of `camera` made at the start of each frame,
+		with the render settings applied (such as reverse depth).
+	**/
 	public function getRenderCamera() {
 		return ctx.camera;
 	}

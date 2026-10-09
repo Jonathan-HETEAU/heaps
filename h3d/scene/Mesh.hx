@@ -145,12 +145,23 @@ class Mesh extends Object {
 	}
 
 
+	/**
+		Returns the level of detail currently used to draw this mesh: `forcedLod` if set (not `-1`), otherwise the LOD
+		selected by the primitive from the screen ratio computed during the last frame.
+	**/
 	public function getLodIndex() {
 		if (forcedLod > -1)
 			return forcedLod;
 		return primitive.screenRatioToLod(curScreenRatio);
 	}
 
+	/**
+		Computes the approximate size of `bounds` on screen, relative to the screen size (`1.0` means the bounding
+		sphere covers the screen height or width). Used to select the level of detail of meshes.
+		@param absPos The absolute transform of the object.
+		@param bounds The local bounds of the object.
+		@param camera The camera rendering the object.
+	**/
 	public static function screenRatio(absPos : h3d.Matrix, bounds : h3d.col.Bounds, camera : h3d.Camera) {
 		var worldCenter = bounds.getCenter();
 		worldCenter.transform(absPos);
@@ -167,14 +178,23 @@ class Mesh extends Object {
 	}
 
 
+	/**
+		Sets the weight of the blend shape (morph target) `name`. The primitive must be a `h3d.prim.HMDModel` with blend shapes.
+	**/
 	public function setBlendshapeWeight(name: String, weight : Float) {
 		getBlendshapeInstance()?.setBlendshapeWeight(name, weight);
 	}
 
+	/**
+		Sets the weights of all the blend shapes at once, in the order returned by `getBlenshapeNames`.
+	**/
 	public function setBlendshapeWeights(weights : Array<Float>) {
 		getBlendshapeInstance()?.setBlendshapeWeights(weights);
 	}
 
+	/**
+		Returns the names of the blend shapes of the primitive, or an empty array if it has none.
+	**/
 	public function getBlenshapeNames() : Array<String> {
 		var shapes = @:privateAccess getBlendshapeInstance()?.blendshape?.shapes;
 		if (shapes == null)
@@ -183,6 +203,9 @@ class Mesh extends Object {
 		return [for (s in shapes) s.name];
 	}
 
+	/**
+		Tells if the primitive of this mesh has blend shapes (morph targets).
+	**/
 	public function hasBlendshapes() : Bool {
 		if (blendshapeInstance != null)
 			return true;
