@@ -2,16 +2,42 @@ package h3d.scene.pbr;
 
 import h3d.pass.RectangleShadowMap;
 
+/**
+	A rectangular area light of the PBR renderer, such as a window or a screen. The rectangle is in the YZ plane of
+	the object and shines along its X axis, up to `range`.
+**/
 class RectangleLight extends Light {
 
 	var pbr : h3d.shader.pbr.Light.RectangleLight;
+	/**
+		The width of the rectangle (along the Y axis).
+	**/
 	public var width(default, set) : Float = 0.5;
+	/**
+		The height of the rectangle (along the Z axis).
+	**/
 	public var height(default, set) : Float = 0.5;
+	/**
+		The vertical opening angle of the emitted light, in degrees.
+	**/
 	public var verticalAngle(default, set) : Float = 0.5;
+	/**
+		The horizontal opening angle of the emitted light, in degrees.
+	**/
 	public var horizontalAngle(default, set) : Float = 0.5;
+	/**
+		The maximum distance reached by the light.
+	**/
 	public var range(default, set) : Float = 1;
+	/**
+		The half angle, in degrees, inside which the light has its full intensity: it fades out up to half of
+		`verticalAngle` / `horizontalAngle`.
+	**/
 	public var fallOff : Float = 1;
 
+	/**
+		Creates a rectangle light with a range of 10.
+	**/
 	public function new(?parent) {
 		pbr = new h3d.shader.pbr.Light.RectangleLight();
 		shadows = new RectangleShadowMap(this);
@@ -112,6 +138,9 @@ class RectangleLight extends Light {
 		ctx.emitPass(ctx.pbrLightPass, this);
 	}
 
+	/**
+		Returns how far the light spreads sideways at `range` for an opening `angle` in degrees (capped to 179).
+	**/
 	public function getSpread( angle : Float ) : Float {
 		return hxd.Math.tan(hxd.Math.degToRad(hxd.Math.min(angle, 179.0) / 2)) * range;
 	}

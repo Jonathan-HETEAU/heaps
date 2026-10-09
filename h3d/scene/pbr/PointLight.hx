@@ -1,15 +1,28 @@
 package h3d.scene.pbr;
 
+/**
+	A point light of the PBR renderer, shining in all directions from its position up to `range`.
+	Its shadows use a cube shadow map (`h3d.pass.PointShadowMap`).
+**/
 class PointLight extends Light {
 
 	var pbr : h3d.shader.pbr.Light.PointLight;
+	/**
+		The radius of the light source: closer than this distance, the light has its full intensity.
+	**/
 	public var size : Float = 0.;
+	/**
+		The near plane distance of the shadow map cameras.
+	**/
 	public var zNear : Float = 0.02;
 	/**
 		Alias for uniform scale.
 	**/
 	public var range(get,set) : Float;
 
+	/**
+		Creates a point light with a range of 10.
+	**/
 	public function new(?parent) {
 		pbr = new h3d.shader.pbr.Light.PointLight();
 		shadows = new h3d.pass.PointShadowMap(this);

@@ -1,12 +1,28 @@
 package h3d.scene.pbr;
 
+/**
+	The light system of the PBR renderer. Lights are applied in a deferred lighting pass, except for the objects drawn
+	in the forward passes, which read the lights from `lightBuffer`.
+**/
 @:access(h3d.scene.pbr.Light)
 class LightSystem extends h3d.scene.LightSystem {
 
+	/**
+		The buffer of lights used by the forward passes.
+	**/
 	public var lightBuffer : h3d.scene.pbr.LightBuffer;
+	/**
+		`true` while the renderer draws the forward passes.
+	**/
 	public var forwardMode = false;
+	/**
+		Additional shaders applied with each light in the lighting pass.
+	**/
 	public var lightingShaders : Array<hxsl.Shader> = [];
 
+	/**
+		Creates the light system.
+	**/
 	public function new() {
 		super();
 		lightBuffer = new h3d.scene.pbr.LightBuffer();
@@ -42,12 +58,19 @@ class LightSystem extends h3d.scene.LightSystem {
 		return shaders;
 	}
 
+	/**
+		Draws the shadow map of `light` with the given shadow casters.
+	**/
 	public function drawShadows( light : Light, passes : h3d.pass.PassList ) {
 		light.shadows.setContext(ctx);
 		light.shadows.draw(passes);
 		passes.reset();
 	}
 
+	/**
+		Draws the lights without volume (such as directional lights) as full screen passes.
+		@param shadows If `false`, the shadows of these lights are ignored.
+	**/
 	public function drawScreenLights( r : h3d.scene.Renderer, lightPass : h3d.pass.ScreenFx<Dynamic>, shadows : Bool = true ) {
 		var plight = @:privateAccess ctx.lights;
 		while( plight != null ) {

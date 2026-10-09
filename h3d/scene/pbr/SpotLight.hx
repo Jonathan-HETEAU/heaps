@@ -1,15 +1,35 @@
 package h3d.scene.pbr;
 
+/**
+	A spot light of the PBR renderer: a cone of light along the X axis of the object (see `Object.setDirection`),
+	up to `range`. A `cookie` texture can be projected.
+**/
 class SpotLight extends Light {
 
 	var pbr : h3d.shader.pbr.Light.SpotLight;
 
+	/**
+		The maximum distance reached by the light. Alias for the X scale of the object.
+	**/
 	public var range(get,set) : Float;
+	/**
+		The opening angle of the cone, in degrees.
+	**/
 	public var angle(default,set) : Float;
+	/**
+		The half angle, in degrees, inside which the light has its full intensity: it then fades out up to `angle / 2`.
+		With `0` the light fades from the center of the cone.
+	**/
 	public var fallOff : Float = 0.;
+	/**
+		An optional texture projected by the light (its color and alpha modulate the light).
+	**/
 	public var cookie : h3d.mat.Texture;
 	var lightProj : h3d.Camera;
 
+	/**
+		Creates a spot light with a range of 10 and an angle of 45 degrees.
+	**/
 	public function new(?parent) {
 		pbr = new h3d.shader.pbr.Light.SpotLight();
 		shadows = new h3d.pass.SpotShadowMap(this);
@@ -55,6 +75,9 @@ class SpotLight extends Light {
 		scaleZ = scaleY;
 	}
 
+	/**
+		Returns the pyramid primitive used to draw the light volume (shared, cached by the engine).
+	**/
 	public static function spotLightPrim() : h3d.prim.Polygon {
 		var engine = h3d.Engine.getCurrent();
 		var p : h3d.prim.Polygon = @:privateAccess engine.resCache.get(SpotLight);

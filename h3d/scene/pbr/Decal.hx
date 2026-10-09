@@ -1,7 +1,14 @@
 package h3d.scene.pbr;
 
+/**
+	A projected decal for the PBR renderer: a box volume (usually a unit cube) whose material uses a
+	`h3d.shader.pbr.VolumeDecal` shader to project a texture on the surfaces inside the box.
+**/
 class Decal extends Mesh {
 
+	/**
+		Creates a decal using the given volume primitive and material.
+	**/
 	public function new( primitive, ?material, ?parent ) {
 		super(primitive, material, parent);
 	}

@@ -1,9 +1,21 @@
 package h3d.scene.pbr;
 
+/**
+	A directional light of the PBR renderer, such as the sun: its rays are parallel and it lights the whole scene.
+
+	The light direction is the X axis of the object (see `Object.setDirection`).
+**/
 class DirLight extends Light {
 
 	var pbr : h3d.shader.pbr.Light.DirLight;
 
+	/**
+		Creates a directional light.
+		@param dir The light direction (towards which the light shines).
+		@param parent An optional parent object.
+		@param cascade If `true`, uses cascaded shadow maps (`h3d.pass.CascadeShadowMap`), better for large scenes.
+		Otherwise uses a single `h3d.pass.DirShadowMap`.
+	**/
 	public function new(?dir: h3d.Vector, ?parent, ?cascade) {
 		pbr = new h3d.shader.pbr.Light.DirLight();
 		shadows = cascade ? new h3d.pass.CascadeShadowMap(this) : new h3d.pass.DirShadowMap(this);

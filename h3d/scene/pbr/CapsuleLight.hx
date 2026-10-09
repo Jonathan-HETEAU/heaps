@@ -1,16 +1,32 @@
 package h3d.scene.pbr;
 
+/**
+	A capsule shaped light of the PBR renderer (a segment of `length` along the X axis, with a `radius`),
+	such as a neon tube, up to `range`.
+**/
 class CapsuleLight extends Light {
 
 	var pbr : h3d.shader.pbr.Light.CapsuleLight;
+	/**
+		The radius of the light source.
+	**/
 	public var radius : Float = 0.5;
+	/**
+		The length of the light segment, along the X axis.
+	**/
 	public var length(default, set) : Float = 1.0;
+	/**
+		The near plane distance of the shadow map cameras.
+	**/
 	public var zNear : Float = 0.02;
 	/**
 		Alias for uniform scale.
 	**/
 	public var range(get,set) : Float;
 
+	/**
+		Creates a capsule light with a range of 10.
+	**/
 	public function new(?parent) {
 		pbr = new h3d.shader.pbr.Light.CapsuleLight();
 		shadows = new h3d.pass.CapsuleShadowMap(this);
