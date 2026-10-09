@@ -1,23 +1,45 @@
 package h3d.col;
 
+/**
+	A capsule collider: the points closer than `r` to the segment `a`-`b`.
+**/
 class Capsule extends Collider {
 
+	/**
+		The first end of the segment.
+	**/
 	public var a : Point;
+	/**
+		The second end of the segment.
+	**/
 	public var b : Point;
+	/**
+		The radius.
+	**/
 	public var r : Float;
 	static var tmpSphere = new Sphere(0., 0., 0., 0.);
 
+	/**
+		Creates a capsule.
+	**/
 	public inline function new(a : Point, b : Point, r : Float) {
 		this.a = a;
 		this.b = b;
 		this.r = r;
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public inline function contains( p : Point ) {
 		return new Seg(a, b).distanceSq(p) < r*r;
 	}
 
 	/* https://iquilezles.org/articles/intersectors/ */
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection( r : Ray, bestMatch : Bool ) : Float {
 		var ro = r.getPos();
 		var rd = r.getDir();
@@ -50,6 +72,9 @@ class Capsule extends Collider {
 		return -1;
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum( f : Frustum, ?m : h3d.Matrix ) {
 		if( m != null )
 			throw "Not implemented";
@@ -57,25 +82,40 @@ class Capsule extends Collider {
 		return tmpSphere.inFrustum(f);
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) {
 		tmpSphere.load(a.x + (b.x-a.x), a.y + (b.y-a.y), a.z + (b.z-a.z), (b.distance(a)/2 + r));
 		return tmpSphere.inSphere(s);
 	}
 
+	/**
+		Returns a string representation.
+	**/
 	public function toString() {
 		return "Capsule{" + a + "," + b + "," + hxd.Math.fmt(r) + "}";
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public function dimension() {
 		return a.distance(b) + 2 * r;
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint(p : Point) {
 		throw "not implemented";
 		return new h3d.col.Point();
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		var obj = new h3d.scene.Object();
 

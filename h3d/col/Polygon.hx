@@ -1,8 +1,14 @@
 package h3d.col;
 
+/**
+	A triangle collider, part of a `Polygon` (linked list of triangles).
+**/
 @:allow(h3d.col.Polygon)
 class TriPlane extends Collider {
 
+	/**
+		The next triangle of the polygon.
+	**/
 	public var next : TriPlane = null;
 
 	var p0x : Float;
@@ -28,10 +34,17 @@ class TriPlane extends Collider {
 
 	var oriented : Bool;
 
+	/**
+		Creates an empty collider.
+		@param o If `true`, only the front faces of the triangles can be hit.
+	**/
 	public function new(o = false) {
 		oriented = o;
 	}
 
+	/**
+		Sets the triangle points.
+	**/
 	public inline function init( p0 : Point, p1 : Point, p2 : Point ) {
 		p0x = p0.x;
 		p0y = p0.y;
@@ -57,6 +70,9 @@ class TriPlane extends Collider {
 		invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
 	}
 
+	/**
+		Returns a copy.
+	**/
 	public inline function clone() {
 		var clone = new TriPlane(oriented);
 		clone.load(this);
@@ -65,6 +81,9 @@ class TriPlane extends Collider {
 		return clone;
 	}
 
+	/**
+		Copies the values of another instance.
+	**/
 	public inline function load( tp : TriPlane ) {
 		p0x = tp.p0x;
 		p0y = tp.p0y;
@@ -85,6 +104,9 @@ class TriPlane extends Collider {
 		d = tp.d;
 	}
 
+	/**
+		Transforms the triangles by `m`.
+	**/
 	public function transform( m : h3d.Matrix ){
 		var p0 = new Point(p0x, p0y, p0z);
 		var p1 = new Point(d1x + p0x, d1y + p0y, d1z + p0z);
@@ -95,24 +117,39 @@ class TriPlane extends Collider {
 		init(p0, p1, p2);
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public inline function contains( p : Point ) {
 		return isPointInTriangle(p.x, p.y, p.z);
 	}
 
+	/**
+		Tells if `p` is on the front side of the triangle plane.
+	**/
 	public inline function side( p : Point ) {
 		return nx * p.x + ny * p.y + nz * p.z - d >= 0;
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum( f : Frustum, ?m : h3d.Matrix ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint( p : Point ) {
 		var p0 = new Point(p0x, p0y, p0z);
 
@@ -153,6 +190,10 @@ class TriPlane extends Collider {
 		return c;
 	}
 
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	inline public function rayIntersection( r : Ray, bestMatch : Bool ) @:privateAccess {
 		var dr = r.lx * nx + r.ly * ny + r.lz * nz;
 		if( dr >= 0 && oriented ) // backface culling
@@ -183,11 +224,17 @@ class TriPlane extends Collider {
 		return (u >= 0) && (v >= 0) && (u + v < 1);
 	}
 
+	/**
+		Returns the points of all the triangles.
+	**/
 	public function getPoints() : Array<Point> {
 		return [new Point(p0x, p0y, p0z), new Point(d1x + p0x, d1y + p0y, d1z + p0z), new Point(d2x + p0x, d2y + p0y, d2z + p0z)];
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		var p0 = new Point(p0x, p0y, p0z);
 		var d1 = new Point(d1x, d1y, d1z);
@@ -199,6 +246,9 @@ class TriPlane extends Collider {
 	}
 	#end
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public function dimension() {
 		throw "Not implemented";
 		return 0.0;
@@ -206,16 +256,27 @@ class TriPlane extends Collider {
 }
 
 
+/**
+	A triangle mesh collider (a list of `TriPlane`), precise but slower than simple shapes.
+**/
 class Polygon extends Collider {
 
 	var triPlanes : TriPlane;
 	var oriented : Bool;
 	var convex : Null<Bool>;
 
+	/**
+		Creates an empty collider.
+		@param o If `true`, only the front faces of the triangles can be hit.
+	**/
 	public function new(o = false) {
 		oriented = o;
 	}
 
+	/**
+		Adds the triangles of the given vertex and index buffers.
+		@param stride The number of floats per vertex (the position being the first 3).
+	**/
 	public function addBuffers( vertexes : haxe.ds.Vector<hxd.impl.Float32>, indexes : haxe.ds.Vector<Int>, stride = 3 ) {
 		convex = null;
 		for(i in 0...Std.int(indexes.length / 3)) {
@@ -238,6 +299,9 @@ class Polygon extends Collider {
 		}
 	}
 
+	/**
+		Tells if the mesh is convex (computed once).
+	**/
 	public function isConvex() {
 		if( convex == null ) {
 			convex = true;
@@ -261,12 +325,18 @@ class Polygon extends Collider {
 		return convex;
 	}
 
+	/**
+		Returns a copy.
+	**/
 	public function clone() : h3d.col.Polygon {
 		var clone = new h3d.col.Polygon(oriented);
 		clone.triPlanes = triPlanes.clone();
 		return clone;
 	}
 
+	/**
+		Transforms the triangles by `m`.
+	**/
 	public function transform( m : h3d.Matrix ) {
 		convex = null;
 		var t = triPlanes;
@@ -276,6 +346,9 @@ class Polygon extends Collider {
 		}
 	}
 
+	/**
+		Returns the points of all the triangles.
+	**/
 	public function getPoints() : Array<Point> {
 		var ret : Array<Point> = [];
 		var t = triPlanes;
@@ -286,6 +359,10 @@ class Polygon extends Collider {
 		return ret;
 	}
 
+	/**
+		Returns the bounds of the triangles.
+		@param bnds An optional bounds to add the result to.
+	**/
 	public function getBounds(?bnds: h3d.col.Bounds) : h3d.col.Bounds {
 		if(bnds == null) bnds = new h3d.col.Bounds();
 		bnds.empty();
@@ -299,6 +376,9 @@ class Polygon extends Collider {
 		return bnds;
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public function contains( p : Point ) {
 		var t = triPlanes;
 		if( !isConvex() ) {
@@ -323,6 +403,10 @@ class Polygon extends Collider {
 		return true;
 	}
 
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection( r : Ray, bestMatch : Bool ) {
 		var t = triPlanes;
 		var best = -1.;
@@ -337,16 +421,25 @@ class Polygon extends Collider {
 		return best;
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum( f : Frustum, ?m : h3d.Matrix ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint( p : h3d.col.Point ) {
 		var t = triPlanes;
 		var minDistSq = hxd.Math.POSITIVE_INFINITY;
@@ -363,11 +456,17 @@ class Polygon extends Collider {
 		return closest;
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	inline public function dimension() {
 		return getBounds().dimension();
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		var points : Array<Point> = [];
 
@@ -390,6 +489,10 @@ class Polygon extends Collider {
 	}
 	#end
 
+	/**
+		Creates a flat collider from a 2D polygon placed at height `z`.
+		@param oriented If `true`, only the front side can be hit.
+	**/
 	public static function fromPolygon2D( p : h2d.col.Polygon, z = 0., oriented = true ) {
 		var pout = new Polygon();
 		if( p.isConvex() ) {

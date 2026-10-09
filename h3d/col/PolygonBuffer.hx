@@ -1,17 +1,34 @@
 package h3d.col;
 
+/**
+	A triangle mesh collider reading its triangles directly from vertex and index buffers (no preprocessing).
+**/
 class PolygonBuffer extends Collider {
 
 	var buffer : haxe.ds.Vector<hxd.impl.Float32>;
 	var indexes : haxe.ds.Vector<Int>;
 	var startIndex : Int;
 	var triCount : Int;
+	/**
+		Tells that the mesh is convex, which allows faster `contains` tests.
+	**/
 	public var isConvex : Bool;
+	/**
+		The model file and geometry the data comes from, if known.
+	**/
 	public var source : { entry : hxd.fs.FileEntry, geometryName : String };
 
+	/**
+		Creates an empty collider. Call `setData`.
+	**/
 	public function new() {
 	}
 
+	/**
+		Sets the triangles: 3 floats per vertex in `buffer`, 3 indexes per triangle in `indexes`.
+		@param startIndex The first index used.
+		@param triCount The number of triangles, or `-1` for all.
+	**/
 	public function setData( buffer, indexes, startIndex = 0, triCount = -1, isConvex = false ) {
 		this.buffer = buffer;
 		this.indexes = indexes;
@@ -20,6 +37,9 @@ class PolygonBuffer extends Collider {
 		this.isConvex = isConvex;
 	}
 
+	/**
+		Returns the bounds of the triangles.
+	**/
 	public function getBounds() {
 		var i = startIndex;
 		var b = new Bounds();
@@ -30,6 +50,9 @@ class PolygonBuffer extends Collider {
 		return b;
 	}
 
+	/**
+		Returns the vertexes used by the triangles.
+	**/
 	public function getPoints() {
 		var vmin = 1 << 30;
 		var vmax = -(1<<30);
@@ -53,6 +76,9 @@ class PolygonBuffer extends Collider {
 		return points;
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public function contains( p : Point ) {
 		var i = startIndex;
 		var p = new FPoint(p.x, p.y, p.z);
@@ -102,16 +128,25 @@ class PolygonBuffer extends Collider {
 		return true;
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum( f : Frustum, ?m : h3d.Matrix ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) {
 		throw "Not implemented";
 		return false;
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public function dimension() {
 		return getBounds().dimension();
 	}
@@ -140,6 +175,9 @@ class PolygonBuffer extends Collider {
 		return start.add(d.scaled(t));
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint( p : h3d.col.Point ) {
 		var p = new FPoint(p.x, p.y, p.z);
 		var minDistSq = hxd.Math.POSITIVE_INFINITY;
@@ -193,6 +231,10 @@ class PolygonBuffer extends Collider {
 	}
 
 	// Möller–Trumbore intersection
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection( r : Ray, bestMatch : Bool ) : Float {
 		var i = startIndex;
 		var rdir = new FPoint(r.lx, r.ly, r.lz);
@@ -234,6 +276,9 @@ class PolygonBuffer extends Collider {
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		var points = new Array<Point>();
 		var idx = new hxd.IndexBuffer();

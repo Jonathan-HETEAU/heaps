@@ -1,18 +1,37 @@
 package h3d.col;
 
+/**
+	A cylinder collider of radius `r` between the centers of its two caps `a` and `b`.
+**/
 class Cylinder extends Collider {
 
+	/**
+		The center of the first cap.
+	**/
 	public var a : Point;
+	/**
+		The center of the second cap.
+	**/
 	public var b : Point;
+	/**
+		The radius.
+	**/
 	public var r : Float;
 	static var tmpSphere = new Sphere(0., 0., 0., 0.);
 
+	/**
+		Creates a cylinder.
+	**/
 	public inline function new( a : Point, b : Point, r : Float ) {
 		this.a = a;
 		this.b = b;
 		this.r = r;
 	}
 
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection( r : Ray, bestMatch : Bool ) : Float {
 		var ro = r.getPos();
 		var rd = r.getDir();
@@ -43,6 +62,9 @@ class Cylinder extends Collider {
 		return -1;
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public inline function contains( p : Point ) : Bool {
 		var t = p.sub(a).dot(b.sub(a)) / a.distanceSq(b);
 		if( t < 0 || t > 1 )
@@ -50,6 +72,9 @@ class Cylinder extends Collider {
 		return p.distanceSq(new Point(a.x + t * (b.x - a.x), a.y + t * (b.y - a.y), a.z + t * (b.z - a.z))) < r * r;
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum( f : Frustum, ?m : h3d.Matrix ) : Bool {
 		if( m != null )
 			throw "Not implemented";
@@ -57,25 +82,40 @@ class Cylinder extends Collider {
 		return tmpSphere.inFrustum(f);
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) : Bool {
 		tmpSphere.load(a.x + (b.x-a.x), a.y + (b.y-a.y), a.z + (b.z-a.z), dimension() * 0.5);
 		return tmpSphere.inSphere(s);
 	}
 
+	/**
+		Returns a string representation.
+	**/
 	public function toString() {
 		return "Cylinder{" + a + "," + b + "," + hxd.Math.fmt(r) + "}";
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public inline function dimension() : Float {
 		var h2 = a.distance(b) * 0.5;
 		return 2 * hxd.Math.sqrt(h2 * h2 + r * r);
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint( p : Point ) : Point {
 		throw "not implemented";
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		var obj = new h3d.scene.Object();
 

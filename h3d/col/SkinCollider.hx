@@ -1,5 +1,8 @@
 package h3d.col;
 
+/**
+	A collider following the deformation of a skinned mesh: its triangles are transformed by the current pose of the skin when tested.
+**/
 @:access(h3d.col.PolygonBuffer)
 @:access(h3d.scene.Skin)
 class SkinCollider extends Collider {
@@ -11,6 +14,9 @@ class SkinCollider extends Collider {
 	var lastFrame = -1;
 	var lastBoundsFrame = -1;
 
+	/**
+		Creates the collider of the skin `obj` from its triangles `col`.
+	**/
 	public function new( obj, col ) {
 		this.obj = obj;
 		this.col = col;
@@ -19,6 +25,9 @@ class SkinCollider extends Collider {
 		currentBounds = new h3d.col.Bounds();
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public function contains(p) {
 		checkBounds();
 		if( !currentBounds.contains(p) )
@@ -27,6 +36,9 @@ class SkinCollider extends Collider {
 		return transform.contains(p);
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum(p, ?m : h3d.Matrix ) {
 		checkBounds();
 		if( !currentBounds.inFrustum(p,m) )
@@ -37,6 +49,9 @@ class SkinCollider extends Collider {
 		return transform.inFrustum(p);
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere( s : Sphere ) {
 		checkBounds();
 		if( !currentBounds.inSphere(s) )
@@ -46,6 +61,10 @@ class SkinCollider extends Collider {
 		return false;
 	}
 
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection(r, bestMatch) {
 		checkBounds();
 		if( currentBounds.rayIntersection(r, false) < 0 )
@@ -54,6 +73,9 @@ class SkinCollider extends Collider {
 		return transform.rayIntersection(r, bestMatch);
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public function dimension() {
 		return currentBounds.dimension();
 	}
@@ -95,12 +117,18 @@ class SkinCollider extends Collider {
 		}
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint( p : h3d.col.Point ) {
 		throw "Not implemented";
 		return new h3d.col.Point();
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Object {
 		return new SkinColliderDebugObj(this);
 	}
@@ -109,6 +137,9 @@ class SkinCollider extends Collider {
 }
 
 #if !macro
+/**
+	The debug display of a `SkinCollider`.
+**/
 @:access(h3d.col.SkinCollider)
 @:access(h3d.scene.Skin)
 class SkinColliderDebugObj extends h3d.scene.Object {
@@ -118,6 +149,9 @@ class SkinColliderDebugObj extends h3d.scene.Object {
 	var box : h3d.scene.Box;
 	var boxes : Array<h3d.scene.Box> = [];
 
+	/**
+		Creates the collider of the skin `obj` from its triangles `col`.
+	**/
 	public function new(col : SkinCollider) {
 		super(null);
 		this.col = col;

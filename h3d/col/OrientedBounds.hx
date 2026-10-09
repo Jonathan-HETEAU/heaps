@@ -1,29 +1,83 @@
 package h3d.col;
 
+/**
+	An oriented bounding box (OBB): a box of half sizes `hx`, `hy`, `hz` around a center, with any rotation.
+**/
 class OrientedBounds extends Collider {
+	/**
+		The X position of the center.
+	**/
 	public var centerX : Float = 0.0;
+	/**
+		The Y position of the center.
+	**/
 	public var centerY : Float = 0.0;
+	/**
+		The Z position of the center.
+	**/
 	public var centerZ : Float = 0.0;
 
+	/**
+		The X component of the box X axis.
+	**/
 	public var xx : Float = 1.0;
+	/**
+		The Y component of the box X axis.
+	**/
 	public var xy : Float = 0.0;
+	/**
+		The Z component of the box X axis.
+	**/
 	public var xz : Float = 0.0;
 
+	/**
+		The X component of the box Y axis.
+	**/
 	public var yx : Float = 0.0;
+	/**
+		The Y component of the box Y axis.
+	**/
 	public var yy : Float = 1.0;
+	/**
+		The Z component of the box Y axis.
+	**/
 	public var yz : Float = 0.0;
 
+	/**
+		The X component of the box Z axis.
+	**/
 	public var zx : Float = 0.0;
+	/**
+		The Y component of the box Z axis.
+	**/
 	public var zy : Float = 0.0;
+	/**
+		The Z component of the box Z axis.
+	**/
 	public var zz : Float = 1.0;
 
+	/**
+		The half size along the box X axis.
+	**/
 	public var hx : Float = 0.5;
+	/**
+		The half size along the box Y axis.
+	**/
 	public var hy : Float = 0.5;
+	/**
+		The half size along the box Z axis.
+	**/
 	public var hz : Float = 0.5;
 
+	/**
+		Creates a unit box centered on the origin.
+	**/
 	public function new() {
 	}
 
+	/**
+		Sets the box from a transform: the unit box centered on the origin transformed by `m`.
+	**/
 	public function setMatrix(m: h3d.Matrix) {
 		var s = inline m.getScale();
 		var isx = 1.0/s.x;
@@ -51,6 +105,9 @@ class OrientedBounds extends Collider {
 		zz = m._33 * isz;
 	}
 
+	/**
+		Returns the transform of the unit box giving this box.
+	**/
 	public function getMatrix() : h3d.Matrix {
 		var m = Matrix.I();
 		var s = new h3d.Vector(hx * 2.0, hy * 2.0, hz * 2.0);
@@ -67,6 +124,9 @@ class OrientedBounds extends Collider {
 		return m;
 	}
 
+	/**
+		Sets the rotation of the box from Euler angles, in radians.
+	**/
 	public function setEulerAngles(x: Float, y: Float, z: Float) {
 		var cx = hxd.Math.cos(x); var sx = hxd.Math.sin(x);
 		var cy = hxd.Math.cos(y); var sy = hxd.Math.sin(y);
@@ -85,6 +145,9 @@ class OrientedBounds extends Collider {
 		zz = cx*cy;
 	}
 
+	/**
+		Tells if the box intersects the box `other`.
+	**/
 	public function collideOrientedBounds(other: OrientedBounds) : Bool {
 		// adapted from Christer Ericson "Real Time Collision Detection" Ch 4.4
 		var ax = inline new h3d.Vector(xx,xy,xz);
@@ -203,6 +266,10 @@ class OrientedBounds extends Collider {
 		return true;
 	}
 
+	/**
+		Returns the distance along the ray `r` to the first intersection with the shape, or a negative value if there is none.
+		If `bestMatch` is `false`, any intersection can be returned (faster).
+	**/
 	public function rayIntersection(r:Ray, bestMatch:Bool) : Float {
 		var dx = r.px - centerX;
 		var dy = r.py - centerY;
@@ -280,6 +347,9 @@ class OrientedBounds extends Collider {
 		return tmin;
 	}
 
+	/**
+		Tells if the point `p` is inside the shape.
+	**/
 	public function contains(p:Point):Bool {
 		var dx = p.x - centerX;
 		var dy = p.y - centerY;
@@ -296,12 +366,18 @@ class OrientedBounds extends Collider {
 		);
 	}
 
+	/**
+		Tells if the shape intersects the frustum `f`, optionally transformed by `localMatrix`.
+	**/
 	public function inFrustum(f:Frustum, ?m:Matrix) : Bool {
 		if( m != null )
 			throw "Not implemented";
 		return f.hasOrientedBounds(this);
 	}
 
+	/**
+		Tells if the sphere `s` intersects the box.
+	**/
 	public function hasSphere(s:Sphere):Bool {
 		var dx = s.x - centerX;
 		var dy = s.y - centerY;
@@ -318,6 +394,9 @@ class OrientedBounds extends Collider {
 		);
 	}
 
+	/**
+		Tells if the shape intersects the sphere `s`.
+	**/
 	public function inSphere(s:Sphere):Bool {
 		var sp = inline s.getCenter();
 		var rr = s.r * s.r;
@@ -328,10 +407,16 @@ class OrientedBounds extends Collider {
 		return true;
 	}
 
+	/**
+		Returns the largest size of the shape, used to compare collider sizes.
+	**/
 	public function dimension():Float {
 		return 2.0 * hxd.Math.max(hx, hxd.Math.max(hy, hz));
 	}
 
+	/**
+		Returns the corner `i` (0 to 7) of the box.
+	**/
 	inline public function getVertice(i: Int) : h3d.Vector {
 		var sx = (i & 1) * 2 - 1;
 		var sy = ((i >> 1) & 1) * 2 - 1;
@@ -348,6 +433,9 @@ class OrientedBounds extends Collider {
 		return c+ax+ay+az;
 	}
 
+	/**
+		Returns the 8 corners of the box.
+	**/
 	public function getVertices(?out:Array<Vector>) : Array<Vector> {
 		out = out ?? [];
 		for (i in 0...8) {
@@ -357,6 +445,9 @@ class OrientedBounds extends Collider {
 		return out;
 	}
 
+	/**
+		Returns the point of the shape closest to `p`.
+	**/
 	public function closestPoint(p : Point) {
 		throw "not implemented";
 		return new Point();
@@ -377,6 +468,9 @@ class OrientedBounds extends Collider {
 	}
 
 	#if !macro
+	/**
+		Creates an object displaying the shape (debug), or `null` if not supported.
+	**/
 	public function makeDebugObj() : h3d.scene.Graphics {
 		var g = new h3d.scene.Graphics();
 

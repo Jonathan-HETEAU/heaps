@@ -1,19 +1,47 @@
 package h3d.col;
 import hxd.Math;
 
+/**
+	A ray: an origin and a direction (normalized when created with `fromPoints` or `fromValues`).
+	Used for picking, see `h3d.Camera.rayFromScreen`.
+**/
 @:allow(h3d.col)
 class Ray {
 
+	/**
+		The X position of the origin.
+	**/
 	public var px : Float;
+	/**
+		The Y position of the origin.
+	**/
 	public var py : Float;
+	/**
+		The Z position of the origin.
+	**/
 	public var pz : Float;
+	/**
+		The X component of the direction.
+	**/
 	public var lx : Float;
+	/**
+		The Y component of the direction.
+	**/
 	public var ly : Float;
+	/**
+		The Z component of the direction.
+	**/
 	public var lz : Float;
 
+	/**
+		Creates an empty ray.
+	**/
 	public inline function new() {
 	}
 
+	/**
+		Returns a copy.
+	**/
 	public inline function clone() {
 		var r = new Ray();
 		r.px = px;
@@ -25,6 +53,9 @@ class Ray {
 		return r;
 	}
 
+	/**
+		Copies the origin and direction of `r`.
+	**/
 	public inline function load( r : Ray ) {
 		px = r.px;
 		py = r.py;
@@ -44,6 +75,9 @@ class Ray {
 		}
 	}
 
+	/**
+		Transforms the origin and direction by `m`. The direction is not normalized.
+	**/
 	public inline function transform( m : h3d.Matrix ) {
 		var p = new h3d.Vector(px, py, pz);
 		p.transform(m);
@@ -58,22 +92,37 @@ class Ray {
 		normalize();
 	}
 
+	/**
+		Returns the origin.
+	**/
 	public inline function getPos() {
 		return new Point(px, py, pz);
 	}
 
+	/**
+		Returns the direction.
+	**/
 	public inline function getDir() {
 		return new Point(lx, ly, lz);
 	}
 
+	/**
+		Returns the point at `distance` along the ray.
+	**/
 	public inline function getPoint( distance : Float ) {
 		return new Point(px + distance * lx, py + distance * ly, pz + distance * lz);
 	}
 
+	/**
+		Returns a string representation.
+	**/
 	public function toString() {
 		return "Ray{" + getPos() + "," + getDir() + "}";
 	}
 
+	/**
+		Returns the distance along the ray to the plane `p` (negative if behind or parallel).
+	**/
 	public inline function distance( p : Plane ) : Float {
 		var d = lx * p.nx + ly * p.ny + lz * p.nz;
 		var nd = p.d - (px * p.nx + py * p.ny + pz * p.nz);
@@ -81,6 +130,9 @@ class Ray {
 		return Math.abs(d) < Math.EPSILON ? (Math.abs(nd) < Math.EPSILON ? 0. : -1) : nd / d;
 	}
 
+	/**
+		Returns the intersection with the plane `p`, or `null` if the ray is parallel to it.
+	**/
 	public inline function intersect( p : Plane ) : Null<Point> {
 		var d = lx * p.nx + ly * p.ny + lz * p.nz;
 		var nd = p.d - (px * p.nx + py * p.ny + pz * p.nz);
@@ -93,6 +145,9 @@ class Ray {
 		}
 	}
 
+	/**
+		Tells if the ray crosses the frustum of the view-projection matrix `mvp`.
+	**/
 	public inline function collideFrustum( mvp : Matrix ) {
 		// transform the two ray points into the normalized frustum box
 		var a = new h3d.Vector(px, py, pz);
@@ -118,6 +173,9 @@ class Ray {
 		return !(tmax < 0 || tmin > tmax);
 	}
 
+	/**
+		Tells if the ray crosses the bounds `b`.
+	**/
 	public inline function collide( b : Bounds ) : Bool {
 		var dx = 1 / lx;
 		var dy = 1 / ly;
@@ -142,6 +200,9 @@ class Ray {
 		}
 	}
 
+	/**
+		Creates a ray starting at `p1` and going towards `p2`.
+	**/
 	public static inline function fromPoints( p1 : Point, p2 : Point ) {
 		var r = new Ray();
 		r.px = p1.x;
@@ -154,6 +215,9 @@ class Ray {
 		return r;
 	}
 
+	/**
+		Creates a ray from an origin and a direction (normalized).
+	**/
 	public static inline function fromValues( x, y, z, dx, dy, dz ) {
 		var r = new Ray();
 		r.px = x;
