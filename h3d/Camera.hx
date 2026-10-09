@@ -2,8 +2,23 @@ package h3d;
 
 // use left-handed coordinate system, more suitable for 2D games X=0,Y=0 at screen top-left and Z towards user
 
+/**
+	A 3D camera: a position `pos` looking at `target`, with a perspective (or orthographic, see `orthoBounds`)
+	projection. The default coordinate system has Z up.
+
+	Call `update()` after changing its properties to recompute its matrices (done every frame for `Scene.camera`).
+
+	```haxe
+	s3d.camera.pos.set(10, 10, 10);
+	s3d.camera.target.set(0, 0, 0);
+	s3d.camera.fovY = 60;
+	```
+**/
 class Camera {
 
+	/**
+		A zoom factor applied to the projection (`1` by default).
+	**/
 	public var zoom : Float;
 
 	/**
@@ -18,7 +33,13 @@ class Camera {
 		Use setFovX to initialize fovY based on an horizontal FOV and an initial screen ratio.
 	**/
 	public var fovY : Float;
+	/**
+		The distance of the near clipping plane: closer objects are not drawn.
+	**/
 	public var zNear : Float;
+	/**
+		The distance of the far clipping plane: farther objects are not drawn.
+	**/
 	public var zFar : Float;
 
 	/**
@@ -26,12 +47,27 @@ class Camera {
 	**/
 	public var orthoBounds : h3d.col.Bounds;
 
+	/**
+		Uses a right-handed coordinate system instead of the default left-handed one.
+	**/
 	public var rightHanded : Bool;
 
+	/**
+		The projection matrix, computed by `update`.
+	**/
 	public var mproj : Matrix;
+	/**
+		The view matrix (world to camera space), computed by `update`.
+	**/
 	public var mcam : Matrix;
+	/**
+		The view-projection matrix (`mcam * mproj`), computed by `update`.
+	**/
 	public var m : Matrix;
 
+	/**
+		The camera position.
+	**/
 	public var pos : Vector;
 	/**
 		up is used for the lookAt matrix.
@@ -39,18 +75,43 @@ class Camera {
 		use getUp instead.
 	**/
 	public var up : Vector;
+	/**
+		The point the camera looks at.
+	**/
 	public var target : Vector;
 
+	/**
+		A horizontal offset of the projection center, in screen units (`-1` to `1`), to shift the view without moving the camera.
+	**/
 	public var viewX : Float = 0.;
+	/**
+		A vertical offset of the projection center, in screen units (`-1` to `1`).
+	**/
 	public var viewY : Float = 0.;
 
+	/**
+		If set, `update` places the camera at the absolute position of `follow.pos` looking at `follow.target`
+		(for instance cameras animated in a model). An animated `FOVY` property of `follow.pos` also sets `fovY`.
+	**/
 	public var follow : { pos : h3d.scene.Object, target : h3d.scene.Object };
 
+	/**
+		The view frustum, computed by `update`, used for culling.
+	**/
 	public var frustum(default, null) : h3d.col.Frustum;
 
+	/**
+		A sub-pixel horizontal offset of the projection, used by temporal anti-aliasing.
+	**/
 	public var jitterOffsetX : Float = 0.;
+	/**
+		A sub-pixel vertical offset of the projection, used by temporal anti-aliasing.
+	**/
 	public var jitterOffsetY : Float = 0.;
 
+	/**
+		Uses a reversed depth range (near at 1, far at 0) for better precision. Set by the render context.
+	**/
 	public var reverseDepth = false;
 
 	var minv : Matrix;
@@ -66,6 +127,10 @@ class Camera {
 	inline function markInit(mask) initFlag |= mask;
 	var initFlag : Int = 0;
 
+	/**
+		Creates a camera at `(2, 3, 4)` looking at the origin, with Z up.
+		@param fovY The vertical field of view, in degrees.
+	**/
 	public function new( fovY = 25., zoom = 1., screenRatio = 1.333333, zNear = 0.02, zFar = 4000., rightHanded = false ) {
 		this.fovY = fovY;
 		this.zoom = zoom;
@@ -101,6 +166,9 @@ class Camera {
 		return fovX;
 	}
 
+	/**
+		Returns a copy of the camera.
+	**/
 	public function clone() {
 		var c = new Camera(fovY, zoom, screenRatio, zNear, zFar, rightHanded);
 		c.pos = pos.clone();
@@ -249,6 +317,11 @@ class Camera {
 		return p;
 	}
 
+	/**
+		Returns the ray going from the camera through the given screen pixel, in world space (for picking).
+		@param sceneWidth The width of the screen, the engine width by default.
+		@param sceneHeight The height of the screen, the engine height by default.
+	**/
 	public function rayFromScreen( pixelX : Float, pixelY : Float, sceneWidth = -1, sceneHeight = -1 ) {
 		var engine = h3d.Engine.getCurrent();
 		if( sceneWidth < 0 ) sceneWidth = engine.width;
@@ -258,6 +331,9 @@ class Camera {
 		return h3d.col.Ray.fromPoints(unproject(rx, ry, 0), unproject(rx, ry, 1));
 	}
 
+	/**
+		Recomputes the matrices and the frustum from the camera properties.
+	**/
 	public function update() {
 		if( follow != null ) {
 			var fpos = follow.pos.localToGlobal();
@@ -289,6 +365,10 @@ class Camera {
 		frustum.loadMatrix(m);
 	}
 
+	/**
+		Returns the 8 corners of the view frustum in world space: the 4 corners at depth `zMin`, then the 4 at depth `zMax`
+		(depths from `0` near to `1` far).
+	**/
 	public function getFrustumCorners(zMax=1., zMin=0.) : Array<h3d.Vector> {
 		return [
 			unproject(-1, 1, zMin), unproject(1, 1, zMin), unproject(1, -1, zMin), unproject(-1, -1, zMin),
@@ -296,12 +376,18 @@ class Camera {
 		];
 	}
 
+	/**
+		Tells if the camera position direction is aligned with the `up` vector, in which case the view orientation is undefined.
+	**/
 	public function lostUp() {
 		var p2 = pos.clone();
 		p2.normalize();
 		return Math.abs(p2.dot(up)) > 0.999;
 	}
 
+	/**
+		Returns the normalized direction of the camera space vector (`dx`, `dy`, `dz`), transformed by the view matrix.
+	**/
 	public function getViewDirection( dx : Float, dy : Float, dz = 0. ) {
 		var a = new h3d.col.Point(dx,dy,dz);
 		a.transform3x3(mcam);
@@ -309,6 +395,9 @@ class Camera {
 		return a;
 	}
 
+	/**
+		Moves the camera position along its view axes.
+	**/
 	public function movePosAxis( dx : Float, dy : Float, dz = 0. ) {
 		var p = new h3d.col.Point(dx, dy, dz);
 		p.transform3x3(mcam);
@@ -317,6 +406,9 @@ class Camera {
 		pos.z += p.z;
 	}
 
+	/**
+		Moves the camera target along its view axes.
+	**/
 	public function moveTargetAxis( dx : Float, dy : Float, dz = 0. ) {
 		var p = new h3d.col.Point(dx, dy, dz);
 		p.transform3x3(mcam);
@@ -325,6 +417,9 @@ class Camera {
 		target.z += p.z;
 	}
 
+	/**
+		Moves the camera 2.5% closer to its target (multiplied by `speed`).
+	**/
 	public function forward(speed = 1.) {
 		var c = 1 - 0.025 * speed;
 		pos.set(
@@ -334,6 +429,9 @@ class Camera {
 		);
 	}
 
+	/**
+		Moves the camera 2.5% farther from its target (multiplied by `speed`).
+	**/
 	public function backward(speed = 1.) {
 		var c = 1 + 0.025 * speed;
 		pos.set(
@@ -376,6 +474,9 @@ class Camera {
 		m._44 = 1;
 	}
 
+	/**
+		Places the camera at the position of `m`, looking along its X axis.
+	**/
 	public function setTransform( m : Matrix ) {
 		pos.set(m._41, m._42, m._43);
 		target.load(pos.add(m.getDirection()));
@@ -456,6 +557,11 @@ class Camera {
 		return p;
 	}
 
+	/**
+		Returns the screen position, in pixels, of the world position (`x`, `y`, `z`). Its `z` is the projected depth.
+		@param snapToPixel Rounds the result to integer pixels.
+		@param p An optional vector to store the result in.
+	**/
 	public function project( x : Float, y : Float, z : Float, screenWidth : Float, screenHeight : Float, snapToPixel = true, ?p: h3d.Vector) {
 		if(p == null)
 			p = new h3d.Vector();
@@ -470,6 +576,9 @@ class Camera {
 		return p;
 	}
 
+	/**
+		Converts a distance from the camera to the depth buffer value (taking `reverseDepth` into account).
+	**/
 	public function distanceToDepth( dist : Float ) {
 		var invDist = 1.0 / hxd.Math.clamp(dist, zNear, zFar);
 		var fDivN = zFar / zNear;
@@ -478,6 +587,9 @@ class Camera {
 		return (zFar / a) * (invDist - b);
 	}
 
+	/**
+		Converts a depth buffer value to a distance from the camera.
+	**/
 	public function depthToDistance( depth : Float ) {
 		var d = hxd.Math.clamp(depth);
 		var fDivN = zFar/zNear;
@@ -486,6 +598,9 @@ class Camera {
 		return 1.0 / (a / zFar * d + b);
 	}
 
+	/**
+		Copies all the properties of `cam`.
+	**/
 	public function load( cam : Camera ) {
 		pos.load(cam.pos);
 		target.load(cam.target);

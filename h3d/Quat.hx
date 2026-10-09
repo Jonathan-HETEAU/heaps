@@ -1,14 +1,39 @@
 package h3d;
 using hxd.Math;
 
+/**
+	A quaternion representing a 3D rotation, used for instance by `h3d.scene.Object` to store its rotation.
+	Most methods modify the quaternion in place.
+
+	```haxe
+	var q = new h3d.Quat();
+	q.initRotateAxis(0, 0, 1, Math.PI / 2); // 90 degrees around Z
+	obj.setRotationQuat(q);
+	```
+**/
 @:noDebug
 class Quat {
 
+	/**
+		The X component of the rotation axis part.
+	**/
 	public var x : Float;
+	/**
+		The Y component of the rotation axis part.
+	**/
 	public var y : Float;
+	/**
+		The Z component of the rotation axis part.
+	**/
 	public var z : Float;
+	/**
+		The scalar part (`1` for no rotation).
+	**/
 	public var w : Float;
 
+	/**
+		Creates a quaternion, the identity (no rotation) by default.
+	**/
 	public inline function new( x = 0., y = 0., z = 0., w = 1. ) {
 		this.x = x;
 		this.y = y;
@@ -16,6 +41,9 @@ class Quat {
 		this.w = w;
 	}
 
+	/**
+		Sets the four components.
+	**/
 	public inline function set(x, y, z, w) {
 		this.x = x;
 		this.y = y;
@@ -23,19 +51,31 @@ class Quat {
 		this.w = w;
 	}
 
+	/**
+		Resets to the identity (no rotation).
+	**/
 	public inline function identity() {
 		x = y = z = 0;
 		w = 1;
 	}
 
+	/**
+		Returns the squared length.
+	**/
 	public inline function lengthSq() {
 		return x * x + y * y + z * z + w * w;
 	}
 
+	/**
+		Returns the length (`1` for a rotation).
+	**/
 	public inline function length() {
 		return lengthSq().sqrt();
 	}
 
+	/**
+		Copies the components of `q`.
+	**/
 	public inline function load( q : Quat ) {
 		this.x = q.x;
 		this.y = q.y;
@@ -43,10 +83,17 @@ class Quat {
 		this.w = q.w;
 	}
 
+	/**
+		Returns a copy.
+	**/
 	public inline function clone() {
 		return new Quat(x, y, z, w);
 	}
 
+	/**
+		Sets the rotation turning the direction `from` to the direction `to` (both normalized).
+		Unstable when the directions are almost opposite.
+	**/
 	public function initMoveTo( from : Vector, to : Vector ) {
 		//		H = Normalize(From + To)
 		//		Q = (From ^ H, From . H)
@@ -62,6 +109,9 @@ class Quat {
 		normalize();
 	}
 
+	/**
+		Sets a rotation whose Z axis is the direction `dir`, rotated by `rotate` radians around it.
+	**/
 	public function initNormal( dir : h3d.col.Point, rotate : Float = 0.0 ) {
 		var dir = dir.normalized();
 		if( dir.x*dir.x+dir.y*dir.y < Math.EPSILON2 )
@@ -82,6 +132,10 @@ class Quat {
 		}
 	}
 
+	/**
+		Sets the rotation whose X axis points to `dir` (used by `h3d.scene.Object.setDirection`).
+		@param up The up vector used to orient the other axes (Z up by default).
+	**/
 	public function initDirection( dir : Vector, ?up : Vector ) {
 		if(dir.lengthSq() < Math.EPSILON2){
 			identity();
@@ -131,6 +185,9 @@ class Quat {
 		}
 	}
 
+	/**
+		Sets a rotation of `a` radians around the axis (`x`, `y`, `z`), which must be normalized.
+	**/
 	public function initRotateAxis( x : Float, y : Float, z : Float, a : Float ) {
 		var sin = (a / 2).sin();
 		var cos = (a / 2).cos();
@@ -141,6 +198,9 @@ class Quat {
 		normalize();
 	}
 
+	/**
+		Sets the rotation of the matrix `m`, which must not contain a scale.
+	**/
 	public function initRotateMatrix( m : Matrix ) {
 		var tr = m._11 + m._22 + m._33;
 		if( tr > 0 ) {
@@ -174,6 +234,9 @@ class Quat {
 		}
 	}
 
+	/**
+		Normalizes the quaternion. Resets to the identity if its length is zero.
+	**/
 	public function normalize() {
 		var len = x * x + y * y + z * z + w * w;
 		if( len < hxd.Math.EPSILON2 ) {
@@ -188,6 +251,9 @@ class Quat {
 		}
 	}
 
+	/**
+		Sets the rotation from Euler angles, in radians (X, then Y, then Z).
+	**/
 	public function initRotation( ax : Float, ay : Float, az : Float ) {
 		var sinX = ( ax * 0.5 ).sin();
 		var cosX = ( ax * 0.5 ).cos();
@@ -203,6 +269,9 @@ class Quat {
 		w = cosX * cosYZ + sinX * sinYZ;
 	}
 
+	/**
+		Sets `this` to the product `q1 * q2`: the rotation `q2` followed by `q1`.
+	**/
 	public function multiply( q1 : Quat, q2 : Quat ) {
 		var x2 = q1.x * q2.w + q1.w * q2.x + q1.y * q2.z - q1.z * q2.y;
 		var y2 = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
@@ -214,10 +283,17 @@ class Quat {
 		w = w2;
 	}
 
+	/**
+		Returns the Euler angles of the rotation, in radians.
+	**/
 	public function toEuler() {
 		return toMatrix().getEulerAngles();
 	}
 
+	/**
+		Sets `this` to the linear interpolation between `q1` and `q2` (call `normalize` after it).
+		@param nearest If `true`, interpolates along the shortest path.
+	**/
 	public inline function lerp( q1 : Quat, q2 : Quat, v : Float, nearest = false ) {
 		var v2 = 1 - v;
 		if( nearest && q1.dot(q2) < 0 )
@@ -232,6 +308,9 @@ class Quat {
 		this.w = w;
 	}
 
+	/**
+		Sets `this` to the spherical linear interpolation between `q1` and `q2`, at `v` from `0` to `1`.
+	**/
 	public function slerp( q1 : Quat, q2 : Quat, v : Float ) {
 		// calc cosine
 		var cosom = q1.dot(q2);
@@ -267,6 +346,9 @@ class Quat {
 		this.w = scale0 * q1.w + scale1 * to1.w;
 	}
 
+	/**
+		Inverts the rotation (conjugate of a unit quaternion).
+	**/
 	public inline function conjugate() {
 		x = -x;
 		y = -y;
@@ -309,18 +391,30 @@ class Quat {
 		w = -w;
 	}
 
+	/**
+		Returns the dot product with `q`.
+	**/
 	public inline function dot( q : Quat ) {
 		return x * q.x + y * q.y + z * q.z + w * q.w;
 	}
 
+	/**
+		Returns the rotated X axis (the direction the rotation points to).
+	**/
 	public inline function getDirection() {
 		return new h3d.Vector(1 - 2 * ( y * y + z * z ), 2 * ( x * y + z * w ), 2 * ( x * z - y * w ));
 	}
 
+	/**
+		Returns the rotated Z axis.
+	**/
 	public inline function getUpAxis() {
 		return new h3d.Vector(2 * ( x*z + y*w ),2 * ( y*z - x*w ), 1 - 2 * ( x*x + y*y ));
 	}
 
+	/**
+		Returns the rotated Y axis.
+	**/
 	public inline function getRightAxis() {
 		return new h3d.Vector(2 * ( x*y - z*w ), 1 - 2 * ( x*x + z*z ), 2 * ( y*z + x*w ));
 	}
@@ -358,6 +452,9 @@ class Quat {
 		return m;
 	}
 
+	/**
+		Returns a string representation of the components.
+	**/
 	public function toString() {
 		return '{${x.fmt()},${y.fmt()},${z.fmt()},${w.fmt()}}';
 	}

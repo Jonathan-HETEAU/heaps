@@ -1,5 +1,8 @@
 package h3d;
 
+/**
+	The flags of a `Buffer`, given at creation.
+**/
 enum BufferFlag {
 	/**
 		Indicate that the buffer content will be often modified.
@@ -23,19 +26,44 @@ enum BufferFlag {
 	IndexBuffer;
 }
 
+/**
+	A GPU buffer: vertex data (with the layout given by `format`), index data, or data read by shaders.
+
+	```haxe
+	var buf = h3d.Buffer.ofFloats(floats, hxd.BufferFormat.POS3D_NORMAL_UV);
+	```
+**/
 @:allow(h3d.impl.MemoryManager)
 class Buffer {
+	/**
+		The counter used to give each buffer an `id`.
+	**/
 	public static var GUID = 0;
+	/**
+		A unique identifier of the buffer.
+	**/
 	public var id : Int;
 	var allocPos : hxd.impl.AllocPos;
 	var engine : h3d.Engine;
 	var lastFrame : Int;
 
 	@:allow(h3d.impl.Driver) var vbuf : h3d.impl.Driver.GPUBuffer;
+	/**
+		The number of elements (vertexes) of the buffer.
+	**/
 	public var vertices(default,null) : Int;
+	/**
+		The layout of one element.
+	**/
 	public var format(default,null) : hxd.BufferFormat;
+	/**
+		The flags given at creation.
+	**/
 	public var flags(default, null) : haxe.EnumFlags<BufferFlag>;
 
+	/**
+		Allocates a buffer of `vertices` elements of the given format (unless `NoAlloc` is set).
+	**/
 	public function new(vertices, format : hxd.BufferFormat, ?flags : Array<BufferFlag> ) {
 		id = GUID++;
 		this.vertices = vertices;
@@ -50,14 +78,23 @@ class Buffer {
 			@:privateAccess engine.mem.allocBuffer(this);
 	}
 
+	/**
+		Returns the size of the buffer, in bytes.
+	**/
 	public inline function getMemSize() {
 		return vertices * format.strideBytes;
 	}
 
+	/**
+		Tells if the GPU memory of the buffer is released.
+	**/
 	public inline function isDisposed() {
 		return vbuf == null;
 	}
 
+	/**
+		Releases the GPU memory of the buffer.
+	**/
 	public function dispose() {
 		if( vbuf != null ) {
 			@:privateAccess engine.mem.freeBuffer(this);
@@ -65,6 +102,10 @@ class Buffer {
 		}
 	}
 
+	/**
+		Uploads `vertices` elements from `buf`, starting at the float `bufPos`, to the element `startVertice` of the buffer.
+		Values are converted for the low precision inputs of the format.
+	**/
 	public function uploadFloats( buf : hxd.FloatBuffer, bufPos : Int, vertices : Int, startVertice = 0 ) {
 		if( startVertice < 0 || vertices < 0 || startVertice + vertices > this.vertices )
 			throw "Invalid vertices count";
@@ -117,6 +158,9 @@ class Buffer {
 		engine.driver.uploadBufferData(this, startVertice, vertices, buf, bufPos);
 	}
 
+	/**
+		Uploads `vertices` elements from `data`, starting at the byte `dataPos`, to the element `startVertice` of the buffer.
+	**/
 	public function uploadBytes( data : haxe.io.Bytes, dataPos : Int, vertices : Int, startVertice : Int = 0 ) {
 		if( startVertice < 0 || vertices < 0 || startVertice + vertices > this.vertices )
 			throw "Invalid vertices count";
@@ -125,22 +169,34 @@ class Buffer {
 		engine.driver.uploadBufferBytes(this, startVertice, vertices, data, dataPos);
 	}
 
+	/**
+		Reads `vertices` elements from the GPU (synchronous) into `bytes`.
+	**/
 	public function readBytes( bytes : haxe.io.Bytes, bytesPosition : Int, vertices : Int, startVertice : Int = 0 ) {
 		if( startVertice < 0 || vertices < 0 || startVertice + vertices > this.vertices )
 			throw "Invalid vertices count";
 		engine.driver.readBufferBytes(this, startVertice, vertices, bytes, bytesPosition);
 	}
 
+	/**
+		Reads `vertices` elements from the GPU into `bytes` asynchronously, then calls `callback`.
+	**/
 	public function readBytesAsync( bytes : haxe.io.Bytes, bytesPosition : Int, vertices : Int, startVertice : Int = 0, callback : Void -> Void ) {
 		if( startVertice < 0 || vertices < 0 || startVertice + vertices > this.vertices )
 			throw "Invalid vertices count";
 		engine.driver.readBufferBytesAsync(this, startVertice, vertices, bytes, bytesPosition, callback);
 	}
 
+	/**
+		Returns the bindless handle of the buffer (requires a driver supporting it).
+	**/
 	public function getHandle() : h3d.BufferHandle {
 		return engine.driver.getBufferHandle(this);
 	}
 
+	/**
+		Creates a buffer holding the floats of `v`.
+	**/
 	public static function ofFloats( v : hxd.FloatBuffer, format : hxd.BufferFormat, ?flags ) {
 		var nvert = Math.ceil(v.length / format.stride);
 		var b = new Buffer(nvert, format, flags);
@@ -148,6 +204,9 @@ class Buffer {
 		return b;
 	}
 
+	/**
+		Creates a buffer holding the first `vertices` elements of `v`.
+	**/
 	public static function ofSubFloats( v : hxd.FloatBuffer, vertices : Int, format : hxd.BufferFormat, ?flags ) {
 		var b = new Buffer(vertices, format, flags);
 		b.uploadFloats(v, 0, vertices);

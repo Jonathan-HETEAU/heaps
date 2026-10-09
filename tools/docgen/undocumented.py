@@ -23,8 +23,14 @@ def scan(path):
         s = line.strip()
         if in_comment:
             if "*/" in s:
+                if in_comment != "plain":
+                    last_doc_end = i
                 in_comment = False
-                last_doc_end = i
+            continue
+        if s.startswith("/*") and not s.startswith("/**"):
+            # plain comment block (possibly commented-out code): skip it entirely
+            if "*/" not in s[2:]:
+                in_comment = "plain"
             continue
         if s.startswith("/**"):
             if "*/" not in s[3:]:
