@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Multiplies the alpha by a channel of a texture (blue by default, or alpha with `useAlphaChannel`).
+**/
 class AlphaMap extends hxsl.Shader {
 
 	static var SRC = {
@@ -22,6 +25,9 @@ class AlphaMap extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader with the alpha map `texture`.
+	**/
 	public function new(texture, useAlphaChannel=false) {
 		super();
 		uvScale.set(1, 1);

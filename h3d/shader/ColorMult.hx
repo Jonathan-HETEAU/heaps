@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Multiplies the output color by `color`, blended by `amount`.
+**/
 class ColorMult extends hxsl.Shader {
 
 	static var SRC = {

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Uses a multi-channel signed distance field texture as alpha mask, for sharp shapes at any scale (for instance MSDF fonts).
+**/
 class AlphaMSDF extends hxsl.Shader {
 	static var SRC = {
 		

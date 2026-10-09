@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Reads the PBR surface properties of the pixel from the G-buffer textures.
+**/
 class PropsImport extends hxsl.Shader {
 
 	static var SRC = {

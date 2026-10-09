@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Outputs the distance to the camera divided by its far plane as depth (for omnidirectional shadow maps).
+**/
 class LinearShadowDepth extends hxsl.Shader {
 
 	static var SRC = {

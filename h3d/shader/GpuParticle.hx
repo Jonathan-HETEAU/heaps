@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Animates the particles of `h3d.parts.GpuParticles` on the GPU.
+**/
 class GpuParticle extends hxsl.Shader {
 
 	static var SRC = {

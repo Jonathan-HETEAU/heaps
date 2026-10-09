@@ -1,5 +1,9 @@
 package h3d.shader.pbr;
 
+/**
+	Converts the color to linear space (approximated by squaring it), for unlit objects drawn in HDR (see `h3d.mat.PbrMaterial`
+	`BeforeTonemapping` mode). With `useEmissiveHDR`, the color is also multiplied by `1 + emissive`.
+**/
 class GammaCorrect extends hxsl.Shader {
 	static var SRC = {
 		var pixelColor : Vec4;

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Debug: displays the alpha channel of a displacement texture.
+**/
 class DisplacementDisplay extends hxsl.Shader {
 
 	static var SRC = {

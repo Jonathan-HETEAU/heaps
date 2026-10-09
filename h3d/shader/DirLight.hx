@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	The shader of `h3d.scene.fwd.DirLight`.
+**/
 class DirLight extends hxsl.Shader {
 
 	static var SRC = {
@@ -36,6 +39,9 @@ class DirLight extends hxsl.Shader {
 
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		color.set(1, 1, 1);

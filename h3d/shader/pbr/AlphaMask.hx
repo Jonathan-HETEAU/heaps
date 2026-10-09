@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Makes the sky pixels (without geometry) transparent, for `h3d.scene.pbr.Renderer.enableTransparency`.
+**/
 class AlphaMask extends hxsl.Shader {
 
 	static var SRC = {

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Base of the compute shaders culling instances and writing indirect draw commands (see `h3d.scene.GPUMeshBatch`).
+**/
 class InstanceIndirectBase extends hxsl.Shader {
 	static var SRC = {
 		@global var camera : {
@@ -178,6 +181,9 @@ class InstanceIndirectBase extends hxsl.Shader {
 	}
 }
 
+/**
+	Culls instances of sub meshes and selects their level of detail, writing their indirect draw commands.
+**/
 class SubPartInstanceIndirect extends InstanceIndirectBase {
 	static var SRC = {
 		// n : subMesh index
@@ -232,6 +238,9 @@ class SubPartInstanceIndirect extends InstanceIndirectBase {
 	}
 }
 
+/**
+	Culls instances and selects their level of detail, writing their indirect draw commands.
+**/
 class InstanceIndirect extends InstanceIndirectBase {
 	static var SRC = {
 		@param var center : Vec3;

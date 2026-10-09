@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Draws the quads of `h3d.scene.Graphics` as screen space lines of constant `width` in pixels.
+**/
 class LineShader extends hxsl.Shader {
 
 	static var SRC = {
@@ -59,6 +62,9 @@ class LineShader extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new( width = 1.5, lengthScale = 1. ) {
 		super();
 		this.width = width;

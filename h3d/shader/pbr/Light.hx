@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Shader functions computing the intensity of the different kinds of PBR lights.
+**/
 class LightEvaluation extends hxsl.Shader {
 
 	static var SRC = {
@@ -110,6 +113,9 @@ class LightEvaluation extends hxsl.Shader {
 	};
 }
 
+/**
+	Base of the shaders of the PBR lights: outputs the light color and direction used by the lighting shader.
+**/
 class Light extends LightEvaluation {
 
 	static var SRC = {
@@ -126,6 +132,9 @@ class Light extends LightEvaluation {
 	};
 }
 
+/**
+	The shader of `h3d.scene.pbr.SpotLight`.
+**/
 class SpotLight extends Light {
 
 	static var SRC = {
@@ -164,6 +173,9 @@ class SpotLight extends Light {
 	}
 }
 
+/**
+	The shader of `h3d.scene.pbr.PointLight`.
+**/
 class PointLight extends Light {
 
 	static var SRC = {
@@ -181,6 +193,9 @@ class PointLight extends Light {
 	};
 }
 
+/**
+	The shader of `h3d.scene.pbr.DirLight`.
+**/
 class DirLight extends Light {
 
 	static var SRC = {
@@ -195,6 +210,9 @@ class DirLight extends Light {
 	};
 }
 
+/**
+	Counts the lights affecting each pixel (for the `Performance` display mode).
+**/
 class Performance extends hxsl.Shader {
 	static var SRC = {
 		@param var maxLights : Int;
@@ -209,6 +227,9 @@ class Performance extends hxsl.Shader {
 	}
 }
 
+/**
+	The shader of `h3d.scene.pbr.CapsuleLight`.
+**/
 class CapsuleLight extends Light {
 
 	static var SRC = {
@@ -231,6 +252,9 @@ class CapsuleLight extends Light {
 	};
 }
 
+/**
+	The shader of `h3d.scene.pbr.RectangleLight`.
+**/
 class RectangleLight extends Light {
 	static var SRC = {
 		@param var lightDir : Vec3;

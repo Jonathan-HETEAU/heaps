@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Base of the skinning shaders: holds the bone matrices.
+**/
 class SkinBase extends hxsl.Shader {
 
 	static var SRC = {

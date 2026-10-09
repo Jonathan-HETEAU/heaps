@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Debug: draws a black and white checker pattern from the texture coordinates.
+**/
 class Checker extends hxsl.Shader {
 
 	static var SRC = {

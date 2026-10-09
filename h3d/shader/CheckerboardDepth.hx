@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Downsamples a depth texture by taking alternatively the minimum and maximum of each 2x2 block (checkerboard pattern).
+**/
 class CheckerboardDepth extends h3d.shader.ScreenShader {
 	static var SRC = {
 

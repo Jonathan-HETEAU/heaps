@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Multiplies (or adds with `additive`) the output color by the vertex color (RGBA).
+**/
 class VertexColorAlpha extends hxsl.Shader {
 
 	static var SRC = {

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Plays an animation stored as a grid of frames in a texture (a sprite sheet), optionally blending between frames.
+**/
 class AnimatedTexture extends hxsl.Shader {
 
 	static var SRC = {
@@ -59,6 +62,13 @@ class AnimatedTexture extends hxsl.Shader {
 	};
 
 
+	/**
+		Creates the shader.
+		@param frameDivisionX The number of frames horizontally in the texture.
+		@param frameDivisionY The number of frames vertically in the texture.
+		@param totalFrames The number of frames, or `-1` for all the cells.
+		@param speed The number of frames per second.
+	**/
 	public function new( texture, frameDivisionX : Int, frameDivisionY : Int, totalFrames = -1, ?speed = 1.) {
 		super();
 		this.texture = texture;

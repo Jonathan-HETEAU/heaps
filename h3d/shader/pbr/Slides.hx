@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	The G-buffer channel displayed by the `Debug` display mode of the PBR renderer.
+**/
 enum abstract DebugMode(Int) {
 	var Full = 0;
 	var Albedo = 1;
@@ -15,6 +18,9 @@ enum abstract DebugMode(Int) {
 	var Clusters = 11;
 }
 
+/**
+	Displays the G-buffer channels for debugging (the `Debug` display mode of `h3d.scene.pbr.Renderer`).
+**/
 class Slides extends ScreenShader {
 
 	static var SRC = {
@@ -136,6 +142,9 @@ class Slides extends ScreenShader {
 		}
 	};
 
+	/**
+		The channel displayed.
+	**/
 	public var mode(get,set) : DebugMode;
 
 	function get_mode() : DebugMode { return cast smode; }

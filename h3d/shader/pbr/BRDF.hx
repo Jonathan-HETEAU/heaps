@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Shader functions of the PBR lighting model (GGX distribution, visibility and Fresnel terms), to be used by the lighting shaders.
+**/
 class BRDF extends hxsl.Shader {
 
 	static var SRC = {

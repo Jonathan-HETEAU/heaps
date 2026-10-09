@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Clamps the projected depth between `zMin` and `zMax`.
+**/
 class ZCut extends hxsl.Shader {
 
 	static var SRC = {
@@ -18,6 +21,9 @@ class ZCut extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new(zMin = 0., zMax = 1.) {
 		super();
 		this.zMin = zMin;

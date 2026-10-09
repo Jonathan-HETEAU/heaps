@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Deforms the texture coordinates with a moving sine wave.
+**/
 class SinusDeform extends hxsl.Shader {
 
 	static var SRC = {
@@ -17,6 +20,9 @@ class SinusDeform extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new( frequency = 10., amplitude = 0.01, speed = 1. ) {
 		super();
 		this.frequency = frequency;

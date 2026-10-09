@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Discards the pixels whose alpha is below `threshold`.
+**/
 class KillAlpha extends hxsl.Shader {
 
 	static var SRC = {
@@ -14,6 +17,9 @@ class KillAlpha extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new(threshold = 0.) {
 		super();
 		this.threshold = threshold;

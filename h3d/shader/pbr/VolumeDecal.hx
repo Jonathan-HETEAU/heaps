@@ -1,6 +1,9 @@
 package h3d.shader.pbr;
 
 
+/**
+	Base of the PBR volume decal shaders: reconstructs the position of the surface inside the decal box from the depth.
+**/
 class BaseDecal extends hxsl.Shader {
 	static var SRC = {
 
@@ -65,6 +68,9 @@ class BaseDecal extends hxsl.Shader {
 	}
 }
 
+/**
+	A decal drawing a colored texture over the surfaces.
+**/
 class DecalOverlay extends BaseDecal {
 	static var SRC = {
 
@@ -122,11 +128,17 @@ class DecalOverlay extends BaseDecal {
 		}
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new( ) {
 		super();
 	}
 }
 
+/**
+	A decal writing albedo, normal and PBR properties into the G-buffer.
+**/
 class DecalPBR extends BaseDecal {
 
 	static var SRC = {
@@ -212,6 +224,9 @@ class DecalPBR extends BaseDecal {
 		}
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new( ) {
 		super();
 		CENTERED = true;

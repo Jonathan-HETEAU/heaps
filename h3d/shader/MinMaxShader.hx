@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Outputs the minimum (or maximum with `isMax`) of two textures.
+**/
 class MinMaxShader extends ScreenShader {
 
 	static var SRC = {
@@ -16,6 +19,9 @@ class MinMaxShader extends ScreenShader {
 	};
 }
 
+/**
+	Outputs the minimum (or maximum with `isMax`) of two cube textures, for a cube face.
+**/
 class CubeMinMaxShader extends ScreenShader {
 
 	static var SRC = {

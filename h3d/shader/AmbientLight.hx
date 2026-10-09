@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	The ambient light of the forward renderer, combined with the light shaders (see `h3d.scene.fwd.LightSystem`).
+**/
 class AmbientLight extends hxsl.Shader {
 
 	static var SRC = {

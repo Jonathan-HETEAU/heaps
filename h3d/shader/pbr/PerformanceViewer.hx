@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Displays the light count of each pixel with a color gradient (for the `Performance` display mode).
+**/
 class PerformanceViewer extends ScreenShader {
 
 	static var SRC = {

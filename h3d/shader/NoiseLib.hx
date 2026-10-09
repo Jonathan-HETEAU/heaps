@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Shader functions computing gradient noise (`psrdnoise`), to be used by other shaders.
+**/
 class NoiseLib extends hxsl.Shader {
 
 static var SRC = {

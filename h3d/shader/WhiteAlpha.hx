@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Replaces the texture color by white, keeping its alpha.
+**/
 class WhiteAlpha extends hxsl.Shader {
 
 	static var SRC = {

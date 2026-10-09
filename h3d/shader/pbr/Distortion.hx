@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Applies the distortion texture rendered by the `"distortion"` pass to the image.
+**/
 class Distortion extends h3d.shader.ScreenShader {
 
 	static var SRC = {

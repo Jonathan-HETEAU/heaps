@@ -1,5 +1,9 @@
 package h3d.shader;
 
+/**
+	The base shader of the 3D meshes: transforms the vertices by the object and camera matrices, and outputs the color,
+	depth and normal. Added to every `h3d.mat.Material`.
+**/
 class BaseMesh extends hxsl.Shader {
 
 	static var SRC = {
@@ -119,6 +123,9 @@ class BaseMesh extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		color.set(1, 1, 1);

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Debug: makes the output opaque, and with `showAlpha` displays the alpha channel as grey levels.
+**/
 class AlphaChannel extends hxsl.Shader {
 
 	static var SRC = {

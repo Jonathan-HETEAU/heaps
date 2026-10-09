@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Receives the shadows of the forward renderer shadow map (see `h3d.pass.DefaultShadowMap` and `h3d.mat.Material.receiveShadows`).
+**/
 class Shadow extends hxsl.Shader {
 
 	static var SRC = {
@@ -25,6 +28,9 @@ class Shadow extends hxsl.Shader {
 		}
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 	}

@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	The strength of each property written by a decal (albedo, normal, PBR properties, emissive), from `0` to `1`.
+**/
 class StrengthValues extends hxsl.Shader {
 
 	static var SRC = {
@@ -26,6 +29,9 @@ class StrengthValues extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new(albedoStrength=1.,normalStrength=1.,pbrStrength=1., emissiveStrength=1.) {
 		super();
 		this.albedoStrength = albedoStrength;

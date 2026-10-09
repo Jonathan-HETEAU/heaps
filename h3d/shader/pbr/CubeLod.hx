@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Displays a mip level of a cube texture (used to display the environment as sky).
+**/
 class CubeLod extends hxsl.Shader {
 
 	static var SRC = {
@@ -14,6 +17,9 @@ class CubeLod extends hxsl.Shader {
 
 	}
 
+	/**
+		Creates the shader with the cube `texture`.
+	**/
 	public function new(?texture) {
 		super();
 		this.texture = texture;

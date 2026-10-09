@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	One pass of a separable blur, used by `h3d.pass.Blur`.
+**/
 class Blur extends ScreenShader {
 
 	static var SRC = {

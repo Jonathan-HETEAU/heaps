@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies the shadows of a perspective shadow map (see `h3d.pass.ProjectedShadowMap`).
+**/
 class SpotShadow extends hxsl.Shader {
 
 	static var SRC = {

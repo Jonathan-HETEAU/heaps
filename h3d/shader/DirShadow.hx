@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies the shadows of a directional shadow map (see `h3d.pass.DirShadowMap`).
+**/
 class DirShadow extends hxsl.Shader {
 
 	static var SRC = {

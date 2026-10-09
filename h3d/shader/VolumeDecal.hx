@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Projects a texture on the surfaces inside a box volume (the decal mesh), using the depth buffer.
+**/
 class VolumeDecal extends hxsl.Shader {
 
 	static var SRC = {
@@ -39,6 +42,9 @@ class VolumeDecal extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader for a decal of the given size.
+	**/
 	public function new( objectWidth : Float, objectHeight : Float ) {
 		super();
 		normal.set(0, 0, 1);

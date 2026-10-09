@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies a texture to the output color (see `h3d.mat.Material.texture`).
+**/
 class Texture extends hxsl.Shader {
 
 	static var SRC = {
@@ -34,6 +37,9 @@ class Texture extends hxsl.Shader {
 	}
 
 
+	/**
+		Creates the shader with the texture `tex`.
+	**/
 	public function new(?tex) {
 		super();
 		this.texture = tex;

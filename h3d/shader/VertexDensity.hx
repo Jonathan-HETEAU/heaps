@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Debug: displays the density of vertices on screen with a color ramp.
+**/
 class VertexDensity extends hxsl.Shader {
 	static var SRC = {
 		@global var camera : {

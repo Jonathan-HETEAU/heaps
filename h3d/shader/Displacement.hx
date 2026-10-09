@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Displaces the pixels of a texture according to a normal map (for distortion effects).
+**/
 class Displacement extends ScreenShader {
 
 	static var SRC = {

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Extracts the bright parts of an image (above `power`), for a bloom post process.
+**/
 class Bloom extends ScreenShader {
 
 	static var SRC = {

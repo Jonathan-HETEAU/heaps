@@ -1,5 +1,9 @@
 package h3d.shader.pbr;
 
+/**
+	Sets the PBR properties from a texture: metalness in red, glossiness in green (roughness is `1 - green²`),
+	occlusion in blue and emissive (multiplied by `emissiveValue`) in alpha.
+**/
 class PropsTexture extends hxsl.Shader {
 	static var SRC = {
 
@@ -53,6 +57,9 @@ class PropsTexture extends hxsl.Shader {
 
 	}
 
+	/**
+		Creates the shader with the texture `t`.
+	**/
 	public function new(?t) {
 		super();
 		this.texture = t;

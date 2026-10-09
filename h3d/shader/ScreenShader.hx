@@ -1,5 +1,9 @@
 package h3d.shader;
 
+/**
+	Base class of the full screen shaders used with `h3d.pass.ScreenFx`: it provides the `calculatedUV` of each pixel of
+	the screen quad. Extend it and write a `fragment` function.
+**/
 class ScreenShader extends hxsl.Shader {
 
 	static var SRC = {

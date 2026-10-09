@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Draws an outline around the opaque pixels of a texture (see `h3d.pass.Outline`).
+**/
 class Outline2D extends ScreenShader {
 	static var SRC = {
 		@param var texture : Sampler2D;

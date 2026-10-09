@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Animates the texture coordinates through a grid of frames (a sprite sheet).
+**/
 class UVAnim extends hxsl.Shader {
 
 	static var SRC = {
@@ -23,6 +26,12 @@ class UVAnim extends hxsl.Shader {
 		}
 	};
 
+	/**
+		Creates the shader.
+		@param frameDivision The number of frames on each axis of the texture.
+		@param totalFrames The number of frames, or `-1` for all the cells.
+		@param speed The number of frames per second.
+	**/
 	public function new(frameDivision : Int, totalFrames = -1, ?speed = 1.) {
 		super();
 		if( totalFrames < 0 ) totalFrames = frameDivision;

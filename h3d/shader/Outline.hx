@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Draws an outline by inflating the mesh along its normals by `size` (to use in a pass drawn behind the object).
+**/
 class Outline extends hxsl.Shader {
 
 	static var SRC = {

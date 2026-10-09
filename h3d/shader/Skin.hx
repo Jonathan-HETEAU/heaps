@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Shader functions applying the bone matrices to points and vectors.
+**/
 class Utils extends hxsl.Shader {
 	static var SRC = {
 		var boneMatrixX : Mat3x4;
@@ -28,6 +31,9 @@ class Utils extends hxsl.Shader {
 		}
 	}
 }
+/**
+	The skinning shader of `h3d.scene.Skin`: deforms the vertices by up to 4 bones.
+**/
 class Skin extends SkinBase {
 
 	static var SRC = {

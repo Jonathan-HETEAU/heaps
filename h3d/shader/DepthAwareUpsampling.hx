@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Upsamples a low resolution image using the depths to avoid bleeding across edges.
+**/
 class DepthAwareUpsampling extends ScreenShader {
 	static var SRC = {
 

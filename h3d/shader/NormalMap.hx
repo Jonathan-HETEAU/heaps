@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies a tangent space normal map (the mesh needs tangents). See `h3d.mat.Material.normalMap`.
+**/
 class NormalMap extends hxsl.Shader {
 
 	static var SRC = {
@@ -34,6 +37,9 @@ class NormalMap extends hxsl.Shader {
 
 	 };
 
+	/**
+		Creates the shader with the normal map `texture`.
+	**/
 	public function new(?texture) {
 		super();
 		this.texture = texture;

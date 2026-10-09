@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Fades the objects in near the camera (between `nearMinFade` and `nearMaxFade`) and out far from it (between `farMinFade` and `farMaxFade`).
+**/
 class DistanceFade extends hxsl.Shader {
 
 	static var SRC = {

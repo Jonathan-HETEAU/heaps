@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Adds a color to the output color.
+**/
 class ColorAdd extends hxsl.Shader {
 
 	static var SRC = {
@@ -13,6 +16,9 @@ class ColorAdd extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader with a color in `0xRRGGBB` format.
+	**/
 	public function new( color : Int = 0 ) {
 		super();
 		this.color.setColor(color);

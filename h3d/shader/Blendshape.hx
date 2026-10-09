@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies the blend shapes (morph targets) of a mesh on the GPU (see `h3d.prim.Blendshape`).
+**/
 class Blendshape extends hxsl.Shader {
 
 	static var SRC = {

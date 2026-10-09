@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	The shader of `h3d.scene.fwd.PointLight`.
+**/
 class PointLight extends hxsl.Shader {
 
 	static var SRC = {
@@ -49,6 +52,9 @@ class PointLight extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		color.set(1, 1, 1);

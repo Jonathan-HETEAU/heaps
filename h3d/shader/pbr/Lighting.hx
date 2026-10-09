@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Computes the indirect lighting (environment diffuse and specular) and the sky of the PBR renderer.
+**/
 class Indirect extends PropsDefinition {
 
 	static var SRC = {
@@ -102,6 +105,9 @@ class Indirect extends PropsDefinition {
 	};
 }
 
+/**
+	Computes the direct lighting of a PBR light from the G-buffer.
+**/
 class Direct extends PropsDefinition {
 
 	static var SRC = {

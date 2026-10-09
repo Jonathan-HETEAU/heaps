@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Expands the particles of `h3d.parts.Particles` into camera facing quads.
+**/
 class ParticleShader extends hxsl.Shader {
 
 	static var SRC = {
@@ -57,6 +60,9 @@ class ParticleShader extends hxsl.Shader {
 
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		rotationAxis.initRotationAxis(new h3d.Vector(1, 0, 0), Math.PI / 2);

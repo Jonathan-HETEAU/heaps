@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies a cube texture: sampled with the normal, or with the reflected view direction if `reflection` is set.
+**/
 class CubeMap extends hxsl.Shader {
 
 	static var SRC = {
@@ -21,6 +24,9 @@ class CubeMap extends hxsl.Shader {
 
 	}
 
+	/**
+		Creates the shader with the cube `texture`.
+	**/
 	public function new(texture, reflection=false) {
 		super();
 		this.texture = texture;

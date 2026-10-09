@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Compute shader sorting the lights into the clusters of the view (see `h3d.scene.pbr.LightBuffer`).
+**/
 class ClusterCull extends hxsl.Shader {
 
 	static var SRC = {
@@ -226,6 +229,9 @@ class ClusterCull extends hxsl.Shader {
 	};
 }
 
+/**
+	Compute shader removing from the clusters the lights hidden by the opaque geometry, using the hierarchical depth buffer.
+**/
 class ClusterLightOcclusion extends hxsl.Shader {
 
 	static var SRC = {

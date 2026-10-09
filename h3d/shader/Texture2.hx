@@ -33,6 +33,9 @@ class Texture2 extends hxsl.Shader {
 	}
 
 
+	/**
+		Creates the shader with the texture `tex`.
+	**/
 	public function new(?tex) {
 		super();
 		this.texture = tex;

@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Shader functions converting colors between color spaces and packing colors in integers, to be used by other shaders.
+**/
 class ColorSpaces extends hxsl.Shader {
 	static var SRC = {
 

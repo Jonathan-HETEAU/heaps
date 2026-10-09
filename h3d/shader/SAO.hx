@@ -116,6 +116,9 @@ class SAO extends ScreenShader {
 		}
 	};
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		numSamples = 20;

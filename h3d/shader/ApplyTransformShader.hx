@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies an additional transform to the model matrices (used by `h3d.scene.Batcher` with `isRelative`).
+**/
 class ApplyTransformShader extends hxsl.Shader {
 	static var SRC = {
 		@const var IS_LOCAL : Bool = false;

@@ -1,6 +1,9 @@
 package h3d.shader.pbr;
 
 
+/**
+	Converts the HDR image to displayable colors (exposure, tone mapping operator, gamma). See `h3d.scene.pbr.Renderer.toneMode`.
+**/
 class ToneMapping extends ScreenShader {
 
 	static var SRC = {
@@ -59,9 +62,18 @@ class ToneMapping extends ScreenShader {
 		}
 	}
 
+	/**
+		The exposure: colors are multiplied by `exp(exposure)`.
+	**/
 	public var exposure(default,set) : Float;
+	/**
+		The gamma of the output (2 by default).
+	**/
 	public var gamma(default,set) : Float;
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		exposure = 0;

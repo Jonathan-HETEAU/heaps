@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Declares the PBR surface properties (albedo, normal, metalness, roughness, occlusion, emissive...) shared by the PBR shaders.
+**/
 class PropsDefinition extends hxsl.Shader {
 
 	static var SRC = {

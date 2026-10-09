@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Builds a mip level of a hierarchical depth buffer, keeping the minimum or maximum depth of each 2x2 block.
+**/
 class HZB extends h3d.shader.ScreenShader {
 	static var SRC = {
 		@const var compareMax : Bool;

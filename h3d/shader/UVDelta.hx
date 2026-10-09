@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Scales and offsets the texture coordinates.
+**/
 class UVDelta extends hxsl.Shader {
 
 	static var SRC = {
@@ -11,6 +14,9 @@ class UVDelta extends hxsl.Shader {
 		}
 	};
 
+	/**
+		Creates the shader with an offset (`dx`, `dy`) and a scale (`sx`, `sy`).
+	**/
 	public function new( dx = 0., dy = 0., sx = 1., sy = 1. ) {
 		super();
 		uvDelta.set(dx, dy);

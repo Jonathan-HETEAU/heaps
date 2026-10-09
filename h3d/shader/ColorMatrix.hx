@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Transforms the output color by a matrix (see the color methods of `h3d.Matrix`).
+**/
 class ColorMatrix extends hxsl.Shader {
 
 	static var SRC = {
@@ -15,6 +18,9 @@ class ColorMatrix extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader with the 16 values of the matrix `m` (identity by default).
+	**/
 	public function new( ?m : Array<Float> ) {
 		super();
 		if( m != null ) this.matrix.loadValues(m) else this.matrix.identity();

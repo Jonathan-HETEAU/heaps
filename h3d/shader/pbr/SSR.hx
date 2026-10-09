@@ -2,6 +2,9 @@ package h3d.shader.pbr;
 
 /* Follows Skyth's implementation from Godot */
 
+/**
+	Combines the screen space reflections with the lit image.
+**/
 class SSRResolve extends h3d.shader.ScreenShader {
 	static var SRC = {
 		@param var ssrMipLevel : Sampler2D;
@@ -14,6 +17,9 @@ class SSRResolve extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Filters the screen space reflections according to the roughness.
+**/
 class SSRFilter extends h3d.shader.ScreenShader {
 	static var SRC = {
 		@param var ssrColor : Sampler2D;
@@ -48,6 +54,9 @@ class SSRFilter extends h3d.shader.ScreenShader {
 	}
 }
 
+/**
+	Computes the screen space reflections by marching rays in the depth buffer (see `h3d.pass.SSR`).
+**/
 class SSR extends hxsl.Shader {
 	static var SRC = {
 

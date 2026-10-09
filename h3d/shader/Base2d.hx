@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	The base shader of the 2D objects (`h2d.Drawable`): transforms the 2D vertices and applies the texture, color and filters.
+**/
 class Base2d extends hxsl.Shader {
 
 	static var SRC = {

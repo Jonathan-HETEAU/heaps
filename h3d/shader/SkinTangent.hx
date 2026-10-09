@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	The skinning shader for meshes with tangents (normal maps).
+**/
 class SkinTangent extends SkinBase {
 
 	static var SRC = {

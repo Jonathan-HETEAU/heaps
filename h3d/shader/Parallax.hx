@@ -1,8 +1,17 @@
 package h3d.shader;
 
+/**
+	Parallax occlusion mapping: offsets the texture coordinates according to a height map, to simulate relief.
+**/
 class Parallax extends hxsl.Shader {
 
+	/**
+		The minimum number of layers sampled.
+	**/
 	public static final MIN_LAYERS = 6;
+	/**
+		The maximum number of layers sampled.
+	**/
 	public static final MAX_LAYERS = 24;
 	static var SRC = {
 
@@ -56,6 +65,9 @@ class Parallax extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 		maxLayers = MAX_LAYERS;

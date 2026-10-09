@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Shader functions sampling shadow maps (hard, ESM or PCF), to be used by the shadow shaders.
+**/
 class ShadowSampling extends hxsl.Shader {
 
 	static var SRC = {

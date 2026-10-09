@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies the cascaded shadows of a directional light (see `h3d.pass.CascadeShadowMap`).
+**/
 class CascadeShadow extends hxsl.Shader {
 
 	static var SRC = {

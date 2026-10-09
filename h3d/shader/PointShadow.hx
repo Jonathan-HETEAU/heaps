@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Applies the shadows of a cube shadow map (see `h3d.pass.CubeShadowMap`).
+**/
 class PointShadow extends hxsl.Shader {
 
 	static var SRC = {
@@ -33,6 +36,9 @@ class PointShadow extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader.
+	**/
 	public function new() {
 		super();
 	}

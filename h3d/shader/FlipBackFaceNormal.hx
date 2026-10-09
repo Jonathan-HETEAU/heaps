@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Flips the normal of back faces, for double sided lighting.
+**/
 class FlipBackFaceNormal extends hxsl.Shader {
 
     static var SRC = {

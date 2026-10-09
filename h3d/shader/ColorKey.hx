@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Discards the pixels of a given color (color keying).
+**/
 class ColorKey extends hxsl.Shader {
 
 	static var SRC = {
@@ -12,6 +15,9 @@ class ColorKey extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader with the key color `v`, in `0xAARRGGBB` format.
+	**/
 	public function new( v = 0 ) {
 		super();
 		colorKey.setColor(v);

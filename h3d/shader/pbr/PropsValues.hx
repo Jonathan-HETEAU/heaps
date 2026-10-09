@@ -1,5 +1,8 @@
 package h3d.shader.pbr;
 
+/**
+	Sets the PBR properties of a material from constant values.
+**/
 class PropsValues extends hxsl.Shader {
 
 	static var SRC = {
@@ -52,6 +55,9 @@ class PropsValues extends hxsl.Shader {
 
 	};
 
+	/**
+		Creates the shader with the given property values.
+	**/
 	public function new(metalness=0.,roughness=1.,occlusion=1.,emissive=0.,custom1=0.,custom2=0.,translucency=0.) {
 		super();
 		this.metalnessValue = metalness;

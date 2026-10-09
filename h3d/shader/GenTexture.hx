@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Generates simple textures (a disc, see `h3d.mat.Texture.genDisc`).
+**/
 class GenTexture extends ScreenShader {
 
 	static var SRC = {

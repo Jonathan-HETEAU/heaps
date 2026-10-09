@@ -1,5 +1,8 @@
 package h3d.shader;
 
+/**
+	Replaces the output color by a fixed color.
+**/
 class FixedColor extends hxsl.Shader {
 
 	static var SRC = {
@@ -14,6 +17,9 @@ class FixedColor extends hxsl.Shader {
 		}
 	}
 
+	/**
+		Creates the shader with a color in `0xRRGGBB` format and an alpha.
+	**/
 	public function new( color = 0, alpha = 1. ) {
 		super();
 		this.color.setColor(color);
