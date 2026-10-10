@@ -12,11 +12,15 @@ A mouse cursor (see `hxd.System.setCursor` and `h2d.Interactive.cursor`).
 Default
 ```
 
+The default arrow.
+
 ### Button
 
 ```haxe
 Button
 ```
+
+A hand, for clickable elements.
 
 ### Move
 
@@ -24,11 +28,15 @@ Button
 Move
 ```
 
+Arrows in all directions.
+
 ### TextInput
 
 ```haxe
 TextInput
 ```
+
+A text cursor (I-beam).
 
 ### Hide
 
@@ -36,11 +44,15 @@ TextInput
 Hide
 ```
 
+No cursor.
+
 ### ResizeNS
 
 ```haxe
 ResizeNS
 ```
+
+A vertical resize cursor.
 
 ### ResizeWE
 
@@ -48,11 +60,15 @@ ResizeNS
 ResizeWE
 ```
 
+A horizontal resize cursor.
+
 ### ResizeNWSE
 
 ```haxe
 ResizeNWSE
 ```
+
+A diagonal resize cursor, from top left to bottom right.
 
 ### ResizeNESW
 
@@ -60,11 +76,15 @@ ResizeNWSE
 ResizeNESW
 ```
 
+A diagonal resize cursor, from top right to bottom left.
+
 ### Custom
 
 ```haxe
 Custom(custom:CustomCursor)
 ```
+
+A custom cursor made of bitmaps.
 
 ### Callback
 

@@ -4,7 +4,7 @@
 
 ## h3d.impl.Benchmark
 
-- Fichier : `h3d/impl/Benchmark.hx` — 520 lignes — 19 blocs doc — contient du `#if`
+- Fichier : `h3d/impl/Benchmark.hx` — 525 lignes — 20 blocs doc — contient du `#if`
 - Types : `class QueryObject`, `class StatsObject`, `class Benchmark`
 - Héritage : `Benchmark` extends `h2d.Graphics`
 - Dépend de : `h2d.Flow`, `h2d.Font`, `h2d.Graphics` (extends/use), `h2d.Interactive`, `h2d.Text`, `h2d.Tile`, `h3d.Engine`, `h3d.Matrix`, `h3d.Vector`, `h3d.impl.Driver`, `h3d.scene.CameraController`, `h3d.scene.Object`, `h3d.scene.Scene`, `hxd.App`, `hxd.Math`, `hxd.Pad`, `hxd.System.js`, `hxd.Window.js`, `hxd.res.DefaultFont`
@@ -19,7 +19,7 @@
 
 ## h3d.impl.DirectXDriver
 
-- Fichier : `h3d/impl/DirectXDriver.hx` — 1629 lignes — 14 blocs doc — contient du `#if`
+- Fichier : `h3d/impl/DirectXDriver.hx` — 1638 lignes — 17 blocs doc — contient du `#if`
 - Types : `class ShaderContext`, `class CompiledShader`, `enum PipelineKind`, `class PipelineState`, `class DirectXDriver`
 - Héritage : `DirectXDriver` extends `h3d.impl.Driver`
 - Dépend de : `h2d.col.IBounds`, `h3d.Buffer`, `h3d.Vector4`, `h3d.impl.Driver` (extends/import/use), `h3d.mat.Pass` (import/use), `h3d.mat.Stencil`, `h3d.mat.Texture`, `hxd.BitmapData`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.IndexBuffer`, `hxd.Math`, `hxd.PixelFormat`, `hxd.Pixels`, `hxd.System.js`, `hxsl.Ast`, `hxsl.HlslOut`, `hxsl.RuntimeShader`
@@ -27,7 +27,7 @@
 
 ## h3d.impl.Driver
 
-- Fichier : `h3d/impl/Driver.hx` — 742 lignes — 130 blocs doc — contient du `#if`
+- Fichier : `h3d/impl/Driver.hx` — 884 lignes — 163 blocs doc — contient du `#if`
 - Types : `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `typedef GPUBuffer`, `typedef Texture`, `typedef Query`, `typedef DriverImpl`, `enum Feature`, `enum QueryKind`, `enum RenderFlag`, `class Driver`
 - Dépend de : `h2d.col.IBounds`, `h3d.Buffer`, `h3d.BufferHandle`, `h3d.Engine`, `h3d.Vector4`, `h3d.impl.DX12Driver`, `h3d.impl.GlDriver`, `h3d.impl.InstanceBuffer`, `h3d.impl.ShaderCache`, `h3d.impl.Upscaling`, `h3d.mat.Data`, `h3d.mat.Pass`, `h3d.mat.Texture`, `h3d.mat.TextureHandle`, `h3d.shader.Buffers`, `hxd.BitmapData`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.IndexBuffer`, `hxd.Pixels`, `hxsl.RuntimeShader`
 - Utilisé par : `h3d.Buffer`, `h3d.BufferHandle`, `h3d.Engine`, `h3d.impl.Benchmark`, `h3d.impl.DX12Driver`, `h3d.impl.DirectXDriver`, `h3d.impl.FpsGraph`, `h3d.impl.GlDriver`, `h3d.impl.InstanceBuffer`, `h3d.impl.MemoryManager`, `h3d.impl.NullDriver`, `h3d.impl.RenderGraphDriver`, `h3d.impl.Upscaling`, `h3d.impl.VulkanDriver`, `h3d.mat.Texture`, `h3d.mat.TextureHandle`, `h3d.scene.pbr.Renderer`, `hxd.res.TextureStream`
@@ -132,7 +132,7 @@
 
 ## h3d.impl.StutterBenchmark
 
-- Fichier : `h3d/impl/StutterBenchmark.hx` — 148 lignes — 12 blocs doc
+- Fichier : `h3d/impl/StutterBenchmark.hx` — 160 lignes — 16 blocs doc
 - Types : `class Stutter`, `enum StutterSeverity`, `class StutterBenchmark`
 - Dépend de : `h3d.impl.FrameData`
 
@@ -145,7 +145,7 @@
 
 ## h3d.impl.Upscaling
 
-- Fichier : `h3d/impl/Upscaling.hx` — 2250 lignes — 141 blocs doc — contient du `#if`
+- Fichier : `h3d/impl/Upscaling.hx` — 2325 lignes — 166 blocs doc — contient du `#if`
 - Types : `enum UpscalingFeature`, `enum_abstract UpscalingProvider`, `enum UpscalingMode`, `enum FrameGenMode`, `enum FrameGenUIMode`, `enum LowLatencyMode`, `enum LatencyMarker`, `class UpscalingInputs`, `class UpscalingParams`, `class UpscalingSettings`, `class FrameGenSettings`, `class UpscalingBackend`, `class Upscaling`, `class DX12DlssBackend`, `class DX12FsrBackend`
 - Héritage : `DX12DlssBackend` extends `UpscalingBackend`, `DX12FsrBackend` extends `UpscalingBackend`
 - Dépend de : `h3d.Engine`, `h3d.Matrix`, `h3d.Vector`, `h3d.impl.DX12Driver`, `h3d.impl.Driver`, `h3d.mat.Texture`, `h3d.pass.Copy`, `hxd.Math`, `hxd.Timer`

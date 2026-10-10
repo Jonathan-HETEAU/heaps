@@ -27,7 +27,7 @@
 
 ## h3d.prim.Capsule
 
-- Fichier : `h3d/prim/Capsule.hx` — 148 lignes — 4 blocs doc
+- Fichier : `h3d/prim/Capsule.hx` — 157 lignes — 7 blocs doc
 - Types : `enum_abstract Axis`, `class Capsule`
 - Héritage : `Capsule` extends `Polygon`
 - Dépend de : `h3d.Engine`, `h3d.col.Collider`, `h3d.col.Point` (import/use), `h3d.col.Sphere`, `h3d.prim.Polygon` (extends/use), `hxd.IndexBuffer`
@@ -118,7 +118,7 @@
 
 ## h3d.prim.ModelDatabase
 
-- Fichier : `h3d/prim/ModelDatabase.hx` — 417 lignes — 22 blocs doc — contient du `#if`
+- Fichier : `h3d/prim/ModelDatabase.hx` — 423 lignes — 24 blocs doc — contient du `#if`
 - Types : `typedef ModelDataInput`, `typedef ModelProps`, `class ModelDatabase`
 - Dépend de : `h3d.Vector`, `h3d.anim.Skin`, `h3d.prim.HMDModel`, `h3d.scene.Skin`, `hxd.fs.FileConfig` (import/use), `hxd.fs.LocalFileSystem`, `hxd.res.Loader`, `hxd.res.NotFound`
 - Utilisé par : `hxd.fmt.hmd.Library`, `hxd.fs.Convert`

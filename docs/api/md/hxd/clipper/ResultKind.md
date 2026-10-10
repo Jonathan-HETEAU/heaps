@@ -12,14 +12,20 @@ The polygons kept in the result: all of them, only the outer polygons, or only t
 All
 ```
 
+All the polygons.
+
 ### NoHoles
 
 ```haxe
 NoHoles
 ```
 
+Only the outer polygons.
+
 ### HolesOnly
 
 ```haxe
 HolesOnly
 ```
+
+Only the holes.

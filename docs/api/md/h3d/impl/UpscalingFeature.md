@@ -12,14 +12,20 @@ The features of an upscaling backend.
 Upscaler
 ```
 
+The upscaling of a lower resolution render.
+
 ### FrameGen
 
 ```haxe
 FrameGen
 ```
 
+The frame generation, which interpolates extra frames.
+
 ### LowLatency
 
 ```haxe
 LowLatency
 ```
+
+The low latency mode.

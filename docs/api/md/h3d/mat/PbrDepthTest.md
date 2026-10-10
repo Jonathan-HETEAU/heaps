@@ -10,11 +10,11 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `Less` | `"Less"` |  |
-| `LessEqual` | `"LessEqual"` |  |
-| `Greater` | `"Greater"` |  |
-| `GreaterEqual` | `"GreaterEqual"` |  |
-| `Always` | `"Always"` |  |
-| `Never` | `"Never"` |  |
-| `Equal` | `"Equal"` |  |
-| `NotEqual` | `"NotEqual"` |  |
+| `Less` | `"Less"` | Passes if the depth is less than the stored depth. |
+| `LessEqual` | `"LessEqual"` | Passes if the depth is less than or equal to the stored depth. |
+| `Greater` | `"Greater"` | Passes if the depth is greater than the stored depth. |
+| `GreaterEqual` | `"GreaterEqual"` | Passes if the depth is greater than or equal to the stored depth. |
+| `Always` | `"Always"` | Always passes. |
+| `Never` | `"Never"` | Never passes. |
+| `Equal` | `"Equal"` | Passes if the depth is equal to the stored depth. |
+| `NotEqual` | `"NotEqual"` | Passes if the depth is not equal to the stored depth. |

@@ -122,6 +122,8 @@ Displays the number of triangles drawn.
 var measureCpuThread:sys.thread.Thread
 ```
 
+When set, only the measures made from this thread are recorded, and its name is displayed instead of `cpu`/`gpu` (threaded targets only).
+
 ## Methods
 
 ### clear

@@ -12,14 +12,21 @@ A descriptor for an argument of a console command.
 var t:ConsoleArg
 ```
 
+The type of the argument.
+
 ### opt
 
 ```haxe
 var ?opt:Null<Bool>
 ```
 
+When set, argument is considered optional and command callback will receive `null` if argument was omitted.
+Inserting optional arguments between non-optional arguments leads to an undefined behavior.
+
 ### name
 
 ```haxe
 var name:String
 ```
+
+A human-readable argument name.

@@ -12,14 +12,20 @@ Boolean system properties, queried with `System.getValue`.
 IsTouch
 ```
 
+The main input is a touch screen.
+
 ### IsWindowed
 
 ```haxe
 IsWindowed
 ```
 
+The application runs in a window that can be resized or moved.
+
 ### IsMobile
 
 ```haxe
 IsMobile
 ```
+
+The application runs on a mobile device.

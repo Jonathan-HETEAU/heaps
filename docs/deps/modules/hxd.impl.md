@@ -23,7 +23,7 @@
 
 ## hxd.impl.AppContext
 
-- Fichier : `hxd/impl/AppContext.hx` — 82 lignes — 6 blocs doc — contient du `#if`
+- Fichier : `hxd/impl/AppContext.hx` — 88 lignes — 8 blocs doc — contient du `#if`
 - Types : `class AppContext`
 - Dépend de : `h3d.Engine`, `hxd.App`, `hxd.System.js`, `hxd.Window.js`
 

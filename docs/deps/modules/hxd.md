@@ -42,7 +42,7 @@
 
 ## hxd.Cursor
 
-- Fichier : `hxd/Cursor.hx` — 139 lignes — 8 blocs doc — contient du `#if`
+- Fichier : `hxd/Cursor.hx` — 169 lignes — 18 blocs doc — contient du `#if`
 - Types : `enum Cursor`, `class CustomCursor`
 - Dépend de : `hxd.BitmapData`, `hxd.System.js`
 - Utilisé par : `h2d.Interactive`, `h2d.domkit.BaseComponents`, `h3d.scene.Interactive`, `hxd.SceneEvents`, `hxd.System`, `hxd.System.hl`, `hxd.System.js`
@@ -109,7 +109,7 @@
 
 ## hxd.Pad
 
-- Fichier : `hxd/Pad.hx` — 631 lignes — 29 blocs doc — contient du `#if`
+- Fichier : `hxd/Pad.hx` — 694 lignes — 50 blocs doc — contient du `#if`
 - Types : `typedef Event`, `class GameController`, `typedef PadConfig`, `class Pad`
 - Dépend de : `hxd.Math`
 - Utilisé par : `h2d.Camera`, `h2d.Console`, `h2d.Dropdown`, `h2d.Flow`, `h2d.Interactive`, `h2d.Scene`, `h2d.Slider`, `h2d.TextInput`, `h2d.domkit.Style`, `h3d.impl.Benchmark`, `h3d.scene.CameraController`, `h3d.scene.Interactive`, `h3d.scene.Scene`, `h3d.scene.pbr.Renderer`, `hxd.SceneEvents`, `hxd.Window`, `hxd.Window.hl`, `hxd.Window.js`, `hxd.impl.MouseMode`
@@ -122,7 +122,7 @@
 
 ## hxd.PixelFormat
 
-- Fichier : `hxd/PixelFormat.hx` — 36 lignes — 1 blocs doc
+- Fichier : `hxd/PixelFormat.hx` — 120 lignes — 29 blocs doc
 - Types : `enum PixelFormat`
 - Utilisé par : `h3d.impl.DX12Driver`, `h3d.impl.DirectXDriver`, `h3d.impl.PipelineCache`, `h3d.impl.RenderGraph`, `h3d.impl.TextureCache`, `h3d.mat.Data`, `h3d.mat.Texture3D`, `h3d.pass.CascadeShadowMap`, `h3d.pass.DefaultShadowMap`, `h3d.pass.DirShadowMap`, `h3d.pass.Shadows`, `h3d.scene.pbr.Environment`, `hxd.Pixels`, `hxd.res.Image`
 
@@ -165,19 +165,19 @@
 
 ## hxd.System
 
-- Fichier : `hxd/System.hx` — 184 lignes — 26 blocs doc
+- Fichier : `hxd/System.hx` — 226 lignes — 40 blocs doc
 - Types : `enum Platform`, `enum SystemValue`, `enum KeyboardLayout`, `class System`
 - Dépend de : `hxd.Cursor`
 
 ## hxd.System.hl
 
-- Fichier : `hxd/System.hl.hx` — 653 lignes — 35 blocs doc — contient du `#if`
+- Fichier : `hxd/System.hl.hx` — 695 lignes — 49 blocs doc — contient du `#if`
 - Types : `enum Platform`, `enum SystemValue`, `enum KeyboardLayout`, `class System`
 - Dépend de : `h3d.Engine`, `hxd.Cursor`, `hxd.Timer`, `hxd.Window`, `hxd.Window.js`
 
 ## hxd.System.js
 
-- Fichier : `hxd/System.js.hx` — 278 lignes — 27 blocs doc — contient du `#if`
+- Fichier : `hxd/System.js.hx` — 320 lignes — 41 blocs doc — contient du `#if`
 - Types : `enum Platform`, `enum SystemValue`, `enum KeyboardLayout`, `class System`
 - Dépend de : `hxd.Cursor`, `hxd.Math`, `hxd.Timer`, `hxd.Window.js`
 - Utilisé par : `h2d.TextInput`, `h2d.domkit.Style`, `h3d.Engine`, `h3d.impl.Benchmark`, `h3d.impl.DX12Driver`, `h3d.impl.DirectXDriver`, `h3d.impl.RenderContext`, `hxd.App`, `hxd.Cursor`, `hxd.File`, `hxd.SceneEvents`, `hxd.Window.hl`, `hxd.fmt.pak.Build`, `hxd.fmt.pak.Loader`, `hxd.fs.FileConverter`, `hxd.impl.AppContext`, `hxsl.CacheFile`
@@ -203,7 +203,7 @@
 
 ## hxd.Window.hl
 
-- Fichier : `hxd/Window.hl.hx` — 1139 lignes — 52 blocs doc — contient du `#if`
+- Fichier : `hxd/Window.hl.hx` — 1157 lignes — 58 blocs doc — contient du `#if`
 - Types : `typedef DisplayMode`, `typedef DisplayMode`, `enum DisplayMode`, `typedef Monitor`, `typedef DisplaySetting`, `class NativeDroppedFile`, `class Window`
 - Héritage : `NativeDroppedFile` extends `hxd.DropFileEvent.DroppedFile`
 - Dépend de : `hxd.BitmapData`, `hxd.DropFileEvent` (extends/use), `hxd.Event`, `hxd.Key` (import/use), `hxd.Math`, `hxd.Pad`, `hxd.System.js`, `hxd.impl.MouseMode` (import/use)

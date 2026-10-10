@@ -13,11 +13,15 @@ The native texture of the current driver.
 var width:Int
 ```
 
+The width, in pixels.
+
 ### t
 
 ```haxe
 var t:js.html.webgl.Texture
 ```
+
+The native texture.
 
 ### pixelFmt
 
@@ -25,11 +29,15 @@ var t:js.html.webgl.Texture
 var pixelFmt:Int
 ```
 
+The GL pixel type.
+
 ### internalFmt
 
 ```haxe
 var internalFmt:Int
 ```
+
+The GL internal format.
 
 ### height
 
@@ -37,17 +45,23 @@ var internalFmt:Int
 var height:Int
 ```
 
+The height, in pixels.
+
 ### bits
 
 ```haxe
 var bits:Int
 ```
 
+The sampling parameters (filter, wrap, mip map) last applied, to skip unchanged ones (`-1` if none).
+
 ### bind
 
 ```haxe
 var bind:Int
 ```
+
+The GL binding target (2D, cube, array or 3D texture).
 
 ## On hl/sdl
 
@@ -58,11 +72,15 @@ var bind:Int
 var width:Int
 ```
 
+The width, in pixels.
+
 ### t
 
 ```haxe
 var t:sdl.Texture
 ```
+
+The native texture.
 
 ### pixelFmt
 
@@ -70,11 +88,15 @@ var t:sdl.Texture
 var pixelFmt:Int
 ```
 
+The GL pixel type.
+
 ### internalFmt
 
 ```haxe
 var internalFmt:Int
 ```
+
+The GL internal format.
 
 ### height
 
@@ -82,17 +104,23 @@ var internalFmt:Int
 var height:Int
 ```
 
+The height, in pixels.
+
 ### bits
 
 ```haxe
 var bits:Int
 ```
 
+The sampling parameters (filter, wrap, mip map) last applied, to skip unchanged ones (`-1` if none).
+
 ### bind
 
 ```haxe
 var bind:Int
 ```
+
+The GL binding target (2D, cube, array or 3D texture).
 
 ## On hl/directx
 
@@ -103,11 +131,15 @@ var bind:Int
 var ?views:Null<Array<dx.ShaderResourceView>>
 ```
 
+The shader resource views starting at each mip level.
+
 ### view
 
 ```haxe
 var view:dx.ShaderResourceView
 ```
+
+The shader resource view.
 
 ### rt
 
@@ -115,11 +147,15 @@ var view:dx.ShaderResourceView
 var rt:Array<dx.RenderTargetView>
 ```
 
+The render target views, by layer and mip level.
+
 ### res
 
 ```haxe
 var res:dx.Resource
 ```
+
+The native resource.
 
 ### readOnlyDepthView
 
@@ -127,8 +163,12 @@ var res:dx.Resource
 var ?readOnlyDepthView:Null<dx.DepthStencilView>
 ```
 
+The read only depth stencil view, for depth textures.
+
 ### depthView
 
 ```haxe
 var ?depthView:Null<dx.DepthStencilView>
 ```
+
+The depth stencil view, for depth textures.

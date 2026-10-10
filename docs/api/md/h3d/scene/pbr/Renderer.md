@@ -138,6 +138,8 @@ Builds a hierarchical depth buffer (a mipmapped depth texture) from the current 
 function getPbrDepth():h3d.mat.Texture
 ```
 
+Returns the depth texture of the renderer.
+
 ### getDefaultProps
 
 ```haxe

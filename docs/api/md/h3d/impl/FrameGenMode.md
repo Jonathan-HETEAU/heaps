@@ -12,11 +12,15 @@ The frame generation mode.
 Off
 ```
 
+No frame generation.
+
 ### On
 
 ```haxe
 On
 ```
+
+Frame generation enabled.
 
 ### Auto
 
@@ -24,8 +28,12 @@ On
 Auto
 ```
 
+Frame generation enabled when the backend decides it is beneficial.
+
 ### Dynamic
 
 ```haxe
 Dynamic
 ```
+
+The backend adapts the number of generated frames (see `dynamicSupported`).

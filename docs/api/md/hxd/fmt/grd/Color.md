@@ -12,8 +12,12 @@ A color of a gradient: RGB (`0` to `255`) or HSB (hue in degrees, saturation and
 RGB(r:Float, g:Float, b:Float)
 ```
 
+A RGB color, with components from `0` to `255`.
+
 ### HSB
 
 ```haxe
 HSB(h:Float, s:Float, b:Float)
 ```
+
+A HSB color: hue in degrees, saturation and brightness in percent.

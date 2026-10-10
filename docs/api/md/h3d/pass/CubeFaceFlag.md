@@ -12,11 +12,15 @@ The faces of a cube shadow map.
 Right
 ```
 
+The face at index 0 of the cube texture (+X).
+
 ### Left
 
 ```haxe
 Left
 ```
+
+The face at index 1 of the cube texture (-X).
 
 ### Back
 
@@ -24,11 +28,15 @@ Left
 Back
 ```
 
+The face at index 2 of the cube texture (+Y).
+
 ### Front
 
 ```haxe
 Front
 ```
+
+The face at index 3 of the cube texture (-Y).
 
 ### Top
 
@@ -36,8 +44,12 @@ Front
 Top
 ```
 
+The face at index 4 of the cube texture (+Z).
+
 ### Bottom
 
 ```haxe
 Bottom
 ```
+
+The face at index 5 of the cube texture (-Z).

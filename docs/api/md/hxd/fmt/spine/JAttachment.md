@@ -12,8 +12,12 @@ An attachment, in the Spine JSON format.
 var ?type:Null<String>
 ```
 
+The type of the attachment (`region` by default, or `skinnedmesh`).
+
 ### color
 
 ```haxe
 var ?color:Null<String>
 ```
+
+The color.

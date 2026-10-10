@@ -12,11 +12,15 @@ The typed shader expressions, produced by `hxsl.Checker`.
 TConst(c:Const)
 ```
 
+A constant.
+
 ### TVar
 
 ```haxe
 TVar(v:TVar)
 ```
+
+A variable.
 
 ### TGlobal
 
@@ -24,11 +28,15 @@ TVar(v:TVar)
 TGlobal(g:TGlobal)
 ```
 
+A built-in function or value.
+
 ### TParenthesis
 
 ```haxe
 TParenthesis(e:TExpr)
 ```
+
+An expression in parentheses.
 
 ### TBlock
 
@@ -36,11 +44,15 @@ TParenthesis(e:TExpr)
 TBlock(el:Array<TExpr>)
 ```
 
+A block of expressions.
+
 ### TBinop
 
 ```haxe
 TBinop(op:Binop, e1:TExpr, e2:TExpr)
 ```
+
+A binary operation.
 
 ### TUnop
 
@@ -48,11 +60,15 @@ TBinop(op:Binop, e1:TExpr, e2:TExpr)
 TUnop(op:Unop, e1:TExpr)
 ```
 
+A unary operation.
+
 ### TVarDecl
 
 ```haxe
 TVarDecl(v:TVar, ?init:TExpr)
 ```
+
+A variable declaration.
 
 ### TCall
 
@@ -60,11 +76,15 @@ TVarDecl(v:TVar, ?init:TExpr)
 TCall(e:TExpr, args:Array<TExpr>)
 ```
 
+A call.
+
 ### TSwiz
 
 ```haxe
 TSwiz(e:TExpr, regs:Array<Component>)
 ```
+
+A swizzle (`e.xyz`).
 
 ### TIf
 
@@ -72,11 +92,15 @@ TSwiz(e:TExpr, regs:Array<Component>)
 TIf(econd:TExpr, eif:TExpr, eelse:Null<TExpr>)
 ```
 
+A condition.
+
 ### TDiscard
 
 ```haxe
 TDiscard
 ```
+
+Discards the pixel.
 
 ### TReturn
 
@@ -84,11 +108,15 @@ TDiscard
 TReturn(?e:TExpr)
 ```
 
+A return.
+
 ### TFor
 
 ```haxe
 TFor(v:TVar, it:TExpr, loop:TExpr)
 ```
+
+A `for` loop.
 
 ### TContinue
 
@@ -96,11 +124,15 @@ TFor(v:TVar, it:TExpr, loop:TExpr)
 TContinue
 ```
 
+A continue.
+
 ### TBreak
 
 ```haxe
 TBreak
 ```
+
+A break.
 
 ### TArray
 
@@ -108,11 +140,15 @@ TBreak
 TArray(e:TExpr, index:TExpr)
 ```
 
+An array access.
+
 ### TArrayDecl
 
 ```haxe
 TArrayDecl(el:Array<TExpr>)
 ```
+
+An array declaration.
 
 ### TSwitch
 
@@ -120,11 +156,15 @@ TArrayDecl(el:Array<TExpr>)
 TSwitch(e:TExpr, cases:Array<{ values:Array<TExpr>, expr:TExpr }>, def:Null<TExpr>)
 ```
 
+A switch.
+
 ### TWhile
 
 ```haxe
 TWhile(e:TExpr, loop:TExpr, normalWhile:Bool)
 ```
+
+A `while` loop, or a `do ... while` loop if `normalWhile` is not set.
 
 ### TMeta
 
@@ -132,11 +172,15 @@ TWhile(e:TExpr, loop:TExpr, normalWhile:Bool)
 TMeta(m:String, args:Array<Const>, e:TExpr)
 ```
 
+An expression with metadata.
+
 ### TField
 
 ```haxe
 TField(e:TExpr, name:String)
 ```
+
+A field access on a structure inside an array.
 
 ### TSyntax
 

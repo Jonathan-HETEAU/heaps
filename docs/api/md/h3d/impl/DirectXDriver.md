@@ -92,6 +92,8 @@ override function getDriverName(details:Bool):String
 function forceDeviceError():Void
 ```
 
+Simulates the loss of the device, for tests.
+
 ### present
 
 ```haxe

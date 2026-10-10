@@ -74,7 +74,7 @@
 
 ## h3d.scene.pbr.Renderer
 
-- Fichier : `h3d/scene/pbr/Renderer.hx` — 1265 lignes — 37 blocs doc — contient du `#if`
+- Fichier : `h3d/scene/pbr/Renderer.hx` — 1289 lignes — 45 blocs doc — contient du `#if`
 - Types : `enum_abstract DisplayMode`, `enum_abstract SkyMode`, `enum_abstract TonemapMap`, `typedef RenderProps`, `class DepthCopy`, `class Renderer`
 - Héritage : `DepthCopy` extends `h3d.shader.ScreenShader`, `Renderer` extends `h3d.scene.Renderer`
 - Dépend de : `h3d.Camera`, `h3d.Matrix`, `h3d.Vector`, `h3d.Vector4`, `h3d.col.Collider`, `h3d.impl.Driver` (import), `h3d.impl.RenderGraph`, `h3d.impl.RendererFX`, `h3d.impl.Upscaling` (import/use), `h3d.mat.Pass`, `h3d.mat.Stencil`, `h3d.mat.Texture`, `h3d.mat.TextureArray`, `h3d.pass.Blur`, `h3d.pass.CascadeShadowMap`, `h3d.pass.Copy`, `h3d.pass.FXAA`, `h3d.pass.Output`, `h3d.pass.PassList`, `h3d.pass.ScreenFx`, `h3d.pass.Shadows`, `h3d.scene.Renderer` (extends/use), `h3d.scene.pbr.Environment`, `h3d.scene.pbr.Light`, `h3d.scene.pbr.LightSystem`, `h3d.shader.BaseMesh`, `h3d.shader.HZB`, `h3d.shader.ScreenShader` (extends/use), `h3d.shader.pbr.AlphaMask`, `h3d.shader.pbr.Light`, `h3d.shader.pbr.Lighting`, `h3d.shader.pbr.PerformanceViewer`, `h3d.shader.pbr.PropsImport`, `h3d.shader.pbr.Slides`, `h3d.shader.pbr.ToneMapping`, `hxd.Math`, `hxd.Pad`, `hxd.Timer`, `hxd.Window.js`, `hxd.res.Embed`, `hxsl.Channel`, `hxsl.Output`, `hxsl.Shader`

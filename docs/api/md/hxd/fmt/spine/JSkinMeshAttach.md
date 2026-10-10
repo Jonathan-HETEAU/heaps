@@ -36,6 +36,8 @@ The texture coordinates.
 var ?type:Null<String>
 ```
 
+The type of the attachment (`region` by default, or `skinnedmesh`).
+
 ### triangles
 
 ```haxe
@@ -73,3 +75,5 @@ The edges, for the editor.
 ```haxe
 var ?color:Null<String>
 ```
+
+The color.

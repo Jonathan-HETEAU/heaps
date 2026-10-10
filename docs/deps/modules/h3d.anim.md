@@ -4,7 +4,7 @@
 
 ## h3d.anim.Animation
 
-- Fichier : `h3d/anim/Animation.hx` — 497 lignes — 40 blocs doc — contient du `#if`
+- Fichier : `h3d/anim/Animation.hx` — 506 lignes — 43 blocs doc — contient du `#if`
 - Types : `class AnimatedObject`, `typedef Event`, `class Animation`
 - Dépend de : `h3d.scene.Object`, `h3d.scene.Skin`
 - Utilisé par : `h3d.anim.BlendSpace2D`, `h3d.anim.BufferAnimation`, `h3d.anim.LinearAnimation`, `h3d.anim.SimpleBlend`, `h3d.anim.SmoothTarget`, `h3d.anim.SmoothTransition`, `h3d.anim.Transition`, `h3d.prim.ModelCache`, `h3d.scene.AnimMeshBatcher`, `h3d.scene.Object`, `h3d.scene.Skin`, `hxd.fmt.fbx.BaseLibrary`, `hxd.fmt.fbx.HMDOut`, `hxd.fmt.hmd.Dump`, `hxd.fmt.hmd.Library`, `hxd.fs.Convert`

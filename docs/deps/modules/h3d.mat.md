@@ -69,7 +69,7 @@
 
 ## h3d.mat.PbrMaterial
 
-- Fichier : `h3d/mat/PbrMaterial.hx` — 737 lignes — 46 blocs doc — contient du `#if`
+- Fichier : `h3d/mat/PbrMaterial.hx` — 857 lignes — 86 blocs doc — contient du `#if`
 - Types : `enum_abstract PbrMode`, `enum_abstract PbrBlend`, `enum_abstract PbrDepthTest`, `enum_abstract PbrDepthWrite`, `enum_abstract PbrStencilOp`, `enum_abstract PbrStencilCompare`, `enum_abstract PbrCullingMode`, `class PbrProps`, `class PbrMaterial`
 - Héritage : `PbrMaterial` extends `Material`
 - Dépend de : `h3d.mat.BaseMaterial`, `h3d.mat.BlendMode`, `h3d.mat.Data`, `h3d.mat.Material` (extends/use), `h3d.mat.Stencil`, `h3d.shader.FlipBackFaceNormal`, `h3d.shader.Parallax`, `h3d.shader.VolumeDecal`, `h3d.shader.pbr.AlphaMultiply`, `h3d.shader.pbr.GammaCorrect`, `h3d.shader.pbr.PropsTexture`, `h3d.shader.pbr.PropsValues`, `h3d.shader.pbr.StrengthValues`

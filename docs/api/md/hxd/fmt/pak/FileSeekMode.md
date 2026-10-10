@@ -12,17 +12,23 @@ The origin of a seek in a file.
 SeekBegin
 ```
 
+From the start of the file.
+
 ### SeekEnd _(js only)_
 
 ```haxe
 SeekEnd
 ```
 
+From the end of the file.
+
 ### SeedCurrent _(js only)_
 
 ```haxe
 SeedCurrent
 ```
+
+From the current position.
 
 ### e _(hl/sdl, hl/directx only)_
 

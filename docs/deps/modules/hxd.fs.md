@@ -48,7 +48,7 @@
 
 ## hxd.fs.FileConverter
 
-- Fichier : `hxd/fs/FileConverter.hx` — 547 lignes — 20 blocs doc — contient du `#if`
+- Fichier : `hxd/fs/FileConverter.hx` — 597 lignes — 35 blocs doc — contient du `#if`
 - Types : `typedef ConvertConfig`, `typedef ConvertRule`, `enum ConvertPattern`, `typedef ConvertCommand`, `typedef ConvertCacheItem`, `class FileConverter`
 - Dépend de : `hxd.Math`, `hxd.System.js`, `hxd.fs.Convert`, `hxd.fs.LocalFileSystem`
 - Utilisé par : `hxd.fs.Convert`, `hxd.fs.LocalFileSystem`

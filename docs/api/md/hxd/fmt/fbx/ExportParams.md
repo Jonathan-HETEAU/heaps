@@ -12,11 +12,15 @@ The axis conventions of an exported FBX file.
 var upSign:String
 ```
 
+The sign of the up axis (`"1"` or `"-1"`).
+
 ### up
 
 ```haxe
 var up:String
 ```
+
+The index of the up axis (`"2"` for Z).
 
 ### forwardSign
 
@@ -24,8 +28,12 @@ var up:String
 var forwardSign:String
 ```
 
+The sign of the forward axis (`"1"` or `"-1"`).
+
 ### forward
 
 ```haxe
 var forward:String
 ```
+
+The index of the forward axis (`"0"` for X).

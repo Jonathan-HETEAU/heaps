@@ -12,8 +12,12 @@ The size of an array: a constant, or a constant variable.
 SConst(v:Int)
 ```
 
+A constant size.
+
 ### SVar
 
 ```haxe
 SVar(v:TVar)
 ```
+
+The size given by a constant variable.

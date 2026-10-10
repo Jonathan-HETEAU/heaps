@@ -16,7 +16,7 @@
 
 ## hxd.tools.RenderDoc
 
-- Fichier : `hxd/tools/RenderDoc.hx` — 241 lignes — 15 blocs doc — contient du `#if`
+- Fichier : `hxd/tools/RenderDoc.hx` — 305 lignes — 79 blocs doc — contient du `#if`
 - Types : `enum_abstract RenderDocInputButton`, `class RenderDocNative`, `class RenderDoc`
 
 ## hxd.tools.VHACD

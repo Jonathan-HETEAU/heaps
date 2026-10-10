@@ -12,8 +12,12 @@ An untyped shader expression, as parsed from the shader source.
 var pos:Position
 ```
 
+The position in the source.
+
 ### expr
 
 ```haxe
 var expr:ExprDef
 ```
+
+The expression.

@@ -12,11 +12,15 @@ A property value of a FBX node.
 PInt(v:Int)
 ```
 
+An integer.
+
 ### PFloat
 
 ```haxe
 PFloat(v:Float)
 ```
+
+A float.
 
 ### PString
 
@@ -24,11 +28,15 @@ PFloat(v:Float)
 PString(v:String)
 ```
 
+A string.
+
 ### PIdent
 
 ```haxe
 PIdent(i:String)
 ```
+
+An identifier (unquoted in the text format).
 
 ### PInts
 
@@ -36,14 +44,20 @@ PIdent(i:String)
 PInts(v:Array<Int>)
 ```
 
+An array of integers.
+
 ### PFloats
 
 ```haxe
 PFloats(v:Array<Float>)
 ```
 
+An array of floats.
+
 ### PBinary
 
 ```haxe
 PBinary(v:Bytes)
 ```
+
+Raw binary data.

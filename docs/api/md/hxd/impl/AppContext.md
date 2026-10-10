@@ -23,11 +23,15 @@ Creates the context of the application, for its current window and engine. All t
 static function reset():Void
 ```
 
+Clears the current engine and window, before creating a new application.
+
 ### set
 
 ```haxe
 static function set(app:hxd.App):Void
 ```
+
+Makes the engine of the application the current one.
 
 ## Variables
 

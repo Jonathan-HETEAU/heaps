@@ -12,11 +12,15 @@ The kind of platform the application runs on (see `System.platform`).
 IOS
 ```
 
+iOS.
+
 ### Android
 
 ```haxe
 Android
 ```
+
+Android.
 
 ### WebGL
 
@@ -24,11 +28,15 @@ Android
 WebGL
 ```
 
+A web browser.
+
 ### PC
 
 ```haxe
 PC
 ```
+
+A desktop computer.
 
 ### Console
 
@@ -36,8 +44,12 @@ PC
 Console
 ```
 
+A game console.
+
 ### FlashPlayer
 
 ```haxe
 FlashPlayer
 ```
+
+Adobe Flash Player (not supported anymore).

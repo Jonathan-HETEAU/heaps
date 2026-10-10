@@ -10,7 +10,7 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `None` | `"None"` |  |
-| `Back` | `"Back"` |  |
-| `Front` | `"Front"` |  |
-| `Both` | `"Both"` |  |
+| `None` | `"None"` | No culling: both faces are drawn. |
+| `Back` | `"Back"` | Back faces are culled. |
+| `Front` | `"Front"` | Front faces are culled. |
+| `Both` | `"Both"` | Both faces are culled: nothing is drawn. |

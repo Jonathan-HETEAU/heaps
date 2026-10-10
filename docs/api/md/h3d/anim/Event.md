@@ -12,14 +12,20 @@ An event of an animation (such as a footstep), triggered when the animation reac
 var ?originalEvent:Null<Event>
 ```
 
+The event of the source animation that this one overrides, if it was modified by the animation properties.
+
 ### name
 
 ```haxe
 var name:String
 ```
 
+The name of the event.
+
 ### frame
 
 ```haxe
 var frame:Int
 ```
+
+The frame of the event.

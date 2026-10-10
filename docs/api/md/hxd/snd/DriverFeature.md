@@ -11,3 +11,5 @@ The optional features of a sound driver.
 ```haxe
 MasterVolume
 ```
+
+The driver has a master volume (see `setMasterVolume`).

@@ -4,7 +4,7 @@
 
 ## hxd.fmt.tiff.Data
 
-- Fichier : `hxd/fmt/tiff/Data.hx` — 160 lignes — 43 blocs doc
+- Fichier : `hxd/fmt/tiff/Data.hx` — 172 lignes — 47 blocs doc
 - Types : `enum_abstract TifTag`, `enum_abstract TifType`, `enum TifValue`, `typedef TifFile`, `class Utils`
 - Utilisé par : `hxd.fmt.tiff.Reader`, `hxd.fmt.tiff.Writer`
 

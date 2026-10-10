@@ -12,8 +12,12 @@ An argument of a raw code expression (`TSyntax`).
 var e:TExpr
 ```
 
+The argument.
+
 ### access
 
 ```haxe
 var access:SyntaxArgAccess
 ```
+
+How the argument is accessed.

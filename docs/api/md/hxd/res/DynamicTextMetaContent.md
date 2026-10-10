@@ -12,8 +12,12 @@ The metadata of a text: `skip` is set by the `skip` attribute, `sub` is the meta
 var sub:DynamicTextMeta
 ```
 
+The metadata of a group's children.
+
 ### skip
 
 ```haxe
 var skip:Bool
 ```
+
+Set by the `skip` attribute.

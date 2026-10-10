@@ -12,6 +12,6 @@ Implicit casts to: `Int`
 
 | Name | Value | Description |
 |---|---|---|
-| `X` | `0` |  |
-| `Y` | `1` |  |
-| `Z` | `2` |  |
+| `X` | `0` | The X axis. |
+| `Y` | `1` | The Y axis. |
+| `Z` | `2` | The Z axis. |

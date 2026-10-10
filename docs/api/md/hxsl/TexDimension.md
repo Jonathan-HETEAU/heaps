@@ -12,11 +12,15 @@ The dimension of a texture.
 T1D
 ```
 
+1D.
+
 ### T2D
 
 ```haxe
 T2D
 ```
+
+2D.
 
 ### T3D
 
@@ -24,8 +28,12 @@ T2D
 T3D
 ```
 
+3D.
+
 ### TCube
 
 ```haxe
 TCube
 ```
+
+Cube.

@@ -12,14 +12,20 @@ The uniform block a variable is declared in.
 Default
 ```
 
+Outside of the uniform blocks.
+
 ### Globals
 
 ```haxe
 Globals
 ```
 
+The block of the globals.
+
 ### Params
 
 ```haxe
 Params
 ```
+
+The block of the parameters.

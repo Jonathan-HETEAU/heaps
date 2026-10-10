@@ -12,11 +12,15 @@ The quality mode of the upscaler: the lower the quality, the smaller the render 
 Off
 ```
 
+No upscaling: rendered at full resolution.
+
 ### NativeAA
 
 ```haxe
 NativeAA
 ```
+
+Rendered at full resolution, with the upscaler used as anti-aliasing (DLAA).
 
 ### Quality
 
@@ -24,11 +28,15 @@ NativeAA
 Quality
 ```
 
+The highest quality upscaling.
+
 ### Balanced
 
 ```haxe
 Balanced
 ```
+
+Balanced quality and performance.
 
 ### Performance
 
@@ -36,8 +44,12 @@ Balanced
 Performance
 ```
 
+Favors performance over quality.
+
 ### UltraPerformance
 
 ```haxe
 UltraPerformance
 ```
+
+The lowest render resolution.

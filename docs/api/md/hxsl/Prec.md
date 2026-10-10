@@ -12,14 +12,20 @@ The precision of a shader variable.
 Low
 ```
 
+Low precision.
+
 ### Medium
 
 ```haxe
 Medium
 ```
 
+Medium precision.
+
 ### High
 
 ```haxe
 High
 ```
+
+High precision.

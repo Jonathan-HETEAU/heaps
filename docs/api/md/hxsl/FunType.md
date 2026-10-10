@@ -12,8 +12,12 @@ The signature of a function.
 var ret:Type
 ```
 
+The return type.
+
 ### args
 
 ```haxe
 var args:Array<{ type:Type, name:String }>
 ```
+
+The arguments.

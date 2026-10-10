@@ -12,11 +12,15 @@ The untyped shader expressions, as parsed from the shader source.
 EConst(c:Const)
 ```
 
+A constant.
+
 ### EIdent
 
 ```haxe
 EIdent(i:String)
 ```
+
+An identifier.
 
 ### EParenthesis
 
@@ -24,11 +28,15 @@ EIdent(i:String)
 EParenthesis(e:Expr)
 ```
 
+An expression in parentheses.
+
 ### EField
 
 ```haxe
 EField(e:Expr, f:String)
 ```
+
+A field access `e.f`.
 
 ### EBinop
 
@@ -36,11 +44,15 @@ EField(e:Expr, f:String)
 EBinop(op:Binop, e1:Expr, e2:Expr)
 ```
 
+A binary operation.
+
 ### EUnop
 
 ```haxe
 EUnop(op:Unop, e1:Expr)
 ```
+
+A unary operation.
 
 ### ECall
 
@@ -48,11 +60,15 @@ EUnop(op:Unop, e1:Expr)
 ECall(e:Expr, args:Array<Expr>)
 ```
 
+A call.
+
 ### EBlock
 
 ```haxe
 EBlock(el:Array<Expr>)
 ```
+
+A block of expressions.
 
 ### EVars
 
@@ -60,11 +76,15 @@ EBlock(el:Array<Expr>)
 EVars(v:Array<VarDecl>)
 ```
 
+Variable declarations.
+
 ### EFunction
 
 ```haxe
 EFunction(f:FunDecl)
 ```
+
+A function declaration.
 
 ### EIf
 
@@ -72,11 +92,15 @@ EFunction(f:FunDecl)
 EIf(econd:Expr, eif:Expr, eelse:Null<Expr>)
 ```
 
+A condition.
+
 ### EDiscard
 
 ```haxe
 EDiscard
 ```
+
+Discards the pixel.
 
 ### EFor
 
@@ -84,11 +108,15 @@ EDiscard
 EFor(v:String, loop:Expr, block:Expr)
 ```
 
+A `for` loop.
+
 ### EReturn
 
 ```haxe
 EReturn(?e:Null<Expr>)
 ```
+
+A return.
 
 ### EBreak
 
@@ -96,11 +124,15 @@ EReturn(?e:Null<Expr>)
 EBreak
 ```
 
+A break.
+
 ### EContinue
 
 ```haxe
 EContinue
 ```
+
+A continue.
 
 ### EArray
 
@@ -108,11 +140,15 @@ EContinue
 EArray(e:Expr, eindex:Expr)
 ```
 
+An array access.
+
 ### EArrayDecl
 
 ```haxe
 EArrayDecl(el:Array<Expr>)
 ```
+
+An array declaration.
 
 ### ESwitch
 
@@ -120,14 +156,20 @@ EArrayDecl(el:Array<Expr>)
 ESwitch(e:Expr, cases:Array<{ values:Array<Expr>, expr:Expr }>, def:Null<Expr>)
 ```
 
+A switch.
+
 ### EWhile
 
 ```haxe
 EWhile(cond:Expr, loop:Expr, normalWhile:Bool)
 ```
 
+A `while` loop, or a `do ... while` loop if `normalWhile` is not set.
+
 ### EMeta
 
 ```haxe
 EMeta(name:String, args:Array<Expr>, e:Expr)
 ```
+
+An expression with metadata.

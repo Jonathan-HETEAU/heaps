@@ -12,8 +12,12 @@ The model settings stored in the `model.props` files.
 var lodConfig:Array<Float>
 ```
 
+The screen ratios of the levels of detail.
+
 ### dynamicBones
 
 ```haxe
 var dynamicBones:Array<Dynamic>
 ```
+
+The configuration of the dynamic bones.

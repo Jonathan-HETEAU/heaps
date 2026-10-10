@@ -48,7 +48,7 @@
 
 ## h2d.col.IPolygon
 
-- Fichier : `h2d/col/IPolygon.hx` — 330 lignes — 19 blocs doc
+- Fichier : `h2d/col/IPolygon.hx` — 339 lignes — 22 blocs doc
 - Types : `enum OffsetKind`, `abstract IPolygon`
 - Dépend de : `h2d.col.IBounds`, `h2d.col.IPoint`, `h2d.col.IPolygons`, `h2d.col.Point`, `h2d.col.Polygon`, `hxd.Math` (import/use), `hxd.clipper.Clipper`, `hxd.impl.ArrayIterator`
 - Utilisé par : `h2d.col.IPolygons`, `h2d.col.Polygon`, `hxd.clipper.Clipper`

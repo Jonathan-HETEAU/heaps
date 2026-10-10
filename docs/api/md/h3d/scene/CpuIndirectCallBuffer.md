@@ -12,8 +12,12 @@ The indirect draw commands of one material, built on the CPU when using sub mesh
 var count:Int
 ```
 
+The number of commands.
+
 ### bytes
 
 ```haxe
 var bytes:Bytes
 ```
+
+The indirect draw commands.

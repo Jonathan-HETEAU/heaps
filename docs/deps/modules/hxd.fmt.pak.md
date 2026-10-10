@@ -16,7 +16,7 @@
 
 ## hxd.fmt.pak.FileSystem
 
-- Fichier : `hxd/fmt/pak/FileSystem.hx` — 332 lignes — 19 blocs doc — contient du `#if`
+- Fichier : `hxd/fmt/pak/FileSystem.hx` — 341 lignes — 22 blocs doc — contient du `#if`
 - Types : `typedef FileSeekMode`, `enum FileSeekMode`, `class FileInput`, `class FileSeek`, `class PakEntry`, `class FileSystem`
 - Héritage : `FileInput` extends `haxe.io.BytesInput`, `PakEntry` extends `FileEntry`, `FileSystem` implements `hxd.fs.FileSystem`
 - Dépend de : `hxd.File`, `hxd.fmt.pak.Data`, `hxd.fmt.pak.Reader`, `hxd.fs.FileEntry` (extends/import/use), `hxd.fs.FileSystem` (implements/use), `hxd.impl.ArrayIterator`, `hxd.res.NotFound`

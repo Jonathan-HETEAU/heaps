@@ -45,7 +45,7 @@ Sub-packages: [`hxd.clipper`](clipper/README.md), [`hxd.earcut`](earcut/README.m
 | [`Pad`](Pad.md) | class | A game pad (controller). |
 | [`PadConfig`](PadConfig.md) | typedef | The mapping of the buttons and axes of a game pad: each field is the index of the button or axis in `Pad.buttons` and `Pad.values`. |
 | [`Perlin`](Perlin.md) | class | Gradient (Perlin) noise generator in 1D, 2D and 3D, with fractal (multi-octave) and ridged variants. |
-| [`PixelFormat`](PixelFormat.md) | enum | The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed formats (`S3TC`, `ASTC`, `ETC`...) and depth formats. |
+| [`PixelFormat`](PixelFormat.md) | enum | The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed formats (`S3TC`) and depth formats. |
 | [`Pixels`](Pixels.md) | class | An image in CPU memory: its bytes, size and `PixelFormat`. |
 | [`PixelsARGB`](PixelsARGB.md) | abstract | `Pixels` converted to the `ARGB` format, with fast pixel access. |
 | [`PixelsFloat`](PixelsFloat.md) | abstract | `Pixels` converted to the `R32F` format, with fast pixel access. |

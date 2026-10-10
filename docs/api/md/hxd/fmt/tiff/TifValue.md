@@ -12,11 +12,15 @@ A TIFF tag value.
 VInt(v:Int)
 ```
 
+An integer.
+
 ### VFloat
 
 ```haxe
 VFloat(v:Float)
 ```
+
+A float.
 
 ### VString
 
@@ -24,8 +28,12 @@ VFloat(v:Float)
 VString(s:String)
 ```
 
+A string.
+
 ### VArray
 
 ```haxe
 VArray(a:Array<TifValue>)
 ```
+
+An array of values.

@@ -12,14 +12,20 @@ The low latency mode (such as NVIDIA Reflex).
 Off
 ```
 
+No low latency mode.
+
 ### On
 
 ```haxe
 On
 ```
 
+Low latency mode enabled.
+
 ### OnWithBoost
 
 ```haxe
 OnWithBoost
 ```
+
+Low latency mode enabled, with the GPU kept at higher clocks.

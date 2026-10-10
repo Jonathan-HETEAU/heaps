@@ -12,8 +12,12 @@ A texture with the channel to read, the value of a `Channel` global.
 var texture:TextureChannel
 ```
 
+The texture.
+
 ### channel
 
 ```haxe
 var channel:Channel
 ```
+
+The channel to read.

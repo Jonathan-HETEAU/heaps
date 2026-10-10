@@ -12,6 +12,8 @@ Geometry optimizations available for `WorldModel.optimize`.
 None
 ```
 
+No optimization.
+
 ### TopDown
 
 ```haxe

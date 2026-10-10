@@ -12,8 +12,12 @@ The role of a polygon added to `Clipper`: subject or clip.
 Subject
 ```
 
+A subject polygon.
+
 ### Clip
 
 ```haxe
 Clip
 ```
+
+A clip polygon.

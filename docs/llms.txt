@@ -589,7 +589,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [hxd.Pad](api/md/hxd/Pad.md): A game pad (controller).
 - [hxd.PadConfig](api/md/hxd/PadConfig.md): The mapping of the buttons and axes of a game pad: each field is the index of the button or axis in `Pad.buttons` and `Pad.values`.
 - [hxd.Perlin](api/md/hxd/Perlin.md): Gradient (Perlin) noise generator in 1D, 2D and 3D, with fractal (multi-octave) and ridged variants.
-- [hxd.PixelFormat](api/md/hxd/PixelFormat.md): The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed formats (`S3TC`, `ASTC`, `ETC`...) and depth formats.
+- [hxd.PixelFormat](api/md/hxd/PixelFormat.md): The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed formats (`S3TC`) and depth formats.
 - [hxd.Pixels](api/md/hxd/Pixels.md): An image in CPU memory: its bytes, size and `PixelFormat`.
 - [hxd.PixelsARGB](api/md/hxd/PixelsARGB.md): `Pixels` converted to the `ARGB` format, with fast pixel access.
 - [hxd.PixelsFloat](api/md/hxd/PixelsFloat.md): `Pixels` converted to the `R32F` format, with fast pixel access.

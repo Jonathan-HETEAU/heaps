@@ -10,15 +10,15 @@ Underlying type: `Int`
 
 | Name | Value | Description |
 |---|---|---|
-| `Full` | `0` |  |
-| `Albedo` | `1` |  |
-| `Normal` | `2` |  |
-| `Depth` | `3` |  |
-| `Metalness` | `4` |  |
-| `Roughness` | `5` |  |
-| `AO` | `6` |  |
-| `Emissive` | `7` |  |
-| `Shadow` | `8` |  |
-| `Velocity` | `9` |  |
-| `Translucency` | `10` |  |
-| `Clusters` | `11` |  |
+| `Full` | `0` | All the channels at once, in a grid. |
+| `Albedo` | `1` | The albedo color. |
+| `Normal` | `2` | The normals. |
+| `Depth` | `3` | The depth. |
+| `Metalness` | `4` | The metalness. |
+| `Roughness` | `5` | The roughness. |
+| `AO` | `6` | The ambient occlusion. |
+| `Emissive` | `7` | The emissive value (red) and the custom channels (green and blue). |
+| `Shadow` | `8` | The shadow map. |
+| `Velocity` | `9` | The velocity, if available. |
+| `Translucency` | `10` | The translucency, if available. |
+| `Clusters` | `11` | The number of lights of each cluster, as a heat map, if clustered lighting is used. |

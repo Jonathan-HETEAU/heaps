@@ -12,11 +12,15 @@ A shader type.
 TVoid
 ```
 
+No value.
+
 ### TInt
 
 ```haxe
 TInt
 ```
+
+An integer.
 
 ### TBool
 
@@ -24,11 +28,15 @@ TInt
 TBool
 ```
 
+A boolean.
+
 ### TFloat
 
 ```haxe
 TFloat
 ```
+
+A float.
 
 ### TString
 
@@ -36,11 +44,15 @@ TFloat
 TString
 ```
 
+A string (only in constant expressions).
+
 ### TVec
 
 ```haxe
 TVec(size:Int, t:VecType)
 ```
+
+A vector of `size` components.
 
 ### TMat3
 
@@ -48,11 +60,15 @@ TVec(size:Int, t:VecType)
 TMat3
 ```
 
+A 3x3 matrix.
+
 ### TMat4
 
 ```haxe
 TMat4
 ```
+
+A 4x4 matrix.
 
 ### TMat3x4
 
@@ -60,11 +76,15 @@ TMat4
 TMat3x4
 ```
 
+A 3x4 matrix (an affine transform).
+
 ### TBytes
 
 ```haxe
 TBytes(size:Int)
 ```
+
+`size` bytes packed in an integer (`Bytes2`, `Bytes4`).
 
 ### TSampler
 
@@ -72,11 +92,15 @@ TBytes(size:Int)
 TSampler(dim:TexDimension, isArray:Bool)
 ```
 
+A texture.
+
 ### TRWTexture
 
 ```haxe
 TRWTexture(dim:TexDimension, isArray:Bool, channels:Int)
 ```
+
+A read-write texture, with its number of channels.
 
 ### TMat2
 
@@ -84,11 +108,15 @@ TRWTexture(dim:TexDimension, isArray:Bool, channels:Int)
 TMat2
 ```
 
+A 2x2 matrix.
+
 ### TStruct
 
 ```haxe
 TStruct(vl:Array<TVar>)
 ```
+
+A structure.
 
 ### TFun
 
@@ -96,11 +124,15 @@ TStruct(vl:Array<TVar>)
 TFun(variants:Array<FunType>)
 ```
 
+A function, with its signatures.
+
 ### TArray
 
 ```haxe
 TArray(t:Type, size:SizeDecl)
 ```
+
+An array.
 
 ### TBuffer
 
@@ -108,11 +140,15 @@ TArray(t:Type, size:SizeDecl)
 TBuffer(t:Type, size:SizeDecl, kind:BufferKind)
 ```
 
+A buffer.
+
 ### TChannel
 
 ```haxe
 TChannel(size:Int)
 ```
+
+One or more channels of a texture (see `hxsl.Channel`).
 
 ### TTextureHandle
 
@@ -120,14 +156,20 @@ TChannel(size:Int)
 TTextureHandle
 ```
 
+A bindless texture handle.
+
 ### TBufferHandle
 
 ```haxe
 TBufferHandle
 ```
 
+A bindless buffer handle.
+
 ### TEnum
 
 ```haxe
 TEnum(path:String)
 ```
+
+A Haxe enum, as an integer constant (see `VarQualifier.Enum`).

@@ -12,14 +12,20 @@ How a raw code (`TSyntax`) argument is accessed.
 Read
 ```
 
+Read only.
+
 ### Write
 
 ```haxe
 Write
 ```
 
+Written only.
+
 ### ReadWrite
 
 ```haxe
 ReadWrite
 ```
+
+Read and written.

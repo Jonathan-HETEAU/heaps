@@ -136,8 +136,8 @@
   "h2d.CdbLevel": {
    "file": "h2d/CdbLevel.hx",
    "package": "h2d",
-   "lines": 703,
-   "doc_blocks": 79,
+   "lines": 712,
+   "doc_blocks": 82,
    "types": [
     "typedef TileSpec",
     "typedef LayerSpec",
@@ -2070,8 +2070,8 @@
   "h2d.col.IPolygon": {
    "file": "h2d/col/IPolygon.hx",
    "package": "h2d.col",
-   "lines": 330,
-   "doc_blocks": 19,
+   "lines": 339,
+   "doc_blocks": 22,
    "types": [
     "enum OffsetKind",
     "abstract IPolygon"
@@ -4058,8 +4058,8 @@
   "h3d.Matrix": {
    "file": "h3d/Matrix.hx",
    "package": "h3d",
-   "lines": 1233,
-   "doc_blocks": 91,
+   "lines": 1248,
+   "doc_blocks": 96,
    "types": [
     "typedef ColorAdjust",
     "class MatrixImpl",
@@ -4341,8 +4341,8 @@
   "h3d.anim.Animation": {
    "file": "h3d/anim/Animation.hx",
    "package": "h3d.anim",
-   "lines": 497,
-   "doc_blocks": 40,
+   "lines": 506,
+   "doc_blocks": 43,
    "types": [
     "class AnimatedObject",
     "typedef Event",
@@ -5762,8 +5762,8 @@
   "h3d.impl.Benchmark": {
    "file": "h3d/impl/Benchmark.hx",
    "package": "h3d.impl",
-   "lines": 520,
-   "doc_blocks": 19,
+   "lines": 525,
+   "doc_blocks": 20,
    "types": [
     "class QueryObject",
     "class StatsObject",
@@ -5976,8 +5976,8 @@
   "h3d.impl.DirectXDriver": {
    "file": "h3d/impl/DirectXDriver.hx",
    "package": "h3d.impl",
-   "lines": 1629,
-   "doc_blocks": 14,
+   "lines": 1638,
+   "doc_blocks": 17,
    "types": [
     "class ShaderContext",
     "class CompiledShader",
@@ -6058,8 +6058,8 @@
   "h3d.impl.Driver": {
    "file": "h3d/impl/Driver.hx",
    "package": "h3d.impl",
-   "lines": 742,
-   "doc_blocks": 130,
+   "lines": 884,
+   "doc_blocks": 163,
    "types": [
     "typedef GPUBuffer",
     "typedef Texture",
@@ -6776,8 +6776,8 @@
   "h3d.impl.StutterBenchmark": {
    "file": "h3d/impl/StutterBenchmark.hx",
    "package": "h3d.impl",
-   "lines": 148,
-   "doc_blocks": 12,
+   "lines": 160,
+   "doc_blocks": 16,
    "types": [
     "class Stutter",
     "enum StutterSeverity",
@@ -6827,8 +6827,8 @@
   "h3d.impl.Upscaling": {
    "file": "h3d/impl/Upscaling.hx",
    "package": "h3d.impl",
-   "lines": 2250,
-   "doc_blocks": 141,
+   "lines": 2325,
+   "doc_blocks": 166,
    "types": [
     "enum UpscalingFeature",
     "enum_abstract UpscalingProvider",
@@ -7328,8 +7328,8 @@
   "h3d.mat.PbrMaterial": {
    "file": "h3d/mat/PbrMaterial.hx",
    "package": "h3d.mat",
-   "lines": 737,
-   "doc_blocks": 46,
+   "lines": 857,
+   "doc_blocks": 86,
    "types": [
     "enum_abstract PbrMode",
     "enum_abstract PbrBlend",
@@ -8459,8 +8459,8 @@
   "h3d.pass.CubeShadowMap": {
    "file": "h3d/pass/CubeShadowMap.hx",
    "package": "h3d.pass",
-   "lines": 263,
-   "doc_blocks": 4,
+   "lines": 281,
+   "doc_blocks": 10,
    "types": [
     "enum CubeFaceFlag",
     "class CubeShadowMap"
@@ -9550,8 +9550,8 @@
   "h3d.prim.Capsule": {
    "file": "h3d/prim/Capsule.hx",
    "package": "h3d.prim",
-   "lines": 148,
-   "doc_blocks": 4,
+   "lines": 157,
+   "doc_blocks": 7,
    "types": [
     "enum_abstract Axis",
     "class Capsule"
@@ -10095,8 +10095,8 @@
   "h3d.prim.ModelDatabase": {
    "file": "h3d/prim/ModelDatabase.hx",
    "package": "h3d.prim",
-   "lines": 417,
-   "doc_blocks": 22,
+   "lines": 423,
+   "doc_blocks": 24,
    "types": [
     "typedef ModelDataInput",
     "typedef ModelProps",
@@ -11168,8 +11168,8 @@
   "h3d.scene.MeshBatch": {
    "file": "h3d/scene/MeshBatch.hx",
    "package": "h3d.scene",
-   "lines": 994,
-   "doc_blocks": 55,
+   "lines": 1003,
+   "doc_blocks": 57,
    "types": [
     "enum MeshBatchFlag",
     "typedef CpuIndirectCallBuffer",
@@ -11943,8 +11943,8 @@
   "h3d.scene.World": {
    "file": "h3d/scene/World.hx",
    "package": "h3d.scene",
-   "lines": 912,
-   "doc_blocks": 69,
+   "lines": 915,
+   "doc_blocks": 70,
    "types": [
     "class WorldElement",
     "class WorldChunk",
@@ -12718,8 +12718,8 @@
   "h3d.scene.pbr.Renderer": {
    "file": "h3d/scene/pbr/Renderer.hx",
    "package": "h3d.scene.pbr",
-   "lines": 1265,
-   "doc_blocks": 37,
+   "lines": 1289,
+   "doc_blocks": 45,
    "types": [
     "enum_abstract DisplayMode",
     "enum_abstract SkyMode",
@@ -15257,8 +15257,8 @@
   "h3d.shader.pbr.Slides": {
    "file": "h3d/shader/pbr/Slides.hx",
    "package": "h3d.shader.pbr",
-   "lines": 154,
-   "doc_blocks": 3,
+   "lines": 190,
+   "doc_blocks": 15,
    "types": [
     "enum_abstract DebugMode",
     "class Slides"
@@ -15574,8 +15574,8 @@
   "hxd.Cursor": {
    "file": "hxd/Cursor.hx",
    "package": "hxd",
-   "lines": 139,
-   "doc_blocks": 8,
+   "lines": 169,
+   "doc_blocks": 18,
    "types": [
     "enum Cursor",
     "class CustomCursor"
@@ -15991,8 +15991,8 @@
   "hxd.Pad": {
    "file": "hxd/Pad.hx",
    "package": "hxd",
-   "lines": 631,
-   "doc_blocks": 29,
+   "lines": 694,
+   "doc_blocks": 50,
    "types": [
     "typedef Event",
     "class GameController",
@@ -16046,8 +16046,8 @@
   "hxd.PixelFormat": {
    "file": "hxd/PixelFormat.hx",
    "package": "hxd",
-   "lines": 36,
-   "doc_blocks": 1,
+   "lines": 120,
+   "doc_blocks": 29,
    "types": [
     "enum PixelFormat"
    ],
@@ -16238,8 +16238,8 @@
   "hxd.System": {
    "file": "hxd/System.hx",
    "package": "hxd",
-   "lines": 184,
-   "doc_blocks": 26,
+   "lines": 226,
+   "doc_blocks": 40,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16257,8 +16257,8 @@
   "hxd.System.hl": {
    "file": "hxd/System.hl.hx",
    "package": "hxd",
-   "lines": 653,
-   "doc_blocks": 35,
+   "lines": 695,
+   "doc_blocks": 49,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16288,8 +16288,8 @@
   "hxd.System.js": {
    "file": "hxd/System.js.hx",
    "package": "hxd",
-   "lines": 278,
-   "doc_blocks": 27,
+   "lines": 320,
+   "doc_blocks": 41,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16419,8 +16419,8 @@
   "hxd.Window.hl": {
    "file": "hxd/Window.hl.hx",
    "package": "hxd",
-   "lines": 1139,
-   "doc_blocks": 52,
+   "lines": 1157,
+   "doc_blocks": 58,
    "types": [
     "typedef DisplayMode",
     "typedef DisplayMode",
@@ -16528,8 +16528,8 @@
   "hxd.clipper.ClipType": {
    "file": "hxd/clipper/ClipType.hx",
    "package": "hxd.clipper",
-   "lines": 12,
-   "doc_blocks": 1,
+   "lines": 24,
+   "doc_blocks": 5,
    "types": [
     "enum ClipType"
    ],
@@ -16542,8 +16542,8 @@
   "hxd.clipper.Clipper": {
    "file": "hxd/clipper/Clipper.hx",
    "package": "hxd.clipper",
-   "lines": 4101,
-   "doc_blocks": 31,
+   "lines": 4119,
+   "doc_blocks": 37,
    "types": [
     "enum EdgeSide",
     "enum Direction",
@@ -16622,8 +16622,8 @@
   "hxd.clipper.EndType": {
    "file": "hxd/clipper/EndType.hx",
    "package": "hxd.clipper",
-   "lines": 13,
-   "doc_blocks": 1,
+   "lines": 28,
+   "doc_blocks": 6,
    "types": [
     "enum EndType"
    ],
@@ -16636,8 +16636,8 @@
   "hxd.clipper.JoinType": {
    "file": "hxd/clipper/JoinType.hx",
    "package": "hxd.clipper",
-   "lines": 11,
-   "doc_blocks": 1,
+   "lines": 20,
+   "doc_blocks": 4,
    "types": [
     "enum JoinType"
    ],
@@ -16650,8 +16650,8 @@
   "hxd.clipper.PolyFillType": {
    "file": "hxd/clipper/PolyFillType.hx",
    "package": "hxd.clipper",
-   "lines": 12,
-   "doc_blocks": 1,
+   "lines": 24,
+   "doc_blocks": 5,
    "types": [
     "enum PolyFillType"
    ],
@@ -16664,8 +16664,8 @@
   "hxd.clipper.PolyType": {
    "file": "hxd/clipper/PolyType.hx",
    "package": "hxd.clipper",
-   "lines": 10,
-   "doc_blocks": 1,
+   "lines": 16,
+   "doc_blocks": 3,
    "types": [
     "enum PolyType"
    ],
@@ -16849,8 +16849,8 @@
   "hxd.fmt.fbx.Data": {
    "file": "hxd/fmt/fbx/Data.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 223,
-   "doc_blocks": 18,
+   "lines": 244,
+   "doc_blocks": 25,
    "types": [
     "enum FbxProp",
     "typedef FbxNode",
@@ -16923,8 +16923,8 @@
   "hxd.fmt.fbx.HMDOut": {
    "file": "hxd/fmt/fbx/HMDOut.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 1913,
-   "doc_blocks": 25,
+   "lines": 1958,
+   "doc_blocks": 40,
    "types": [
     "typedef CollideParams",
     "typedef ShapeColliderParams",
@@ -17035,8 +17035,8 @@
   "hxd.fmt.fbx.Writer": {
    "file": "hxd/fmt/fbx/Writer.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 975,
-   "doc_blocks": 6,
+   "lines": 987,
+   "doc_blocks": 10,
    "types": [
     "typedef ExportParams",
     "class Writer"
@@ -17098,8 +17098,8 @@
   "hxd.fmt.grd.Data": {
    "file": "hxd/fmt/grd/Data.hx",
    "package": "hxd.fmt.grd",
-   "lines": 128,
-   "doc_blocks": 25,
+   "lines": 143,
+   "doc_blocks": 30,
    "types": [
     "class Gradient",
     "class ColorStop",
@@ -17188,8 +17188,8 @@
   "hxd.fmt.hmd.Data": {
    "file": "hxd/fmt/hmd/Data.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 1100,
-   "doc_blocks": 167,
+   "lines": 1184,
+   "doc_blocks": 195,
    "types": [
     "typedef GeometryDataFormat",
     "typedef GeometryFormat",
@@ -17346,8 +17346,8 @@
   "hxd.fmt.hmd.Library": {
    "file": "hxd/fmt/hmd/Library.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 959,
-   "doc_blocks": 13,
+   "lines": 977,
+   "doc_blocks": 19,
    "types": [
     "class FormatMap",
     "class ContextShared",
@@ -17530,8 +17530,8 @@
   "hxd.fmt.kframes.Data": {
    "file": "hxd/fmt/kframes/Data.hx",
    "package": "hxd.fmt.kframes",
-   "lines": 138,
-   "doc_blocks": 28,
+   "lines": 156,
+   "doc_blocks": 34,
    "types": [
     "abstract KFSize",
     "enum_abstract KFAnimProp",
@@ -17611,8 +17611,8 @@
   "hxd.fmt.pak.FileSystem": {
    "file": "hxd/fmt/pak/FileSystem.hx",
    "package": "hxd.fmt.pak",
-   "lines": 332,
-   "doc_blocks": 19,
+   "lines": 341,
+   "doc_blocks": 22,
    "types": [
     "typedef FileSeekMode",
     "enum FileSeekMode",
@@ -17812,8 +17812,8 @@
   "hxd.fmt.spine.JsonData": {
    "file": "hxd/fmt/spine/JsonData.hx",
    "package": "hxd.fmt.spine",
-   "lines": 285,
-   "doc_blocks": 65,
+   "lines": 291,
+   "doc_blocks": 67,
    "types": [
     "typedef JCurve",
     "typedef JBoneAnimation",
@@ -17863,8 +17863,8 @@
   "hxd.fmt.tiff.Data": {
    "file": "hxd/fmt/tiff/Data.hx",
    "package": "hxd.fmt.tiff",
-   "lines": 160,
-   "doc_blocks": 43,
+   "lines": 172,
+   "doc_blocks": 47,
    "types": [
     "enum_abstract TifTag",
     "enum_abstract TifType",
@@ -18193,8 +18193,8 @@
   "hxd.fs.FileConverter": {
    "file": "hxd/fs/FileConverter.hx",
    "package": "hxd.fs",
-   "lines": 547,
-   "doc_blocks": 20,
+   "lines": 597,
+   "doc_blocks": 35,
    "types": [
     "typedef ConvertConfig",
     "typedef ConvertRule",
@@ -18543,8 +18543,8 @@
   "hxd.impl.AppContext": {
    "file": "hxd/impl/AppContext.hx",
    "package": "hxd.impl",
-   "lines": 82,
-   "doc_blocks": 6,
+   "lines": 88,
+   "doc_blocks": 8,
    "types": [
     "class AppContext"
    ],
@@ -19489,8 +19489,8 @@
   "hxd.res.DynamicText": {
    "file": "hxd/res/DynamicText.hx",
    "package": "hxd.res",
-   "lines": 495,
-   "doc_blocks": 13,
+   "lines": 504,
+   "doc_blocks": 15,
    "types": [
     "typedef DynamicTextMeta",
     "typedef DynamicTextMetaContent",
@@ -20174,8 +20174,8 @@
   "hxd.snd.Driver": {
    "file": "hxd/snd/Driver.hx",
    "package": "hxd.snd",
-   "lines": 155,
-   "doc_blocks": 34,
+   "lines": 158,
+   "doc_blocks": 35,
    "types": [
     "typedef SourceHandle",
     "typedef BufferHandle",
@@ -21151,8 +21151,8 @@
   "hxd.tools.RenderDoc": {
    "file": "hxd/tools/RenderDoc.hx",
    "package": "hxd.tools",
-   "lines": 241,
-   "doc_blocks": 15,
+   "lines": 305,
+   "doc_blocks": 79,
    "types": [
     "enum_abstract RenderDocInputButton",
     "class RenderDocNative",
@@ -21184,8 +21184,8 @@
   "hxsl.Ast": {
    "file": "hxsl/Ast.hx",
    "package": "hxsl",
-   "lines": 1127,
-   "doc_blocks": 118,
+   "lines": 1545,
+   "doc_blocks": 322,
    "types": [
     "enum BufferKind",
     "enum TexDimension",
@@ -21364,8 +21364,8 @@
   "hxsl.CacheFile": {
    "file": "hxsl/CacheFile.hx",
    "package": "hxsl",
-   "lines": 833,
-   "doc_blocks": 6,
+   "lines": 839,
+   "doc_blocks": 8,
    "types": [
     "class NullShader",
     "class CacheFile"
@@ -21561,8 +21561,8 @@
   "hxsl.ChannelTexture": {
    "file": "hxsl/ChannelTexture.hx",
    "package": "hxsl",
-   "lines": 7,
-   "doc_blocks": 1,
+   "lines": 16,
+   "doc_blocks": 3,
    "types": [
     "typedef ChannelTexture"
    ],
@@ -21749,8 +21749,8 @@
   "hxsl.Flatten": {
    "file": "hxsl/Flatten.hx",
    "package": "hxsl",
-   "lines": 629,
-   "doc_blocks": 6,
+   "lines": 635,
+   "doc_blocks": 8,
    "types": [
     "class Alloc",
     "enum ARead",
@@ -21977,8 +21977,8 @@
   "hxsl.NXGlslOut": {
    "file": "hxsl/NXGlslOut.hx",
    "package": "hxsl",
-   "lines": 127,
-   "doc_blocks": 3,
+   "lines": 136,
+   "doc_blocks": 6,
    "types": [
     "enum BlockType",
     "class NXGlslOut"

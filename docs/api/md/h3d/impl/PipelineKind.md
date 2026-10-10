@@ -12,8 +12,12 @@ A stage of the DirectX 11 pipeline.
 Vertex
 ```
 
+The vertex shader stage.
+
 ### Pixel
 
 ```haxe
 Pixel
 ```
+
+The pixel shader stage.

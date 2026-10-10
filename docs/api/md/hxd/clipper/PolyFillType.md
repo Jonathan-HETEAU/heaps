@@ -12,11 +12,15 @@ The filling rule deciding which regions are inside the polygons, from their wind
 EvenOdd
 ```
 
+Inside when the winding number is odd.
+
 ### NonZero
 
 ```haxe
 NonZero
 ```
+
+Inside when the winding number is not zero.
 
 ### Positive
 
@@ -24,8 +28,12 @@ NonZero
 Positive
 ```
 
+Inside when the winding number is positive.
+
 ### Negative
 
 ```haxe
 Negative
 ```
+
+Inside when the winding number is negative.

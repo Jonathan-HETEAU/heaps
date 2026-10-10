@@ -12,11 +12,15 @@ The detected keyboard layout (see `System.getKeyboardLayout`).
 QWERTY
 ```
 
+QWERTY layout.
+
 ### AZERTY
 
 ```haxe
 AZERTY
 ```
+
+AZERTY layout (French).
 
 ### QWERTZ
 
@@ -24,14 +28,20 @@ AZERTY
 QWERTZ
 ```
 
+QWERTZ layout (German).
+
 ### QZERTY
 
 ```haxe
 QZERTY
 ```
 
+QZERTY layout (Italian).
+
 ### Unknown
 
 ```haxe
 Unknown
 ```
+
+The layout could not be detected.

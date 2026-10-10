@@ -10,11 +10,11 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `Always` | `"Always"` |  |
-| `Never` | `"Never"` |  |
-| `Equal` | `"Equal"` |  |
-| `NotEqual` | `"NotEqual"` |  |
-| `Greater` | `"Greater"` |  |
-| `GreaterEqual` | `"GreaterEqual"` |  |
-| `Less` | `"Less"` |  |
-| `LessEqual` | `"LessEqual"` |  |
+| `Always` | `"Always"` | Always passes. |
+| `Never` | `"Never"` | Never passes. |
+| `Equal` | `"Equal"` | Passes if the reference value is equal to the stored value. |
+| `NotEqual` | `"NotEqual"` | Passes if the reference value is not equal to the stored value. |
+| `Greater` | `"Greater"` | Passes if the reference value is greater than the stored value. |
+| `GreaterEqual` | `"GreaterEqual"` | Passes if the reference value is greater than or equal to the stored value. |
+| `Less` | `"Less"` | Passes if the reference value is less than the stored value. |
+| `LessEqual` | `"LessEqual"` | Passes if the reference value is less than or equal to the stored value. |

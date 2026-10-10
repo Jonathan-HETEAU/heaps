@@ -14,6 +14,6 @@ Implicit casts to: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `AUTO` | `"auto"` |  |
-| `DLSS` | `"dlss"` |  |
-| `FSR` | `"fsr"` |  |
+| `AUTO` | `"auto"` | The first available provider. |
+| `DLSS` | `"dlss"` | NVIDIA DLSS (with DLSS frame generation and Reflex). |
+| `FSR` | `"fsr"` | AMD FidelityFX Super Resolution. |

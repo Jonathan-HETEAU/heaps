@@ -10,11 +10,11 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `Keep` | `"Keep"` |  |
-| `Zero` | `"Zero"` |  |
-| `Replace` | `"Replace"` |  |
-| `Increment` | `"Increment"` |  |
-| `IncrementWrap` | `"IncrementWrap"` |  |
-| `Decrement` | `"Decrement"` |  |
-| `DecrementWrap` | `"DecrementWrap"` |  |
-| `Invert` | `"Invert"` |  |
+| `Keep` | `"Keep"` | Keeps the stored value. |
+| `Zero` | `"Zero"` | Sets the value to `0`. |
+| `Replace` | `"Replace"` | Replaces the value with the reference value. |
+| `Increment` | `"Increment"` | Increments the value, clamped to the maximum. |
+| `IncrementWrap` | `"IncrementWrap"` | Increments the value, wrapping to `0`. |
+| `Decrement` | `"Decrement"` | Decrements the value, clamped to `0`. |
+| `DecrementWrap` | `"DecrementWrap"` | Decrements the value, wrapping to the maximum. |
+| `Invert` | `"Invert"` | Inverts the bits of the value. |

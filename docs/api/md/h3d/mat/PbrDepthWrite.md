@@ -10,6 +10,6 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `Default` | `"Default"` |  |
-| `On` | `"On"` |  |
-| `Off` | `"Off"` |  |
+| `Default` | `"Default"` | Writes the depth only when the blend mode is `None`. |
+| `On` | `"On"` | Always writes the depth. |
+| `Off` | `"Off"` | Never writes the depth. |

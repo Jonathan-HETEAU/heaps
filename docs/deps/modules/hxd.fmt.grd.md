@@ -4,7 +4,7 @@
 
 ## hxd.fmt.grd.Data
 
-- Fichier : `hxd/fmt/grd/Data.hx` — 128 lignes — 25 blocs doc
+- Fichier : `hxd/fmt/grd/Data.hx` — 143 lignes — 30 blocs doc
 - Types : `class Gradient`, `class ColorStop`, `enum ColorStopType`, `class TransparencyStop`, `enum Color`, `class GradientStop`, `class Data`
 - Héritage : `Data` extends `haxe.ds.StringMap`
 - Utilisé par : `hxd.fmt.grd.Reader`, `hxd.res.Gradients`

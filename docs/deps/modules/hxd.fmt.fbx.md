@@ -11,7 +11,7 @@
 
 ## hxd.fmt.fbx.Data
 
-- Fichier : `hxd/fmt/fbx/Data.hx` — 223 lignes — 18 blocs doc
+- Fichier : `hxd/fmt/fbx/Data.hx` — 244 lignes — 25 blocs doc
 - Types : `enum FbxProp`, `typedef FbxNode`, `class FbxTools`
 - Utilisé par : `hxd.fmt.fbx.BaseLibrary`, `hxd.fmt.fbx.Filter`, `hxd.fmt.fbx.Geometry`, `hxd.fmt.fbx.HMDOut`, `hxd.fmt.fbx.Parser`, `hxd.fmt.fbx.Writer`, `hxd.fs.Convert`
 
@@ -30,7 +30,7 @@
 
 ## hxd.fmt.fbx.HMDOut
 
-- Fichier : `hxd/fmt/fbx/HMDOut.hx` — 1913 lignes — 25 blocs doc — contient du `#if`
+- Fichier : `hxd/fmt/fbx/HMDOut.hx` — 1958 lignes — 40 blocs doc — contient du `#if`
 - Types : `typedef CollideParams`, `typedef ShapeColliderParams`, `enum_abstract ShapeColliderType`, `class HMDOut`
 - Héritage : `HMDOut` extends `BaseLibrary`
 - Dépend de : `h3d.Matrix`, `h3d.Quat`, `h3d.Vector`, `h3d.anim.Animation`, `h3d.anim.LinearAnimation`, `h3d.anim.Skin`, `h3d.col.Bounds`, `h3d.col.Point`, `h3d.prim.Polygon`, `hxd.BufferFormat` (import/use), `hxd.FloatBuffer`, `hxd.IndexBuffer`, `hxd.Math`, `hxd.fmt.fbx.BaseLibrary` (extends/import/use), `hxd.fmt.fbx.Data` (use/using), `hxd.fmt.fbx.Geometry`, `hxd.fmt.hmd.Data` (import/use), `hxd.impl.TypedArray`, `hxd.tools.MeshOptimizer`, `hxd.tools.Mikktspace`
@@ -45,6 +45,6 @@
 
 ## hxd.fmt.fbx.Writer
 
-- Fichier : `hxd/fmt/fbx/Writer.hx` — 975 lignes — 6 blocs doc — contient du `#if`
+- Fichier : `hxd/fmt/fbx/Writer.hx` — 987 lignes — 10 blocs doc — contient du `#if`
 - Types : `typedef ExportParams`, `class Writer`
 - Dépend de : `h3d.Quat`, `h3d.prim.Cube`, `h3d.prim.HMDModel`, `h3d.prim.Polygon`, `h3d.prim.Primitive`, `h3d.scene.Box`, `h3d.scene.Interactive`, `h3d.scene.Mesh`, `h3d.scene.MultiMaterial`, `h3d.scene.Object`, `hxd.BufferFormat`, `hxd.File`, `hxd.Math`, `hxd.fmt.fbx.Data` (import/use), `hxd.fmt.hmd.Data` (import), `hxd.fmt.hmd.Library`

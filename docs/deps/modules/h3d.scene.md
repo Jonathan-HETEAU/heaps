@@ -94,7 +94,7 @@
 
 ## h3d.scene.MeshBatch
 
-- Fichier : `h3d/scene/MeshBatch.hx` — 994 lignes — 55 blocs doc — contient du `#if`
+- Fichier : `h3d/scene/MeshBatch.hx` — 1003 lignes — 57 blocs doc — contient du `#if`
 - Types : `enum MeshBatchFlag`, `typedef CpuIndirectCallBuffer`, `class MeshBatch`, `class BatchData`, `class SubMesh`, `class SubPart`
 - Héritage : `MeshBatch` extends `MultiMaterial`
 - Dépend de : `h3d.Buffer`, `h3d.Matrix`, `h3d.Vector`, `h3d.Vector4`, `h3d.col.Bounds`, `h3d.impl.InstanceBuffer`, `h3d.mat.Pass`, `h3d.mat.Texture`, `h3d.mat.TextureHandle`, `h3d.prim.HMDModel`, `h3d.prim.Instanced`, `h3d.prim.MeshPrimitive`, `h3d.scene.MultiMaterial` (extends/use), `h3d.scene.RenderContext`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.FloatBufferLoader`, `hxd.Math`, `hxd.impl.Allocator`, `hxsl.Ast`, `hxsl.BatchShader`, `hxsl.Cache`, `hxsl.Globals`, `hxsl.RuntimeShader`, `hxsl.Shader`
@@ -163,7 +163,7 @@
 
 ## h3d.scene.World
 
-- Fichier : `h3d/scene/World.hx` — 912 lignes — 69 blocs doc
+- Fichier : `h3d/scene/World.hx` — 915 lignes — 70 blocs doc
 - Types : `class WorldElement`, `class WorldChunk`, `class WorldMaterial`, `class WorldModelGeometry`, `enum OptAlgorithm`, `class WorldModel`, `class World`
 - Héritage : `World` extends `Object`
 - Dépend de : `h3d.Engine`, `h3d.Matrix`, `h3d.Vector`, `h3d.Vector4`, `h3d.col.Bounds`, `h3d.mat.BigTexture`, `h3d.mat.BlendMode`, `h3d.mat.Data`, `h3d.prim.BigPrimitive`, `h3d.scene.Mesh`, `h3d.scene.Object` (extends/use), `h3d.scene.RenderContext`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.IndexBuffer`, `hxd.Math`, `hxd.fmt.hmd.Data`, `hxd.res.Image`, `hxd.res.Loader`, `hxd.res.Model`, `hxd.res.NotFound`, `hxsl.Shader`

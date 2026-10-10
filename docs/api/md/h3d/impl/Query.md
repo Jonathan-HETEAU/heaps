@@ -16,8 +16,12 @@ The native query of the current driver.
 var q:sdl.Query
 ```
 
+The native query.
+
 ### kind
 
 ```haxe
 var kind:QueryKind
 ```
+
+The kind of query.

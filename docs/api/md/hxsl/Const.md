@@ -12,11 +12,15 @@ A constant value.
 CNull
 ```
 
+`null`.
+
 ### CBool
 
 ```haxe
 CBool(b:Bool)
 ```
+
+A boolean.
 
 ### CInt
 
@@ -24,14 +28,20 @@ CBool(b:Bool)
 CInt(v:Int)
 ```
 
+An integer.
+
 ### CFloat
 
 ```haxe
 CFloat(v:Float)
 ```
 
+A float.
+
 ### CString
 
 ```haxe
 CString(v:String)
 ```
+
+A string.

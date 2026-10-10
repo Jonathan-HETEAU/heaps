@@ -12,11 +12,15 @@ A vector component, for swizzling.
 X
 ```
 
+The first component (`x` or `r`).
+
 ### Y
 
 ```haxe
 Y
 ```
+
+The second component (`y` or `g`).
 
 ### Z
 
@@ -24,8 +28,12 @@ Y
 Z
 ```
 
+The third component (`z` or `b`).
+
 ### W
 
 ```haxe
 W
 ```
+
+The fourth component (`w` or `a`).

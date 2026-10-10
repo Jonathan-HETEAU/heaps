@@ -12,14 +12,20 @@ The type of the components of a vector.
 VInt
 ```
 
+Integers.
+
 ### VFloat
 
 ```haxe
 VFloat
 ```
 
+Floats.
+
 ### VBool
 
 ```haxe
 VBool
 ```
+
+Booleans.

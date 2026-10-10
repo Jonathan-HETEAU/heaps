@@ -34,7 +34,7 @@
 
 ## hxd.snd.Driver
 
-- Fichier : `hxd/snd/Driver.hx` — 155 lignes — 34 blocs doc — contient du `#if`
+- Fichier : `hxd/snd/Driver.hx` — 158 lignes — 35 blocs doc — contient du `#if`
 - Types : `typedef SourceHandle`, `typedef BufferHandle`, `typedef SourceHandle`, `typedef BufferHandle`, `typedef SourceHandle`, `typedef BufferHandle`, `class EffectDriver`, `enum DriverFeature`, `interface Driver`
 - Dépend de : `h3d.Vector`, `hxd.snd.Data`, `hxd.snd.openal.AudioTypes`, `hxd.snd.webaudio.AudioTypes`
 - Utilisé par : `hxd.snd.Effect`, `hxd.snd.Manager`, `hxd.snd.NativeChannel`, `hxd.snd.openal.Driver`, `hxd.snd.openal.LowPassDriver`, `hxd.snd.openal.PitchDriver`, `hxd.snd.openal.ReverbDriver`, `hxd.snd.openal.SpatializationDriver`, `hxd.snd.webaudio.Driver`, `hxd.snd.webaudio.LowPassDriver`, `hxd.snd.webaudio.PitchDriver`, `hxd.snd.webaudio.SpatializationDriver`

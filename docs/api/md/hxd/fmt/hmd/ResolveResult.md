@@ -12,11 +12,15 @@ How the collider of a model is built (see `Collider.resolveColliderType`).
 Empty
 ```
 
+No collider.
+
 ### Mesh
 
 ```haxe
 Mesh(model:Model)
 ```
+
+The triangles of the model are used as collider.
 
 ### ConvexHulls
 
@@ -24,8 +28,12 @@ Mesh(model:Model)
 ConvexHulls(model:Model)
 ```
 
+Convex hulls are generated from the model.
+
 ### Shapes
 
 ```haxe
 Shapes
 ```
+
+A group of shapes, from `CollideParams.shapes`.

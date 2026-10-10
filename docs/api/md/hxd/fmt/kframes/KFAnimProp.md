@@ -10,9 +10,9 @@ Underlying type: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `AnchorPoint` | `"ANCHOR_POINT"` |  |
-| `XPosition` | `"X_POSITION"` |  |
-| `YPosition` | `"Y_POSITION"` |  |
-| `Scale` | `"SCALE"` |  |
-| `Opacity` | `"OPACITY"` |  |
-| `Rotation` | `"ROTATION"` |  |
+| `AnchorPoint` | `"ANCHOR_POINT"` | The anchor point. |
+| `XPosition` | `"X_POSITION"` | The X position. |
+| `YPosition` | `"Y_POSITION"` | The Y position. |
+| `Scale` | `"SCALE"` | The scale. |
+| `Opacity` | `"OPACITY"` | The opacity. |
+| `Rotation` | `"ROTATION"` | The rotation. |

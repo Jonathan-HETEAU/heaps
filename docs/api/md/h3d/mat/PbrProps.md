@@ -12,6 +12,8 @@ The properties of a `PbrMaterial`, stored as `props` and edited in Hide. Call `r
 function new():Void
 ```
 
+Creates the default properties.
+
 ## Variables
 
 ### mode
@@ -242,8 +244,12 @@ The geometry using this material is excluded from the collision data built by th
 function load(o:Dynamic):PbrProps
 ```
 
+Sets the properties from the saved object and returns this.
+
 ### save
 
 ```haxe
 function save():Dynamic
 ```
+
+Returns the properties different from the defaults, to be saved.

@@ -59,7 +59,7 @@
 
 ## h3d.pass.CubeShadowMap
 
-- Fichier : `h3d/pass/CubeShadowMap.hx` — 263 lignes — 4 blocs doc
+- Fichier : `h3d/pass/CubeShadowMap.hx` — 281 lignes — 10 blocs doc
 - Types : `enum CubeFaceFlag`, `class CubeShadowMap`
 - Héritage : `CubeShadowMap` extends `Shadows`
 - Dépend de : `h3d.Camera`, `h3d.Matrix`, `h3d.Vector4`, `h3d.col.Collider`, `h3d.mat.Texture`, `h3d.pass.PassList`, `h3d.pass.PassObject`, `h3d.pass.ScreenFx`, `h3d.pass.Shadows` (extends/use), `h3d.scene.Light`, `h3d.shader.LinearShadowDepth`, `h3d.shader.MinMaxShader`, `hxd.Pixels`, `hxsl.ShaderList`

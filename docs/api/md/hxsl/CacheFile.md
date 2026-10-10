@@ -14,7 +14,7 @@ A shader cache saving the linked shaders and their compiled code to a file (`FIL
 function new(allowCompile:Bool, ?recompileRT:Bool = false, ?showProgress:Bool = false):Void
 ```
 
-Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise an error is thrown.
+Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise `onMissingShader` is called.
 
 ## Static variables
 
@@ -50,11 +50,15 @@ override function getLinkShader(vars:Array<Output>, ?vertexOutputName:String = "
 dynamic function onMissingShader(shaders:ShaderList):RuntimeShader
 ```
 
+Called when a shader is not in the cache and `allowCompile` is not set: returns the shader to use instead. By default, logs it and returns `link(null, Default)`.
+
 ### onNewShader
 
 ```haxe
 dynamic function onNewShader(r:RuntimeShader):Void
 ```
+
+Called when a shader was compiled and added to the cache. Logs it by default.
 
 ## Inherited members
 

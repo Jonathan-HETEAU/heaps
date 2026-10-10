@@ -54,7 +54,7 @@
 
 ## hxd.res.DynamicText
 
-- Fichier : `hxd/res/DynamicText.hx` — 495 lignes — 13 blocs doc — contient du `#if`
+- Fichier : `hxd/res/DynamicText.hx` — 504 lignes — 15 blocs doc — contient du `#if`
 - Types : `typedef DynamicTextMeta`, `typedef DynamicTextMetaContent`, `abstract NoArg`, `abstract Key`, `class DynamicText`
 - Dépend de : `hxd.res.FileTree`
 

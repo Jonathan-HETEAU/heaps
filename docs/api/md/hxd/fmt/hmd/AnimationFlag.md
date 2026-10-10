@@ -12,11 +12,15 @@ The animated components of an animated object.
 HasPosition
 ```
 
+The position is animated.
+
 ### HasRotation
 
 ```haxe
 HasRotation
 ```
+
+The rotation is animated.
 
 ### HasScale
 
@@ -24,11 +28,15 @@ HasRotation
 HasScale
 ```
 
+The scale is animated.
+
 ### HasUV
 
 ```haxe
 HasUV
 ```
+
+The texture coordinates offset is animated.
 
 ### HasAlpha
 
@@ -36,11 +44,15 @@ HasUV
 HasAlpha
 ```
 
+The alpha is animated.
+
 ### SingleFrame
 
 ```haxe
 SingleFrame
 ```
+
+The object has a single frame of data, used for the whole animation.
 
 ### HasProps
 
@@ -48,8 +60,12 @@ SingleFrame
 HasProps
 ```
 
+Custom properties are animated (see `AnimationObject.props`).
+
 ### Reserved
 
 ```haxe
 Reserved
 ```
+
+Reserved for future use.

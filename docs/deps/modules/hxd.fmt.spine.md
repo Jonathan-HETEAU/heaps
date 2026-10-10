@@ -12,7 +12,7 @@
 
 ## hxd.fmt.spine.JsonData
 
-- Fichier : `hxd/fmt/spine/JsonData.hx` — 285 lignes — 65 blocs doc
+- Fichier : `hxd/fmt/spine/JsonData.hx` — 291 lignes — 67 blocs doc
 - Types : `typedef JCurve`, `typedef JBoneAnimation`, `typedef JAnimation`, `typedef JBone`, `typedef JSkeleton`, `typedef JAttachment`, `typedef JRegionAttach`, `typedef JSkinMeshAttach`, `typedef JSkin`, `typedef JSlot`, `typedef JsonData`
 - Utilisé par : `hxd.fmt.spine.Library`
 

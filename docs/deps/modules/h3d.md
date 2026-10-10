@@ -53,7 +53,7 @@
 
 ## h3d.Matrix
 
-- Fichier : `h3d/Matrix.hx` — 1233 lignes — 91 blocs doc
+- Fichier : `h3d/Matrix.hx` — 1248 lignes — 96 blocs doc
 - Types : `typedef ColorAdjust`, `class MatrixImpl`, `abstract Matrix`
 - Dépend de : `h2d.col.Polynomial`, `h3d.Quat`, `h3d.Vector`, `hxd.Math` (import/use)
 - Utilisé par : `h2d.Drawable`, `h2d.ObjectFollower`, `h2d.domkit.BaseComponents`, `h2d.filter.Ambient`, `h2d.filter.ColorMatrix`, `h3d.Camera`, `h3d.Quat`, `h3d.Vector`, `h3d.Vector4`, `h3d.anim.BlendSpace2D`, `h3d.anim.BufferAnimation`, `h3d.anim.LinearAnimation`, `h3d.anim.Skin`, `h3d.anim.SmoothTarget`, `h3d.anim.SmoothTransition`, `h3d.col.Bounds`, `h3d.col.Capsule`, `h3d.col.Collider`, `h3d.col.Cylinder`, `h3d.col.Frustum`, `h3d.col.HeightMap`, `h3d.col.InsideCollider`, `h3d.col.ObjectCollider`, `h3d.col.OrientedBounds`, `h3d.col.Plane`, `h3d.col.Polygon`, `h3d.col.PolygonBuffer`, `h3d.col.Ray`, `h3d.col.SkinCollider`, `h3d.col.Sphere`, `h3d.col.TransformCollider`, `h3d.impl.Benchmark`, `h3d.impl.RenderContext`, `h3d.impl.Upscaling`, `h3d.parts.GpuParticles`, `h3d.pass.Blur`, `h3d.pass.CascadeShadowMap`, `h3d.pass.ColorMatrix`, `h3d.pass.CubeCopy`, `h3d.pass.CubeShadowMap`, `h3d.pass.DirShadowMap`, `h3d.pass.Shadows`, `h3d.prim.BigPrimitive`, `h3d.prim.ColliderData`, `h3d.prim.Instanced`, `h3d.prim.Quads`, `h3d.scene.AnimMeshBatcher`, `h3d.scene.Batcher`, `h3d.scene.Mesh`, `h3d.scene.MeshBatch`, `h3d.scene.Object`, `h3d.scene.RenderContext`, `h3d.scene.Scene`, `h3d.scene.Skin`, `h3d.scene.World`, `h3d.scene.pbr.Environment`, `h3d.scene.pbr.LightBuffer`, `h3d.scene.pbr.Renderer`, `hxd.FloatBufferLoader`, `hxd.fmt.fbx.BaseLibrary`, `hxd.fmt.fbx.Geometry`, `hxd.fmt.fbx.HMDOut`, `hxd.fmt.hmd.Data`, `hxsl.DynamicShader`, `hxsl.Macros`, `hxsl.Types`

@@ -12,7 +12,7 @@ Implicit casts to: `String`
 
 | Name | Value | Description |
 |---|---|---|
-| `Sphere` | `"Sphere"` |  |
-| `Box` | `"Box"` |  |
-| `Capsule` | `"Capsule"` |  |
-| `Cylinder` | `"Cylinder"` |  |
+| `Sphere` | `"Sphere"` | A sphere. |
+| `Box` | `"Box"` | A box. |
+| `Capsule` | `"Capsule"` | A capsule. |
+| `Cylinder` | `"Cylinder"` | A cylinder. |

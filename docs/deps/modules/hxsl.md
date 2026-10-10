@@ -4,7 +4,7 @@
 
 ## hxsl.Ast
 
-- Fichier : `hxsl/Ast.hx` — 1127 lignes — 118 blocs doc — contient du `#if`
+- Fichier : `hxsl/Ast.hx` — 1545 lignes — 322 blocs doc — contient du `#if`
 - Types : `enum BufferKind`, `enum TexDimension`, `enum Type`, `enum VecType`, `enum SizeDecl`, `typedef FunType`, `class Error`, `typedef Position`, `typedef Expr`, `typedef Binop`, `typedef Unop`, `enum VarKind`, `enum VarQualifier`, `enum Prec`, `typedef VarDecl`, `typedef FunDecl`, `enum Const`, `enum ExprDef`, `enum TExprDef`, `class TVar`, `typedef TFunction`, `enum FunctionKind`, `enum TGlobal`, `enum SyntaxArgAccess`, `typedef SyntaxArg`, `enum Component`, `class TExpr`, `typedef ShaderData`, `class Tools`, `class Tools2`, `class Tools3`, `class Tools4`
 - Dépend de : `hxsl.Output`, `hxsl.Printer`, `hxsl.Types`
 - Utilisé par : `h3d.impl.DX12Driver`, `h3d.impl.DirectXDriver`, `h3d.impl.GlDriver`, `h3d.impl.RenderContext`, `h3d.scene.MeshBatch`, `hxd.BufferFormat`, `hxsl.Cache`, `hxsl.CacheFile`, `hxsl.Checker`, `hxsl.Clone`, `hxsl.Dce`, `hxsl.Debug`, `hxsl.DynamicShader`, `hxsl.Eval`, `hxsl.Flatten`, `hxsl.Globals`, `hxsl.GlslOut`, `hxsl.HlslOut`, `hxsl.Linker`, `hxsl.MacroParser`, `hxsl.Macros`, `hxsl.NXGlslOut`, `hxsl.Output`, `hxsl.Printer`, `hxsl.RuntimeShader`, `hxsl.Serializer`, `hxsl.Shader`, `hxsl.SharedShader`, `hxsl.Splitter`
@@ -26,7 +26,7 @@
 
 ## hxsl.CacheFile
 
-- Fichier : `hxsl/CacheFile.hx` — 833 lignes — 6 blocs doc — contient du `#if`
+- Fichier : `hxsl/CacheFile.hx` — 839 lignes — 8 blocs doc — contient du `#if`
 - Types : `class NullShader`, `class CacheFile`
 - Héritage : `NullShader` extends `hxsl.Shader`, `CacheFile` extends `Cache`
 - Dépend de : `h3d.Engine`, `hxd.Math`, `hxd.System.js`, `hxd.res.Loader`, `hxd.res.NotFound`, `hxsl.Ast` (import), `hxsl.Cache` (extends/use), `hxsl.Channel`, `hxsl.Globals`, `hxsl.Output`, `hxsl.Printer`, `hxsl.RuntimeShader`, `hxsl.Shader` (extends/use), `hxsl.ShaderList`, `hxsl.SharedShader`
@@ -54,7 +54,7 @@
 
 ## hxsl.ChannelTexture
 
-- Fichier : `hxsl/ChannelTexture.hx` — 7 lignes — 1 blocs doc
+- Fichier : `hxsl/ChannelTexture.hx` — 16 lignes — 3 blocs doc
 - Types : `typedef ChannelTexture`
 - Dépend de : `hxsl.Channel`, `hxsl.Types`
 - Utilisé par : `hxsl.Shader`
@@ -104,7 +104,7 @@
 
 ## hxsl.Flatten
 
-- Fichier : `hxsl/Flatten.hx` — 629 lignes — 6 blocs doc
+- Fichier : `hxsl/Flatten.hx` — 635 lignes — 8 blocs doc
 - Types : `class Alloc`, `enum ARead`, `class Flatten`
 - Dépend de : `hxsl.Ast` (use/using)
 - Utilisé par : `hxsl.Cache`
@@ -153,7 +153,7 @@
 
 ## hxsl.NXGlslOut
 
-- Fichier : `hxsl/NXGlslOut.hx` — 127 lignes — 3 blocs doc
+- Fichier : `hxsl/NXGlslOut.hx` — 136 lignes — 6 blocs doc
 - Types : `enum BlockType`, `class NXGlslOut`
 - Héritage : `NXGlslOut` extends `hxsl.GlslOut`
 - Dépend de : `hxsl.Ast` (import/use/using), `hxsl.Globals`, `hxsl.GlslOut` (extends/use), `hxsl.Output`

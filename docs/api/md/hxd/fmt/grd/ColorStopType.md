@@ -12,14 +12,20 @@ The source of the color of a stop: a user color, or the background or foreground
 User
 ```
 
+A color chosen by the user.
+
 ### Background
 
 ```haxe
 Background
 ```
 
+The background color.
+
 ### Foreground
 
 ```haxe
 Foreground
 ```
+
+The foreground color.

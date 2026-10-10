@@ -12,14 +12,20 @@ How the UI is handled by the frame generation, so that it is not interpolated: `
 BackBuffer
 ```
 
+The whole back buffer is interpolated, UI included.
+
 ### HudLess
 
 ```haxe
 HudLess
 ```
 
+A copy of the frame without the UI is marked with `Upscaling.markFrameGenHudless`.
+
 ### UITexture
 
 ```haxe
 UITexture
 ```
+
+The UI is drawn into a separate texture, see `Upscaling.getFrameGenUITarget`.

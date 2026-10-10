@@ -21,6 +21,8 @@ The tone mapping operator.
 var ?skyColor:Null<Int>
 ```
 
+The color of the sky, for the `CustomColor` sky mode.
+
 ### sky
 
 ```haxe
@@ -51,6 +53,8 @@ The display mode.
 var ?forceDirectDiscard:Null<Bool>
 ```
 
+Discards the pixels not lit by the direct lights (default `false`).
+
 ### exposure
 
 ```haxe
@@ -73,11 +77,15 @@ The emissive intensity multiplier is `emissive * emissive`.
 var ?e:Null<Float>
 ```
 
+The `e` factor of the `Filmic` tone mapping curve.
+
 ### d
 
 ```haxe
 var ?d:Null<Float>
 ```
+
+The `d` factor of the `Filmic` tone mapping curve.
 
 ### c
 
@@ -85,14 +93,20 @@ var ?d:Null<Float>
 var ?c:Null<Float>
 ```
 
+The `c` factor of the `Filmic` tone mapping curve.
+
 ### b
 
 ```haxe
 var ?b:Null<Float>
 ```
 
+The `b` factor of the `Filmic` tone mapping curve.
+
 ### a
 
 ```haxe
 var ?a:Null<Float>
 ```
+
+The `a` factor of the `Filmic` tone mapping curve `(x * (a * x + b)) / (x * (c * x + d) + e)`.

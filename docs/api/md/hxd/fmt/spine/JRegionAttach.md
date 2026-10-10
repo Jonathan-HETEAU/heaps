@@ -36,6 +36,8 @@ The width of the image.
 var ?type:Null<String>
 ```
 
+The type of the attachment (`region` by default, or `skinnedmesh`).
+
 ### scaleY
 
 ```haxe
@@ -73,3 +75,5 @@ The height of the image.
 ```haxe
 var ?color:Null<String>
 ```
+
+The color.

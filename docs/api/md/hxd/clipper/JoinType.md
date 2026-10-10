@@ -12,14 +12,20 @@ How the corners are joined by `ClipperOffset`: square, round or mitered.
 Square
 ```
 
+Squared corners.
+
 ### Round
 
 ```haxe
 Round
 ```
 
+Rounded corners.
+
 ### Miter
 
 ```haxe
 Miter
 ```
+
+Mitered (sharp) corners, limited by the miter limit.

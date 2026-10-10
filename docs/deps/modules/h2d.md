@@ -32,7 +32,7 @@
 
 ## h2d.CdbLevel
 
-- Fichier : `h2d/CdbLevel.hx` — 703 lignes — 79 blocs doc — contient du `#if`
+- Fichier : `h2d/CdbLevel.hx` — 712 lignes — 82 blocs doc — contient du `#if`
 - Types : `typedef TileSpec`, `typedef LayerSpec`, `typedef LevelSpec`, `class LevelTileset`, `class LevelObject`, `class LevelGroup`, `class LevelObjectInstance`, `enum LevelLayerData`, `class LevelLayer`, `class CdbLevel`
 - Héritage : `CdbLevel` extends `Layers`
 - Dépend de : `h2d.Layers` (extends/use), `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `h2d.TileGroup`, `h2d.col.Bounds`, `hxd.res.Image`, `hxd.res.Loader`

@@ -52,6 +52,8 @@ The name of the variable in the generated code.
 Shared
 ```
 
+The parameter is shared by all the shaders declaring it with the same name, instead of being separate for each shader.
+
 ### Precision
 
 ```haxe
@@ -82,6 +84,8 @@ The variable is ignored in reflection (inspector).
 PerInstance(v:Int)
 ```
 
+The input changes every `v` instances (instanced rendering).
+
 ### Doc
 
 ```haxe
@@ -96,17 +100,23 @@ The documentation of the variable, for editors.
 Borrow(source:String)
 ```
 
+The local variable is read from the shader of the given path.
+
 ### Sampler
 
 ```haxe
 Sampler(name:String)
 ```
 
+The names of the samplers of the texture.
+
 ### Final
 
 ```haxe
 Final
 ```
+
+The local variable is assigned only once, at its declaration.
 
 ### Flat
 
@@ -122,8 +132,12 @@ The variable is not interpolated between the vertex and the fragment shader.
 NoVar
 ```
 
+The local variable is not passed from the vertex to the fragment shader.
+
 ### Enum
 
 ```haxe
 Enum(path:String, constructors:Array<String>)
 ```
+
+The parameter is a Haxe enum, stored as the index of its constructor.

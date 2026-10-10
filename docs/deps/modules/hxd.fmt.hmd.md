@@ -4,7 +4,7 @@
 
 ## hxd.fmt.hmd.Data
 
-- Fichier : `hxd/fmt/hmd/Data.hx` — 1100 lignes — 167 blocs doc — contient du `#if`
+- Fichier : `hxd/fmt/hmd/Data.hx` — 1184 lignes — 195 blocs doc — contient du `#if`
 - Types : `typedef GeometryDataFormat`, `typedef GeometryFormat`, `typedef DataPosition`, `typedef Index`, `enum Property`, `typedef Properties`, `enum_abstract ColliderType`, `class Position`, `class Geometry`, `class BlendShape`, `enum ResolveResult`, `class Collider`, `typedef ConvexHullParams`, `class ConvexHullsCollider`, `class MeshCollider`, `class GroupCollider`, `class SphereCollider`, `class BoxCollider`, `class CapsuleCollider`, `class CylinderCollider`, `class EmptyCollider`, `class Material`, `class SkinJoint`, `class SkinSplit`, `class Skin`, `class Model`, `enum AnimationFlag`, `class AnimationObject`, `class AnimationEvent`, `class Animation`, `class Data`
 - Héritage : `ConvexHullsCollider` extends `Collider`, `MeshCollider` extends `Collider`, `GroupCollider` extends `Collider`, `SphereCollider` extends `Collider`, `BoxCollider` extends `Collider`, `CapsuleCollider` extends `Collider`, `CylinderCollider` extends `Collider`, `EmptyCollider` extends `Collider`
 - Dépend de : `h3d.Matrix`, `h3d.Quat`, `h3d.Vector`, `h3d.col.Bounds`, `h3d.col.Point`, `h3d.mat.BlendMode`, `hxd.BufferFormat`, `hxd.Math`, `hxd.fmt.fbx.HMDOut` (import/use), `hxd.tools.VHACD`
@@ -18,7 +18,7 @@
 
 ## hxd.fmt.hmd.Library
 
-- Fichier : `hxd/fmt/hmd/Library.hx` — 959 lignes — 13 blocs doc — contient du `#if`
+- Fichier : `hxd/fmt/hmd/Library.hx` — 977 lignes — 19 blocs doc — contient du `#if`
 - Types : `class FormatMap`, `class ContextShared`, `class GeometryBuffer`, `class Library`
 - Héritage : `ContextShared` extends `hrt.prefab.ContextShared`
 - Dépend de : `h3d.Vector`, `h3d.Vector4`, `h3d.anim.Animation`, `h3d.anim.BufferAnimation`, `h3d.anim.LinearAnimation`, `h3d.anim.Skin`, `h3d.col.Bounds`, `h3d.col.Point`, `h3d.mat.Material`, `h3d.mat.MaterialSetup`, `h3d.mat.Texture`, `h3d.prim.HMDModel` (import/use), `h3d.prim.ModelDatabase`, `h3d.scene.Mesh`, `h3d.scene.MultiMaterial`, `h3d.scene.Object`, `h3d.scene.Skin`, `h3d.shader.BaseMesh`, `h3d.shader.NormalMap`, `h3d.shader.SpecularTexture`, `h3d.shader.Texture`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.IndexBuffer`, `hxd.Math`, `hxd.fmt.hmd.Data` (import/use), `hxd.impl.Float32`, `hxd.impl.TypedArray`, `hxd.res.Loader`, `hxd.res.Resource`

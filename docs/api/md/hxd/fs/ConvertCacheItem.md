@@ -12,11 +12,15 @@ A conversion stored in the cache (`.tmp/cache.dat`), used to skip the conversion
 var ver:Null<Int>
 ```
 
+The version of the converter that generated the file.
+
 ### time
 
 ```haxe
 var time:Int
 ```
+
+The modification time of the source file.
 
 ### size
 
@@ -24,11 +28,15 @@ var time:Int
 var size:Int
 ```
 
+The size of the source file.
+
 ### out
 
 ```haxe
 var out:String
 ```
+
+The path of the converted file.
 
 ### localParamsHash
 
@@ -36,14 +44,20 @@ var out:String
 var localParamsHash:Null<String>
 ```
 
+The hash of the local parameters of the conversion, or `null`.
+
 ### localContextJson
 
 ```haxe
 var localContextJson:Null<String>
 ```
 
+The local context of the conversion, as JSON, or `null`.
+
 ### hash
 
 ```haxe
 var hash:String
 ```
+
+The SHA1 hash of the source file.

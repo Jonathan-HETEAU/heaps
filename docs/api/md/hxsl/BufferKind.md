@@ -36,14 +36,20 @@ A read-write storage buffer.
 Partial
 ```
 
+A uniform buffer declaring only some fields of its format: the format of the buffer set at runtime is a compile time constant.
+
 ### StoragePartial
 
 ```haxe
 StoragePartial
 ```
 
+A read-only storage buffer declaring only some fields of its format (see `Partial`).
+
 ### RWPartial
 
 ```haxe
 RWPartial
 ```
+
+A read-write storage buffer declaring only some fields of its format (see `Partial`).

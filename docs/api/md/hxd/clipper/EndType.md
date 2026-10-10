@@ -12,11 +12,15 @@ How the ends of the paths are handled by `ClipperOffset`: closed polygons, close
 ClosedPol
 ```
 
+The paths are closed polygons: both sides are offset.
+
 ### ClosedLine
 
 ```haxe
 ClosedLine
 ```
+
+The paths are closed lines: offset as an outline.
 
 ### OpenButt
 
@@ -24,14 +28,20 @@ ClosedLine
 OpenButt
 ```
 
+Open paths with ends squared off at the end points.
+
 ### OpenSquare
 
 ```haxe
 OpenSquare
 ```
 
+Open paths with ends squared off, extended by the offset.
+
 ### OpenRound
 
 ```haxe
 OpenRound
 ```
+
+Open paths with round ends.

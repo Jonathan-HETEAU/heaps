@@ -130,7 +130,7 @@
 
 ## h3d.shader.pbr.Slides
 
-- Fichier : `h3d/shader/pbr/Slides.hx` — 154 lignes — 3 blocs doc
+- Fichier : `h3d/shader/pbr/Slides.hx` — 190 lignes — 15 blocs doc
 - Types : `enum_abstract DebugMode`, `class Slides`
 - Héritage : `Slides` extends `ScreenShader`
 - Dépend de : `h3d.shader.ScreenShader` (extends/use), `h3d.shader.Shadow`
