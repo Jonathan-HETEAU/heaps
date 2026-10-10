@@ -1,6 +1,9 @@
 package hxsl;
 using hxsl.Ast;
 
+/**
+	Encodes typed shaders to a compact base64 string, stored in the compiled shader classes.
+**/
 class Serializer {
 
 	var out : haxe.io.BytesBuffer;
@@ -13,6 +16,9 @@ class Serializer {
 	var tid = 1;
 	var version : Int;
 
+	/**
+		Creates a serializer.
+	**/
 	public function new() {
 	}
 
@@ -486,6 +492,9 @@ class Serializer {
 
 	static var SIGN = 0x8C741D; // will be encoded to HXSL
 
+	/**
+		Decodes a serialized shader.
+	**/
 	public function unserialize( data : String ) : ShaderData {
 		input = new haxe.io.BytesInput(haxe.crypto.Base64.decode(data,false));
 		if( input.readByte() != (SIGN & 0xFF) || input.readByte() != (SIGN >> 8) & 0xFF )
@@ -502,6 +511,9 @@ class Serializer {
 		};
 	}
 
+	/**
+		Encodes the shader.
+	**/
 	public function serialize( s : ShaderData ) {
 		varMap = new Map();
 		idMap = new Map();
@@ -516,6 +528,9 @@ class Serializer {
 		return haxe.crypto.Base64.encode(out.getBytes(),false);
 	}
 
+	/**
+		Encodes the shader.
+	**/
 	public static function run( s : ShaderData ) {
 		return new Serializer().serialize(s);
 	}

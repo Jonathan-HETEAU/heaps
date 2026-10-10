@@ -9,15 +9,24 @@ private class ParamVar {
 	var index : Int;
 }
 
+/**
+	The parameters forced to be stored per instance in a batch shader, by shader name.
+**/
 class BatchInstanceParams {
 
 	var forcedPerInstance : Array<{ shader : String, params : Array<String> }>;
 	var cachedSignature : String;
 
+	/**
+		Creates the parameters.
+	**/
 	public function new( forcedPerInstance ) {
 		this.forcedPerInstance = forcedPerInstance;
 	}
 
+	/**
+		Returns a string identifying the parameters.
+	**/
 	public function getSignature() {
 		if( cachedSignature == null ) {
 			for( fp in forcedPerInstance )
@@ -29,14 +38,26 @@ class BatchInstanceParams {
 
 }
 
+/**
+	A node of the tree caching the linked shaders, indexed by the shader instance identifiers.
+**/
 class SearchMap {
+	/**
+		The shader linked for the list of instances leading to this node.
+	**/
 	public var linked : RuntimeShader;
 	var nexts : Map<Int,SearchMap>;
 	var firstId: Int = -1;  // Optim: majority of nodes have 0-1 nexts
 	var firstNext : SearchMap;
 
+	/**
+		Creates a node.
+	**/
 	public function new() { }
 
+	/**
+		Sets the child node of the given instance identifier.
+	**/
 	public function set(id: Int, s: SearchMap) {
 		if(nexts != null) {
 			nexts.set(id, s);
@@ -57,6 +78,9 @@ class SearchMap {
 		}
 	}
 
+	/**
+		Returns the child node of the given instance identifier.
+	**/
 	inline public function get(id: Int) {
 		if(firstId < 0)
 			return null;
@@ -68,6 +92,9 @@ class SearchMap {
 	}
 }
 
+/**
+	Links lists of shaders into `RuntimeShader`s and caches the results.
+**/
 class Cache {
 
 	var linkCache : SearchMap;
@@ -214,6 +241,9 @@ class Cache {
 		return s;
 	}
 
+	/**
+		Returns the shader linking the shaders of the list (with their current variants), created and cached on the first call.
+	**/
 	@:noDebug
 	public function link( shaders : hxsl.ShaderList, mode : LinkMode ) {
 		#if heaps_mt_hxsl_cache
@@ -610,6 +640,9 @@ class Cache {
 		return c;
 	}
 
+	/**
+		Returns a shader reading the per instance parameters of the linked shader from a buffer, to draw many instances in one call (see `h3d.scene.MeshBatch`).
+	**/
 	public function makeBatchShader( rt : RuntimeShader, shaders, params : BatchInstanceParams ) : BatchShader {
 		var batchMap;
 		if( params == null )
@@ -1000,6 +1033,9 @@ class Cache {
 	}
 
 	static var INST : Cache;
+	/**
+		Returns the cache, created on the first call.
+	**/
 	public static function get() : Cache {
 		var c = INST;
 		if( c == null )
@@ -1007,10 +1043,16 @@ class Cache {
 		return c;
 	}
 
+	/**
+		Sets the cache (such as a `CacheFile` loading precompiled shaders).
+	**/
 	public static function set(c) {
 		INST = c;
 	}
 
+	/**
+		Removes the cache: a new one is created on the next `get`.
+	**/
 	public static function clear() {
 		INST = null;
 	}

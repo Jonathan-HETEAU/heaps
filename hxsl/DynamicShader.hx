@@ -17,8 +17,14 @@ private class Access {
 	}
 }
 
+/**
+	A shader created at runtime from a `SharedShader` (such as a shader graph or a shader loaded from source), whose parameters are accessed by name or variable.
+**/
 class DynamicShader extends Shader {
 
+	/**
+		The name of the shader instance.
+	**/
 	public var instanceName : String;
 	var values = new Array<Dynamic>();
 	var floats = new Array<Float>();
@@ -26,6 +32,9 @@ class DynamicShader extends Shader {
 	var varIndexes = new Map<Int,Int>();
 	var varNames = new Map<String,Int>();
 
+	/**
+		Creates a shader instance of the shared shader.
+	**/
 	public function new( s : SharedShader, ?name ) {
 		this.shader = s;
 		this.instanceName = name;
@@ -94,6 +103,9 @@ class DynamicShader extends Shader {
 		accesses.push(access == null ? new Access(isFloat?Float:Dynamic,vid,null) : access);
 	}
 
+	/**
+		Returns the index of the parameter variable.
+	**/
 	public function getParamIndex( p : hxsl.Ast.TVar ) : Int {
 		return varIndexes.get(p.id);
 	}
@@ -138,6 +150,9 @@ class DynamicShader extends Shader {
 		return floats[a.index];
 	}
 
+	/**
+		Sets the value of the parameter variable.
+	**/
 	public function setParamValue( p : hxsl.Ast.TVar, value : Dynamic ) {
 		var vidx = varIndexes.get(p.id);
 		var a = accesses[vidx];
@@ -154,6 +169,9 @@ class DynamicShader extends Shader {
 		}
 	}
 
+	/**
+		Sets the value of the float parameter variable.
+	**/
 	public function setParamFloatValue( p : hxsl.Ast.TVar, value : Float ) {
 		var vidx = varIndexes.get(p.id);
 		var a = accesses[vidx];
@@ -190,6 +208,9 @@ class DynamicShader extends Shader {
 		updateConstantsFinal(globals);
 	}
 
+	/**
+		Returns the value of the parameter of the given name, or `null`.
+	**/
 	public function getVariable( name : String ) : Dynamic {
 		var vid = varNames.get(name);
 		if( vid == null )
@@ -197,6 +218,9 @@ class DynamicShader extends Shader {
 		return vid < 0 ? floats[-vid-1] : values[vid];
 	}
 
+	/**
+		Sets the value of the parameter of the given name. Returns `false` if there is none.
+	**/
 	public function setVariable( name : String, value : Dynamic ) {
 		var vid = varNames.get(name);
 		if( vid == null )
@@ -208,6 +232,9 @@ class DynamicShader extends Shader {
 		return true;
 	}
 
+	/**
+		Returns a parameter (or a field) for hscript.
+	**/
 	@:keep public function hscriptGet( field : String ) : Dynamic {
 		var vid = varNames.get(field);
 		if( vid == null )
@@ -217,6 +244,9 @@ class DynamicShader extends Shader {
 		return values[vid];
 	}
 
+	/**
+		Sets a parameter (or a field) from hscript.
+	**/
 	@:keep public function hscriptSet( field : String, value : Dynamic ) : Dynamic {
 		var vid = varNames.get(field);
 		if( vid == null ) {

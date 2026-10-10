@@ -15,6 +15,9 @@ private class VarProps {
 	}
 }
 
+/**
+	Splits a linked shader into its stages (vertex and fragment, or compute), with the variables each one uses.
+**/
 class Splitter {
 
 	var vars : Map<Int,VarProps>;
@@ -28,11 +31,17 @@ class Splitter {
 	var mapVarsFun : TExpr -> TExpr;
 	var checkExprFun : TExpr -> Void;
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		this.mapVarsFun = mapVars;
 		this.checkExprFun = checkExpr;
 	}
 
+	/**
+		Returns the stages of the shader.
+	**/
 	public function split( s : ShaderData, isBatchShader : Bool  ) : Array<ShaderData> {
 		this.isBatchShader = isBatchShader;
 		var vfun = null, vvars = new Map(), avvars = [];

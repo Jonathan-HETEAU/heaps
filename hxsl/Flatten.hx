@@ -15,11 +15,17 @@ private class Alloc {
 	}
 }
 
+/**
+	How a flattened variable is read: at a fixed position, or at an offset computed at runtime (array access).
+**/
 enum ARead {
 	AIndex( a : Alloc );
 	AOffset( a : Alloc, stride : Int, delta : TExpr );
 }
 
+/**
+	Packs the parameters and globals of a shader stage into arrays of `vec4` (and arrays of textures and buffers), as expected by the drivers.
+**/
 class Flatten {
 
 	var globals : Array<TVar>;
@@ -27,15 +33,27 @@ class Flatten {
 	var outVars : Array<TVar>;
 	var varMap : Map<TVar,Alloc>;
 	var textureFormats : Array<{ dim : TexDimension, arr : Bool, rw : Int }>;
+	/**
+		The position of each packed variable in its array.
+	**/
 	public var allocData : Map< TVar, Array<Alloc> >;
+	/**
+		Tells if the stage uses bindless handles.
+	**/
 	public var hasBindless : Bool;
 
 	var mapExprFun : TExpr -> TExpr;
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		this.mapExprFun = mapExpr;
 	}
 
+	/**
+		Returns the shader stage with its parameters and globals packed.
+	**/
 	public function flatten( s : ShaderData, kind : FunctionKind ) : ShaderData {
 		globals = [];
 		params = [];

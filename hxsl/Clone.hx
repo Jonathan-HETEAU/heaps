@@ -1,14 +1,26 @@
 package hxsl;
 using hxsl.Ast;
 
+/**
+	Deep copies typed shaders, with new variable identifiers.
+**/
 class Clone {
 
+	/**
+		The copy of each variable, by the identifier of the original.
+	**/
 	public var varMap : Map<Int,TVar>;
 
+	/**
+		Creates a cloner.
+	**/
 	public function new() {
 		varMap = new Map();
 	}
 
+	/**
+		Returns the copy of the variable, created on the first call.
+	**/
 	public function tvar( v : TVar ) : TVar {
 		var v2 = varMap.get(v.id);
 		if( v2 != null ) return v2;
@@ -25,6 +37,9 @@ class Clone {
 		return v2;
 	}
 
+	/**
+		Returns a copy of the function.
+	**/
 	public function tfun( f : TFunction ) : TFunction {
 		return {
 			ret : ttype(f.ret),
@@ -35,6 +50,9 @@ class Clone {
 		};
 	}
 
+	/**
+		Returns a copy of the type, with copied variables.
+	**/
 	public function ttype( t : Type ) {
 		switch( t ) {
 		case TStruct(vl):
@@ -48,6 +66,9 @@ class Clone {
 		}
 	}
 
+	/**
+		Returns a copy of the expression.
+	**/
 	public function texpr( e : TExpr ) : TExpr {
 		var e2 : TExpr = e.map(texpr);
 		e2.t = ttype(e.t);
@@ -64,6 +85,9 @@ class Clone {
 		return e2;
 	}
 
+	/**
+		Returns a copy of the shader.
+	**/
 	public function shader( s : ShaderData ) : ShaderData {
 		return {
 			name : s.name,
@@ -72,6 +96,9 @@ class Clone {
 		};
 	}
 
+	/**
+		Returns a copy of the shader.
+	**/
 	public static function shaderData( s : ShaderData ) {
 		return new Clone().shader(s);
 	}

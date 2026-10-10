@@ -1,6 +1,9 @@
 package hxsl;
 import hxsl.Ast;
 
+/**
+	Generates GLSL code (desktop GL or GLES/WebGL) from a flattened shader stage.
+**/
 class GlslOut {
 
 	static var KWD_LIST = "attribute const uniform varying buffer shared
@@ -98,20 +101,32 @@ class GlslOut {
 	var uniformBuffer : Int = 0;
 	var outIndex : Int = 0;
 	var rwTextures : Int = 0;
+	/**
+		The name of each variable in the generated code, by identifier.
+	**/
 	public var varNames : Map<Int,String>;
+	/**
+		The GLES version to target (WebGL), or `null` for desktop GL.
+	**/
 	public var glES : Null<Float>;
+	/**
+		The GLSL version to target.
+	**/
 	public var version : Null<Int>;
 
-	/*
+	/**
 		Intel HD driver fix:
 			single element arrays are interpreted as not arrays, creating mismatch when
 			handling uniforms/textures. The fix changes decl[1] into decl[2] with one unused element.
 
 		Should not be enabled on AMD driver as it will create mismatch wrt uniforms binding
 		when there are some unused textures in shader output.
-	*/
+	**/
 	var intelDriverFix : Bool;
 
+	/**
+		Creates a generator.
+	**/
 	public function new() {
 		varNames = new Map();
 		allNames = new Map();
@@ -835,6 +850,9 @@ class GlslOut {
 		}
 	}
 
+	/**
+		Returns the GLSL code of the shader stage.
+	**/
 	public function run( s : ShaderData ) {
 
 		var foundGlobals = new Map();
@@ -916,6 +934,9 @@ class GlslOut {
 		return decls.join("\n");
 	}
 
+	/**
+		Returns the GLSL code of the shader stage, for WebGL on JS.
+	**/
 	public static function compile( s : ShaderData ) {
 		var out = new GlslOut();
 		#if js

@@ -8,21 +8,39 @@ using hxsl.Ast;
 **/
 class Eval {
 
+	/**
+		The evaluated copy of each variable.
+	**/
 	public var varMap : Map<TVar,TVar>;
+	/**
+		If set, the calls to helper functions are inlined.
+	**/
 	public var inlineCalls : Bool;
+	/**
+		If set, the loops over constant ranges are unrolled.
+	**/
 	public var unrollLoops : Bool;
+	/**
+		If set, the conditional values (`if` expressions with an `else`) are replaced by a `mix`.
+	**/
 	public var eliminateConditionals : Bool;
 	var constants : Map<Int,TExprDef>;
 	var funMap : Map<TVar,TFunction>;
 	var curFun : TFunction;
 	var mapped : Array<TVar> = [];
 
+	/**
+		Creates an evaluator.
+	**/
 	public function new() {
 		varMap = new Map();
 		funMap = new Map();
 		constants = new Map();
 	}
 
+	/**
+		Sets the value of a constant variable.
+	**/
 	public function setConstant( v : TVar, c : Const ) {
 		constants.set(v.id, TConst(c));
 	}
@@ -133,6 +151,9 @@ class Eval {
 		}
 	}
 
+	/**
+		Returns the shader with the constants replaced by their values and the expressions reduced.
+	**/
 	public function eval( s : ShaderData ) : ShaderData {
 		evalFinalConsts(s);
 		var funs = [];

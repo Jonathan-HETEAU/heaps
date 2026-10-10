@@ -2,12 +2,18 @@ package hxsl;
 import hxsl.Ast;
 using hxsl.Ast;
 
+/**
+	The uniform block a variable is declared in.
+**/
 enum BlockType {
 	Default;
 	Globals;
 	Params;
 }
 
+/**
+	Generates GLSL code for the Nintendo Switch, with the globals and parameters in uniform blocks.
+**/
 class NXGlslOut extends hxsl.GlslOut {
 
 	var block : BlockType;
@@ -15,6 +21,9 @@ class NXGlslOut extends hxsl.GlslOut {
 	var hasParams = false;
 	var ubo : Array<TVar> = [];
 
+	/**
+		Creates a generator.
+	**/
 	public function new(){
 		super();
 		version = 140;

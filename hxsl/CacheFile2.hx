@@ -11,16 +11,37 @@ private class ShaderListInfo {
 	public var constBits : Int;
 }
 
+/**
+	Loads the shader lists of a `CacheFile2` and links them, possibly in a thread (with `-D heaps_mt_hxsl_cache`).
+**/
 @:access(hxsl.CacheFile2)
 class CacheFile2Loader {
 	var cache : CacheFile2;
 
 	// Input from file
+	/**
+		The link shaders read from the file.
+	**/
 	public var lkInfos : Array<{ name : String, vars : Array<hxsl.Output> }> = [];
+	/**
+		The batch shaders read from the file.
+	**/
 	public var bcMap : Map<String, { sign : String, params : hxsl.Cache.BatchInstanceParams }> = [];
+	/**
+		The default shader lists read from the file.
+	**/
 	public var rtInfosDefault : Array<{ sign : String, sl : Array<ShaderListInfo> }> = [];
+	/**
+		The batch shader lists read from the file.
+	**/
 	public var rtInfosBatch : Array<{ sign : String, sl : Array<ShaderListInfo> }> = [];
+	/**
+		The compute shader lists read from the file.
+	**/
 	public var rtInfosCompute : Array<{ sign : String, sl : Array<ShaderListInfo> }> = [];
+	/**
+		The buffer formats read from the file.
+	**/
 	public var bfMap : Map<Int, hxd.BufferFormat> = [];
 
 	// Tmp used by run
@@ -38,10 +59,16 @@ class CacheFile2Loader {
 	var linkDone : Bool = false;
 	#end
 
+	/**
+		Creates a loader for the cache.
+	**/
 	public function new( cache : CacheFile2 ) {
 		this.cache = cache;
 	}
 
+	/**
+		Links all the shader lists, then calls `onDone`.
+	**/
 	public function run( onDone : Void -> Void ) {
 		this.onDone = onDone;
 
@@ -271,10 +298,16 @@ class CacheFile2Loader {
 class CacheFile2 extends Cache {
 	static var DEBUG : Bool = false;
 	static var LOAD_TIME : Float = 0.0;
+	/**
+		The version of the file format.
+	**/
 	public static var VERSION = 1;
 
 	var file : String;
 	var outFile : String;
+	/**
+		If set, the cache file is saved when new shaders are linked (see `saveIfModified`).
+	**/
 	public var allowSave : Bool;
 
 	var isLoading : Bool = false;
@@ -291,6 +324,9 @@ class CacheFile2 extends Cache {
 	var rtMutex : sys.thread.Mutex;
 	#end
 
+	/**
+		Creates the cache for the file (saved to `outFile` if set).
+	**/
 	public function new( file : String, allowSave : Bool, ?outFile : String ) {
 		super();
 		this.file = file;
@@ -502,6 +538,9 @@ class CacheFile2 extends Cache {
 		return true;
 	}
 
+	/**
+		Saves the cache file if new shaders were added.
+	**/
 	public function saveIfModified() {
 		if( this.isDirty ) {
 			this.isDirty = false;
@@ -511,6 +550,9 @@ class CacheFile2 extends Cache {
 		}
 	}
 
+	/**
+		Writes a description of the cached shaders to a file, for debugging.
+	**/
 	public function dump(path: String, withCode : Bool=false) {
 		function addChild( parent : DumpNode, name : String ) : DumpNode {
 			for(child in parent.children) {

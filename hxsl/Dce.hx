@@ -3,6 +3,9 @@ using hxsl.Ast;
 import hxsl.Debug.trace in debug;
 
 private class Exit {
+	/**
+		Creates the exception used to exit the expression scan.
+	**/
 	public function new() {
 	}
 }
@@ -31,6 +34,9 @@ private class VarDeps {
 private class WriteTo {
 	public var vars : Array<VarDeps>;
 	public var bits : Array<Int>;
+	/**
+		Creates an empty write target.
+	**/
 	public function new() {
 		vars = [];
 		bits = [];
@@ -57,6 +63,9 @@ private class WriteTo {
 	}
 }
 
+/**
+	Dead code elimination: removes the variables and expressions that don't contribute to the outputs of the shaders.
+**/
 class Dce {
 
 	var used : Map<Int,VarDeps>;
@@ -64,10 +73,16 @@ class Dce {
 	var markAsKeep : Bool;
 	var checkBranchesFun : TExpr -> Void;
 
+	/**
+		Creates the pass.
+	**/
 	public function new() {
 		checkBranchesFun = this.checkBranches; // prevent recreation of instance closure
 	}
 
+	/**
+		Removes the dead code of the stages of a shader (vertex then fragment), in place.
+	**/
 	public function dce( shaders : Array<ShaderData> ) {
 		// collect vars dependencies
 		used = new Map();

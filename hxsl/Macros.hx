@@ -3,6 +3,9 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 using hxsl.Ast;
 
+/**
+	The macros compiling the shaders at compile time.
+**/
 class Macros {
 	#if macro
 	static function makeType( t : Type ) : ComplexType {
@@ -553,6 +556,9 @@ class Macros {
 		return fields;
 	}
 
+	/**
+		Creates a parser resolving the enum types at compile time.
+	**/
 	public static function makeParser( ?enumTypes : Map<String,String> ) {
 		var p = new MacroParser();
 		p.resolveEnum = function(t, pos) {
@@ -597,6 +603,9 @@ class Macros {
 		return null;
 	}
 
+	/**
+		Build macro of the `hxsl.Shader` subclasses: checks the `SRC` source, serializes it, and generates the properties of the parameters and the methods to access them.
+	**/
 	public static function buildShader() {
 		var fields = Context.getBuildFields();
 		for( f in fields )
@@ -667,6 +676,9 @@ class Macros {
 		return fields;
 	}
 
+	/**
+		Build macro generating a property backed by a `GlobalSlot` for each field marked with `@global("path")` (used by `h3d.scene.RenderContext`).
+	**/
 	public static function buildGlobals() {
 		var fields = Context.getBuildFields();
 		var globals = [];

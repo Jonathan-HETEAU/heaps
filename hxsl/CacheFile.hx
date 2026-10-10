@@ -18,8 +18,14 @@ private class NullShader extends hxsl.Shader {
 	};
 }
 
+/**
+	A shader cache saving the linked shaders and their compiled code to a file (`FILENAME`), to load them at startup instead of compiling them.
+**/
 class CacheFile extends Cache {
 
+	/**
+		The path of the cache file. The compiled code is saved next to it, with a platform suffix.
+	**/
 	public static var FILENAME = "res/shaders.cache";
 
 	var allowCompile : Bool;
@@ -39,8 +45,14 @@ class CacheFile extends Cache {
 	var compiledSources : Map<String,{ vertex : String, fragment : String }> = new Map();
 	var allSources : Map<String,String> = new Map();
 
+	/**
+		If set, the new shaders are added to the cache file.
+	**/
 	public var allowSave = #if usesys false #else true #end;
 
+	/**
+		Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise an error is thrown.
+	**/
 	public function new( allowCompile, recompileRT = false, showProgress = false ) {
 		super();
 		this.allowCompile = allowCompile;

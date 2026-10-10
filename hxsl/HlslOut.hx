@@ -1,16 +1,28 @@
 package hxsl;
 using hxsl.Ast;
 
+/**
+	Allocates the sampler registers of the textures, sharing the ones of the textures with the same `@sampler` name.
+**/
 class Samplers {
 
+	/**
+		The number of samplers allocated.
+	**/
 	public var count : Int;
 	var named : Map<String, Int>;
 
+	/**
+		Creates an empty allocation.
+	**/
 	public function new() {
 		count = 0;
 		named = new Map();
 	}
 
+	/**
+		Allocates the samplers of the texture variable (or array of textures), adds them to `arr` and returns it. Returns `null` if the variable is not a texture.
+	**/
 	public function make( v : TVar, arr : Array<Int> ) : Array<Int> {
 
 		var ntex = switch( v.type ) {
@@ -46,9 +58,21 @@ class Samplers {
 
 }
 
+/**
+	The samplers of a texture variable.
+**/
 typedef SamplerRef = {
+	/**
+		The sampler indexes.
+	**/
 	var arr : Array<Int>;
+	/**
+		The offset of the variable in the array.
+	**/
 	var offset : Int;
+	/**
+		The expression of the index in the array.
+	**/
 	var index : TExpr;
 }
 
@@ -58,6 +82,9 @@ private class GlobalsCollect {
 	public var computeLayout : Array<Int> = [1,1,1];
 	public var gtypes : Map<Int,Type> = [];
 
+	/**
+		Creates an empty collection.
+	**/
 	public function new() {
 	}
 
@@ -83,6 +110,9 @@ private class GlobalsCollect {
 }
 
 
+/**
+	Generates HLSL code (DirectX 11 and 12) from a flattened shader stage.
+**/
 class HlslOut {
 
 	static var KWD_LIST = [
@@ -146,6 +176,9 @@ class HlslOut {
 	var bindlessSamplers : Map<Int, Int>;
 	var samplers : Map<Int, SamplerRef>;
 	var computeLayout : Array<Int>;
+	/**
+		The name of each variable in the generated code, by identifier.
+	**/
 	public var varNames : Map<Int,String>;
 
 	var varAccess : Map<Int,String>;
@@ -155,6 +188,9 @@ class HlslOut {
 	inline function get_isCompute() return kind == Main;
 	inline function get_isVertex() return kind == Vertex;
 
+	/**
+		Creates a generator.
+	**/
 	public function new() {
 		varNames = new Map();
 		allNames = new Map();
@@ -915,6 +951,9 @@ class HlslOut {
 		}
 	}
 
+	/**
+		Returns a unique name for the variable in the generated code, avoiding the HLSL keywords.
+	**/
 	public static function varName(v : TVar, varNames : Map<Int, String>, allNames : Map<String, Int>) : String {
 		var n = varNames.get(v.id);
 		if( n != null )
@@ -1183,6 +1222,9 @@ class HlslOut {
 		}
 	}
 
+	/**
+		Returns the HLSL code of the shader stage.
+	**/
 	public function run( s : ShaderData ) {
 		locals = new Map();
 		bindlessSamplers = new Map();
@@ -1214,6 +1256,9 @@ class HlslOut {
 		return decls.join("\n");
 	}
 
+	/**
+		Returns the semantic name of a vertex input (a name ending with a digit gets a `_` suffix).
+	**/
 	public static function semanticName( name : String ) {
 		if( name.length == 0 || (name.charCodeAt(name.length - 1) >= '0'.code && name.charCodeAt(name.length - 1) <= '9'.code) )
 			name += "_";

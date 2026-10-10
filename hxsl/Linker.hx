@@ -63,8 +63,14 @@ private class ShaderInfos {
 	}
 }
 
+/**
+	Links the variants of a list of shaders into a single shader: the variables of the same name are merged, and the functions are ordered by their dependencies.
+**/
 class Linker {
 
+	/**
+		All the variables of the linked shader.
+	**/
 	public var allVars : Array<AllocatedVar>;
 	var varMap : Map<String,AllocatedVar>;
 	var curShader : ShaderInfos;
@@ -79,6 +85,9 @@ class Linker {
 
 	var mapExprVarFun : TExpr -> TExpr;
 
+	/**
+		Creates a linker for the given link mode.
+	**/
 	public function new(mode) {
 		this.mode = mode;
 		this.mapExprVarFun = mapExprVar;
@@ -408,6 +417,9 @@ class Linker {
 		cur.onStack = false;
 	}
 
+	/**
+		Links the shaders and returns the result, with its vertex and fragment (or main) functions.
+	**/
 	public function link( shadersData : Array<ShaderData> ) : ShaderData {
 		debug("---------------------- LINKING -----------------------");
 		varMap = new Map();

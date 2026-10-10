@@ -1,11 +1,26 @@
 package hxsl;
 using hxsl.Ast;
 
+/**
+	A variant of a shader for a combination of constant values, with the constants evaluated.
+**/
 class ShaderInstance {
 	static var UID = 0;
+	/**
+		The unique identifier of the instance.
+	**/
 	public var id : Int;
+	/**
+		The shader code, with the constants replaced by their values.
+	**/
 	public var shader : ShaderData;
+	/**
+		The index of each parameter, by variable identifier.
+	**/
 	public var params : Map<Int,Int>;
+	/**
+		Creates an instance.
+	**/
 	public function new(shader) {
 		id = ++UID;
 		this.shader = shader;
@@ -13,21 +28,54 @@ class ShaderInstance {
 	}
 }
 
+/**
+	A global variable used by a shader.
+**/
 class ShaderGlobal {
+	/**
+		The variable.
+	**/
 	public var v : TVar;
+	/**
+		The identifier of the global (see `Globals.allocID`).
+	**/
 	public var globalId : Int;
+	/**
+		Creates a global.
+	**/
 	public function new(v, gid) {
 		this.v = v;
 		this.globalId = gid;
 	}
 }
 
+/**
+	A constant variable of a shader, and its position in the variant key.
+**/
 class ShaderConst {
+	/**
+		The variable.
+	**/
 	public var v : TVar;
+	/**
+		The position of the value in the variant key, in bits.
+	**/
 	public var pos : Int;
+	/**
+		The number of bits of the value.
+	**/
 	public var bits : Int;
+	/**
+		The identifier of the global, for a constant global, or `0` for a parameter.
+	**/
 	public var globalId : Int;
+	/**
+		The next constant.
+	**/
 	public var next : ShaderConst;
+	/**
+		Creates a constant.
+	**/
 	public function new(v, pos, bits) {
 		this.v = v;
 		this.pos = pos;
@@ -35,12 +83,27 @@ class ShaderConst {
 	}
 }
 
+/**
+	The compiled data of a shader class, shared by all its instances, with the cache of its variants.
+**/
 class SharedShader {
+	/**
+		If set, the loops of the shaders are unrolled when the variants are evaluated.
+	**/
 	public static var UNROLL_LOOPS = false;
 	static var SHADER_RESOLVE : Map<String, SharedShader> = [];
 
+	/**
+		The shader code.
+	**/
 	public var data : ShaderData;
+	/**
+		The global variables used by the shader.
+	**/
 	public var globals : Array<ShaderGlobal>;
+	/**
+		The list of the constant variables, which select the variant.
+	**/
 	public var consts : ShaderConst;
 	var instanceCache : Map<Int,ShaderInstance>;
 	var lastBits = -1;
@@ -49,6 +112,9 @@ class SharedShader {
 	var file : hxd.fs.FileEntry;
 	var module : String;
 
+	/**
+		Creates the shared shader from its serialized source (see `hxsl.Serializer`).
+	**/
 	public function new(src:String,?module:String) {
 		instanceCache = new Map();
 		consts = null;
@@ -72,6 +138,9 @@ class SharedShader {
 		// don't try to optimize if consts is null, we need to do a few things in Eval
 	}
 
+	/**
+		Returns the variant of the shader for the given constant values, created on the first call.
+	**/
 	public inline function getInstance( constBits : Int ) {
 		if( lastBits == constBits )
 			return lastInstance;
@@ -389,6 +458,9 @@ class SharedShader {
 
 	#end
 
+	/**
+		Compacts the memory of the shader data (HashLink with `-D heaps_compact_mem`).
+	**/
 	public static function compactMem<T>( mem : T ) {
 		#if (hl && heaps_compact_mem)
 		mem = hl.Api.compact(mem, null, 0, null);

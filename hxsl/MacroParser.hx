@@ -2,12 +2,20 @@ package hxsl;
 import haxe.macro.Expr;
 using haxe.macro.Tools;
 
+/**
+	Converts the Haxe expressions of a shader source (`SRC`) into the untyped shader AST.
+**/
 class MacroParser {
 
+	/**
+		Creates a parser.
+	**/
 	public function new() {
 	}
 
-	// set by hxsl.Macros at compile time, returns null for runtime parsing (live reload, hide ShaderLoader)
+	/**
+		Returns the path and constructors of an enum type used in the shader. Set by `hxsl.Macros` at compile time; returns `null` for runtime parsing (live reload, Hide shader loader).
+	**/
 	public dynamic function resolveEnum( t : ComplexType, pos : Position ) : Null<{ path : String, constructors : Array<String> }> {
 		return null;
 	}
@@ -105,6 +113,9 @@ class MacroParser {
 		}
 	}
 
+	/**
+		Converts a Haxe type to a shader type.
+	**/
 	public function parseType( t : ComplexType, pos : Position ) : Ast.Type {
 		switch( t ) {
 		case TPath( { pack : [], name : name, sub : null, params : [] } ):
@@ -230,6 +241,9 @@ class MacroParser {
 		return TInt;
 	}
 
+	/**
+		Converts a Haxe expression to a shader expression.
+	**/
 	public function parseExpr( e : Expr ) : Ast.Expr {
 		var ed : Ast.ExprDef = switch( e.expr ) {
 		case EBlock(el):

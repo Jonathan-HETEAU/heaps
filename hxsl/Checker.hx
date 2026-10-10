@@ -32,8 +32,14 @@ class Checker {
 	var inLoop : Bool;
 	var inWhile : Bool;
 	var enums : Map<String, Array<String>>;
+	/**
+		The initial values of the non local variables declared in the shader.
+	**/
 	public var inits : Array<{ v : TVar, e : TExpr }>;
 
+	/**
+		Creates a type checker.
+	**/
 	public function new() {
 		globals = initGlobals();
 	}
@@ -283,14 +289,23 @@ class Checker {
 		return Ast.Error.t(msg,pos);
 	}
 
+	/**
+		Called with the warnings of the type checking.
+	**/
 	public dynamic function warning( msg : String, pos : Position ) {
 	}
 
+	/**
+		Returns the source of the shader of the given path, for the shaders that extend or borrow other shaders. Set by the caller.
+	**/
 	public dynamic function loadShader( path : String ) : Expr {
 		throw "Not implemented";
 		return null;
 	}
 
+	/**
+		Types the shader source and returns the typed shader. Throws an `Ast.Error` on errors.
+	**/
 	public function check( name : String, shader : Expr ) : ShaderData {
 		vars = new Map();
 		enums = new Map();

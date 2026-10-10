@@ -1,5 +1,8 @@
 package hxsl;
 
+/**
+	The platforms for which `CacheFileBuilder` compiles the shaders.
+**/
 enum CacheFilePlatform {
 	DirectX;
 	OpenGL;
@@ -68,16 +71,40 @@ private class CustomCacheFile extends CacheFile {
 
 }
 
+/**
+	A command line tool compiling the shaders of a `CacheFile` for one or more platforms (`-gl`, `-dx`, `-ps4`, `-xbox`, `-xbogdk`, `-xbs`, `-nx`, `-nxbinary`), from the shaders of a HashLink bytecode file (`-lib`).
+**/
 class CacheFileBuilder {
 
+	/**
+		The platform being compiled.
+	**/
 	public var platform : CacheFilePlatform;
+	/**
+		The platforms to compile.
+	**/
 	public var platforms : Array<CacheFilePlatform> = [];
+	/**
+		The serialized shaders, by name, read from the bytecode file.
+	**/
 	public var shaderLib : Map<String,String> = new Map();
+	/**
+		Tells if the DirectX compiler is initialized.
+	**/
 	public var dxInitDone = false;
 	#if (hldx && dx12)
+	/**
+		The DirectX 12 driver used to compile the shaders.
+	**/
 	public var dx12Driver : h3d.impl.DX12Driver;
 	#end
+	/**
+		The shader model used with the DirectX 11 compiler.
+	**/
 	public var dxShaderVersion = "5_0";
+	/**
+		The shader model used with the DirectX 12 compiler (DXC).
+	**/
 	public var dxcShaderVersion = "6_1";
 	var glout : GlslOut;
 	var vertexOut : String;
@@ -86,9 +113,15 @@ class CacheFileBuilder {
 	var shaderCache : h3d.impl.ShaderCache;
 	var shaderCacheConfig : String = "";
 
+	/**
+		Creates a builder.
+	**/
 	public function new() {
 	}
 
+	/**
+		Compiles the shaders of the cache file for each platform.
+	**/
 	public function run() {
 		for( p in platforms ) {
 			Sys.println("Generating shaders for " + p);
@@ -106,6 +139,9 @@ class CacheFileBuilder {
 		return "\n//BIN=" + haxe.crypto.Base64.encode(data) + "#\n";
 	}
 
+	/**
+		Compiles a shader stage for the current platform and returns its code.
+	**/
 	public function compileShader( r : RuntimeShader, rd : RuntimeShader.RuntimeShaderData ) : String {
 		hasCompiled = true;
 		var s = generateShader(r, rd);
@@ -240,6 +276,9 @@ class CacheFileBuilder {
 		throw "Missing implementation for " + platform;
 	}
 
+	/**
+		Runs the tool with the command line arguments.
+	**/
 	public static function main() {
 		var args = Sys.args();
 		try sys.FileSystem.deleteFile("hxsl.CacheFileBuilder.hl") catch( e : Dynamic ) {};

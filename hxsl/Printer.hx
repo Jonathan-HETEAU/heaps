@@ -1,11 +1,17 @@
 package hxsl;
 using hxsl.Ast;
 
+/**
+	Prints typed shaders as HxSL source code, for debugging.
+**/
 class Printer {
 
 	var buffer : StringBuf;
 	var varId : Bool;
 
+	/**
+		Creates a printer. If `varId` is set, the variable identifiers are printed.
+	**/
 	public function new(varId = false) {
 		this.varId = varId;
 	}
@@ -14,6 +20,9 @@ class Printer {
 		buffer.add(v);
 	}
 
+	/**
+		Returns the shader as source code.
+	**/
 	public function shaderString( s : ShaderData ) {
 		buffer = new StringBuf();
 		for( v in s.vars ) {
@@ -31,18 +40,27 @@ class Printer {
 		return buffer.toString();
 	}
 
+	/**
+		Returns the declaration of the variable.
+	**/
 	public function varString( v : TVar ) {
 		buffer = new StringBuf();
 		addVar(v, null);
 		return buffer.toString();
 	}
 
+	/**
+		Returns the function as source code.
+	**/
 	public function funString( f : TFunction ) {
 		buffer = new StringBuf();
 		addFun(f);
 		return buffer.toString();
 	}
 
+	/**
+		Returns the expression as source code.
+	**/
 	public function exprString( e : TExpr ) {
 		buffer = new StringBuf();
 		addExpr(e,"");
@@ -327,6 +345,9 @@ class Printer {
 
 	}
 
+	/**
+		Returns the operator as source code.
+	**/
 	public static function opStr( op : Ast.Binop ) {
 		return switch(op) {
 		case OpAdd:"+";
@@ -356,14 +377,23 @@ class Printer {
 		}
 	}
 
+	/**
+		Returns the expression as source code.
+	**/
 	public static function toString( e : TExpr, varId = false ) {
 		return new Printer(varId).exprString(e);
 	}
 
+	/**
+		Returns the shader as source code.
+	**/
 	public static function shaderToString( s : ShaderData, varId = false ) {
 		return new Printer(varId).shaderString(s);
 	}
 
+	/**
+		Checks the consistency of the variables of the shader (debug).
+	**/
 	public static function check( s : ShaderData, ?from : Array<ShaderData> ) {
 		try {
 			var vars = new Map();

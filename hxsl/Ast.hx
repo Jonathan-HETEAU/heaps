@@ -1,14 +1,29 @@
 package hxsl;
 
+/**
+	The kind of a shader buffer.
+**/
 enum BufferKind {
+	/**
+		A uniform (constant) buffer.
+	**/
 	Uniform;
+	/**
+		A read-only storage buffer.
+	**/
 	Storage;
+	/**
+		A read-write storage buffer.
+	**/
 	RW;
 	Partial;
 	StoragePartial;
 	RWPartial;
 }
 
+/**
+	The dimension of a texture.
+**/
 enum TexDimension {
 	T1D;
 	T2D;
@@ -16,6 +31,9 @@ enum TexDimension {
 	TCube;
 }
 
+/**
+	A shader type.
+**/
 enum Type {
 	TVoid;
 	TInt;
@@ -40,97 +58,232 @@ enum Type {
 	TEnum( path : String );
 }
 
+/**
+	The type of the components of a vector.
+**/
 enum VecType {
 	VInt;
 	VFloat;
 	VBool;
 }
 
+/**
+	The size of an array: a constant, or a constant variable.
+**/
 enum SizeDecl {
 	SConst( v : Int );
 	SVar( v : TVar );
 }
 
+/**
+	The signature of a function.
+**/
 typedef FunType = { args : Array<{ name : String, type : Type }>, ret : Type };
 
+/**
+	A shader compilation error.
+**/
 class Error {
 
+	/**
+		The error message.
+	**/
 	public var msg : String;
+	/**
+		The position of the error in the shader source.
+	**/
 	public var pos : Position;
 
+	/**
+		Creates an error.
+	**/
 	public function new( msg, pos ) {
 		this.msg = msg;
 		this.pos = pos;
 	}
 
+	/**
+		Returns the message and position of the error.
+	**/
 	public function toString() {
 		return "Error(" + msg + ")@" + pos;
 	}
 
+	/**
+		Throws an error.
+	**/
 	public static function t( msg : String, pos : Position ) : Dynamic {
 		throw new Error(msg, pos);
 		return null;
 	}
 }
 
+/**
+	A position in the shader source.
+**/
 typedef Position = haxe.macro.Expr.Position;
 
+/**
+	An untyped shader expression, as parsed from the shader source.
+**/
 typedef Expr = { expr : ExprDef, pos : Position };
 
+/**
+	A binary operator.
+**/
 typedef Binop = haxe.macro.Expr.Binop;
+/**
+	A unary operator.
+**/
 typedef Unop = haxe.macro.Expr.Unop;
 
+/**
+	The kind of a shader variable.
+**/
 enum VarKind {
+	/**
+		A global variable, shared by all the shaders and set with `hxsl.Globals`.
+	**/
 	Global;
+	/**
+		A vertex attribute, read from the vertex buffers.
+	**/
 	Input;
+	/**
+		A parameter, set from Haxe code on the shader instance.
+	**/
 	Param;
+	/**
+		A variable shared by the shaders of a pass: written in the vertex shader, it is interpolated for the fragment shader.
+	**/
 	Var;
+	/**
+		A local variable.
+	**/
 	Local;
+	/**
+		An output of the shader (such as `output.position` or `output.color`).
+	**/
 	Output;
+	/**
+		A function.
+	**/
 	Function;
 }
 
+/**
+	The qualifiers of a shader variable, set with metadata in the shader source (such as `@const` or `@range`).
+**/
 enum VarQualifier {
+	/**
+		The parameter is a compile time constant: each value produces a shader variant. `max` is the maximum value of an integer.
+	**/
 	Const( ?max : Int );
+	/**
+		The variable is not shared with the other shaders.
+	**/
 	Private;
+	/**
+		The texture parameter can be `null`.
+	**/
 	Nullable;
+	/**
+		The global is set for each object.
+	**/
 	PerObject;
+	/**
+		The name of the variable in the generated code.
+	**/
 	Name( n : String );
 	Shared;
+	/**
+		The precision of the variable.
+	**/
 	Precision( p : Prec );
+	/**
+		The range of the value, for editors.
+	**/
 	Range( min : Float, max : Float );
-	Ignore; // the variable is ignored in reflection (inspector)
+	/**
+		The variable is ignored in reflection (inspector).
+	**/
+	Ignore;
 	PerInstance( v : Int );
+	/**
+		The documentation of the variable, for editors.
+	**/
 	Doc( s : String );
 	Borrow( source : String );
 	Sampler( name : String );
 	Final;
+	/**
+		The variable is not interpolated between the vertex and the fragment shader.
+	**/
 	Flat;
 	NoVar;
 	Enum( path : String, constructors : Array<String> );
 }
 
+/**
+	The precision of a shader variable.
+**/
 enum Prec {
 	Low;
 	Medium;
 	High;
 }
 
+/**
+	A variable declaration in the shader source.
+**/
 typedef VarDecl = {
+	/**
+		The name of the variable.
+	**/
 	var name : String;
+	/**
+		The type of the variable, or `null` to infer it.
+	**/
 	var type : Null<Type>;
+	/**
+		The kind of the variable, or `null` for a local variable.
+	**/
 	var kind : Null<VarKind>;
+	/**
+		The qualifiers of the variable.
+	**/
 	var qualifiers : Array<VarQualifier>;
+	/**
+		The initial value of the variable.
+	**/
 	var expr : Null<Expr>;
 }
 
+/**
+	A function declaration in the shader source.
+**/
 typedef FunDecl = {
+	/**
+		The name of the function.
+	**/
 	var name : String;
+	/**
+		The arguments of the function.
+	**/
 	var args : Array<VarDecl>;
+	/**
+		The return type, or `null` to infer it.
+	**/
 	var ret : Null<Type>;
+	/**
+		The body of the function.
+	**/
 	var expr : Expr;
 }
 
+/**
+	A constant value.
+**/
 enum Const {
 	CNull;
 	CBool( b : Bool );
@@ -139,6 +292,9 @@ enum Const {
 	CString( v : String );
 }
 
+/**
+	The untyped shader expressions, as parsed from the shader source.
+**/
 enum ExprDef {
  	EConst( c : Const );
 	EIdent( i : String );
@@ -163,6 +319,9 @@ enum ExprDef {
 	EMeta( name : String, args : Array<Expr>, e : Expr );
 }
 
+/**
+	The typed shader expressions, produced by `hxsl.Checker`.
+**/
 enum TExprDef {
 	TConst( c : Const );
 	TVar( v : TVar );
@@ -186,17 +345,41 @@ enum TExprDef {
 	TWhile( e : TExpr, loop : TExpr, normalWhile : Bool );
 	TMeta( m : String, args : Array<Const>, e : TExpr );
 	TField( e : TExpr, name : String );
-	TSyntax(target : String, code : String, args : Array<SyntaxArg> ); // target = "code" should be treated as "insert regardless of target"
+	/**
+		Raw code inserted in the output of the given target (`"code"` inserts it for any target).
+	**/
+	TSyntax(target : String, code : String, args : Array<SyntaxArg> );
 }
 
+/**
+	A typed shader variable.
+**/
 @:structInit
 @:publicFields
 class TVar {
+	/**
+		The unique identifier of the variable.
+	**/
 	var id : Int;
+	/**
+		The name of the variable.
+	**/
 	var name : String;
+	/**
+		The type of the variable.
+	**/
 	var type : Type;
+	/**
+		The kind of the variable.
+	**/
 	var kind : VarKind;
+	/**
+		The variable containing this one, for the fields of a structure.
+	**/
 	@:optional var parent : TVar;
+	/**
+		The qualifiers of the variable.
+	**/
 	@:optional var qualifiers : Null<Array<VarQualifier>>;
 
 	#if heaps_compact_mem
@@ -218,22 +401,61 @@ class TVar {
 	#end
 }
 
+/**
+	A typed shader function.
+**/
 typedef TFunction = {
+	/**
+		The kind of the function.
+	**/
 	var kind : FunctionKind;
+	/**
+		The variable referencing the function.
+	**/
 	var ref : TVar;
+	/**
+		The arguments of the function.
+	**/
 	var args : Array<TVar>;
+	/**
+		The return type.
+	**/
 	var ret : Type;
+	/**
+		The body of the function.
+	**/
 	var expr : TExpr;
 }
 
+/**
+	The kind of a shader function.
+**/
 enum FunctionKind {
+	/**
+		The `vertex` entry point.
+	**/
 	Vertex;
+	/**
+		The `fragment` entry point.
+	**/
 	Fragment;
+	/**
+		An `__init__` function, computing variables before the entry points.
+	**/
 	Init;
+	/**
+		A helper function, called by the others.
+	**/
 	Helper;
+	/**
+		The `main` entry point of a compute shader.
+	**/
 	Main;
 }
 
+/**
+	The built-in functions and values of the shader language.
+**/
 enum TGlobal {
 	Radians;
 	Degrees;
@@ -354,17 +576,26 @@ enum TGlobal {
 	ToUInt;
 }
 
+/**
+	How a raw code (`TSyntax`) argument is accessed.
+**/
 enum SyntaxArgAccess {
 	Read;
 	Write;
 	ReadWrite;
 }
 
+/**
+	An argument of a raw code expression (`TSyntax`).
+**/
 typedef SyntaxArg = {
 	e: TExpr,
 	access: SyntaxArgAccess,
 }
 
+/**
+	A vector component, for swizzling.
+**/
 enum Component {
 	X;
 	Y;
@@ -372,19 +603,46 @@ enum Component {
 	W;
 }
 
+/**
+	A typed shader expression.
+**/
 @:structInit
 class TExpr {
+	/**
+		The expression.
+	**/
 	public var e : TExprDef;
+	/**
+		The type of the expression.
+	**/
 	public var t : Type;
+	/**
+		The position of the expression in the shader source.
+	**/
 	public var p : Position;
 }
 
+/**
+	A typed shader: its variables and functions.
+**/
 typedef ShaderData = {
+	/**
+		The name of the shader.
+	**/
 	var name : String;
+	/**
+		The variables of the shader.
+	**/
 	var vars : Array<TVar>;
+	/**
+		The functions of the shader.
+	**/
 	var funs : Array<TFunction>;
 }
 
+/**
+	Helpers on the shader types, variables and expressions.
+**/
 class Tools {
 
 	static var UID = 0;
@@ -392,10 +650,22 @@ class Tools {
 	static var uidMutex = new sys.thread.Mutex();
 	#end
 
+	/**
+		All the components, in order.
+	**/
 	public static var SWIZ = Component.createAll();
+	/**
+		The number of bits used to encode the channel of a `TChannel` constant.
+	**/
 	public static var MAX_CHANNELS_BITS = 3;
+	/**
+		The number of bits used to encode the mapping of a partial buffer.
+	**/
 	public static var MAX_PARTIAL_MAPPINGS_BITS = 7;
 
+	/**
+		Returns a new unique variable identifier (negative for the variables created at compile time).
+	**/
 	public static function allocVarId() {
 		// in order to prevent compile time ids to conflict with runtime allocated ones
 		// let's use negative numbers for compile time ones
@@ -413,6 +683,9 @@ class Tools {
 		#end
 	}
 
+	/**
+		Returns the number of coordinates to sample a texture of the given dimension (one more for an array).
+	**/
 	public static function getTexUVSize( dim : TexDimension, arr = false ) {
 		var size = switch( dim ) {
 		case T1D: 1;
@@ -423,6 +696,9 @@ class Tools {
 		return size;
 	}
 
+	/**
+		Returns the number of components of the size of a texture of the given dimension (one more for an array).
+	**/
 	public static function getDimSize( dim : TexDimension, arr = false ) {
 		var size = switch( dim ){
 		case T1D: 1;
@@ -433,6 +709,9 @@ class Tools {
 		return size;
 	}
 
+	/**
+		Returns the name of the variable in the generated code (its `Name` qualifier, or its name).
+	**/
 	public static function getName( v : TVar ) {
 		if( v.qualifiers == null )
 			return v.name;
@@ -444,6 +723,9 @@ class Tools {
 		return v.name;
 	}
 
+	/**
+		Returns the documentation of the variable (its `Doc` qualifier), or `null`.
+	**/
 	public static function getDoc( v : TVar ) {
 		if ( v.qualifiers == null )
 			return null;
@@ -455,6 +737,9 @@ class Tools {
 		return null;
 	}
 
+	/**
+		Returns the enum of the variable (its `Enum` qualifier), or `null`.
+	**/
 	public static function getEnum( v : TVar ) {
 		if( v.qualifiers == null )
 			return null;
@@ -466,6 +751,9 @@ class Tools {
 		return null;
 	}
 
+	/**
+		Returns the number of bits used to encode the constant variable in the shader variant key.
+	**/
 	public static function getConstBits( v : TVar ) {
 		switch( v.type ) {
 		case TBool:
@@ -492,6 +780,9 @@ class Tools {
 		return 0;
 	}
 
+	/**
+		Tells if the variable is a compile time constant.
+	**/
 	public static function isConst( v : TVar ) {
 		if( v.type.match(TChannel(_)|TBuffer(_,_,Partial|StoragePartial|RWPartial)) )
 			return true;
@@ -504,22 +795,37 @@ class Tools {
 		return false;
 	}
 
+	/**
+		Tells if the variable is a local `final` number or boolean.
+	**/
 	public static function isFinalConst( v : TVar ) {
 		return v.kind.match(Local) && v.type.match(TInt | TFloat | TBool) && hasQualifier(v, Final);
 	}
 
+	/**
+		Tells if the variable is a local `final` integer.
+	**/
 	public static function isFinalInt( v : TVar ) {
 		return isFinalConst(v) && v.type.match(TInt);
 	}
 
+	/**
+		Tells if the variable is a structure.
+	**/
 	public static function isStruct( v : TVar ) {
 		return switch( v.type ) { case TStruct(_): true; default: false; }
 	}
 
+	/**
+		Tells if the variable is an array.
+	**/
 	public static function isArray( v : TVar ) {
 		return switch( v.type ) { case TArray(_): true; default: false; }
 	}
 
+	/**
+		Tells if the variable has the qualifier.
+	**/
 	public static function hasQualifier( v : TVar, q ) {
 		if( v.qualifiers != null )
 			for( q2 in v.qualifiers )
@@ -528,6 +834,9 @@ class Tools {
 		return false;
 	}
 
+	/**
+		Tells if the variable borrows the variables of the shader of the given path.
+	**/
 	public static function hasBorrowQualifier( v : TVar, path : String ) {
 		if ( v.qualifiers != null )
 			for( q in v.qualifiers )
@@ -538,6 +847,9 @@ class Tools {
 		return false;
 	}
 
+	/**
+		Tells if the type is a texture (sampler or read-write texture).
+	**/
 	public static function isTexture( t : Type ) {
 		return switch( t ) {
 		case TSampler(_), TChannel(_), TRWTexture(_):
@@ -547,6 +859,9 @@ class Tools {
 		}
 	}
 
+	/**
+		Returns the type as written in the shader source.
+	**/
 	public static function toString( t : Type ) {
 		return switch( t ) {
 		case TVec(size, t):
@@ -578,6 +893,9 @@ class Tools {
 		}
 	}
 
+	/**
+		Returns the scalar type of the vector components.
+	**/
 	public static function toType( t : VecType ) {
 		return switch( t ) {
 		case VFloat: TFloat;
@@ -586,6 +904,9 @@ class Tools {
 		};
 	}
 
+	/**
+		Tells if evaluating the expression may have side effects (assignments, discards, function calls...).
+	**/
 	public static function hasSideEffect( e : TExpr ) {
 		switch( e.e ) {
 		case TParenthesis(e):
@@ -642,6 +963,9 @@ class Tools {
 		}
 	}
 
+	/**
+		Calls `f` on each sub expression.
+	**/
 	public static function iter( e : TExpr, f : TExpr -> Void ) {
 		switch( e.e ) {
 		case TParenthesis(e): f(e);
@@ -673,6 +997,9 @@ class Tools {
 		}
 	}
 
+	/**
+		Returns a copy of the expression with each sub expression replaced by `f`.
+	**/
 	public static inline function map( e : TExpr, f : TExpr -> TExpr ) : TExpr {
 		var ed = switch( e.e ) {
 		case TParenthesis(e): TParenthesis(f(e));
@@ -697,6 +1024,9 @@ class Tools {
 		return { e : ed, t : e.t, p : e.p };
 	}
 
+	/**
+		Returns the number of floats used by the type.
+	**/
 	public static function size( t : Type ) {
 		return switch( t ) {
 		case TVoid: 0;
@@ -721,6 +1051,9 @@ class Tools {
 	}
 
 	#if !macro
+	/**
+		Evaluates a constant expression.
+	**/
 	public static function evalConst( e : TExpr ) : Dynamic {
 		return switch( e.e ) {
 		case TConst(c):
@@ -749,8 +1082,14 @@ class Tools {
 
 }
 
+/**
+	Helpers on the shader built-in functions.
+**/
 class Tools2 {
 
+	/**
+		Returns the name of the built-in function in the shader source.
+	**/
 	public static function toString( g : TGlobal ) {
 		var n = g.getName();
 		return n.charAt(0).toLowerCase() + n.substr(1);
@@ -758,16 +1097,28 @@ class Tools2 {
 
 }
 
+/**
+	Helpers on the shader data.
+**/
 class Tools3 {
 
+	/**
+		Returns the shader as source code.
+	**/
 	public static function toString( s : ShaderData ) {
 		return Printer.shaderToString(s);
 	}
 
 }
 
+/**
+	Helpers on the shader expressions.
+**/
 class Tools4 {
 
+	/**
+		Returns the expression as source code.
+	**/
 	public static function toString( e : TExpr ) {
 		return Printer.toString(e);
 	}
