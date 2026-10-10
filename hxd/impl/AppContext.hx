@@ -9,10 +9,22 @@ class AppContext {
 
 	static var contexts : Array<AppContext> = [];
 
+	/**
+		The window of the application.
+	**/
 	public var win : hxd.Window;
+	/**
+		The engine of the application.
+	**/
 	public var engine : h3d.Engine;
+	/**
+		The application.
+	**/
 	public var app : hxd.App;
 
+	/**
+		Creates the context of the application, for its current window and engine. All the contexts are updated by the main loop.
+	**/
 	public function new(app) {
 		#if !multidriver
 		throw "Needs -D multidriver";
@@ -34,6 +46,9 @@ class AppContext {
 		reset();
 	}
 
+	/**
+		Runs a frame of the application.
+	**/
 	public function update() {
 		if( app.sevents == null )
 			return;

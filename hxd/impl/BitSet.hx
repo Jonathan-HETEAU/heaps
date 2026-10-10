@@ -1,25 +1,43 @@
 package hxd.impl;
 
+/**
+	A fixed size set of bits.
+**/
 abstract BitSet(haxe.io.Bytes) {
 
+	/**
+		Creates a set of `count` bits, all unset.
+	**/
 	public function new(count:Int) {
 		this = haxe.io.Bytes.alloc((count + 7) >> 3);
 	}
 
+	/**
+		Tells if the bit is set.
+	**/
 	public function get(index:Int) {
 		return this.get(index>>3) & (1 << (index&7)) != 0;
 	}
 
+	/**
+		Sets the bit.
+	**/
 	public function set(index:Int) {
 		var p = index >> 3;
 		this.set(p, this.get(p) | (1 << (index&7)));
 	}
 
+	/**
+		Unsets the bit.
+	**/
 	public function unset(index:Int) {
 		var p = index >> 3;
 		this.set(p, this.get(p) & ~(1 << (index&7)));
 	}
 
+	/**
+		Sets the bit to `b`.
+	**/
 	public function toggle(index:Int, b : Bool) {
 		var p = index >> 3;
 		var v = this.get(p);
@@ -27,6 +45,9 @@ abstract BitSet(haxe.io.Bytes) {
 		this.set(p, b ? v | mask : v & ~mask);
 	}
 
+	/**
+		Sets all the bits to `b`.
+	**/
 	public function clear(b=false) {
 		this.fill(0,this.length,b?0xFF:0);
 	}

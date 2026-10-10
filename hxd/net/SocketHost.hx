@@ -26,10 +26,16 @@ package hxd.net;
 #end
 import hxbit.NetworkHost;
 
+/**
+	A hxbit network client communicating through a `Socket`.
+**/
 class SocketClient extends NetworkClient {
 
 	var socket : Socket;
 
+	/**
+		Creates a client of the host using the socket (`null` for the local client).
+	**/
 	public function new(host, s) {
 		super(host);
 		this.socket = s;
@@ -63,12 +69,21 @@ class SocketClient extends NetworkClient {
 
 }
 
+/**
+	A hxbit network host using TCP sockets, as a client (`connect`) or as a server (`wait`). Requires the hxbit library.
+**/
 class SocketHost extends NetworkHost {
 
 	var connected = false;
 	var socket : Socket;
+	/**
+		Disabled when connecting to a server on the same computer (`127.0.0.1`), so that the sounds are not played twice.
+	**/
 	public var enableSound : Bool = true;
 
+	/**
+		Creates the host.
+	**/
 	public function new() {
 		super();
 		isAuth = false;
@@ -87,6 +102,9 @@ class SocketHost extends NetworkHost {
 		connected = false;
 	}
 
+	/**
+		Connects to a server, and calls `onConnect` with `true` when connected, or `false` on failure.
+	**/
 	public function connect( host : String, port : Int, ?onConnect : Bool -> Void ) {
 		close();
 		isAuth = false;
@@ -107,6 +125,9 @@ class SocketHost extends NetworkHost {
 		});
 	}
 
+	/**
+		Starts a server listening on the address, and calls `onConnected` for each client connecting.
+	**/
 	public function wait( host : String, port : Int, ?onConnected : NetworkClient -> Void ) {
 		close();
 		isAuth = false;
@@ -121,6 +142,9 @@ class SocketHost extends NetworkHost {
 		isAuth = true;
 	}
 
+	/**
+		Starts as a server without listening, for a single player game.
+	**/
 	public function offlineServer() {
 		close();
 		self = new SocketClient(this, null);

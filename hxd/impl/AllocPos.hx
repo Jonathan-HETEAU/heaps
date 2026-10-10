@@ -1,13 +1,29 @@
 package hxd.impl;
 
+/**
+	The code position where a GPU resource (buffer, texture) was allocated, recorded to track memory leaks.
+	Enabled with `h3d.impl.MemoryManager.enableTrackAlloc`.
+**/
 class AllocPos {
 
 	static var ENABLED : Bool = false;
 
+	/**
+		The first position of the call stack outside of the engine packages (`file:line`).
+	**/
 	public var position : String;
+	/**
+		The positions of the call stack.
+	**/
 	public var stack : Array<String> = [];
-	public static var ENGINE_PACKAGES = ["h3d","hxd","h2d","haxe","sys","hrt" /* HIDE */];
+	/**
+		The packages skipped to find `position` (`hrt` is the Hide runtime).
+	**/
+	public static var ENGINE_PACKAGES = ["h3d","hxd","h2d","haxe","sys","hrt"];
 
+	/**
+		Records the current position, or returns `null` if the tracking is disabled.
+	**/
 	public static function make() {
 		if ( !ENABLED )
 			return null;

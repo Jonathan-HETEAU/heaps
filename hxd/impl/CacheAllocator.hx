@@ -176,8 +176,15 @@ private class Cache<T:h3d.Buffer> {
 	}
 }
 
+/**
+	An allocator keeping the disposed GPU buffers to reuse them for the next allocations of the same size, format and flags.
+	The unused buffers are released after `maxKeepTime` seconds, or when `maxMemSize` is exceeded.
+**/
 class CacheAllocator extends Allocator {
 
+	/**
+		The frame of the last allocation.
+	**/
 	public var currentFrame = -1;
 	var buffers:Cache<h3d.Buffer>;
 	var indexBuffers:Cache<h3d.Indexes>;
@@ -188,6 +195,9 @@ class CacheAllocator extends Allocator {
 	**/
 	public var maxKeepTime = 60.;
 
+	/**
+		The maximum memory of the cached buffers, in bytes.
+	**/
 	public var maxMemSize : Int = 512 * 1024 * 1024;
 
 	/**
@@ -202,8 +212,14 @@ class CacheAllocator extends Allocator {
 	var curBuffers : Int = 0;
 	var debug = false;
 
+	/**
+		The moving average of the allocations served from the cache, from `0` to `1`.
+	**/
 	public var hitRate : Float = 0.;
 
+	/**
+		Creates the allocator.
+	**/
 	public function new(debug = false) {
 		super();
 		this.debug = debug;
@@ -267,6 +283,9 @@ class CacheAllocator extends Allocator {
 		curBuffers = 0;
 	}
 
+	/**
+		Makes the buffers disposed in the previous frames available.
+	**/
 	public function checkFrame() {
 		if( currentFrame == hxd.Timer.frameCount )
 			return;
@@ -275,11 +294,17 @@ class CacheAllocator extends Allocator {
 		indexBuffers.nextFrame();
 	}
 
+	/**
+		Runs `gc` if it was not run recently.
+	**/
 	public function checkGC() {
 		var t = haxe.Timer.stamp();
 		if( t - lastGC > maxKeepTime * 0.1 ) gc();
 	}
 
+	/**
+		Releases the cached buffers over `maxMemSize`, and those unused for more than `maxKeepTime`.
+	**/
 	public function gc() {
 		var now = haxe.Timer.stamp();
 
@@ -300,6 +325,9 @@ class CacheAllocator extends Allocator {
 		lastGC = now;
 	}
 
+	/**
+		Releases all the cached buffers.
+	**/
 	public function clear() {
 		buffers.clear();
 		indexBuffers.clear();
@@ -308,6 +336,9 @@ class CacheAllocator extends Allocator {
 	}
 
 	#if hl
+	/**
+		Writes statistics on the cached buffers to a file.
+	**/
 	@:access(h3d.Buffer)
 	public function printStats(filePath:String) {
 		var fo = sys.io.File.write(filePath);

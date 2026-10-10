@@ -1,6 +1,9 @@
 package hxd.tools;
 
 #if hl
+/**
+	The keys that can trigger a RenderDoc capture.
+**/
 enum abstract RenderDocInputButton(Int) {
 	// '0' - '9' matches ASCII values
 	var Key_0 = 0x30;
@@ -79,6 +82,9 @@ enum abstract RenderDocInputButton(Int) {
 	var Key_Max;
 }
 
+/**
+	The native bindings of `RenderDoc`.
+**/
 @:hlNative("?heaps", "rdoc_")
 class RenderDocNative {
 	static function init() : Bool {
@@ -138,28 +144,46 @@ class RenderDocNative {
 @:access(hxd.tools.RenderDocNative)
 class RenderDoc {
 
+	/**
+		Loads the RenderDoc library. Returns `false` if it is not available.
+	**/
 	public static function init() : Bool {
 		return RenderDocNative.init();
 	}
 
+	/**
+		Sets the keys triggering a capture.
+	**/
 	public static function setCaptureKeys(keys:Array<RenderDocInputButton>) : Bool {
 		var bytes = hl.Bytes.getArray(keys);
 		return RenderDocNative.setCaptureKeys(bytes, keys.length);
 	}
 
+	/**
+		Sets the path template of the capture files.
+	**/
 	public static function setCaptureFilePathTemplate(pathTemplate:String) : Bool {
 		return RenderDocNative.setCaptureFilePathTemplate(pathTemplate == null ? null : @:privateAccess pathTemplate.toUtf8());
 	}
 
+	/**
+		Returns the path template of the capture files.
+	**/
 	public static function getCaptureFilePathTemplate() : String {
 		var bytes = RenderDocNative.getCaptureFilePathTemplate();
 		return bytes == null ? null : @:privateAccess String.fromUTF8(bytes);
 	}
 
+	/**
+		Returns the number of captures made.
+	**/
 	public static function getNumCaptures() {
 		return RenderDocNative.getNumCaptures();
 	}
 
+	/**
+		Returns the file path of the capture, or `null`.
+	**/
 	public static function getCapture(index:Int) : String {
 		var length = 0;
 		if( RenderDocNative.getCapture(index, null, length, null) ) {
@@ -170,14 +194,23 @@ class RenderDoc {
 		return null;
 	}
 
+	/**
+		Captures the next frame.
+	**/
 	public static function triggerCapture() : Bool {
 		return RenderDocNative.triggerCapture();
 	}
 
+	/**
+		Tells if the RenderDoc UI is connected to the application.
+	**/
 	public static function isTargetControlConnected() : Bool {
 		return RenderDocNative.isTargetControlConnected();
 	}
 
+	/**
+		Launches the RenderDoc UI, optionally connected to the application.
+	**/
 	public static function launchReplayUi(connectTargetControl:Bool, cmdline:String) : Bool {
 		var cmd = cmdline == null ? null : @:privateAccess cmdline.toUtf8();
 		return RenderDocNative.launchReplayUi(connectTargetControl ? 1 : 0, cmd);
@@ -190,10 +223,16 @@ class RenderDoc {
 		return RenderDocNative.startFrameCapture(device, wndHandle);
 	}
 
+	/**
+		Tells if a frame is being captured.
+	**/
 	public static function isFrameCapturing() : Bool {
 		return RenderDocNative.isFrameCapturing();
 	}
 
+	/**
+		Ends the capture started with `startFrameCapture`. Pass `null` to use the default device and window.
+	**/
 	public static function endFrameCapture(device:Dynamic, wndHandle:Dynamic) : Bool {
 		return RenderDocNative.endFrameCapture(device, wndHandle);
 	}

@@ -2,6 +2,9 @@ package hxd.net;
 
 private class SocketOutput extends haxe.io.Output {
 
+	/**
+		Creates an output that sends nothing.
+	**/
 	public function new() {
 	}
 
@@ -30,6 +33,9 @@ private class SocketInput extends haxe.io.Input {
 
 }
 
+/**
+	An asynchronous TCP socket, on HashLink (with libuv) and Node.js.
+**/
 class Socket {
 
 	static var openedSocks = [];
@@ -39,12 +45,27 @@ class Socket {
 	var s : js.node.net.Socket;
 	var srv : js.node.net.Server;
 	#end
+	/**
+		The output to send data.
+	**/
 	public var out(default, null) : SocketOutput;
+	/**
+		The input to read the received data, in `onData`.
+	**/
 	public var input(default, null) : SocketInput;
+	/**
+		A timeout in seconds (currently not applied).
+	**/
 	public var timeout(default, set) : Null<Float>;
 
+	/**
+		Tells if `bind` is supported on this platform.
+	**/
 	public static inline var ALLOW_BIND = #if (hl || (nodejs && hxnodejs)) true #else false #end;
 
+	/**
+		Creates a socket.
+	**/
 	public function new() {
 		out = new SocketOutput();
 	}
@@ -53,6 +74,9 @@ class Socket {
 		return this.timeout = t;
 	}
 
+	/**
+		Connects to the server and calls `onConnect` when connected.
+	**/
 	public function connect( host : String, port : Int, onConnect : Void -> Void ) {
 		close();
 		openedSocks.push(this);
@@ -84,6 +108,9 @@ class Socket {
 		#end
 	}
 
+	/**
+		Listens for connections on the address, and calls `onConnect` with the socket of each connected client.
+	**/
 	public function bind( host : String, port : Int, onConnect : Socket -> Void, listenCount = 5 ) {
 		close();
 		openedSocks.push(this);
@@ -127,6 +154,9 @@ class Socket {
 		#end
 	}
 
+	/**
+		Closes the socket.
+	**/
 	public function close() {
 		openedSocks.remove(this);
 		#if hl
@@ -148,10 +178,16 @@ class Socket {
 		#end
 	}
 
+	/**
+		Called on a socket error. Throws by default.
+	**/
 	public dynamic function onError(msg:String) {
 		throw "Socket Error " + msg;
 	}
 
+	/**
+		Called when data is received, to read from `input`.
+	**/
 	public dynamic function onData() {
 	}
 
@@ -159,12 +195,18 @@ class Socket {
 
 #if hl
 
+/**
+	The output of a HashLink socket.
+**/
 class HLSocketOutput extends SocketOutput {
 
 	var tmpBuf : haxe.io.Bytes;
 	var s : Socket;
 	var onWriteResult : Bool -> Void;
 
+	/**
+		Creates the output of the socket.
+	**/
 	public function new(s) {
 		super();
 		this.s = s;
@@ -192,6 +234,9 @@ class HLSocketOutput extends SocketOutput {
 
 }
 
+/**
+	The input of a HashLink socket.
+**/
 class HLSocketInput extends SocketInput {
 
 	var s : Socket;
@@ -200,6 +245,9 @@ class HLSocketInput extends SocketInput {
 	var len : Int;
 	var size : Int;
 
+	/**
+		Creates the input of the socket.
+	**/
 	public function new(sock) {
 		this.s = sock;
 		@:privateAccess s.s.readStartRaw(onData);
@@ -255,11 +303,17 @@ class HLSocketInput extends SocketInput {
 
 #elseif (nodejs && hxnodejs)
 
+/**
+	The output of a Node.js socket.
+**/
 class NodeSocketOutput extends SocketOutput {
 
 	var tmpBuf : js.node.Buffer;
 	var s : Socket;
 
+	/**
+		Creates the output of the socket.
+	**/
 	public function new(s) {
 		super();
 		this.s = s;
@@ -280,6 +334,9 @@ class NodeSocketOutput extends SocketOutput {
 
 }
 
+/**
+	The input of a Node.js socket.
+**/
 class NodeSocketInput extends SocketInput {
 
 	var s : Socket;
@@ -288,6 +345,9 @@ class NodeSocketInput extends SocketInput {
 	var len : Int = 0;
 	var size : Int = 0;
 
+	/**
+		Creates the input of the socket.
+	**/
 	public function new(sock) {
 		this.s = sock;
 		@:privateAccess s.s.on('data', buf -> onData(buf, buf.length));

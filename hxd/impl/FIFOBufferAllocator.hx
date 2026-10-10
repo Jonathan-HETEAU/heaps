@@ -38,6 +38,9 @@ private class Cache<T:h3d.Buffer> {
 		disposed = [];
 	}
 
+	/**
+		Releases the oldest buffers unused for more than `maxKeepFrame` frames, or while the memory is over `maxMemSize`. Returns `true` if buffers remain.
+	**/
 	public function gc() {
 		var curFrame = hxd.Timer.frameCount;
 		while ( true ) {
@@ -52,14 +55,33 @@ private class Cache<T:h3d.Buffer> {
 	}
 }
 
+/**
+	The key of a cache of buffers.
+**/
 typedef BufferConfig = {
+	/**
+		The number of vertices (or indexes).
+	**/
 	var vertices : Int;
+	/**
+		The uid of the buffer format.
+	**/
 	var formatId : Int;
+	/**
+		The buffer flags.
+	**/
 	var flags : Int;
 }
 
+/**
+	An allocator keeping the disposed GPU buffers to reuse them, in first in first out order.
+	The unused buffers are released after `maxKeepFrame` frames, or when `maxMemSize` is exceeded.
+**/
 class FIFOBufferAllocator extends Allocator {
 
+	/**
+		The frame of the last allocation.
+	**/
 	public var currentFrame = -1;
 	var buffers : Array<Cache<h3d.Buffer>> = [];
 	var indexBuffers : Array<Cache<h3d.Indexes>> = [];
@@ -157,6 +179,9 @@ class FIFOBufferAllocator extends Allocator {
 		indexBuffers = [];
 	}
 
+	/**
+		Makes the buffers disposed in the previous frames available.
+	**/
 	public function checkFrame() {
 		if( currentFrame == hxd.Timer.frameCount )
 			return;
@@ -167,11 +192,17 @@ class FIFOBufferAllocator extends Allocator {
 			b.nextFrame();
 	}
 
+	/**
+		Runs `gc` once per frame.
+	**/
 	public function checkGC() {
 		var t = hxd.Timer.frameCount;
 		if ( t != lastGC ) gc();
 	}
 
+	/**
+		Releases the cached buffers unused for more than `maxKeepFrame` frames, or over `maxMemSize`.
+	**/
 	public function gc() {
 		var now = hxd.Timer.frameCount;
 		var i = buffers.length;
@@ -190,6 +221,9 @@ class FIFOBufferAllocator extends Allocator {
 		lastGC = now;
 	}
 
+	/**
+		Releases all the cached buffers.
+	**/
 	public function clear() {
 		for ( c in buffers ) {
 			for ( b in c.available ) {

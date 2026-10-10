@@ -2,8 +2,14 @@ package hxd.impl;
 import haxe.macro.Context;
 using haxe.macro.Tools;
 
+/**
+	The macro packing the fields marked with `@:bits(field, ?count)` into the bits of an integer field.
+**/
 class BitsBuilder {
 
+	/**
+		Build macro: each `@:bits` field (`Bool`, `Int` or enum) becomes a property stored in the given integer field, with a `_bits` constant giving its bit count.
+	**/
 	public static function build() {
 		var fields = Context.getBuildFields();
 		var pos = Context.currentPos();

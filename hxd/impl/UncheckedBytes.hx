@@ -2,6 +2,9 @@ package hxd.impl;
 
 private typedef InnerData = #if hl hl.Bytes #elseif js TypedArray.Uint8Array #else haxe.io.BytesData #end
 
+/**
+	Fast byte access without bounds checking. Converted implicitly from `haxe.io.Bytes`.
+**/
 abstract UncheckedBytes(InnerData) {
 
 	inline function new(v) {
@@ -25,6 +28,9 @@ abstract UncheckedBytes(InnerData) {
 		return v;
 	}
 
+	/**
+		Returns unchecked access to the bytes.
+	**/
 	@:from public static inline function fromBytes( b : haxe.io.Bytes ) : UncheckedBytes {
 		#if hl
 		return new UncheckedBytes(b);

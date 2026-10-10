@@ -1,24 +1,33 @@
 package hxd.tools;
 
+/**
+	Options of the meshoptimizer simplification functions.
+**/
 enum abstract SimplifyOptions(Int) to Int from Int {
-	/* Do not move vertices that are located on the topological border (vertices on triangle edges that don't have a paired triangle). Useful for simplifying portions of the larger mesh. */
+	/** Do not move vertices that are located on the topological border (vertices on triangle edges that don't have a paired triangle). Useful for simplifying portions of the larger mesh. **/
 	var LockBorder = 1 << 0;
-	/* Improve simplification performance assuming input indices are a sparse subset of the mesh. Note that error becomes relative to subset extents. */
+	/** Improve simplification performance assuming input indices are a sparse subset of the mesh. Note that error becomes relative to subset extents. **/
 	var Sparse = 1 << 1;
-	/* Treat error limit and resulting error as absolute instead of relative to mesh extents. */
+	/** Treat error limit and resulting error as absolute instead of relative to mesh extents. **/
 	var ErrorAbsolute = 1 << 2;
-	/* Remove disconnected parts of the mesh during simplification incrementally, regardless of the topological restrictions inside components. */
+	/** Remove disconnected parts of the mesh during simplification incrementally, regardless of the topological restrictions inside components. **/
 	var Prune = 1 << 3;
 }
 
+/**
+	Options of the meshoptimizer tangent generation.
+**/
 enum abstract TangentOptions(Int) to Int from Int {
-	/* Produce tangents compatible with MikkTSpace (same weighting and fallbacks) at the cost of reduced quality. Not recommended unless normal maps are baked. */
+	/** Produce tangents compatible with MikkTSpace (same weighting and fallbacks) at the cost of reduced quality. Not recommended unless normal maps are baked. **/
 	var TangentCompatible = 1 << 0;
-	/* Experimental: For vertices only connected to degenerate triangles, output zero tangents instead of an arbitrary fallback.  */
+	/** Experimental: For vertices only connected to degenerate triangles, output zero tangents instead of an arbitrary fallback.  **/
 	var TangentZeroFallback = 1 << 1;
 }
 
 #if (hl && hl_ver >= version("1.15.0"))
+/**
+	Bindings to the meshoptimizer library (HashLink 1.15+): vertex remapping, cache optimization, simplification and tangents generation.
+**/
 class MeshOptimizer {
 	/**
 	Generates a vertex remap table from the vertex buffer and an optional index buffer and returns number of unique vertices

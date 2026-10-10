@@ -1,11 +1,21 @@
 package hxd.impl;
 
+/**
+	Applies a dynamic properties object to an object, recursively.
+	Arrays are applied to vectors, and `"#AARRGGBB"` strings to color vectors.
+**/
 class Properties {
 
+	/**
+		Returns a field of the object.
+	**/
 	public function getField(obj : Dynamic, f : String) : Dynamic {
 		return Reflect.field(obj, f);
 	}
 
+	/**
+		Sets a field of the object.
+	**/
 	public function setField(obj : Dynamic, f : String, value : Dynamic) {
 		Reflect.setField(obj, f, value);
 	}
@@ -19,6 +29,9 @@ class Properties {
 		return switch(t) { case TClass(c): Type.getClassName(c); default: t.getName(); };
 	}
 
+	/**
+		Sets the fields of `obj` from `props`. Throws if a value can't be applied.
+	**/
 	public function apply( props : Dynamic, obj : Dynamic ) {
 		for( f in Reflect.fields(props) ) {
 			var v : Dynamic = getField(props, f);
