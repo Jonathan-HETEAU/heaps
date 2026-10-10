@@ -1,9 +1,9 @@
 package h3d.pass;
 
-@ignore("shader")
 /**
 	Draws an outline around the opaque pixels of a texture (based on its alpha).
 **/
+@ignore("shader")
 class Outline extends ScreenFx<h3d.shader.Outline2D> {
 	/**
 		The outline width, in pixels.

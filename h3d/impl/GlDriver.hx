@@ -75,13 +75,13 @@ private class CompiledProgram {
 	}
 }
 
+/**
+	The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink.
+**/
 @:access(h3d.impl.Shader)
 #if (hlsdl||usegl)
 @:build(h3d.impl.MacroHelper.replaceGL())
 #end
-/**
-	The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink.
-**/
 class GlDriver extends Driver {
 
 	#if js

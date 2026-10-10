@@ -1,10 +1,6 @@
 package h3d.mat;
 import h3d.mat.Data;
 
-@:allow(h3d.mat.Material)
-#if !macro
-@:build(hxd.impl.BitsBuilder.build())
-#end
 /**
 	The stencil buffer settings of a `Pass` (see `Pass.stencil`): the test performed against the stencil buffer and the
 	operations applied to it, separately for front and back faces.
@@ -16,6 +12,10 @@ import h3d.mat.Data;
 	mask.material.mainPass.stencil.setOp(Keep, Keep, Replace);
 	```
 **/
+@:allow(h3d.mat.Material)
+#if !macro
+@:build(hxd.impl.BitsBuilder.build())
+#end
 class Stencil {
 
 	var maskBits  : Int = 0;

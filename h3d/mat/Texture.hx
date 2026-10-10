@@ -1,10 +1,6 @@
 package h3d.mat;
 import h3d.mat.Data;
 
-@:allow(h3d)
-#if !macro
-@:build(hxd.impl.BitsBuilder.build())
-#end
 /**
 	A GPU texture: an image sampled by shaders, or a render target.
 
@@ -18,6 +14,10 @@ import h3d.mat.Data;
 	var target = new h3d.mat.Texture(512, 512, [Target]);
 	```
 **/
+@:allow(h3d)
+#if !macro
+@:build(hxd.impl.BitsBuilder.build())
+#end
 class Texture {
 
 	static var UID = 0;

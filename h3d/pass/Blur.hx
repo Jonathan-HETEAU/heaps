@@ -1,6 +1,5 @@
 package h3d.pass;
 
-@ignore("shader")
 /**
 	A separable blur: a horizontal then a vertical pass, gaussian by default. Works with 2D and cube textures.
 
@@ -9,6 +8,7 @@ package h3d.pass;
 	blur.apply(ctx, texture); // blurs texture in place
 	```
 **/
+@ignore("shader")
 class Blur extends ScreenFx<h3d.shader.Blur> {
 
 	var cubeDir = [ h3d.Matrix.L([0,0,-1,0, 0,-1,0,0, 1,0,0,0]),
