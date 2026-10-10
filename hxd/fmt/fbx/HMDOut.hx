@@ -4,6 +4,9 @@ import hxd.fmt.fbx.BaseLibrary;
 import hxd.fmt.hmd.Data;
 import hxd.BufferFormat;
 
+/**
+	How the collider of a model is generated (see `hxd.fmt.hmd.Collider.resolveColliderType`).
+**/
 typedef CollideParams = {
 	?useDefault : Bool,
 	?unit : Float,
@@ -13,6 +16,9 @@ typedef CollideParams = {
 	?shapes : Array<ShapeColliderParams>
 }
 
+/**
+	A shape of a custom collider.
+**/
 typedef ShapeColliderParams = {
 	type : ShapeColliderType,
 	position : { x : Float, y : Float, z : Float },
@@ -21,6 +27,9 @@ typedef ShapeColliderParams = {
 	?radius : Float,
 }
 
+/**
+	The type of a collider shape.
+**/
 enum abstract ShapeColliderType(String) to String {
 	var Sphere;
 	var Box;
@@ -28,27 +37,75 @@ enum abstract ShapeColliderType(String) to String {
 	var Cylinder;
 }
 
+/**
+	Converts a FBX file to the HMD format of Heaps (see `hxd.fs.Convert`): optimized geometries, skins, animations, levels of detail and colliders.
+**/
 class HMDOut extends BaseLibrary {
 	var d : Data;
 	var dataOut : haxe.io.BytesOutput;
 	var filePath : String;
 	var tmp = haxe.io.Bytes.alloc(4);
 	var midsSortRemap : Map<Int, Int>;
+	/**
+		If set, the texture paths are kept absolute, instead of relative to the file.
+	**/
 	public var absoluteTexturePath : Bool;
+	/**
+		If set, the joints that don't influence any vertex are removed.
+	**/
 	public var optimizeSkin = true;
+	/**
+		If set, the meshes are optimized (vertex deduplication and cache optimization, HashLink only).
+	**/
 	public var optimizeMesh = false;
+	/**
+		If set, the normals are computed instead of read from the file.
+	**/
 	public var generateNormals = false;
+	/**
+		If set, the tangents are generated even without normal map.
+	**/
 	public var generateTangents = false;
+	/**
+		The default collider parameters.
+	**/
 	public var generateCollides : CollideParams;
+	/**
+		The collider parameters of each model, by name.
+	**/
 	public var modelCollides : Map<String, Array<CollideParams>> = [];
+	/**
+		The names of the materials whose triangles are not part of the generated colliders.
+	**/
 	public var ignoreCollides : Array<String>;
 	var ignoreCollidesCache : Map<Int,Bool> = [];
+	/**
+		The size under which a model gets no default collider.
+	**/
 	public var collisionThresholdHeight : Float;
+	/**
+		If set, the default collider uses the lowest level of detail.
+	**/
 	public var collisionUseLowLod : Bool;
+	/**
+		If set, no collider is generated.
+	**/
 	public var noCollision : Bool;
+	/**
+		The storage precision of the vertex inputs, by name (such as `uv` or `normal`), or `null` for the default.
+	**/
 	public var lowPrecConfig : Map<String,Precision>;
+	/**
+		The decimation factor of each generated level of detail (unskinned models without LODs).
+	**/
 	public var lodsDecimation : Array<Float>;
+	/**
+		The maximum number of UV channels kept, or `0` for all.
+	**/
 	public var maxUVs : Int = 0;
+	/**
+		If set, the vertex colors are not exported.
+	**/
 	public var noColor : Bool = false;
 
 	function int32tof( v : Int ) : Float {
@@ -231,6 +288,9 @@ class HMDOut extends BaseLibrary {
 		}
 	}
 
+	/**
+		Writes a value with the precision, and returns the value as it will be read.
+	**/
 	public static inline function writePrec( d : haxe.io.BytesOutput, v : Float, p : Precision ) : Float {
 		return switch( p ) {
 			case F32:
@@ -251,6 +311,9 @@ class HMDOut extends BaseLibrary {
 		}
 	}
 
+	/**
+		Returns the size of a value of the precision, in bytes.
+	**/
 	public static inline function precisionSize(p:Precision) {
 		return switch( p ) {
 		case F32: 4;
@@ -259,6 +322,9 @@ class HMDOut extends BaseLibrary {
 		}
 	}
 
+	/**
+		Writes the padding after `count` values of the precision, to align the data to 4 bytes.
+	**/
 	public static inline function flushPrec( d : haxe.io.BytesOutput, p : Precision, count : Int ) {
 		var b = (count * precisionSize(p)) & 3;
 		switch( b ) {
@@ -273,6 +339,9 @@ class HMDOut extends BaseLibrary {
 		}
 	}
 
+	/**
+		Returns the input name used to look up the precision of a vertex input (`tangent` uses the one of `normal`, the UV channels the one of `uv`).
+	**/
 	public static function remapPrecision(inputName : String) {
 		if ( inputName == "tangent" )
 			return "normal";
@@ -1664,6 +1733,9 @@ class HMDOut extends BaseLibrary {
 		return p;
 	}
 
+	/**
+		Writes a float, avoiding negative zero.
+	**/
 	public static inline function writeFloat(d : haxe.io.BytesOutput, f : Float ) {
 		d.writeFloat( f == 0 ? 0 : f ); // prevent negative zero
 	}
@@ -1790,6 +1862,9 @@ class HMDOut extends BaseLibrary {
 		return a;
 	}
 
+	/**
+		Converts the loaded FBX data to HMD. If `includeGeometry` is not set, only the animations and the joint positions are exported.
+	**/
 	public function toHMD( filePath : String, includeGeometry : Bool ) : Data {
 
 		// if we have only animation data, make sure to export all joints positions

@@ -1,33 +1,54 @@
 package hxd.fmt.fbx;
 using hxd.fmt.fbx.Data;
 
+/**
+	Reads the data of a FBX geometry node.
+**/
 class Geometry {
 
 	var lib : BaseLibrary;
 	var root : FbxNode;
 
+	/**
+		Creates the reader for the geometry node of the library.
+	**/
 	public function new(l, root) {
 		this.lib = l;
 		this.root = root;
 	}
 
+	/**
+		Returns the geometry node.
+	**/
 	public function getRoot() {
 		return root;
 	}
 
+	/**
+		Returns the vertex positions (3 floats per vertex).
+	**/
 	public function getVertices() {
 		return root.get("Vertices").getFloats();
 	}
 
+	/**
+		Returns the polygon vertex indexes: the last index of each polygon is stored as `-index - 1`.
+	**/
 	public function getPolygons() {
 		return root.get("PolygonVertexIndex").getInts();
 	}
 
+	/**
+		Returns the material index of each polygon, or `null`.
+	**/
 	public function getMaterials() {
 		var mats = root.get("LayerElementMaterial",true);
 		return mats == null ? null : mats.get("Materials").getInts();
 	}
 
+	/**
+		Returns the material index of each triangle.
+	**/
 	public function getMaterialByTriangle() {
 		var mids = getMaterials();
 		var pos = 0;
@@ -45,6 +66,9 @@ class Geometry {
 		return mats;
 	}
 
+	/**
+		Appends another geometry, with the given material remapping. Throws if one has a geometric transform.
+	**/
 	public function merge( g : Geometry, materials : Array<Int> ) {
 		var vl = getVertices();
 		var vcount = Std.int(vl.length / 3);
@@ -169,6 +193,9 @@ class Geometry {
 		return { vidx : vout, idx : iout };
 	}
 
+	/**
+		Returns the vertex positions, transformed by the matrix (the geometric transform by default).
+	**/
 	public function getPoints(?matrix) {
 		if( matrix == null ) matrix = getGeomMatrix();
 		if( matrix != null && matrix.isIdentity() ) matrix = null;
@@ -191,6 +218,9 @@ class Geometry {
 		return points;
 	}
 
+	/**
+		Returns the normals of the polygon vertices (3 floats each), transformed by the matrix (the geometric transform by default), or `null`.
+	**/
 	public function getNormals(?matrix) {
 		if( matrix == null ) matrix = getGeomMatrix();
 		if( matrix != null && matrix.isIdentity() ) matrix = null;
@@ -251,6 +281,9 @@ class Geometry {
 		return nrm;
 	}
 
+	/**
+		Returns the vertex colors and their indexes, or `null`.
+	**/
 	public function getColors() {
 		var color = root.get("LayerElementColor",true);
 		if( color == null ) return null;
@@ -259,6 +292,9 @@ class Geometry {
 		return { values : color.get("Colors").getFloats(), index : index.getInts() };
 	}
 
+	/**
+		Returns the UV channels, with their values and indexes.
+	**/
 	public function getUVs() {
 		var uvs = [];
 		for( v in root.getAll("LayerElementUV") ) {
@@ -273,6 +309,9 @@ class Geometry {
 		return uvs;
 	}
 
+	/**
+		Returns the geometric transform of the model, or `null`.
+	**/
 	@:access(hxd.fmt.fbx.BaseLibrary.leftHand)
 	public function getGeomMatrix() {
 		var rot = null, trans = null;

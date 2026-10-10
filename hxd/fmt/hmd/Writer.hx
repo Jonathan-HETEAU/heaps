@@ -1,11 +1,17 @@
 package hxd.fmt.hmd;
 import hxd.fmt.hmd.Data;
 
+/**
+	Writes a HMD file.
+**/
 class Writer {
 
 	var out : haxe.io.Output;
 	var version : Int;
 
+	/**
+		Creates a writer for the output.
+	**/
 	public function new(out) {
 		this.out = out;
 	}
@@ -112,6 +118,9 @@ class Writer {
 		}
 	}
 
+	/**
+		Writes the data.
+	**/
 	public function write( d : Data ) {
 		var old = out;
 		var header = new haxe.io.BytesOutput();

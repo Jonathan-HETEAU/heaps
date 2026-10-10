@@ -1,11 +1,17 @@
 package hxd.fmt.hmd;
 import hxd.fmt.hmd.Data;
 
+/**
+	Converts a HMD file into a readable text description, for debugging.
+**/
 class Dump {
 
 	var buf : StringBuf;
 	var prefix : String;
 
+	/**
+		Creates the dumper.
+	**/
 	public function new() {
 	}
 
@@ -29,6 +35,9 @@ class Dump {
 		}
 	}
 
+	/**
+		Returns the description of the data.
+	**/
 	public function dump( h : Data ) : String {
 		buf = new StringBuf();
 		prefix = "";
@@ -252,11 +261,17 @@ class Dump {
 		return buf.toString();
 	}
 
+	/**
+		Returns the description of the data.
+	**/
 	public static function toString(hmd) {
 		return new Dump().dump(hmd);
 	}
 
 	#if sys
+	/**
+		Command line tool printing the description of a HMD file (or of a FBX file converted to HMD).
+	**/
 	public static function main() {
 		var file = Sys.args()[0];
 		if( file == null ) throw "Missing file argument";

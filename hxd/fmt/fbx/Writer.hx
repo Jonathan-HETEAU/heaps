@@ -3,6 +3,9 @@ package hxd.fmt.fbx;
 import hxd.fmt.fbx.Data;
 import hxd.fmt.hmd.Data;
 
+/**
+	The axis conventions of an exported FBX file.
+**/
 typedef ExportParams = {
 	forward: String,
 	forwardSign: String,
@@ -11,6 +14,9 @@ typedef ExportParams = {
 }
 
 
+/**
+	Exports 3D objects to a binary FBX file.
+**/
 class Writer {
 	static var unsuported : Array<Dynamic> = [
 		h3d.scene.Interactive,
@@ -20,10 +26,16 @@ class Writer {
 
 	var out: haxe.io.Output;
 
+	/**
+		Creates a writer for the output.
+	**/
 	public function new(out) {
 		this.out = out;
 	}
 
+	/**
+		Returns the vertex format, vertices and indexes of a primitive (of a level of detail for a HMD model).
+	**/
 	public static function getPrimitiveInfos(prim : h3d.prim.Primitive, ?format: BufferFormat, ?lodIdx : Int = 0) @:privateAccess {
 		var infos : {
 			?vertexFormat : BufferFormat,
@@ -862,6 +874,9 @@ class Writer {
 		return connections;
 	}
 
+	/**
+		Writes the objects as FBX.
+	**/
 	public function write(objects: Array<h3d.scene.Object>, ?params : Dynamic) {
 		var old = out;
 		var header = new haxe.io.BytesOutput();
@@ -882,6 +897,9 @@ class Writer {
 		out.write(bytes);
 	}
 
+	/**
+		Exports the visible and supported objects to the file, with the given axis conventions, then calls `callb`.
+	**/
 	public function export(toExport: Array<h3d.scene.Object>, destinationPath: String, callb : Void -> Void, ?params : ExportParams) {
 		if (this.out == null)
 			this.out = new haxe.io.BytesOutput();

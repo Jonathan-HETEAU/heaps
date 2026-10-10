@@ -1,5 +1,8 @@
 package hxd.fmt.fbx;
 
+/**
+	A property value of a FBX node.
+**/
 enum FbxProp {
 	PInt( v : Int );
 	PFloat( v : Float );
@@ -10,14 +13,32 @@ enum FbxProp {
 	PBinary( v : haxe.io.Bytes );
 }
 
+/**
+	A node of a FBX file: its name, properties and children.
+**/
 typedef FbxNode = {
+	/**
+		The name of the node.
+	**/
 	var name : String;
+	/**
+		The property values of the node.
+	**/
 	var props : Array<FbxProp>;
+	/**
+		The children nodes.
+	**/
 	var childs : Array<FbxNode>;
 }
 
+/**
+	Helpers to read FBX nodes.
+**/
 class FbxTools {
 
+	/**
+		Returns the descendant node at the path (node names separated by dots). Throws if not found, unless `opt` is set.
+	**/
 	public static function get( n : FbxNode, path : String, opt = false ) {
 		var parts = path.split(".");
 		var cur = n;
@@ -38,6 +59,9 @@ class FbxTools {
 		return cur;
 	}
 
+	/**
+		Returns all the descendant nodes at the path.
+	**/
 	public static function getAll( n : FbxNode, path : String ) {
 		var parts = path.split(".");
 		var cur = [n];
@@ -54,6 +78,9 @@ class FbxTools {
 		return cur;
 	}
 
+	/**
+		Returns the integer array of the node.
+	**/
 	public static function getInts( n : FbxNode ) {
 		if( n.props.length != 1 )
 			throw n.name + " has " + n.props + " props";
@@ -65,6 +92,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the float array of the node (converting an integer array).
+	**/
 	public static function getFloats( n : FbxNode ) {
 		if( n.props.length != 1 )
 			throw n.name + " has " + n.props + " props";
@@ -84,6 +114,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Tells if the node has the property.
+	**/
 	public static function hasProp( n : FbxNode, p : FbxProp ) {
 		for( p2 in n.props )
 			if( Type.enumEq(p, p2) )
@@ -101,6 +134,9 @@ class FbxTools {
 		return Std.int(f);
 	}
 
+	/**
+		Returns the property as an integer.
+	**/
 	public static function toInt( n : FbxProp ) {
 		if( n == null ) throw "null prop";
 		return switch( n ) {
@@ -110,6 +146,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the property as a float.
+	**/
 	public static function toFloat( n : FbxProp ) {
 		if( n == null ) throw "null prop";
 		return switch( n ) {
@@ -119,6 +158,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the property as a string.
+	**/
 	public static function toString( n : FbxProp ) {
 		if( n == null ) throw "null prop";
 		return switch( n ) {
@@ -127,6 +169,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the property as bytes.
+	**/
 	public static function toBinary( n : FbxProp ) {
 		if ( n == null ) throw "null prop";
 		return switch( n ) {
@@ -135,6 +180,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the identifier of the object node.
+	**/
 	public static function getId( n : FbxNode ) {
 		if( n.props.length != 3 )
 			throw n.name + " is not an object";
@@ -145,6 +193,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the name of the object node (without its class prefix, with dots replaced by `_`).
+	**/
 	public static function getName( n : FbxNode ) {
 		if( n.props.length != 3 )
 			throw n.name + " is not an object";
@@ -157,6 +208,9 @@ class FbxTools {
 		}
 	}
 
+	/**
+		Returns the type of the object node.
+	**/
 	public static function getType( n : FbxNode ) {
 		if( n.props.length != 3 )
 			throw n.name + " is not an object";

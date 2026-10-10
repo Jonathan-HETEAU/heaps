@@ -1,6 +1,9 @@
 package hxd.fmt.hmd;
 import hxd.fmt.hmd.Data;
 
+/**
+	Reads a HMD file.
+**/
 class Reader {
 
 	static var BLEND = Type.allEnums(h2d.BlendMode);
@@ -9,6 +12,9 @@ class Reader {
 	var i : haxe.io.Input;
 	var version : Int;
 
+	/**
+		Creates a reader for the input.
+	**/
 	public function new(i) {
 		this.i = i;
 	}
@@ -145,6 +151,9 @@ class Reader {
 		return [for (_ in 0...lodCount) i.readInt32()];
 	}
 
+	/**
+		Reads the description of the content of the file, without the binary data. If `fast` is set, the header is read at once from the input.
+	**/
 	public function readHeader( fast = false ) : Data {
 		var d = new Data();
 		var h = i.readString(3);
@@ -350,6 +359,9 @@ class Reader {
 		return d;
 	}
 
+	/**
+		Reads the file, with its binary data.
+	**/
 	public function read() : Data {
 		var h = readHeader();
 		h.data = i.read(i.readInt32());

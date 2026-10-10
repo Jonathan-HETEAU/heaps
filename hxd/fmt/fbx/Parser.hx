@@ -15,6 +15,9 @@ private enum Token {
 	TEof;
 }
 
+/**
+	Parses FBX files, in text or binary format.
+**/
 class Parser {
 
 	var line : Int;
@@ -517,6 +520,9 @@ class Parser {
 		}
 	}
 
+	/**
+		Parses FBX data (binary or text) and returns its root node.
+	**/
 	public static function parse( data : Bytes ) {
 		if (data.length > 20 && data.getString(0, 20) == "Kaydara FBX Binary  ") {
 			return new Parser().parseBytes(data);

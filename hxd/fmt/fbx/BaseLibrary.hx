@@ -5,19 +5,55 @@ import h3d.col.Point;
 
 import haxe.xml.Access;
 
+/**
+	A node of the hierarchy built while converting a FBX file.
+**/
 class TmpObject {
+	/**
+		The index of the node.
+	**/
 	public var index : Int;
+	/**
+		The FBX model of the node.
+	**/
 	public var model : FbxNode;
+	/**
+		The parent node.
+	**/
 	public var parent : TmpObject;
+	/**
+		Tells if the node is a skeleton joint.
+	**/
 	public var isJoint : Bool;
+	/**
+		Tells if the node is a mesh.
+	**/
 	public var isMesh : Bool;
+	/**
+		The children nodes.
+	**/
 	public var childs : Array<TmpObject>;
 	#if !(dataOnly || macro)
+	/**
+		The object created for the node.
+	**/
 	public var obj : h3d.scene.Object;
 	#end
+	/**
+		The joint created for the node.
+	**/
 	public var joint : h3d.anim.Skin.Joint;
+	/**
+		The skinned mesh node of the joint.
+	**/
 	public var skin : TmpObject;
+	/**
+		The root joints of a skinned mesh node.
+	**/
 	public var rootJoints : Array<TmpObject>;
+	/**
+		Creates a node.
+	**/
 	public function new() {
 		childs = [];
 	}
@@ -39,23 +75,46 @@ private class AnimCurve {
 	}
 }
 
+/**
+	The default transform of a FBX model: translation, scale, rotation and pre-rotation.
+**/
 class DefaultMatrixes {
+	/**
+		The translation.
+	**/
 	public var trans : Null<Point>;
+	/**
+		The scale.
+	**/
 	public var scale : Null<Point>;
+	/**
+		The rotation (Euler angles in radians).
+	**/
 	public var rotate : Null<Point>;
+	/**
+		The pre-rotation (Euler angles in radians).
+	**/
 	public var preRot : Null<Point>;
+	/**
+		Set when the model was removed from the hierarchy (such as an optimized joint).
+	**/
 	public var wasRemoved : Null<Int>;
 
+	/**
+		The bind transform of a joint.
+	**/
 	public var transPos : h3d.Matrix;
 
+	/**
+		Creates an empty transform.
+	**/
 	public function new() {
 	}
 
+	/**
+		Converts a right handed matrix to left handed, by flipping the X axis.
+	**/
 	public static inline function rightHandToLeft( m : h3d.Matrix ) {
-		// if [x,y,z] is our original point and M the matrix
-		// in right hand we have [x,y,z] * M = [x',y',z']
-		// we need to ensure that left hand matrix convey the x axis flip,
-		// in order to have [-x,y,z] * M = [-x',y',z']
 		m._12 = -m._12;
 		m._13 = -m._13;
 		m._21 = -m._21;
@@ -63,12 +122,18 @@ class DefaultMatrixes {
 		m._41 = -m._41;
 	}
 
+	/**
+		Sets the transform from a matrix.
+	**/
 	public function fromMatrix(m : h3d.Matrix) {
 		trans = m.getPosition();
 		scale = m.getScale();
 		rotate = m.getEulerAngles();
 	}
 
+	/**
+		Returns the matrix of the transform (converted to left handed if `leftHand` is set).
+	**/
 	public function toMatrix(leftHand) {
 		var m = new h3d.Matrix();
 		m.identity();
@@ -80,6 +145,9 @@ class DefaultMatrixes {
 		return m;
 	}
 
+	/**
+		Returns the rotation of the transform (converted to left handed if `leftHand` is set).
+	**/
 	public function toQuaternion(leftHand) {
 		var m = new h3d.Matrix();
 		m.identity();
@@ -93,6 +161,9 @@ class DefaultMatrixes {
 
 }
 
+/**
+	Loads a FBX file (version 7) and builds its hierarchy, geometries, skins and animations. `HMDOut` converts it to the HMD format.
+**/
 class BaseLibrary {
 
 	var root : FbxNode;
@@ -106,6 +177,9 @@ class BaseLibrary {
 	var animationEvents : Array<{ frame : Int, data : String }>;
 	var isMaya : Bool;
 
+	/**
+		The path of the FBX file.
+	**/
 	public var fileName : String;
 
 	/**
@@ -138,6 +212,9 @@ class BaseLibrary {
 	**/
 	public var unskinnedJointsAsObjects : Bool;
 
+	/**
+		If set, the vertex colors are imported.
+	**/
 	public var allowVertexColor : Bool = true;
 
 	/**
@@ -160,6 +237,9 @@ class BaseLibrary {
 	**/
 	public var legacySkinImport : Bool = false;
 
+	/**
+		Creates the library for the file.
+	**/
 	public function new( fileName ) {
 		this.fileName = fileName;
 		root = { name : "Root", props : [], childs : [] };
@@ -176,10 +256,16 @@ class BaseLibrary {
 		defaultModelMatrixes = new Map();
 	}
 
+	/**
+		Parses the FBX file and loads it.
+	**/
 	public function loadFile( data : Bytes ) {
 		load(Parser.parse(data));
 	}
 
+	/**
+		Loads the parsed FBX data. Throws if the FBX version is not 7.
+	**/
 	public function load( root : FbxNode ) {
 		reset();
 		this.root = root;
@@ -567,6 +653,9 @@ class BaseLibrary {
 		}
 	}
 
+	/**
+		Converts the data from right handed to left handed coordinates, by flipping the X axis.
+	**/
 	public function leftHandConvert() {
 		if( leftHand ) return;
 		leftHand = true;
@@ -638,6 +727,9 @@ class BaseLibrary {
 		}
 	}
 
+	/**
+		Returns the geometry of the given name.
+	**/
 	public function getGeometry( name : String = "" ) {
 		var geom = null;
 		for( g in root.getAll("Objects.Geometry") )
@@ -650,6 +742,9 @@ class BaseLibrary {
 		return new Geometry(this, geom);
 	}
 
+	/**
+		Returns the parent of the node with the given node type. Throws if there are several, or none unless `opt` is set.
+	**/
 	public function getParent( node : FbxNode, nodeName : String, ?opt : Bool ) {
 		var p = getParents(node, nodeName);
 		if( p.length > 1 )
@@ -659,6 +754,9 @@ class BaseLibrary {
 		return p[0];
 	}
 
+	/**
+		Returns the child of the node with the given node type. Throws if there are several, or none unless `opt` is set.
+	**/
 	public function getChild( node : FbxNode, nodeName : String, ?opt : Bool ) {
 		var c = getChilds(node, nodeName);
 		if( c.length > 1 )
@@ -668,6 +766,9 @@ class BaseLibrary {
 		return c[0];
 	}
 
+	/**
+		Returns the child connected to the node with the given property name, or `null`.
+	**/
 	public function getSpecChild( node : FbxNode, name : String ) {
 		var nc = namedConnect.get(node.getId());
 		if( nc == null )
@@ -678,6 +779,9 @@ class BaseLibrary {
 		return ids.get(id);
 	}
 
+	/**
+		Returns the children of the node (of the given node type if set).
+	**/
 	public function getChilds( node : FbxNode, ?nodeName : String ) {
 		var c = connect.get(node.getId());
 		var subs = [];
@@ -691,6 +795,9 @@ class BaseLibrary {
 		return subs;
 	}
 
+	/**
+		Returns the parents of the node (of the given node type if set).
+	**/
 	public function getParents( node : FbxNode, ?nodeName : String ) {
 		var c = invConnect.get(node.getId());
 		var pl = [];
@@ -704,6 +811,9 @@ class BaseLibrary {
 		return pl;
 	}
 
+	/**
+		Returns the root of the FBX data.
+	**/
 	public function getRoot() {
 		return root;
 	}
@@ -859,6 +969,9 @@ class BaseLibrary {
 	}
 
 
+	/**
+		Merges the geometries of the given models into the first one.
+	**/
 	public function mergeModels( modelNames : Array<String> ) {
 		if( modelNames.length <= 1 )
 			return;
@@ -1001,6 +1114,9 @@ class BaseLibrary {
 		return names;
 	}
 
+	/**
+		Loads the animation of the given name (the first one by default), from this library, another FBX data (`root`), or another library (`lib`) applied to this skeleton.
+	**/
 	public function loadAnimation( ?animName : String, ?root : FbxNode, ?lib : BaseLibrary ) : h3d.anim.Animation {
 		if( lib != null ) {
 			lib.defaultModelMatrixes = defaultModelMatrixes;

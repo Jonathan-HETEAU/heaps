@@ -1,19 +1,31 @@
 package hxd.fmt.fbx;
 using hxd.fmt.fbx.Data;
 
+/**
+	Removes nodes from FBX data, with their connections.
+**/
 class Filter {
 
 	var ignoreList : Array<Array<String>>;
 	var removedObjects : Map<Int,Bool>;
 
+	/**
+		Creates a filter.
+	**/
 	public function new() {
 		ignoreList = [];
 	}
 
+	/**
+		Removes the nodes at the path (node names separated by dots).
+	**/
 	public function ignore( path : String ) {
 		ignoreList.push(path.split("."));
 	}
 
+	/**
+		Returns the FBX data without the ignored nodes and their connections.
+	**/
 	public function filter( f : FbxNode ) : FbxNode {
 		removedObjects = new Map();
 		var f2 = filterRec(f, ignoreList, 0);

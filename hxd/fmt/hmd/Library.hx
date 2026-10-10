@@ -30,16 +30,37 @@ private class ContextShared extends hrt.prefab.ContextShared {
 }
 #end
 
+/**
+	The vertices and indexes of a geometry, decoded in a given format.
+**/
 class GeometryBuffer {
+	/**
+		The vertex data.
+	**/
 	public var vertexes : haxe.ds.Vector<hxd.impl.Float32>;
+	/**
+		The indexes.
+	**/
 	public var indexes : haxe.ds.Vector<Int>;
+	/**
+		Creates an empty buffer.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	Creates the objects, primitives, materials, skins and animations of a HMD model resource (see `hxd.res.Model.toHmd`).
+**/
 class Library {
 
+	/**
+		The model resource.
+	**/
 	public var resource(default,null) : hxd.res.Resource;
+	/**
+		The description of the content of the file.
+	**/
 	public var header(default,null) : Data;
 	var cachedPrimitives : Array<h3d.prim.HMDModel>;
 	var cachedAnimations : Map<String, h3d.anim.Animation>;
@@ -50,6 +71,9 @@ class Library {
 	static var defaultModelConfigs : Map<String, h3d.prim.ModelDatabase.ModelProps> = new Map();
 	#end
 
+	/**
+		Creates the library of the resource.
+	**/
 	public function new(res,  header) {
 		this.resource = res;
 		this.header = header;
@@ -59,6 +83,9 @@ class Library {
 		cachedMaterials = [];
 	}
 
+	/**
+		Reads the binary data of the file.
+	**/
 	public function getData() {
 		var entry = resource.entry;
 		var b = haxe.io.Bytes.alloc(entry.size - header.dataPosition);
@@ -66,6 +93,9 @@ class Library {
 		return b;
 	}
 
+	/**
+		Returns the vertex format (position, normal, uv, color) matching a vertex stride, with the default values of the missing inputs.
+	**/
 	public function getDefaultFormat( stride : Int ) {
 		var format = [
 			new hxd.fmt.hmd.Data.GeometryFormat("position", DVec3),
@@ -88,6 +118,9 @@ class Library {
 		return { format : hxd.BufferFormat.make(format), defs : defs };
 	}
 
+	/**
+		Returns the vertices (in the given format) and indexes of all the models (or of the model of the index), transformed by their position. Throws if they use several materials.
+	**/
 	public function load( format : hxd.BufferFormat, ?defaults : Array<h3d.Vector4>, modelIndex = -1 ) {
 		var vtmp = new h3d.Vector();
 		var models = modelIndex < 0 ? header.models : [header.models[modelIndex]];
@@ -123,6 +156,9 @@ class Library {
 		return { vertex : outVertex, index : outIndex };
 	}
 
+	/**
+		Decodes the vertices of the geometry in the given format (with default values for the missing inputs), and the indexes of a material (all of them if `material` is not set).
+	**/
 	@:noDebug
 	public function getBuffers( geom : Geometry, format : hxd.BufferFormat, ?defaults : Array<h3d.Vector4>, ?material : Int ) {
 
@@ -312,6 +348,9 @@ class Library {
 		return p;
 	}
 
+	/**
+		Releases the cached primitives and materials.
+	**/
 	public function dispose() {
 		for( p in cachedPrimitives )
 			if( p != null )
