@@ -4,22 +4,52 @@ import haxe.macro.Expr;
 using haxe.macro.ExprTools;
 #end
 
+/**
+	Implement this interface to use field initializers that reference other fields: they are moved to the constructor, in dependency order. `a => { ... }` sets fields of the value of `a`.
+**/
 @:autoBuild(h3d.impl.VarBinding.Macros.build())
 interface VarBinding {
 }
 
 #if macro
 
+/**
+	A field initializer, with its dependencies (macro).
+**/
 class Init {
+	/**
+		The path of the initialized field.
+	**/
 	public var path : Array<String>;
+	/**
+		The initial value.
+	**/
 	public var expr : Expr;
+	/**
+		The initializers this one depends on.
+	**/
 	public var dependsOn : Array<Init>;
+	/**
+		The initializers depending on this one.
+	**/
 	public var dependedBy : Array<Init>;
 
+	/**
+		Used to sort the initializers.
+	**/
 	public var mark : Bool;
+	/**
+		Tells if it comes from a `=>` initializer.
+	**/
 	public var isInit : Bool;
+	/**
+		The initializer of the containing object.
+	**/
 	public var parent : Init;
 
+	/**
+		Creates an initializer.
+	**/
 	public function new(path,expr, isInit=false) {
 		this.path = path;
 		this.expr = expr;
@@ -30,6 +60,9 @@ class Init {
 
 }
 
+/**
+	The macros of `VarBinding`.
+**/
 class Macros {
 
 	static function hasIdent( e ) {
@@ -47,6 +80,9 @@ class Macros {
 		return has;
 	}
 
+	/**
+		Build macro of the `VarBinding` classes.
+	**/
 	public static function build() {
 		var fields = haxe.macro.Context.getBuildFields();
 		var inits = [];

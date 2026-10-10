@@ -1,15 +1,42 @@
 package h3d.impl;
 
+/**
+	The base class of the 2D and 3D render contexts (`h2d.RenderContext`, `h3d.scene.RenderContext`): time, globals, temporary textures, and the filling of the shader buffers.
+**/
 class RenderContext {
 
+	/**
+		If set, a missing texture or buffer parameter throws an error.
+	**/
 	public static var STRICT = true;
 
+	/**
+		The engine.
+	**/
 	public var engine : h3d.Engine;
+	/**
+		The current time, in seconds.
+	**/
 	public var time : Float;
+	/**
+		The time elapsed since the previous frame, in seconds.
+	**/
 	public var elapsedTime : Float;
+	/**
+		The current frame number.
+	**/
 	public var frame : Int;
+	/**
+		The cache of the temporary render target textures.
+	**/
 	public var textures : h3d.impl.TextureCache;
+	/**
+		The values of the global shader variables.
+	**/
 	public var globals : hxsl.Globals;
+	/**
+		The buffers receiving the shader globals and parameters.
+	**/
 	public var shaderBuffers = new h3d.shader.Buffers();
 
 	function new() {
@@ -21,12 +48,18 @@ class RenderContext {
 		globals = new hxsl.Globals();
 	}
 
+	/**
+		Makes this context the current one.
+	**/
 	public function setCurrent() {
 		if (inst != null)
 			onContextChange();
 		inst = this;
 	}
 
+	/**
+		Clears the current context. Throws if this context is not the current one.
+	**/
 	public function clearCurrent() {
 		if( inst == this )
 			inst = null;
@@ -34,10 +67,16 @@ class RenderContext {
 			throw "Context has changed";
 	}
 
+	/**
+		Releases the temporary textures.
+	**/
 	public function dispose() {
 		textures.dispose();
 	}
 
+	/**
+		Writes the bits of an integer at the float position in the buffer.
+	**/
 	public static inline function fillIntParam( v:Int, pos: Int, out : hxsl.Shader.ShaderParamBuffer ){
 		#if js
 		var view = new hxd.impl.TypedArray.Uint32Array(out.buffer);
@@ -48,6 +87,9 @@ class RenderContext {
 	}
 
 
+	/**
+		Writes a value of the given shader type at the float position in the buffer, and returns the number of floats written.
+	**/
 	public static function fillRec( v : Dynamic, type : hxsl.Ast.Type, out : hxsl.Shader.ShaderParamBuffer, pos : Int ) : Int {
 		switch( type ) {
 		case TBool:
@@ -206,6 +248,9 @@ class RenderContext {
 		#end
 	}
 
+	/**
+		Returns the value of a parameter of the shaders (or of a per object global). Throws if it is `null`, unless `opt` is set.
+	**/
 	public inline function getParamValue( p : hxsl.RuntimeShader.AllocParam, shaders : hxsl.ShaderList, opt = false ) : Dynamic {
 		if( p.perObjectGlobal != null ) {
 			var v : Dynamic = globals.fastGet(p.perObjectGlobal.gid);
@@ -222,6 +267,9 @@ class RenderContext {
 		return v;
 	}
 
+	/**
+		Writes the globals used by the shader in the buffers.
+	**/
 	public function fillGlobals( buf : h3d.shader.Buffers, s : hxsl.RuntimeShader ) {
 		inline function fill(buf:h3d.shader.Buffers.ShaderBuffers, s:hxsl.RuntimeShader.RuntimeShaderData) {
 			var g = s.globals;
@@ -245,6 +293,9 @@ class RenderContext {
 		if( s.fragment != null ) fill(buf.fragment, s.fragment);
 	}
 
+	/**
+		Writes the parameters, textures and buffers of the shaders in the buffers.
+	**/
 	public function fillParams( buf : h3d.shader.Buffers, s : hxsl.RuntimeShader, shaders : hxsl.ShaderList, compute : Bool = false ) {
 		var curInstance = -1;
 		var curInstanceValue = null;
@@ -323,12 +374,20 @@ class RenderContext {
 	}
 
 	static var inst : RenderContext;
+	/**
+		Returns the current context.
+	**/
 	public static function get() return inst;
+	/**
+		Returns the current context if it is an instance of the class, or `null`.
+	**/
 	public static inline function getType<T:RenderContext>( cl : Class<h3d.impl.RenderContext> ) {
 		return Std.downcast(inst, cl);
 	}
 
+	/**
+		Called when another context becomes the current one while one is set.
+	**/
 	public static dynamic function onContextChange() {
-		// Will throw 'Context has changed' down the line
 	}
 }

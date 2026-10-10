@@ -1,10 +1,22 @@
 package h3d.impl;
 
+/**
+	How the shader binaries are stored in the cache file.
+**/
 enum abstract ShaderCacheMode(Int) from Int to Int {
+	/**
+		Base64 text.
+	**/
 	var Base64 = 0;
+	/**
+		Raw bytes.
+	**/
 	var Binary = 1;
 }
 
+/**
+	A cache of the shaders compiled by the driver, by source code and configuration, saved to a file to avoid compiling them at the next run (see `Driver.setShaderCache`).
+**/
 class ShaderCache {
 
 	var file : String;
@@ -12,15 +24,33 @@ class ShaderCache {
 	var data : Map<String, haxe.io.Bytes>;
 	var sources : Map<String, String>;
 	var sourceFile : String;
+	/**
+		If set, the sources are also saved, in a `.source` file, for debugging.
+	**/
 	public var keepSource : Bool;
 	var mode : ShaderCacheMode;
 	var dirty = false;
+	/**
+		If set, the new compiled shaders are saved.
+	**/
 	public var allowSave = true;
 
+	/**
+		The keyword starting the version in the file header.
+	**/
 	public static var VERSION_KEY_WORD = "VERSION";
+	/**
+		The version of the file format.
+	**/
 	public static var VERSION = 1;
+	/**
+		The keyword starting the mode in the file header.
+	**/
 	public static var MODE_KEY_WORD = "MODE";
 
+	/**
+		Creates the cache for the file (saved to `outputFile` if set).
+	**/
 	public function new( file : String, ?outputFile : String, mode = Base64) {
 		this.file = file;
 		this.outputFile = outputFile ?? file;
@@ -28,16 +58,25 @@ class ShaderCache {
 		sourceFile = file + ".source";
 	}
 
+	/**
+		Disables the saving. Deprecated: set `allowSave` to `false`.
+	**/
 	@:deprecated("use allowSave = false")
 	public function disableSave() {
 		allowSave = false;
 	}
 
+	/**
+		Clears the cache.
+	**/
 	public function initEmpty() {
 		data = [];
 		sources = [];
 	}
 
+	/**
+		Loads the cache files.
+	**/
 	public function load() {
 		initEmpty();
 		try loadFile(file) catch( e : Dynamic ) {};
@@ -146,6 +185,9 @@ class ShaderCache {
 		#end
 	}
 
+	/**
+		Returns the compiled shader of the source and configuration, or `null`.
+	**/
 	public function resolveShaderBinary( source : String, ?configurationKey = "" ) {
 		var encodedSource = haxe.crypto.Md5.encode(source);
 		var key = configurationKey + encodedSource;
@@ -157,6 +199,9 @@ class ShaderCache {
 	}
 
 	var saveTimer : haxe.Timer;
+	/**
+		Adds a compiled shader to the cache, and saves the file shortly after if `saveToFile` is set.
+	**/
 	public function saveCompiledShader( source : String, bytes : haxe.io.Bytes, ?configurationKey = "", ?saveToFile = true ) {
 		var key = configurationKey + haxe.crypto.Md5.encode(source);
 		lock();
@@ -196,6 +241,9 @@ class ShaderCache {
 		}, 100);
 	}
 
+	/**
+		Saves the cache file if it changed.
+	**/
 	public function save() {
 		lock();
 		if( !dirty ) {

@@ -43,6 +43,9 @@ private class StatsObject {
 	}
 }
 
+/**
+	A 2D bar displaying the GPU time of each section of the frame (with GPU timestamp queries), with the draw calls. Call `begin` at the start of the frame, `measure` at the start of each section, and `end` at the end of the frame.
+**/
 class Benchmark extends h2d.Graphics {
 
 	var cachedStats : StatsObject;
@@ -55,19 +58,52 @@ class Benchmark extends h2d.Graphics {
 	var labels : Array<h2d.Text>;
 	var interact : h2d.Interactive;
 
+	/**
+		If set, the time waiting for the next frame (vsync) is estimated and displayed.
+	**/
 	public var estimateWait = false;
+	/**
+		Enables the measures and the display.
+	**/
 	public var enable(default,set) : Bool;
 
+	/**
+		The width of the bar, or `null` for the width of the scene.
+	**/
 	public var width : Null<Int>;
+	/**
+		The height of the bar, in pixels.
+	**/
 	public var height = 16;
+	/**
+		The color of the labels.
+	**/
 	public var textColor = 0;
+	/**
+		The colors of the sections.
+	**/
 	public var colors = new Array<Int>();
+	/**
+		The font of the labels.
+	**/
 	public var font : h2d.Font;
 
+	/**
+		The frame time change (in nanoseconds) above which the smoothed frame time is reset.
+	**/
 	public var recalTime = 1e9;
+	/**
+		The smoothing factor of the frame time, from `0` (none) to `1`.
+	**/
 	public var smoothTime = 0.95;
 
+	/**
+		If set, the CPU time is measured instead of the GPU time.
+	**/
 	public var measureCpu = false;
+	/**
+		Displays the number of triangles drawn.
+	**/
 	public var displayTriangleCount = true;
 
 	#if target.threaded public var measureCpuThread: sys.thread.Thread = null; #end
@@ -79,6 +115,9 @@ class Benchmark extends h2d.Graphics {
 	var prevFrame : Float;
 	var frameTime : Float;
 
+	/**
+		Creates the bar.
+	**/
 	public function new(?parent) {
 		super(parent);
 		waitFrames = [];
@@ -180,6 +219,9 @@ class Benchmark extends h2d.Graphics {
 		if( hxd.Math.abs(tip.parent.x - tx) > 5 ) tip.parent.x = Std.int(tx);
 	}
 
+	/**
+		Starts measuring a frame. The display is updated if `withVisual` is set.
+	**/
 	public function begin(withVisual=true) {
 
 		if( !enable ) return;
@@ -268,6 +310,9 @@ class Benchmark extends h2d.Graphics {
 		measure("begin");
 	}
 
+	/**
+		Updates the display with the last measures.
+	**/
 	public function syncVisual() {
 		var s2d = getScene();
 		var old = labels;
@@ -368,6 +413,9 @@ class Benchmark extends h2d.Graphics {
 		return l;
 	}
 
+	/**
+		Ends the measure of the frame.
+	**/
 	public function end() {
 		if( !enable ) return;
 		measure("end");
@@ -406,6 +454,9 @@ class Benchmark extends h2d.Graphics {
 		return q;
 	}
 
+	/**
+		Starts the section of the given name.
+	**/
 	public function measure( name : String ) {
 		if( !enable ) return;
 		if( currentFrame != null && currentFrame.name == name )
@@ -424,12 +475,18 @@ class Benchmark extends h2d.Graphics {
 		if( measureCpu ) q.value = haxe.Timer.stamp() * 1e9;
 	}
 
+	/**
+		Returns the name of the current section, or `null`.
+	**/
 	public function getCurrentId() {
 		if ( currentFrame != null )
 			return currentFrame.name;
 		return null;
 	}
 
+	/**
+		Freezes the application to inspect the scene: replaces the main loop by rendering only, with an orbit camera controller, and disables the culling to show the culled objects.
+	**/
 	public static function takeControl( app : hxd.App, ?s3d : h3d.scene.Scene ) @:privateAccess {
 		if( s3d == null ) s3d = app.s3d;
 		var cur = hxd.System.getCurrentLoop();

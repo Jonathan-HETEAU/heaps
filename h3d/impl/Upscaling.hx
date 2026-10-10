@@ -7,18 +7,27 @@ import heaps.dlss.Dlss;
 import heaps.fsr.Fsr;
 #end
 
+/**
+	The features of an upscaling backend.
+**/
 enum UpscalingFeature {
 	Upscaler;
 	FrameGen;
 	LowLatency;
 }
 
+/**
+	An upscaling technology.
+**/
 enum abstract UpscalingProvider(String) from String to String {
 	var AUTO = "auto";
 	var DLSS = "dlss";
 	var FSR = "fsr";
 }
 
+/**
+	The quality mode of the upscaler: the lower the quality, the smaller the render resolution.
+**/
 enum UpscalingMode {
 	Off;
 	NativeAA;
@@ -28,6 +37,9 @@ enum UpscalingMode {
 	UltraPerformance;
 }
 
+/**
+	The frame generation mode.
+**/
 enum FrameGenMode {
 	Off;
 	On;
@@ -35,209 +47,489 @@ enum FrameGenMode {
 	Dynamic;
 }
 
+/**
+	How the UI is handled by the frame generation, so that it is not interpolated: `BackBuffer` (the whole back buffer is interpolated), `HudLess` (a copy of the frame without UI is marked with `Upscaling.markFrameGenHudless`), or `UITexture` (the UI is drawn into a separate texture, see `Upscaling.getFrameGenUITarget`).
+**/
 enum FrameGenUIMode {
 	BackBuffer;
 	HudLess;
 	UITexture;
 }
 
+/**
+	The low latency mode (such as NVIDIA Reflex).
+**/
 enum LowLatencyMode {
 	Off;
 	On;
 	OnWithBoost;
 }
 
+/**
+	The points of the frame reported to the low latency technology.
+**/
 enum LatencyMarker {
 	SimulationStart;
 	SimulationEnd;
 	TriggerFlash;
 }
 
+/**
+	The textures used by the upscaler.
+**/
 class UpscalingInputs {
+	/**
+		The rendered image, at the render resolution.
+	**/
 	public var color : h3d.mat.Texture;
+	/**
+		The depth buffer, at the render resolution.
+	**/
 	public var depth : h3d.mat.Texture;
+	/**
+		The motion vectors, at the render resolution.
+	**/
 	public var motionVectors : h3d.mat.Texture;
+	/**
+		The texture receiving the upscaled image.
+	**/
 	public var output : h3d.mat.Texture;
+	/**
+		Creates empty inputs.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The camera and frame parameters of the upscaler and the frame generation.
+**/
 @:struct class UpscalingParams {
+	/**
+		The projection matrix.
+	**/
 	public var cameraViewToClip : h3d.Matrix;
+	/**
+		The inverse projection matrix.
+	**/
 	public var clipToCameraView : h3d.Matrix;
+	/**
+		The matrix from the clip space of the frame to the clip space of the previous frame.
+	**/
 	public var clipToPrevClip : h3d.Matrix;
+	/**
+		The matrix from the clip space of the previous frame to the clip space of the frame.
+	**/
 	public var prevClipToClip : h3d.Matrix;
+	/**
+		The X subpixel jitter of the projection, in pixels.
+	**/
 	public var jitterOffsetX : Float;
+	/**
+		The Y subpixel jitter of the projection, in pixels.
+	**/
 	public var jitterOffsetY : Float;
+	/**
+		The X scale converting the motion vectors to pixels.
+	**/
 	public var mvecScaleX : Float;
+	/**
+		The Y scale converting the motion vectors to pixels.
+	**/
 	public var mvecScaleY : Float;
+	/**
+		The camera position.
+	**/
 	public var cameraPos : h3d.Vector;
+	/**
+		The camera up direction.
+	**/
 	public var cameraUp : h3d.Vector;
+	/**
+		The camera right direction.
+	**/
 	public var cameraRight : h3d.Vector;
+	/**
+		The camera forward direction.
+	**/
 	public var cameraFwd : h3d.Vector;
+	/**
+		The camera near plane distance.
+	**/
 	public var cameraNear : Float;
+	/**
+		The camera far plane distance.
+	**/
 	public var cameraFar : Float;
+	/**
+		The camera vertical field of view, in radians.
+	**/
 	public var cameraFOV : Float;
+	/**
+		The camera aspect ratio.
+	**/
 	public var cameraAspectRatio : Float;
+	/**
+		The value of the motion vectors where they are invalid.
+	**/
 	public var motionVectorsInvalidValue : Float;
+	/**
+		Tells if the depth is inverted (`1` near, `0` far).
+	**/
 	public var depthInverted : Bool;
+	/**
+		Tells if the motion vectors include the camera motion.
+	**/
 	public var cameraMotionIncluded : Bool;
+	/**
+		Resets the history of the upscaler (after a camera cut).
+	**/
 	public var reset : Bool;
+	/**
+		Tells if the projection is orthographic.
+	**/
 	public var orthographicProjection : Bool;
+	/**
+		Tells if the motion vectors are dilated.
+	**/
 	public var motionVectorsDilated : Bool;
+	/**
+		Tells if the motion vectors include the jitter.
+	**/
 	public var motionVectorsJittered : Bool;
+	/**
+		Tells if the color is in HDR.
+	**/
 	public var colorBufferHDR : Bool;
+	/**
+		Lets the upscaler compute the exposure.
+	**/
 	public var autoExposure : Bool;
+	/**
+		Creates the parameters.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The render resolution to use for an upscaling mode.
+**/
 class UpscalingSettings {
+	/**
+		The render width, in pixels.
+	**/
 	public var renderWidth : Int;
+	/**
+		The render height, in pixels.
+	**/
 	public var renderHeight : Int;
+	/**
+		Creates the settings.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The state and capabilities of the frame generation.
+**/
 class FrameGenSettings {
+	/**
+		The status code of the frame generation.
+	**/
 	public var status : Int;
+	/**
+		The minimum size supported.
+	**/
 	public var minWidthOrHeight : Int;
+	/**
+		The number of frames presented for each rendered frame.
+	**/
 	public var framesPresented : Int;
+	/**
+		The maximum number of frames generated for each rendered frame.
+	**/
 	public var maxFramesToGenerate : Int;
+	/**
+		Tells if the `Dynamic` mode is supported.
+	**/
 	public var dynamicSupported : Bool;
+	/**
+		Tells if the frame generation works with vsync.
+	**/
 	public var vsyncSupported : Bool;
+	/**
+		Creates the settings.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The base class of the implementations of an upscaling technology (DLSS, FSR) for a driver. Its methods do nothing: each backend overrides them.
+**/
 @:allow(h3d.impl.Upscaling)
 class UpscalingBackend {
 
+	/**
+		The technology of the backend.
+	**/
 	public var provider(default, null) : UpscalingProvider;
+	/**
+		The features requested.
+	**/
 	public var wanted(default, null) : haxe.EnumFlags<UpscalingFeature>;
+	/**
+		The features supported by the hardware.
+	**/
 	public var supported(default, null) : haxe.EnumFlags<UpscalingFeature>;
 
+	/**
+		Creates the backend.
+	**/
 	public function new( provider : UpscalingProvider ) {
 		this.provider = provider;
 	}
 
+	/**
+		Called by the driver before the device is created.
+	**/
 	public function beforeCreateDevice() {
 	}
 
+	/**
+		Called by the driver after the device is created.
+	**/
 	public function afterCreateDevice() {
 	}
 
+	/**
+		Releases the resources of the unused features.
+	**/
 	public function release( unused : haxe.EnumFlags<UpscalingFeature> ) {
 	}
 
+	/**
+		Called by the driver after the command queue is created.
+	**/
 	public function afterCreateQueue() {
 	}
 
+	/**
+		Called by the driver after the swap chain is created.
+	**/
 	public function afterCreateSwapChain() {
 	}
 
+	/**
+		Called by the driver at the start of the frame.
+	**/
 	public function beginFrame() {
 	}
 
+	/**
+		Called by the driver when the frame commands start.
+	**/
 	public function begin() {
 	}
 
+	/**
+		Called by the driver before the frame is presented.
+	**/
 	public function beforePresent() {
 	}
 
+	/**
+		Called by the driver before the present is queued.
+	**/
 	public function beforeQueuePresent() {
 	}
 
+	/**
+		Called by the driver after the present is queued.
+	**/
 	public function afterQueuePresent() {
 	}
 
+	/**
+		Called by the driver before the swap chain is resized.
+	**/
 	public function beforeResize() {
 	}
 
+	/**
+		Called by the driver to release the resources that depend on the swap chain size.
+	**/
 	public function releaseResizeResources() {
 	}
 
+	/**
+		Called by the driver after the swap chain is resized.
+	**/
 	public function afterResize() {
 	}
 
+	/**
+		Releases the resources.
+	**/
 	public function dispose() {
 	}
 
+	/**
+		Tells if the feature is available.
+	**/
 	public function isAvailable( f : UpscalingFeature ) : Bool {
 		return supported.has(f);
 	}
 
+	/**
+		Returns the name of the implementation of the feature.
+	**/
 	public function getName( f : UpscalingFeature ) : String {
 		return (provider : String).toUpperCase();
 	}
 
+	/**
+		Returns the status of the feature, for debugging.
+	**/
 	public function getStatus( f : UpscalingFeature ) : String {
 		return wanted.has(f) ? "not supported" : "not selected";
 	}
 
+	/**
+		Returns debug information on the feature.
+	**/
 	public function debug( f : UpscalingFeature ) : String {
 		return "";
 	}
 
+	/**
+		Returns the render resolution of the upscaling mode, for the output size.
+	**/
 	public function getRenderSize( mode : UpscalingMode, targetWidth : Int, targetHeight : Int ) : UpscalingSettings {
 		return null;
 	}
 
+	/**
+		Upscales the inputs.
+	**/
 	public function upscale( inputs : UpscalingInputs, params : UpscalingParams, mode : UpscalingMode ) {
 	}
 
+	/**
+		Releases the resources of the upscaler.
+	**/
 	public function releaseUpscaler() {
 	}
 
+	/**
+		Sets the frame generation mode. Returns `false` if not supported.
+	**/
 	public function setFrameGenMode( mode : FrameGenMode, numFramesToGenerate : Int, releaseResources : Bool ) : Bool {
 		return false;
 	}
 
+	/**
+		Returns the frame generation mode.
+	**/
 	public function getFrameGenMode() : FrameGenMode {
 		return Off;
 	}
 
+	/**
+		Returns the frame generation state.
+	**/
 	public function getFrameGenSettings() : FrameGenSettings {
 		return null;
 	}
 
+	/**
+		Provides the inputs of the frame generation for the frame.
+	**/
 	public function prepareFrameGen( inputs : UpscalingInputs, params : UpscalingParams ) {
 	}
 
+	/**
+		Provides the frame without UI and the UI texture to the frame generation.
+	**/
 	public function setFrameGenUI( hudless : h3d.mat.Texture, ui : h3d.mat.Texture ) {
 	}
 
+	/**
+		Tells if the frame generation composes the UI texture itself.
+	**/
 	public function composesFrameGenUI() : Bool {
 		return false;
 	}
 
+	/**
+		Returns the number of hudless buffers needed.
+	**/
 	public function getHudlessBufferCount() : Int {
 		return 1;
 	}
 
+	/**
+		Sets the low latency mode, with an optional frame duration limit in microseconds. Returns `false` if not supported.
+	**/
 	public function setLowLatencyMode( mode : LowLatencyMode, frameLimitUs : Int ) : Bool {
 		return false;
 	}
 
+	/**
+		Waits to reduce the latency, at the start of the frame.
+	**/
 	public function lowLatencySleep() {
 	}
 
+	/**
+		Reports a point of the frame to the low latency technology.
+	**/
 	public function latencyMarker( m : LatencyMarker ) {
 	}
 
+	/**
+		Tells if the latency flash indicator is controlled by the graphics driver.
+	**/
 	public function isFlashIndicatorDriverControlled() : Bool {
 		return false;
 	}
 }
 
+/**
+	Selects and drives the upscaling technologies of the driver: upscaling of a lower resolution rendering (DLSS, FSR), frame generation, and low latency. Accessed with `Driver.upscaling`.
+	The static settings must be set before the engine is created.
+**/
 class Upscaling {
 
+	/**
+		Enables the upscaling technologies.
+	**/
 	public static var ENABLED = true;
+	/**
+		The upscaler to use, or `AUTO` to use the first available one of `PRIORITY`.
+	**/
 	public static var UPSCALER : UpscalingProvider = AUTO;
+	/**
+		Enables the frame generation.
+	**/
 	public static var FRAME_GEN = true;
+	/**
+		The frame generation technology to use, or `AUTO`.
+	**/
 	public static var FRAME_GEN_PROVIDER : UpscalingProvider = AUTO;
+	/**
+		Enables the low latency technology.
+	**/
 	public static var LOW_LATENCY = true;
+	/**
+		Enables the debug mode of the backends.
+	**/
 	public static var DEBUG = false;
+	/**
+		The order in which the technologies are preferred.
+	**/
 	public static var PRIORITY : Array<UpscalingProvider> = [DLSS, FSR];
 
 	var driver : Driver;
@@ -261,29 +553,47 @@ class Upscaling {
 	var frameGenUITarget : h3d.mat.Texture;
 	var frameGenUIDrawn = -1;
 
+	/**
+		Creates the upscaling of the driver with the available backends.
+	**/
 	public function new( driver : Driver, backends : Array<UpscalingBackend> ) {
 		this.driver = driver;
 		this.backends = backends;
 	}
 
+	/**
+		Tells if the feature is supported.
+	**/
 	public function isSupported( f : UpscalingFeature ) : Bool {
 		var b = getBackend(f);
 		return b != null && b.isAvailable(f);
 	}
 
+	/**
+		Returns the name of the implementation of the feature, or `null`.
+	**/
 	public function getName( f : UpscalingFeature ) : String {
 		var b = getBackend(f);
 		return b == null ? null : b.getName(f);
 	}
 
+	/**
+		Returns the available upscalers.
+	**/
 	public function getUpscalers() : Array<UpscalingProvider> {
 		return [for( b in backends ) if( b.supported.has(Upscaler) ) b.provider];
 	}
 
+	/**
+		Returns the current upscaler, or `null`.
+	**/
 	public function getUpscaler() : UpscalingProvider {
 		return upscaler == null ? null : upscaler.provider;
 	}
 
+	/**
+		Changes the upscaler. Returns `false` if it is not available.
+	**/
 	public function setUpscaler( provider : UpscalingProvider ) : Bool {
 		for( b in backends ) {
 			if( b.provider != provider || !b.supported.has(Upscaler) )
@@ -300,10 +610,16 @@ class Upscaling {
 		return false;
 	}
 
+	/**
+		Returns the render resolution of the upscaling mode for the output size, or `null` if there is no upscaler.
+	**/
 	public function getRenderSize( mode : UpscalingMode, targetWidth : Int, targetHeight : Int ) : UpscalingSettings {
 		return upscaler == null ? null : upscaler.getRenderSize(mode, targetWidth, targetHeight);
 	}
 
+	/**
+		Upscales the inputs with the current upscaler.
+	**/
 	public function upscale( inputs : UpscalingInputs, params : UpscalingParams, mode : UpscalingMode ) {
 		if( upscaler == null )
 			return;
@@ -320,6 +636,9 @@ class Upscaling {
 		upscaler.upscale(inputs, params, mode);
 	}
 
+	/**
+		Sets the frame generation mode (low latency is enabled with it). Returns `false` if not supported.
+	**/
 	public function setFrameGenMode( mode : FrameGenMode, numFramesToGenerate = 1, releaseResources = false ) : Bool {
 		if( frameGen == null )
 			return false;
@@ -328,19 +647,31 @@ class Upscaling {
 		return frameGen.setFrameGenMode(mode, numFramesToGenerate, releaseResources);
 	}
 
+	/**
+		Returns the frame generation mode.
+	**/
 	public function getFrameGenMode() : FrameGenMode {
 		return frameGen == null ? Off : frameGen.getFrameGenMode();
 	}
 
+	/**
+		Returns the frame generation state, or `null`.
+	**/
 	public function getFrameGenSettings() : FrameGenSettings {
 		return frameGen == null ? null : frameGen.getFrameGenSettings();
 	}
 
+	/**
+		Provides the inputs of the frame generation for the frame.
+	**/
 	public function prepareFrameGen( inputs : UpscalingInputs, params : UpscalingParams ) {
 		if( frameGen != null )
 			frameGen.prepareFrameGen(inputs, params);
 	}
 
+	/**
+		Sets how the UI is handled by the frame generation.
+	**/
 	public function setFrameGenUIMode( mode : FrameGenUIMode ) {
 		if( mode == frameGenUIMode )
 			return;
@@ -348,10 +679,16 @@ class Upscaling {
 		disposeFrameGenTextures();
 	}
 
+	/**
+		Returns how the UI is handled by the frame generation.
+	**/
 	public function getFrameGenUIMode() : FrameGenUIMode {
 		return frameGenUIMode;
 	}
 
+	/**
+		In `HudLess` mode, records the current back buffer (or `source`) as the frame without UI. Call it before drawing the UI.
+	**/
 	public function markFrameGenHudless( ?source : h3d.mat.Texture ) {
 		var hudless = getHudlessTexture();
 		if( hudless == null )
@@ -363,6 +700,9 @@ class Upscaling {
 		hudlessCaptured = presentCount;
 	}
 
+	/**
+		In `UITexture` mode, returns the texture to draw the UI into, or `null`.
+	**/
 	public function getFrameGenUITarget() : h3d.mat.Texture {
 		if( frameGenUIMode != UITexture )
 			return null;
@@ -379,6 +719,9 @@ class Upscaling {
 		return t;
 	}
 
+	/**
+		In `UITexture` mode, composes the UI texture over the frame (unless the frame generation does it).
+	**/
 	public function compositeFrameGenUI() {
 		var ui = frameGenUITarget;
 		if( ui == null || ui.t == null || frameGenUIMode != UITexture )
@@ -390,6 +733,9 @@ class Upscaling {
 		h3d.pass.Copy.run(ui, null, AlphaAdd);
 	}
 
+	/**
+		Sets the low latency mode, with an optional frame duration limit in microseconds. Returns `false` if not supported.
+	**/
 	public function setLowLatencyMode( mode : LowLatencyMode, frameLimitUs = 0 ) : Bool {
 		lowLatencyMode = mode;
 		this.frameLimitUs = frameLimitUs;
@@ -400,24 +746,39 @@ class Upscaling {
 		return latency.setLowLatencyMode(mode, frameLimitUs);
 	}
 
+	/**
+		Returns the low latency mode.
+	**/
 	public function getLowLatencyMode() : LowLatencyMode {
 		return lowLatencyMode;
 	}
 
+	/**
+		Waits to reduce the latency. Called at the start of the frame.
+	**/
 	public function lowLatencySleep() {
 		if( latency != null )
 			latency.lowLatencySleep();
 	}
 
+	/**
+		Reports a point of the frame to the low latency technology.
+	**/
 	public function latencyMarker( m : LatencyMarker ) {
 		if( latency != null )
 			latency.latencyMarker(m);
 	}
 
+	/**
+		Tells if the latency flash indicator is controlled by the graphics driver.
+	**/
 	public function isFlashIndicatorDriverControlled() : Bool {
 		return latency != null && latency.isFlashIndicatorDriverControlled();
 	}
 
+	/**
+		Returns debug information on the feature, including why it is not available.
+	**/
 	public function debug( f : UpscalingFeature ) : String {
 		var buf = new StringBuf();
 		buf.add(switch( f ) {
@@ -485,6 +846,9 @@ class Upscaling {
 			buf.add("status=Ok\n");
 	}
 
+	/**
+		Called by the driver before the device is created, and forwarded to the backends.
+	**/
 	public function beforeCreateDevice() {
 		upscaler = null;
 		frameGen = null;
@@ -497,6 +861,9 @@ class Upscaling {
 		}
 	}
 
+	/**
+		Called by the driver after the device is created, and forwarded to the backends.
+	**/
 	public function afterCreateDevice() {
 		for( b in backends )
 			b.afterCreateDevice();
@@ -516,18 +883,27 @@ class Upscaling {
 		refresh();
 	}
 
+	/**
+		Called by the driver after the command queue is created, and forwarded to the backends.
+	**/
 	public function afterCreateQueue() {
 		for( b in backends )
 			b.afterCreateQueue();
 		refresh();
 	}
 
+	/**
+		Called by the driver after the swap chain is created, and forwarded to the backends.
+	**/
 	public function afterCreateSwapChain() {
 		for( b in backends )
 			b.afterCreateSwapChain();
 		refresh();
 	}
 
+	/**
+		Called by the driver at the start of the frame, and forwarded to the backends.
+	**/
 	public function beginFrame() {
 		while( pendingRelease.length > 0 )
 			pendingRelease.pop().releaseUpscaler();
@@ -535,44 +911,68 @@ class Upscaling {
 			b.beginFrame();
 	}
 
+	/**
+		Called by the driver when the frame commands start, and forwarded to the backends.
+	**/
 	public function begin() {
 		for( b in backends )
 			b.begin();
 	}
 
+	/**
+		Called by the driver before the frame is presented, and forwarded to the backends.
+	**/
 	public function beforePresent() {
 		for( b in backends )
 			b.beforePresent();
 		prepareFrameGenUI();
 	}
 
+	/**
+		Called by the driver before the present is queued, and forwarded to the backends.
+	**/
 	public function beforeQueuePresent() {
 		for( b in backends )
 			b.beforeQueuePresent();
 	}
 
+	/**
+		Called by the driver after the present is queued, and forwarded to the backends.
+	**/
 	public function afterQueuePresent() {
 		presentCount++;
 		for( b in backends )
 			b.afterQueuePresent();
 	}
 
+	/**
+		Called by the driver before the swap chain is resized, and forwarded to the backends.
+	**/
 	public function beforeResize() {
 		for( b in backends )
 			b.beforeResize();
 	}
 
+	/**
+		Called by the driver to release the resources that depend on the swap chain size, and forwarded to the backends.
+	**/
 	public function releaseResizeResources() {
 		for( b in backends )
 			b.releaseResizeResources();
 		disposeFrameGenTextures();
 	}
 
+	/**
+		Called by the driver after the swap chain is resized, and forwarded to the backends.
+	**/
 	public function afterResize() {
 		for( b in backends )
 			b.afterResize();
 	}
 
+	/**
+		Releases the backends.
+	**/
 	public function dispose() {
 		disposeFrameGenTextures();
 		var i = backends.length;
@@ -678,9 +1078,15 @@ class Upscaling {
 
 #if (hldx && dx12 && dlss && !macro)
 
+/**
+	The NVIDIA DLSS backend of the DirectX 12 driver (`-D dlss`): DLSS upscaling, DLSS frame generation and Reflex low latency.
+**/
 @:access(h3d.impl.DX12Driver)
 class DX12DlssBackend extends UpscalingBackend {
 
+	/**
+		Checks the signature of the DLSS libraries when loading them.
+	**/
 	public static var CHECK_SIGNATURE = true;
 
 	static var optimalSettings = new DLSSOptimalSettings();
@@ -721,6 +1127,9 @@ class DX12DlssBackend extends UpscalingBackend {
 	var tagTypes : Array<DLSSBufferType> = [];
 	var tagTextures : Array<h3d.mat.Texture> = [];
 
+	/**
+		Creates the backend for the driver.
+	**/
 	public function new( driver : DX12Driver ) {
 		super(DLSS);
 		this.driver = driver;
@@ -1239,12 +1648,24 @@ class DX12DlssBackend extends UpscalingBackend {
 
 #if (hldx && dx12 && fsr && !macro)
 
+/**
+	The AMD FSR backend of the DirectX 12 driver (`-D fsr`): FSR upscaling and frame generation.
+**/
 @:access(h3d.impl.DX12Driver)
 @:access(h3d.impl.Upscaling)
 class DX12FsrBackend extends UpscalingBackend {
 
+	/**
+		Runs the frame generation asynchronously, on another queue.
+	**/
 	public static var FRAME_GEN_ASYNC = false;
+	/**
+		The debug flags of the frame generation.
+	**/
 	public static var FRAME_GEN_DEBUG_FLAGS = 0;
+	/**
+		Displays the debug view of the upscaler (with `Upscaling.DEBUG`).
+	**/
 	public static var DEBUG_VIEW = false;
 
 	static inline var FG_STATUS_CONTEXT_FAILED = 1;
@@ -1293,6 +1714,9 @@ class DX12FsrBackend extends UpscalingBackend {
 	var antiLag2Mode : LowLatencyMode = Off;
 	var antiLag2MaxFps = 0;
 
+	/**
+		Creates the backend for the driver.
+	**/
 	public function new( driver : DX12Driver ) {
 		super(FSR);
 		this.driver = driver;

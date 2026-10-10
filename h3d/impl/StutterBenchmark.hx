@@ -1,10 +1,25 @@
 package h3d.impl;
 
+/**
+	A stutter: one or more consecutive frames much longer than usual.
+**/
 class Stutter {
+	/**
+		The time lost, in milliseconds, compared to the median frame time.
+	**/
 	public var impact : Float;
+	/**
+		The number of frames of the stutter.
+	**/
 	public var frameCount : Int;
+	/**
+		The time of the start of the stutter.
+	**/
 	public var startTime : Float;
 
+	/**
+		Creates a stutter of the given impact.
+	**/
 	public function new(v:Float) {
 		impact = v;
 		frameCount = 1;
@@ -12,6 +27,9 @@ class Stutter {
 	}
 }
 
+/**
+	The severity of a stutter, by its impact: `Minor` under 20 ms, `Major` under 50 ms, `Severe` above.
+**/
 enum StutterSeverity {
 	Minor;
 	Major;
@@ -19,6 +37,9 @@ enum StutterSeverity {
 	All;
 }
 
+/**
+	Detects the frames much longer than the median of the last 60 frames, and counts the stutters of the last minute.
+**/
 class StutterBenchmark {
 
 	static var MAX_FRAME_COUNT : Int = 60;
@@ -37,14 +58,23 @@ class StutterBenchmark {
 	var cpuStart : Float = 0;
 	var cpuEnd : Float = 0;
 
+	/**
+		Creates the benchmark.
+	**/
 	public function new() {
 		frames = new FrameData(MAX_FRAME_COUNT);
 	}
 
+	/**
+		Starts measuring a frame.
+	**/
 	public function begin() {
 		cpuStart = haxe.Timer.stamp();
 	}
 
+	/**
+		Ends measuring a frame, and records a stutter if it was too long.
+	**/
 	public function end() {
 		cpuEnd = haxe.Timer.stamp();
 		var dtInMs = (cpuEnd - cpuStart) * 1000.0;
@@ -80,6 +110,9 @@ class StutterBenchmark {
 		return dtInMs > median + STUTTER_FLAT_THRESHOLD || dtInMs > median * STUTTER_MULT_THRESHOLD;
 	}
 
+	/**
+		Returns the number of stutters of the given severity in the last minute.
+	**/
 	public function getStutterCount(severity: StutterSeverity) : Int {
 		if(severity == All)
 			return stutters.length;
@@ -101,6 +134,9 @@ class StutterBenchmark {
 		return count;
 	}
 
+	/**
+		Returns the impact of the worst stutter of the last minute, in milliseconds.
+	**/
 	public function getWorstStutterDuration() : Float {
 		var worst = 0.0;
 		for(s in stutters) {

@@ -30,6 +30,9 @@ private class StackLink {
 	}
 }
 
+/**
+	Records which objects are rendered and when, at each section of the frames (`-D sceneprof`), and saves the result as a Chrome DevTools performance trace.
+**/
 class SceneProf {
 	static var frames : Array<Frame>;
 	static var curFrame : Frame;
@@ -40,6 +43,9 @@ class SceneProf {
 	static var stackCache : Map<h3d.scene.Object, Array<String>>;
 	static var stackCache2d : Map<h2d.Object, Array<String>>;
 
+	/**
+		Starts recording.
+	**/
 	public static function start() {
 		enable = true;
 		stackCache = new Map();
@@ -48,10 +54,16 @@ class SceneProf {
 		lastFrameId = -1;
 	}
 
+	/**
+		Stops recording.
+	**/
 	public static function stop() {
 		enable = false;
 	}
 
+	/**
+		Starts a section of the frame.
+	**/
 	public static function begin(section: String, frame : Int) {
 		if(!enable) return;
 		if(frame != lastFrameId) {
@@ -94,6 +106,9 @@ class SceneProf {
 		return s;
 	}
 
+	/**
+		Records that the object is being rendered.
+	**/
 	public static function mark(?o3d: h3d.scene.Object, ?o2d: h2d.Object) {
 		if(!enable) return;
 		var t = Sys.time();
@@ -104,6 +119,9 @@ class SceneProf {
 		});
 	}
 
+	/**
+		Ends the current section.
+	**/
 	public static function end() {
 		if(!enable) return;
 		curFrame.samples.push({
@@ -113,6 +131,9 @@ class SceneProf {
 		});
 	}
 
+	/**
+		Saves the recording as a Chrome DevTools performance trace (JSON).
+	**/
 	public static function save(outFile: String) {
 		function makeStacks( st : Array<StackLink> ) {
 			var write = [];

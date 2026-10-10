@@ -2,13 +2,22 @@ package h3d.impl;
 import h3d.impl.Driver;
 
 #if render_graph
+/**
+	A driver forwarding the calls to another one and logging them, to build the render graph of a frame (`-D render_graph`, see `RenderGraph`).
+**/
 class RenderGraphDriver extends Driver {
 
 	var d : Driver;
 	var loggedShaders = new Map<Int,Bool>();
 	var currentShader : hxsl.RuntimeShader;
+	/**
+		The logged lines, when not `null`.
+	**/
 	public var logLines : Array<String> = null;
 
+	/**
+		Creates the driver forwarding to `driver`.
+	**/
 	public function new( driver : Driver ) {
 		this.d = driver;
 		logEnable = true;

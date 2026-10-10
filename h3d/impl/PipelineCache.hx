@@ -45,13 +45,31 @@ private abstract Bytes(haxe.io.Bytes) from haxe.io.Bytes {
 }
 #end
 
+/**
+	A pipeline state cached for a signature (render states, render target formats and vertex layout).
+**/
 @:generic class CachedPipeline<T> {
+	/**
+		The signature of the pipeline.
+	**/
 	public var bytes : Bytes;
+	/**
+		The size of the signature, in bytes.
+	**/
 	public var size : Int;
+	/**
+		The native pipeline state, created by the driver.
+	**/
 	public var pipeline : T;
+	/**
+		Creates an empty entry.
+	**/
 	public function new() {
 	}
 
+	/**
+		Returns the decoded fields of the signature, for debugging.
+	**/
 	public function getFields() : Array<{ name : String, value : String }> @:privateAccess {
 		inline function depthFormatName( idx : Int ) : String {
 			if( idx == 0 )
@@ -84,6 +102,9 @@ private abstract Bytes(haxe.io.Bytes) from haxe.io.Bytes {
 		return out;
 	}
 
+	/**
+		Returns the decoded fields of the signature.
+	**/
 	public function toString() {
 		var buf = new StringBuf();
 		for( i => f in getFields() ) {
@@ -96,13 +117,28 @@ private abstract Bytes(haxe.io.Bytes) from haxe.io.Bytes {
 	}
 }
 
+/**
+	The pipeline states of a shader, by signature hash.
+**/
+/**
+	The pipeline states of a shader, by signature hash.
+**/
+/**
+	The pipeline states of a shader, by signature hash.
+**/
 @:forward(get,set,keys)
 abstract PipelineCache<T>(Map<Int,#if hl hl.NativeArray #else Array #end<CachedPipeline<T>>>) {
 
+	/**
+		Creates an empty cache.
+	**/
 	public function new() {
 		this = new Map();
 	}
 
+	/**
+		Returns the differences between the entry and the `max` closest other entries, to understand why new pipelines are created.
+	**/
 	public function diff( cp : CachedPipeline<T>, max = 3 ) : String {
 		inline function diffFields( a, b ) : Array<String> {
 			var fa = a.getFields(), fb = b.getFields();
@@ -140,13 +176,31 @@ abstract PipelineCache<T>(Map<Int,#if hl hl.NativeArray #else Array #end<CachedP
 	}
 }
 
+/**
+	The depth settings of a pipeline.
+**/
 class DepthProps {
+	/**
+		The format of the depth buffer.
+	**/
 	public var format : hxd.PixelFormat;
+	/**
+		The constant depth bias.
+	**/
 	public var bias : Single;
+	/**
+		The slope scaled depth bias.
+	**/
 	public var slopeScaledBias : Single;
+	/**
+		Creates the settings.
+	**/
 	public function new() {}
 }
 
+/**
+	Builds the signature of the current pipeline state (render states, render targets, vertex layout) as the driver state changes, to look up the cached pipelines.
+**/
 class PipelineBuilder {
 
 	static inline var PSIGN_MATID = 0;
@@ -163,6 +217,9 @@ class PipelineBuilder {
 	static inline var SHIFT_PER_BUFFER = #if js 2 #else 1 #end;
 	static inline var PSIGN_SIZE = PSIGN_LAYOUT + (MAX_BUFFERS << SHIFT_PER_BUFFER);
 
+	/**
+		Tells if the state changed since the last `lookup`.
+	**/
 	public var needFlush : Bool;
 	var signature = new Bytes(64);
 	var tmpDepth = new DepthProps();
@@ -172,6 +229,9 @@ class PipelineBuilder {
 	var adlerOut = new Bytes(4);
 	#end
 
+	/**
+		Creates a builder.
+	**/
 	public function new() {
 		if( PSIGN_SIZE > 64 ) throw "assert";
 		setDepthBias(0, 0);
@@ -230,10 +290,16 @@ class PipelineBuilder {
 		}
 	}
 
+	/**
+		Sets the shader.
+	**/
 	public inline function setShader( sh : hxsl.RuntimeShader ) {
 		needFlush = sh.mode != Compute;
 	}
 
+	/**
+		Sets the depth bias.
+	**/
 	public function setDepthBias( depthBias : Float, slopeScaledBias : Float  ) {
 		signature.setF32(PSIGN_DEPTH_BIAS, depthBias);
 		signature.setF32(PSIGN_SLOPE_SCALED_DEPTH_BIAS, slopeScaledBias);
@@ -247,6 +313,9 @@ class PipelineBuilder {
 		return fmt;
 	}
 
+	/**
+		Returns the current depth settings.
+	**/
 	public function getDepthProps() {
 		static var FORMATS = initFormats();
 		var d = tmpDepth;
@@ -256,6 +325,9 @@ class PipelineBuilder {
 		return d;
 	}
 
+	/**
+		Sets a single render target and the depth buffer (`null` for none).
+	**/
 	public function setRenderTarget( tex : h3d.mat.Texture, depth : h3d.mat.Texture  ) {
 		signature.setI32(PSIGN_RENDER_TARGETS, tex == null ? 0 : getRTBits(tex));
 		signature.setI32(PSIGN_RENDER_TARGETS + 4, 0);
@@ -263,10 +335,16 @@ class PipelineBuilder {
 		needFlush = true;
 	}
 
+	/**
+		Tells if a depth buffer is bound.
+	**/
 	public function getDepthEnabled() {
 		return signature.getI32(PSIGN_DEPTH_TARGET_FORMAT) != 0;
 	}
 
+	/**
+		Sets only a depth buffer, without color target.
+	**/
 	public function setDepth( depth : h3d.mat.Texture ) {
 		signature.setI32(PSIGN_RENDER_TARGETS, 0);
 		signature.setI32(PSIGN_RENDER_TARGETS + 4, 0);
@@ -274,6 +352,9 @@ class PipelineBuilder {
 		needFlush = true;
 	}
 
+	/**
+		Sets several render targets and the depth buffer.
+	**/
 	public function setRenderTargets( textures : Array<h3d.mat.Texture>, depth : h3d.mat.Texture  ) {
 		for( i => t in textures )
 			signature.setUI8(PSIGN_RENDER_TARGETS + i, getRTBits(t));
@@ -284,6 +365,9 @@ class PipelineBuilder {
 		needFlush = true;
 	}
 
+	/**
+		Returns the number of color render targets.
+	**/
 	public function getRenderTargetsCount() {
 		var rtCount = 0;
 		for( i in 0...8 )
@@ -291,11 +375,17 @@ class PipelineBuilder {
 		return rtCount;
 	}
 
+	/**
+		Returns the format of the render target of the index.
+	**/
 	public function getRenderTargetFormat(i : Int) {
 		var rtBits = signature.getUI8(PSIGN_RENDER_TARGETS + i);
 		return rtBits != 0 ? getRTFormat(rtBits) : null;
 	}
 
+	/**
+		Sets the render states of the pass.
+	**/
 	public function selectMaterial( pass : h3d.mat.Pass ) @:privateAccess {
 		signature.setI32(PSIGN_MATID, pass.bits);
 		signature.setUI8(PSIGN_COLOR_MASK, pass.colorMask);
@@ -310,6 +400,9 @@ class PipelineBuilder {
 		needFlush = true;
 	}
 
+	/**
+		Sets the mapping of the vertex input of the index.
+	**/
 	public inline function setBuffer( i : Int, inf : hxd.BufferFormat.BufferMapping, stride : Int ) {
 		if( inf.offset >= 256 || (inf.offset & 3) != 0 ) throw "assert";
 		signature.setUI16(PSIGN_LAYOUT + (i<<SHIFT_PER_BUFFER), (inf.offset << 1) | inf.precision.toInt());
@@ -319,6 +412,9 @@ class PipelineBuilder {
 		needFlush = true;
 	}
 
+	/**
+		Returns a pass with the current render states.
+	**/
 	public function getCurrentPass() @:privateAccess {
 		var pass = tmpPass;
 		pass.loadBits(signature.getI32(PSIGN_MATID));
@@ -335,12 +431,18 @@ class PipelineBuilder {
 		return pass;
 	}
 
+	/**
+		Returns the mapping of the vertex input of the index.
+	**/
 	public function getBufferInput( i : Int ) {
 		var b = signature.getUI16(PSIGN_LAYOUT + (i<<SHIFT_PER_BUFFER));
 		return new hxd.BufferFormat.BufferMapping(i, (b >> 1) & ~3, @:privateAccess new hxd.BufferFormat.Precision(b & 7));
 	}
 
 	#if js
+	/**
+		Returns the stride of the buffer of the vertex input of the index.
+	**/
 	public function getBufferStride( i : Int ) {
 		return signature.getUI16(PSIGN_LAYOUT + (i << SHIFT_PER_BUFFER) + 2);
 	}
@@ -364,6 +466,9 @@ class PipelineBuilder {
 		#end
 	}
 
+	/**
+		Returns the cached pipeline for the current signature (with `inputs` vertex inputs), adding an empty entry if it is not found: the driver then creates its pipeline.
+	**/
 	public function lookup<T>( cache : PipelineCache<T>, inputs : Int ) : CachedPipeline<T> {
 		needFlush = false;
 		var signatureSize = PSIGN_LAYOUT + (inputs << SHIFT_PER_BUFFER);

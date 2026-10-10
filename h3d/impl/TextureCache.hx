@@ -1,12 +1,21 @@
 package h3d.impl;
 
+/**
+	A cache of temporary render target textures, reused from one frame to the next in the order they are allocated. Accessed with `RenderContext.textures`.
+**/
 class TextureCache {
 	static var checkFlags : Int = -1;
 	var cache : Array<h3d.mat.Texture>;
 	var position : Int = 0;
 	var defaultDepthBuffer : h3d.mat.Texture;
+	/**
+		The format of the targets allocated without format.
+	**/
 	public var defaultFormat : hxd.PixelFormat;
 
+	/**
+		Creates an empty cache.
+	**/
 	public function new() {
 		cache = [];
 		var engine = h3d.Engine.getCurrent();
@@ -21,10 +30,16 @@ class TextureCache {
 		}
 	}
 
+	/**
+		Returns the texture at the index.
+	**/
 	public inline function get( index = 0 ) {
 		return cache[index];
 	}
 
+	/**
+		Returns the texture of the given name allocated in this frame, or `null`.
+	**/
 	public function getNamed( name : String ) {
 		for( i in 0...position )
 			if( cache[i].name == name )
@@ -32,10 +47,16 @@ class TextureCache {
 		return null;
 	}
 
+	/**
+		Sets the texture at the index.
+	**/
 	public function set( t, index ) {
 		cache[index] = t;
 	}
 
+	/**
+		Called at the start of the frame: disposes the textures not used during the previous one.
+	**/
 	public function begin() {
 		// dispose extra textures we didn't use in previous run
 		while( cache.length > position ) {
@@ -92,6 +113,9 @@ class TextureCache {
 		return newt;
 	}
 
+	/**
+		Returns a render target of the given name, size, format and flags, reusing the texture of the same rank in the previous frame when it matches. The default depth buffer is attached if `defaultDepth` is set.
+	**/
 	public function allocTarget( name : String, width : Int, height : Int, defaultDepth=true, ?format:hxd.PixelFormat, flags : Array<h3d.mat.Data.TextureFlags> = null, layers = 1 ) {
 		var t = cache[position];
 		if( format == null ) format = defaultFormat;
@@ -109,15 +133,24 @@ class TextureCache {
 		return t;
 	}
 
+	/**
+		Returns a render target of the size of the screen multiplied by `scale` (see `allocTarget`).
+	**/
 	public function allocTargetScale( name : String, scale : Float, defaultDepth=true, ?format:hxd.PixelFormat, flags : Array<h3d.mat.Data.TextureFlags> = null, layers = 1 ) {
 		var e = h3d.Engine.getCurrent();
 		return allocTarget(name, Math.ceil(e.width * scale), Math.ceil(e.height * scale), defaultDepth, format, flags, layers);
 	}
 
+	/**
+		Returns a render target of the size of the tile (see `allocTarget`).
+	**/
 	public function allocTileTarget( name : String, tile : h2d.Tile, defaultDepth=false, ?format:hxd.PixelFormat ) {
 		return allocTarget( name, tile.iwidth, tile.iheight, defaultDepth, format );
 	}
 
+	/**
+		Disposes all the textures.
+	**/
 	public function dispose() {
 		for( t in cache )
 			t.dispose();
