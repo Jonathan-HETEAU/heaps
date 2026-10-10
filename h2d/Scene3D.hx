@@ -1,11 +1,29 @@
 package h2d;
 
+/**
+	A flow displaying its own 3D scene (and 2D scene above it), rendered into a texture of the size of the flow.
+**/
 class Scene3D extends h2d.Flow {
 
+	/**
+		The 2D scene drawn over the 3D scene.
+	**/
 	public var s2d : h2d.Scene;
+	/**
+		The 3D scene.
+	**/
 	public var s3d : h3d.scene.Scene;
+	/**
+		If set, the scenes and the texture are disposed when the flow is removed.
+	**/
 	public var deleteOnRemove = true;
+	/**
+		The background color in `0xRRGGBB` format, or `null` for a transparent background.
+	**/
 	public var backgroundColor : Null<Int> = null;
+	/**
+		The event dispatcher the scenes are added to, to receive input events.
+	**/
 	public var events(default,set) : hxd.SceneEvents;
 	var renderTexture : h3d.mat.Texture;
 	var prevScale : h2d.Scene.ScaleMode;
@@ -13,6 +31,9 @@ class Scene3D extends h2d.Flow {
 	var prevHeight = -1;
 	var bgModel : h3d.scene.Mesh;
 
+	/**
+		Creates the flow with new scenes, added to `events` if set.
+	**/
 	public function new(?events:hxd.SceneEvents,?parent) {
 		this.events = events;
 		s2d = new h2d.Scene();

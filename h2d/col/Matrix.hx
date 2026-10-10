@@ -14,11 +14,29 @@ class Matrix {
 
 	static var tmp = new Matrix();
 
+	/**
+		The X component of the transformed X axis (scale and rotation).
+	**/
 	public var a : Float;
+	/**
+		The Y component of the transformed X axis (skew and rotation).
+	**/
 	public var b : Float;
+	/**
+		The X component of the transformed Y axis (skew and rotation).
+	**/
 	public var c : Float;
+	/**
+		The Y component of the transformed Y axis (scale and rotation).
+	**/
 	public var d : Float;
+	/**
+		The X translation.
+	**/
 	public var x : Float;
+	/**
+		The Y translation.
+	**/
 	public var y : Float;
 
 	/**

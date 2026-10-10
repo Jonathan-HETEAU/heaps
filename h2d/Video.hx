@@ -2,19 +2,49 @@ package h2d;
 
 #if (hl && hlvideo)
 
+/**
+	The state of a decoded video frame.
+**/
 enum FrameState {
+	/**
+		The frame can be decoded into.
+	**/
 	Free;
+	/**
+		The frame is being decoded.
+	**/
 	Loading;
+	/**
+		The frame is decoded.
+	**/
 	Ready;
+	/**
+		The video has ended.
+	**/
 	Ended;
 }
 
+/**
+	A decoded video frame.
+**/
 typedef Frame = {
+	/**
+		The pixels of the frame.
+	**/
 	var pixels : hxd.Pixels;
+	/**
+		The state of the frame.
+	**/
 	var state : FrameState;
+	/**
+		The time of the frame in the video, in seconds.
+	**/
 	var time : Float;
 }
 
+/**
+	A ring buffer of decoded video frames, filled ahead of the playback.
+**/
 class FrameCache {
 	var frames : Array<Frame> = [];
 	var readCursor = 0;
@@ -22,6 +52,9 @@ class FrameCache {
 	var width : Int;
 	var height : Int;
 
+	/**
+		Creates a cache of `size` frames of the given size.
+	**/
 	public function new(size : Int, w : Int, h : Int) {
 		width = w;
 		height = h;
@@ -35,12 +68,18 @@ class FrameCache {
 		}
 	}
 
+	/**
+		Returns the frame to display.
+	**/
 	public function currentFrame() : Frame {
 		if( frames == null )
 			return null;
 		return frames[readCursor];
 	}
 
+	/**
+		Frees the current frame and moves to the next one.
+	**/
 	public function nextFrame() : Bool {
 		var nextCursor = (readCursor + 1) % frames.length;
 		frames[readCursor].state = Free;
@@ -55,6 +94,9 @@ class FrameCache {
 			return writeCursor - readCursor;
 	}
 
+	/**
+		Tells if all the frames are decoded and waiting to be displayed.
+	**/
 	public function isFull() {
 		if(writeCursor < readCursor)
 			return frames.length - readCursor + writeCursor >= frames.length - 1;
@@ -62,10 +104,16 @@ class FrameCache {
 			return writeCursor - readCursor >= frames.length - 1;
 	}
 
+	/**
+		Tells if no frame is waiting to be displayed.
+	**/
 	public function isEmpty() {
 		return readCursor == writeCursor;
 	}
 
+	/**
+		Decodes the next frame of the video into a free frame. At the end of the video, it rewinds if `loop` is set, or returns a frame in the `Ended` state.
+	**/
 	public function prepareFrame(webm : hl.video.Webm, codec : hl.video.Aom.Codec, loop : Bool) : Frame {
 		if(frames[writeCursor].state != Free)
 			return null;
@@ -93,6 +141,9 @@ class FrameCache {
 		return f;
 	}
 
+	/**
+		Releases the frames.
+	**/
 	public function dispose() {
 		for(f in frames)
 			f.pixels.dispose();

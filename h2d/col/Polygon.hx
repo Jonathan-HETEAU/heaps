@@ -322,6 +322,10 @@ abstract Polygon(Array<Point>) from Array<Point> to Array<Point> {
 		return minDistSq == 1e10 ? 0. : minDistSq;
 	}
 
+	/**
+		Returns the distance from the ray origin to an intersection with the edges of the polygon, or `-1` if none.
+		If `bestMatch` is set, the closest intersection is returned, otherwise the first one found. If `oriented` is set, only the intersections in the direction of the ray are considered.
+	**/
 	public function rayIntersection( r : h2d.col.Ray, bestMatch : Bool, ?oriented = false ) : Float {
 		var dmin = -1.;
 		var p0 = points[points.length - 1];
@@ -501,6 +505,9 @@ abstract Polygon(Array<Point>) from Array<Point> to Array<Point> {
 		}
 	}
 
+	/**
+		Creates a polygon approximating a circle. If `npoints` is `0`, it is computed from the radius.
+	**/
 	public static function makeCircle( x : Float, y : Float, radius : Float, npoints = 0 ) {
 		if( npoints == 0 )
 			npoints = Math.ceil(Math.abs(radius * 3.14 * 2 / 4));

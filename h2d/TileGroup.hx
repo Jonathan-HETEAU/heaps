@@ -27,10 +27,16 @@ class TileLayerContent extends h3d.prim.Primitive {
 	**/
 	public var yMax : Float;
 
+	/**
+		The buffers with fewer floats than this limit are allocated with `hxd.impl.Allocator`, the bigger ones are allocated directly.
+	**/
 	public var useAllocatorLimit = 1024;
 
 	var state : BatchDrawState;
 
+	/**
+		Creates an empty content.
+	**/
 	public function new() {
 		state = new BatchDrawState();
 		clear();
@@ -56,6 +62,9 @@ class TileLayerContent extends h3d.prim.Primitive {
 		state.clear();
 	}
 
+	/**
+		Tells if the content has no tile.
+	**/
 	public function isEmpty() {
 		return triCount() == 0;
 	}

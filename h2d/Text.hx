@@ -569,6 +569,9 @@ class Text extends Drawable {
 		addBounds(relativeTo, out, x, y, w, h);
 	}
 
+	/**
+		Returns the font used by the text when its font is a group of fonts (`FontGroup`). Returns the first sub font by default: it can be replaced to select another one, such as the one of the current language.
+	**/
 	public static dynamic function resolveSubFont( fnt : Font, text : Text ) : Font {
 		return fnt.subFonts[0];
 	}

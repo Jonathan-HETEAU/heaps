@@ -1,8 +1,14 @@
 package h2d;
 
+/**
+	A scene that can be rendered during a long synchronous loading: each call to `render` processes the window events and presents the frame, at most once every `presentCooldown` seconds.
+**/
 class LoadingScene extends h2d.Scene {
 	var renderTarget : h3d.mat.Texture;
 	var presentCooldown : Float;
+	/**
+		Creates the scene, rendered at most once every `presentCooldown` seconds.
+	**/
 	public function new(presentCooldown : Float) {
 		super();
 		this.presentCooldown = presentCooldown;

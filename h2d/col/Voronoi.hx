@@ -336,6 +336,9 @@ class Cell {
 		The list of the edges of the cell.
 	**/
 	public var halfedges : Array<Halfedge>;
+	/**
+		Set when the cell touches the bounding box and must be closed.
+	**/
 	public var closeMe : Bool;
 
 	@:dox(hide) @:noCompletion

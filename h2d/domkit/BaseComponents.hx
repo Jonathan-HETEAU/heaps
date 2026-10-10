@@ -2,10 +2,19 @@ package h2d.domkit;
 import domkit.Property;
 import domkit.CssValue;
 
+/**
+	The value of the `background` CSS property of a flow: a tile with its scale grid borders, and its color for transitions.
+**/
 typedef FlowBg = { tile : #if macro Bool #else h2d.Tile #end, borderL : Int, borderT : Int, borderR : Int, borderB : Int, ?color : Int }
 
+/**
+	The parser of the CSS values of the h2d components (tiles, fonts, filters, alignments...).
+**/
 class CustomParser extends domkit.CssValue.ValueParser {
 
+	/**
+		Creates the parser.
+	**/
 	public function new() {
 		super();
 		defaultColor = -1;
@@ -79,6 +88,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		#end
 	}
 
+	/**
+		Parses a resource path (`url("path")` or a string) and loads it.
+	**/
 	public function parseResource( v : CssValue) {
 		var path = parsePath(v);
 		return loadResource(path);
@@ -90,6 +102,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 	}
 	#end
 
+	/**
+		Parses a tile: `none`, a color, `color width height`, a resource path, or `tile("path", size)`, `tile("path", w, h)`, `grid("path", hsplit, vsplit)`, `hgrid("path", n)`, `vgrid("path", n)` for a part of an image.
+	**/
 	public function parseTile( v : CssValue) {
 		try {
 			switch( v ) {
@@ -126,6 +141,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a tile position in a grid: `default`, an index, or `x y`.
+	**/
 	public function parseTilePos( value ) : { p:Int, ?y:Int } {
 		return switch( value ) {
 		case VIdent("default"): { p : 0 };
@@ -135,6 +153,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a horizontal alignment: `auto`, `left`, `middle` or `right`.
+	**/
 	public function parseHAlign( value ) : #if macro Bool #else h2d.Flow.FlowAlign #end {
 		switch( parseIdent(value) ) {
 		case "auto":
@@ -150,6 +171,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a vertical alignment: `auto`, `top`, `middle` or `bottom`.
+	**/
 	public function parseVAlign( value ) : #if macro Bool #else h2d.Flow.FlowAlign #end {
 		switch( parseIdent(value) ) {
 		case "auto":
@@ -165,6 +189,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses an alignment: `auto`, a single horizontal or vertical alignment, or both.
+	**/
 	public function parseAlign( value : CssValue ) {
 		switch( value ) {
 		case VIdent("auto"):
@@ -186,6 +213,10 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a font: `default`, a font resource path, or a group of fonts with `group(...)`.
+		The path can be followed by `offset(...)`, `line-height(...)`, `base-line(...)`, then by the SDF parameters: size, channel (`alpha`, `red`, `green`, `blue` or `multi`), cutoff and smoothing.
+	**/
 	public function parseFont( value : CssValue ) {
 		var path = null;
 		var sdf = null;
@@ -271,10 +302,16 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		#end
 	}
 
+	/**
+		Called with the SDF parameters of a font before it is loaded, to adjust them.
+	**/
 	public static dynamic function adjustSdfParams( sdf : { size : Int, channel : h2d.Font.SDFChannel, cutoff : Float, smooth : Float }) {
 
 	}
 
+	/**
+		Parses a text shadow: `none`, a color, or `dx dy [color [alpha]]`.
+	**/
 	public function parseTextShadow( value : CssValue ) {
 		return switch( value ) {
 		case VIdent("none"):
@@ -301,6 +338,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		};
 	}
 
+	/**
+		Parses a flow background: `transparent`, `tile width height` or `tile left top right bottom` (scale grid borders), `color alpha`, or `disc(color [alpha])`.
+	**/
 	public function parseFlowBackground(value) : FlowBg {
 		return switch( value ) {
 		case VIdent("transparent"): null;
@@ -321,6 +361,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a cursor: `default`, `button`, `move`, `textinput`, `hide`, `none`, or a resize cursor (`ns-resize`, `ew-resize`, `nwse-resize`, `nesw-resize`).
+	**/
 	public function parseCursor(value) : hxd.Cursor {
 		return switch( value ) {
 		case VIdent("default"): Default;
@@ -339,6 +382,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a filter: `none`, `nothing`, `grayscale(...)`, `saturate(...)`, `hue(...)`, `brightness(...)`, `outline(size, color)`, `glow(...)`, `blur(radius)`, or several of them to combine.
+	**/
 	public function parseFilter(value) : #if macro Bool #else h2d.filter.Filter #end {
 		return switch( value ) {
 		case VIdent("none"): #if macro true #else null #end;
@@ -432,6 +478,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Interpolates two color adjustments, for CSS transitions.
+	**/
 	public function transitionColorAdjust(col1: h3d.Matrix.ColorAdjust, col2: h3d.Matrix.ColorAdjust, t: Float) {
 		inline function defaultValues(col: h3d.Matrix.ColorAdjust) {
 			var c : h3d.Matrix.ColorAdjust = { saturation: 0, lightness: 0,	hue: 0,	contrast: 0, gain: { color: 0, alpha: 0 } };
@@ -459,6 +508,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		};
 	}
 
+	/**
+		Parses a color adjustment: `none`, or one or several of `hue-rotate(...)`, `contrast(...)`, `gain(color, alpha)`, `brightness(...)`, `saturate(...)`.
+	**/
 	public function parseColorAdjust(value:CssValue) : h3d.Matrix.ColorAdjust {
 		if( value.match(VIdent("none")) )
 			return null;
@@ -493,6 +545,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		return adj;
 	}
 
+	/**
+		Parses an angle (with a `rad` or `deg` unit, radians by default) and returns it in radians.
+	**/
 	public function parseAngleRad(value:CssValue) : Float {
 		return switch(value) {
 			case VUnit(v, "rad"):
@@ -505,6 +560,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		return 0.;
 	}
 
+	/**
+		Parses an angle (with a `rad` or `deg` unit, degrees by default) and returns it in degrees.
+	**/
 	public function parseAngleDeg(value:CssValue) : Float {
 		return switch(value) {
 			case VUnit(v, "rad"):
@@ -532,6 +590,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses the HTML text tag definitions: `name("font")`, `name(color)` or `name("font", color)`.
+	**/
 	public function parseTagDefinitions(value:CssValue) {
 		return switch(value) {
 		case VGroup(values): [for( v in values ) parseTagDefinition(v)];
@@ -539,6 +600,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses a margin: a number, or `ignore-parent` to ignore the padding of the parent flow (see `h2d.Flow.PADDING_IGNORE_PARENT`).
+	**/
 	public function parseMargin(value:CssValue) {
 		return switch(value) {
 		case VIdent("ignore-parent"): #if macro 0 #else h2d.Flow.PADDING_IGNORE_PARENT #end;
@@ -546,6 +610,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 		}
 	}
 
+	/**
+		Parses the margins of the 4 sides, with the CSS box syntax.
+	**/
 	public function parseMarginBox( v : CssValue ) {
 		return parseGenBox(v,parseMargin);
 	}
@@ -553,6 +620,9 @@ class CustomParser extends domkit.CssValue.ValueParser {
 }
 
 #if !macro
+/**
+	The `<object>` domkit component (`h2d.Object`): position, scale, rotation, alpha, filter, and the flow properties of the element in its parent flow (margin, align, position, offset, min size, auto size).
+**/
 @:uiComp("object") @:domkitDecl
 class ObjectComp implements h2d.domkit.Object implements domkit.Component.ComponentDecl<h2d.Object> {
 
@@ -738,6 +808,9 @@ class ObjectComp implements h2d.domkit.Object implements domkit.Component.Compon
 
 }
 
+/**
+	The `<drawable>` domkit component (`h2d.Drawable`): adds the tint color, smoothing, color adjustment and tile wrapping.
+**/
 @:uiComp("drawable") @:domkitDecl
 class DrawableComp extends ObjectComp implements domkit.Component.ComponentDecl<h2d.Drawable> {
 
@@ -758,6 +831,9 @@ class DrawableComp extends ObjectComp implements domkit.Component.ComponentDecl<
 	}
 }
 
+/**
+	The `<mask>` domkit component (`h2d.Mask`): adds the mask width and height.
+**/
 @:uiComp("mask") @:domkitDecl
 class MaskComp extends ObjectComp implements domkit.Component.ComponentDecl<h2d.Mask> {
 	@:p var width : Int;
@@ -768,6 +844,9 @@ class MaskComp extends ObjectComp implements domkit.Component.ComponentDecl<h2d.
 	}
 }
 
+/**
+	The `<video>` domkit component (`h2d.Video`): adds the video resource (`src`) and looping.
+**/
 @:uiComp("video") @:domkitDecl
 class VideoComp extends DrawableComp implements domkit.Component.ComponentDecl<h2d.Video> {
 	@:p(resource) var src : hxd.res.Any;
@@ -786,6 +865,9 @@ class VideoComp extends DrawableComp implements domkit.Component.ComponentDecl<h
 	}
 }
 
+/**
+	The `<bitmap>` domkit component (`h2d.Bitmap`): adds the tile (`src`, with its grid position and flipping) and the size.
+**/
 @:uiComp("bitmap") @:domkitDecl
 class BitmapComp extends DrawableComp implements domkit.Component.ComponentDecl<h2d.Bitmap> {
 
@@ -886,6 +968,9 @@ class BitmapComp extends DrawableComp implements domkit.Component.ComponentDecl<
 
 }
 
+/**
+	The `<text>` domkit component (`h2d.Text`): adds the font, color, spacing, line breaking, alignment and shadow.
+**/
 @:uiComp("text") @:domkitDecl
 class TextComp extends DrawableComp implements domkit.Component.ComponentDecl<h2d.Text> {
 
@@ -926,6 +1011,9 @@ class TextComp extends DrawableComp implements domkit.Component.ComponentDecl<h2
 	#end
 }
 
+/**
+	The `<html-text>` domkit component (`h2d.HtmlText`): adds the white space condensing and the tag definitions.
+**/
 @:uiComp("html-text") @:domkitDecl
 class HtmlTextComp extends TextComp implements domkit.Component.ComponentDecl<h2d.HtmlText> {
 	@:p var condenseWhite : Bool;
@@ -950,6 +1038,9 @@ class HtmlTextComp extends TextComp implements domkit.Component.ComponentDecl<h2
 
 }
 
+/**
+	The `<scale-grid>` domkit component (`h2d.ScaleGrid`): adds the borders, their scale and tiling, and the size.
+**/
 @:uiComp("scale-grid") @:domkitDecl
 class ScaleGridComp extends DrawableComp implements domkit.Component.ComponentDecl<h2d.ScaleGrid> {
 
@@ -990,6 +1081,9 @@ class ScaleGridComp extends DrawableComp implements domkit.Component.ComponentDe
 
 }
 
+/**
+	The `<flow>` domkit component (`h2d.Flow`): adds the size constraints, background, layout, padding, spacing, alignment and overflow.
+**/
 @:uiComp("flow") @:domkitDecl
 class FlowComp extends ObjectComp implements domkit.Component.ComponentDecl<h2d.Flow> {
 
@@ -1216,6 +1310,9 @@ class FlowComp extends ObjectComp implements domkit.Component.ComponentDecl<h2d.
 
 }
 
+/**
+	The `<input>` domkit component (`h2d.TextInput`): adds the width, the cursor and selection tiles, the edition, background color and multiline options.
+**/
 @:uiComp("input") @:domkitDecl
 class InputComp extends TextComp implements domkit.Component.ComponentDecl<h2d.TextInput> {
 

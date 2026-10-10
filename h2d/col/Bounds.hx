@@ -59,10 +59,16 @@ class Bounds extends Collider {
 		return !(xMin > b.xMax || yMin > b.yMax || xMax < b.xMin || yMax < b.yMin);
 	}
 
+	/**
+		Tells if the bounds intersect `b`.
+	**/
 	public inline function collideBounds( b : Bounds ) : Bool {
 		return intersects(b);
 	}
 
+	/**
+		Tells if the bounds intersect the circle.
+	**/
 	public inline function collideCircle( c : Circle ) : Bool {
 		return c.collideBounds(this);
 	}
@@ -74,6 +80,9 @@ class Bounds extends Collider {
 		return p.x >= xMin && p.x < xMax && p.y >= yMin && p.y < yMax;
 	}
 
+	/**
+		Returns the distance along the ray to its first intersection with the bounds, or `-1` if the ray misses them.
+	**/
 	public function rayIntersection( r : Ray ) : Float {
 		var minTx = (xMin - r.px) / r.lx;
 		var minTy = (yMin - r.py) / r.ly;

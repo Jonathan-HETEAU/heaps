@@ -96,10 +96,16 @@ class PixelsCollider extends Collider {
 		}
 	}
 
+	/**
+		Not implemented: throws an error.
+	**/
 	public function collideCircle( c : Circle ) : Bool {
 		throw "Not implemented";
 	}
 
+	/**
+		Not implemented: throws an error.
+	**/
 	public function collideBounds( b : Bounds ) : Bool {
 		throw "Not implemented";
 	}

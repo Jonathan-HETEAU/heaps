@@ -8,8 +8,17 @@ package h2d;
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 typedef TileSpec = {
+	/**
+		The path of the tileset image.
+	**/
 	var file(default, never) : String;
+	/**
+		The number of tiles per row in the tileset.
+	**/
 	var stride(default, never) : Int;
+	/**
+		The size of a tile in pixels.
+	**/
 	var size(default, never) : Int;
 }
 
@@ -17,7 +26,13 @@ typedef TileSpec = {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 typedef LayerSpec = {
+	/**
+		The name of the layer.
+	**/
 	var name : String;
+	/**
+		The tiles of the layer.
+	**/
 	var data : cdb.Types.TileLayer;
 }
 
@@ -25,10 +40,25 @@ typedef LayerSpec = {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 typedef LevelSpec = {
+	/**
+		The width of the level, in tiles.
+	**/
 	var width : Int;
+	/**
+		The height of the level, in tiles.
+	**/
 	var height : Int;
+	/**
+		The properties of the level.
+	**/
 	var props : cdb.Data.LevelProps;
+	/**
+		The per-tile properties.
+	**/
 	var tileProps(default, null) : Array<Dynamic>;
+	/**
+		The layers of the level.
+	**/
 	var layers : Array<LayerSpec>;
 }
 
@@ -36,20 +66,53 @@ typedef LevelSpec = {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 class LevelTileset {
+	/**
+		The number of tiles per row in the tileset.
+	**/
 	public var stride : Int;
+	/**
+		The size of a tile in pixels.
+	**/
 	public var size : Int;
+	/**
+		The tileset image.
+	**/
 	public var res : hxd.res.Image;
+	/**
+		The tile of the whole tileset image.
+	**/
 	public var tile : h2d.Tile;
+	/**
+		The tiles of the tileset, row by row.
+	**/
 	public var tiles : Array<h2d.Tile>;
+	/**
+		The objects defined in the tileset, indexed by the id of their top left tile.
+	**/
 	public var objects : Array<LevelObject>;
+	/**
+		The named groups defined in the tileset.
+	**/
 	public var groups : Map<String, LevelGroup>;
+	/**
+		The groups defined in the tileset, indexed by the id of their top left tile.
+	**/
 	public var groupsById : Array<LevelGroup>;
+	/**
+		The per-tile properties of the tileset.
+	**/
 	public var tilesProps(get, never) : Array<Dynamic>;
 	var props :	cdb.Data.TilesetProps;
 	var tileBuilder : cdb.TileBuilder;
+	/**
+		Creates an empty tileset.
+	**/
 	public function new() {
 	}
 	inline function get_tilesProps() return props.props;
+	/**
+		Returns the CastleDB tile builder of the tileset, used to draw ground borders.
+	**/
 	public function getTileBuilder() {
 		if( tileBuilder == null )
 			tileBuilder = new cdb.TileBuilder(props, stride, tiles.length);
@@ -61,15 +124,42 @@ class LevelTileset {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 class LevelObject {
+	/**
+		The tileset of the object.
+	**/
 	public var tileset : LevelTileset;
+	/**
+		The id of the top left tile of the object.
+	**/
 	public var id : Int;
+	/**
+		The X position of the object in the tileset, in tiles.
+	**/
 	public var x : Int;
+	/**
+		The Y position of the object in the tileset, in tiles.
+	**/
 	public var y : Int;
+	/**
+		The width of the object, in tiles.
+	**/
 	public var width : Int;
+	/**
+		The height of the object, in tiles.
+	**/
 	public var height : Int;
+	/**
+		The properties of the object.
+	**/
 	public var props : Dynamic;
+	/**
+		The tile of the whole object.
+	**/
 	public var tile : h2d.Tile;
 
+	/**
+		Creates an object of the tileset at the given position and size, in tiles.
+	**/
 	public function new(tset, x, y, w, h) {
 		this.tileset = tset;
 		this.x = x;
@@ -86,16 +176,46 @@ class LevelObject {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 class LevelGroup {
+	/**
+		The tileset of the group.
+	**/
 	public var tileset : LevelTileset;
+	/**
+		The name of the group.
+	**/
 	public var name : String;
+	/**
+		The id of the top left tile of the group.
+	**/
 	public var id : Int;
+	/**
+		The X position of the group in the tileset, in tiles.
+	**/
 	public var x : Int;
+	/**
+		The Y position of the group in the tileset, in tiles.
+	**/
 	public var y : Int;
+	/**
+		The width of the group, in tiles.
+	**/
 	public var width : Int;
+	/**
+		The height of the group, in tiles.
+	**/
 	public var height : Int;
+	/**
+		The tile of the whole group.
+	**/
 	public var tile : h2d.Tile;
+	/**
+		The value set on the group in the editor.
+	**/
 	public var value : Dynamic;
 
+	/**
+		Creates a group of the tileset at the given position and size, in tiles.
+	**/
 	public function new(name, tset, x, y, w, h, val) {
 		this.tileset = tset;
 		this.x = x;
@@ -114,11 +234,29 @@ class LevelGroup {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 class LevelObjectInstance {
+	/**
+		The X position of the object in the level, in pixels.
+	**/
 	public var x : Int;
+	/**
+		The Y position of the object in the level, in pixels.
+	**/
 	public var y : Int;
+	/**
+		The rotation of the object, in quarter turns.
+	**/
 	public var rot : Int;
+	/**
+		Tells if the object is flipped horizontally.
+	**/
 	public var flip : Bool;
+	/**
+		The object of the tileset.
+	**/
 	public var obj : LevelObject;
+	/**
+		Creates an instance.
+	**/
 	public function new() {
 	}
 }
@@ -182,6 +320,9 @@ class LevelLayer {
 	**/
 	public var content(get, never) : h2d.TileGroup;
 
+	/**
+		Creates a layer of the level.
+	**/
 	public function new(level) {
 		this.level = level;
 	}
@@ -233,6 +374,9 @@ class LevelLayer {
 		return out;
 	}
 
+	/**
+		Returns the value of the given per-tile string property for each cell of the layer (`null` where unset), like `buildIntProperty`.
+	**/
 	public function buildStringProperty( name : String ) {
 		var tprops = [for( p in tileset.tilesProps ) p == null ? null : Reflect.field(p, name)];
 		var out : Array<String> = [for( i in 0...level.width * level.height ) null];
@@ -275,14 +419,29 @@ class LevelLayer {
 **/
 class CdbLevel extends Layers {
 
+	/**
+		The width of the level, in tiles.
+	**/
 	public var width(default, null) : Int;
+	/**
+		The height of the level, in tiles.
+	**/
 	public var height(default, null) : Int;
+	/**
+		The level data.
+	**/
 	public var level(default, null) : LevelSpec;
+	/**
+		The layers of the level.
+	**/
 	public var layers : Array<LevelLayer>;
 	var tilesets : Map<String, LevelTileset>;
 	var layersMap : Map<String, LevelLayer>;
 	var levelsProps : cdb.Data.LevelsProps;
 
+	/**
+		Creates the level of the given index in the CastleDB levels sheet.
+	**/
 	public function new(allLevels:cdb.Types.Index<Dynamic>,index:Int,?parent) {
 		super(parent);
 		levelsProps = @:privateAccess allLevels.sheet.props.level;
@@ -306,10 +465,16 @@ class CdbLevel extends Layers {
 		}
 	}
 
+	/**
+		Returns the layer of the given name.
+	**/
 	public function getLevelLayer( name : String ) : LevelLayer {
 		return layersMap.get(name);
 	}
 
+	/**
+		Returns the value of the given per-tile property for each cell of the level, merged over all the layers (the greatest value wins).
+	**/
 	public function buildIntProperty( name : String ) {
 		var collide = null;
 		for( l in layers ) {
@@ -331,6 +496,9 @@ class CdbLevel extends Layers {
 		super.getBoundsRec(relativeTo, out, forSize);
 	}
 
+	/**
+		Returns the value of the given per-tile string property for each cell of the level, merged over all the layers (the top layer wins).
+	**/
 	public function buildStringProperty( name : String ) {
 		var collide = null;
 		for( l in layers ) {
@@ -347,6 +515,9 @@ class CdbLevel extends Layers {
 		return collide;
 	}
 
+	/**
+		Returns the tileset of the given image file, if used by the level.
+	**/
 	public function getTileset( file : String ) : LevelTileset {
 		return tilesets.get(file);
 	}
@@ -509,6 +680,9 @@ class CdbLevel extends Layers {
 		return l;
 	}
 
+	/**
+		Redraws the layers that changed.
+	**/
 	public function redraw() {
 		for( l in layers )
 			if( l.needRedraw )

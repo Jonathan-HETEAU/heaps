@@ -96,6 +96,9 @@ class Object #if (domkit && !domkit_heaps) implements domkit.Model<h2d.Object> #
 	public var blendMode : BlendMode = Alpha;
 
 	#if domkit
+	/**
+		The domkit properties of the object (with the `domkit` library), set when it is a domkit component.
+	**/
 	public var dom : domkit.Properties<h2d.Object>;
 	@:dox(hide) @:noCompletion #if !domkit_heaps public #end inline function getChildren() return children;
 	@:dox(hide) @:noCompletion #if !domkit_heaps public #end function getChildRefPosition( first : Bool ) return first ? 0 : children.length - 1;

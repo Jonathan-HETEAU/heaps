@@ -234,18 +234,42 @@ class PointImpl #if apicheck implements h2d.impl.PointApi<Point,Matrix> #end {
 	}
 }
 
+/**
+	A 2D point or vector, with operators: `+`, `-`, `*` (by a `Matrix` or a scale) and `*=`.
+**/
 @:forward abstract Point(PointImpl) from PointImpl to PointImpl {
 
+	/**
+		Creates a point.
+	**/
 	public inline function new(x=0.,y=0.) {
 		this = new PointImpl(x,y);
 	}
 
+	/**
+		Returns `this - p` as a new point.
+	**/
 	@:op(a - b) public inline function sub(p:Point) return this.sub(p);
+	/**
+		Returns `this + p` as a new point.
+	**/
 	@:op(a + b) public inline function add(p:Point) return this.add(p);
+	/**
+		Transforms the point by the matrix.
+	**/
 	@:op(a *= b) public inline function transform(m:Matrix) this.transform(m);
+	/**
+		Returns a copy of the point transformed by the matrix.
+	**/
 	@:op(a * b) public inline function transformed(m:Matrix) return this.transformed(m);
 
+	/**
+		Multiplies the coordinates by `v`.
+	**/
 	@:op(a *= b) public inline function scale(v:Float) this.scale(v);
+	/**
+		Returns a copy of the point multiplied by `v`.
+	**/
 	@:op(a * b) public inline function scaled(v:Float) return this.scaled(v);
 	@:op(a * b) static inline function scaledInv( f : Float, p : Point ) return p.scaled(f);
 

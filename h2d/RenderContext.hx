@@ -497,6 +497,9 @@ class RenderContext extends h3d.impl.RenderContext {
 		}
 	}
 
+	/**
+		Returns the current render zone in `bounds` (or new bounds), or `null` if there is none.
+	**/
 	public function getCurrentRenderZone( ?bounds : h2d.col.Bounds ) {
 		if( !hasRenderZone )
 			return null;

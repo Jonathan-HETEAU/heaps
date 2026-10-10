@@ -792,6 +792,9 @@ class Scene extends Layers implements h3d.IDrawable implements hxd.SceneEvents.I
 		mark("vsync");
 	}
 
+	/**
+		Called at each step of the scene rendering (`"s2d sync"`, `"s2d draw"`, `"vsync"`), for profiling.
+	**/
 	public dynamic function mark(name : String) {}
 
 	override function sync( ctx : RenderContext ) {

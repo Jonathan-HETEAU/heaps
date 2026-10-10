@@ -84,10 +84,16 @@ class Triangle extends Collider {
 		return s >= 0 && t >= 0 && s + t < 1;
 	}
 
+	/**
+		Not implemented: throws an error.
+	**/
 	public function collideCircle( c : Circle ) : Bool {
 		throw "Not implemented";
 	}
 
+	/**
+		Not implemented: throws an error.
+	**/
 	public function collideBounds( b : Bounds ) : Bool {
 		throw "Not implemented";
 	}

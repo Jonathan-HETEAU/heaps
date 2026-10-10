@@ -60,8 +60,17 @@ class TextInput extends Text {
 		When disabled, showSoftwareKeyboard will not be called.
 	**/
 	public var useSoftwareKeyboard : Bool = true;
+	/**
+		Called when a text input gets the focus, if `useSoftwareKeyboard` is set. Replace it to display the virtual keyboard of the platform.
+	**/
 	public static dynamic function showSoftwareKeyboard(target:TextInput) {}
+	/**
+		Called when a text input loses the focus. Replace it to hide the virtual keyboard of the platform.
+	**/
 	public static dynamic function hideSoftwareKeyboard(target:TextInput) {}
+	/**
+		To be called by the platform integration when the virtual keyboard is closed, with `isSubmit` set if the text was validated.
+	**/
 	public dynamic function onSoftwareKeyboardEnd(isSubmit: Bool) {}
 
 	var interactive : h2d.Interactive;
@@ -547,6 +556,9 @@ class TextInput extends Text {
 		if( focus ) this.focus();
 	}
 
+	/**
+		Clears the undo and redo history.
+	**/
 	public function clearUndo() {
 		undo = [];
 		redo = [];
@@ -843,6 +855,9 @@ class TextInput extends Text {
 	function onCursorChange() {
 	}
 
+	/**
+		Removes the focus from the text input.
+	**/
 	public function blur() {
 		onBlur();
 		interactive.blur();

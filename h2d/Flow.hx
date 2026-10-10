@@ -183,7 +183,13 @@ class FlowProperties {
 		When set, element will use the maximum size of non-autoSize elements as size constraint instead of current constraint on the parent flow.
 	**/
 	public var autoSize(never, set) : Null<Float>;
+	/**
+		The horizontal part of `autoSize`: the share of the available width given to the element, or `null` to disable it.
+	**/
 	public var autoSizeWidth : Null<Float>;
+	/**
+		The vertical part of `autoSize`: the share of the available height given to the element, or `null` to disable it.
+	**/
 	public var autoSizeHeight : Null<Float>;
 
 	@:dox(hide)
@@ -519,6 +525,9 @@ class Flow extends Object {
 	**/
 	public var scrollPosY(default, set) : Float = 0.;
 
+	/**
+		A special padding value for the properties of a child (`FlowProperties.paddingLeft` and others): the child ignores the padding of the flow on this side and extends to its border.
+	**/
 	public static var PADDING_IGNORE_PARENT = 0x800000CC;
 
 	var background : h2d.ScaleGrid;
@@ -918,6 +927,9 @@ class Flow extends Object {
 		return false;
 	}
 
+	/**
+		Scrolls the flow vertically so that the element is visible. Returns `false` if the flow is not scrollable (see `overflow`).
+	**/
 	public function scrollIntoView( elt : h2d.Object ) {
 		if( overflow == Scroll || overflow == Hidden ) {
 			var b = elt.getBounds(this);
@@ -1107,6 +1119,9 @@ class Flow extends Object {
 		}
 	}
 
+	/**
+		Creates the background of the flow for the tile, a `ScaleGrid` using the borders of the flow. Can be overridden to use another kind of background.
+	**/
 	public function makeBackground(tile) {
 		return new h2d.ScaleGrid(tile, borderLeft, borderTop, borderRight, borderBottom);
 	}

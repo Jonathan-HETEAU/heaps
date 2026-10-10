@@ -1,14 +1,24 @@
 package h2d.domkit;
 
+/**
+	A loaded CSS source file.
+**/
 typedef SourceFile = {
 	name: String,
 	txt: String,
 	#if (format >= version("3.8.0")) sourceMap: format.map.Data, #end
 }
 
+/**
+	The CSS style sheets applied to domkit components. Add the root objects with `addObject` and call `sync` every frame.
+	With `allowInspect`, the components can be inspected in the application with the middle mouse button.
+**/
 class Style extends domkit.CssStyle {
 
 	static var STATIC_CSS = new Array<hxd.res.Resource>();
+	/**
+		Registers a CSS resource loaded by every new style.
+	**/
 	public static function registerCSS(res) { STATIC_CSS.push(res); return res; }
 
 	var currentObjects : Array<h2d.Object> = [];
@@ -16,14 +26,38 @@ class Style extends domkit.CssStyle {
 	var errors : Array<String>;
 	var errorsText : h2d.Text;
 
+	/**
+		Enables the inspector: a middle click toggles the display of the component under the mouse and its CSS properties (with `inspectDetailsKeyCode` down, it shows the details panel). The mouse wheel selects the parent or child component.
+	**/
 	public var allowInspect(default, set) = false;
+	/**
+		If not `0`, the key that must be held down to use the inspector.
+	**/
 	public var inspectKeyCode : Int = 0;
+	/**
+		The key to hold while clicking to show the details panel of the inspector.
+	**/
 	public var inspectDetailsKeyCode : Int = hxd.Key.CTRL;
+	/**
+		The 3D scene: the inspector is disabled while its renderer is debugging.
+	**/
 	public var s3d : h3d.scene.Scene;
+	/**
+		The parser of the CSS files, which keeps the CSS variables.
+	**/
 	public var cssParser : domkit.CssParser;
+	/**
+		Called when a link of the inspector details panel is clicked.
+	**/
 	public var onInspectHyperlink : (String) -> Void = null;
+	/**
+		Tells if the inspector is currently displayed.
+	**/
 	public var inspectModeActive(default,null) = false;
 
+	/**
+		Creates a style with the registered CSS resources.
+	**/
 	public function new() {
 		super();
 		cssParser = new domkit.CssParser();
@@ -31,6 +65,9 @@ class Style extends domkit.CssStyle {
 			load(r);
 	}
 
+	/**
+		Loads a CSS (or LESS) resource and applies it. If `watchChanges` is set, the style is reloaded when the file changes. If `isVariablesDef` is set, the variables it defines are kept for the next loaded files.
+	**/
 	public function load( r : hxd.res.Resource, watchChanges = true, isVariablesDef = false ) {
 		if( watchChanges ) r.watch(function() {
 			#if (sys || nodejs)
@@ -52,6 +89,9 @@ class Style extends domkit.CssStyle {
 			o.dom.applyStyle(this);
 	}
 
+	/**
+		Loads all the `.less` files of the resource directory, after the `globals` files defining the shared variables.
+	**/
 	public function loadComponents( path : String, ?globals : Array<hxd.res.Resource> ) {
 		if( globals != null ) {
 			for( r in globals )
@@ -115,6 +155,9 @@ class Style extends domkit.CssStyle {
 	static var ON_WATCH_CALLB : Array<Class<Dynamic>> -> Void = null;
 	#end
 
+	/**
+		Stops the live reloading of the components code.
+	**/
 	public function stopWatchInterpComponents() {
 		#if hscript
 		ON_WATCH_CALLB = null;
@@ -122,6 +165,9 @@ class Style extends domkit.CssStyle {
 		#end
 	}
 
+	/**
+		Enables the live reloading of the components code with hscript: when a component class changes, its instances are rebuilt with `customRebuild` (by default, the `rebuild` method of the closest parent that has one).
+	**/
 	public function watchInterpComponents( ?customRebuild ) {
 		#if hscript
 		if( customRebuild == null ) customRebuild = defaultInterpRebuild;
@@ -145,6 +191,9 @@ class Style extends domkit.CssStyle {
 		return r.entry.getText();
 	}
 
+	/**
+		Removes a CSS resource.
+	**/
 	public function unload( r : hxd.res.Resource ) {
 		r.watch(null);
 		resources.remove(r);
@@ -158,12 +207,18 @@ class Style extends domkit.CssStyle {
 			load(r);
 	}
 
+	/**
+		Applies the style to the object and its children, and keeps them updated.
+	**/
 	public function addObject( obj ) {
 		currentObjects.remove(obj);
 		currentObjects.push(obj);
 		obj.dom.applyStyle(this);
 	}
 
+	/**
+		Stops applying the style to the object.
+	**/
 	public function removeObject(obj) {
 		currentObjects.remove(obj);
 	}
@@ -301,6 +356,9 @@ class Style extends domkit.CssStyle {
 		sourceFiles = [];
 	}
 
+	/**
+		Called when the CSS files are reloaded.
+	**/
 	public dynamic function onReload() {
 	}
 

@@ -5,12 +5,33 @@ import hxd.fmt.kframes.Data;
 	[Keyframes](https://github.com/heapsio/keyframes/) integration; A `KeyFrames` animation layer.
 **/
 typedef KeyframesLayer = {
+	/**
+		The identifier of the layer.
+	**/
 	var id : Int;
+	/**
+		The name of the layer.
+	**/
 	var name : String;
+	/**
+		The object displaying the layer.
+	**/
 	var spr : Object;
+	/**
+		The tiles of the layer.
+	**/
 	var tiles : Array<h2d.Tile>;
+	/**
+		The animations of the layer properties.
+	**/
 	var animations : Array<KFAnimation>;
+	/**
+		The first frame where the layer is visible.
+	**/
 	var from : Int;
+	/**
+		The last frame where the layer is visible.
+	**/
 	var to : Int;
 }
 

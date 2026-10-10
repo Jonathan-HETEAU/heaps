@@ -66,7 +66,7 @@ def scan(path):
                     out.append((i + 1, s[:110]))
             if is_type and depth == 0:
                 interface_ctx_set(kind == "interface" or (kind == "typedef"))
-                private_ctx[0] = "private" in mods
+                private_ctx[0] = "private" in mods or any(x in line + prev_meta for x in ("@:noCompletion", "@:dox(hide)"))
             if not is_type and private_ctx[0] and relevant:
                 total -= 1
                 if out and out[-1][0] == i + 1:

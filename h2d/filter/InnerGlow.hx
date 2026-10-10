@@ -34,22 +34,31 @@ private class GlowBlendShader extends h3d.shader.ScreenShader {
 **/
 class InnerGlow extends Blur {
 
+	/**
+		The color of the glow, in `0xRRGGBB` format.
+	**/
 	public var color : Int;
+	/**
+		The opacity of the glow.
+	**/
 	public var alpha : Float;
+	/**
+		The blend mode used to combine the glow with the object.
+	**/
 	public var blendMode : BlendMode = Alpha;
 
+
+	var glowPass = new h3d.pass.ScreenFx<GlowShader>(new GlowShader());
+	var blendPass = new h3d.pass.ScreenFx<GlowBlendShader>(new GlowBlendShader());
+
 	/**
-		Create new Glow filter.
+		Create new inner glow filter.
 		@param color The color of the glow.
 		@param alpha Transparency value of the glow.
 		@param radius The glow distance in pixels.
 		@param gain The glow color intensity.
 		@param quality The sample count on each pixel as a tradeoff of speed/quality.
 	**/
-
-	var glowPass = new h3d.pass.ScreenFx<GlowShader>(new GlowShader());
-	var blendPass = new h3d.pass.ScreenFx<GlowBlendShader>(new GlowBlendShader());
-
 	public function new( color : Int = 0xFFFFFF, alpha = 1., radius = 1., gain = 1., quality = 1. ) {
 		super(radius, gain, quality);
 		this.color = color;
