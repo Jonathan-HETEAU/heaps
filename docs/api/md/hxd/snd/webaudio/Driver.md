@@ -4,6 +4,8 @@
 
 Implements: [`hxd.snd.Driver`](../Driver.md)
 
+The Web Audio sound driver, used on JS (unless `-D useal` is set).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Implements: [`hxd.snd.Driver`](../Driver.md)
 ```haxe
 function new():Void
 ```
+
+Creates the driver.
 
 ## Variables
 
@@ -20,17 +24,23 @@ function new():Void
 var ctx:js.html.audio.AudioContext
 ```
 
+The audio context.
+
 ### masterGain
 
 ```haxe
 var masterGain(get, null):js.html.audio.GainNode
 ```
 
+The node applying the master volume.
+
 ### destination
 
 ```haxe
 var destination(get, set):js.html.audio.AudioNode
 ```
+
+The node the sources are connected to.
 
 ## Methods
 
@@ -64,11 +74,15 @@ Returns free Gain node
 inline function putGain(gain:js.html.audio.GainNode):Void
 ```
 
+Puts a gain node back in the pool.
+
 ### hasFeature
 
 ```haxe
 function hasFeature(d:hxd.snd.DriverFeature):Bool
 ```
+
+Tells if the driver supports the feature.
 
 ### setMasterVolume
 
@@ -76,11 +90,15 @@ function hasFeature(d:hxd.snd.DriverFeature):Bool
 function setMasterVolume(value:Float):Void
 ```
 
+Sets the global volume.
+
 ### setListenerParams
 
 ```haxe
 function setListenerParams(position:h3d.Vector, direction:h3d.Vector, up:h3d.Vector, ?velocity:h3d.Vector):Void
 ```
+
+Sets the position, orientation and velocity of the listener.
 
 ### createSource
 
@@ -88,11 +106,15 @@ function setListenerParams(position:h3d.Vector, direction:h3d.Vector, up:h3d.Vec
 function createSource():SourceHandle
 ```
 
+Creates a source.
+
 ### playSource
 
 ```haxe
 function playSource(source:SourceHandle):Void
 ```
+
+Starts playing the buffers queued on the source.
 
 ### stopSource
 
@@ -100,11 +122,15 @@ function playSource(source:SourceHandle):Void
 function stopSource(source:SourceHandle):Void
 ```
 
+Stops the source.
+
 ### setSourceVolume
 
 ```haxe
 function setSourceVolume(source:SourceHandle, value:Float):Void
 ```
+
+Sets the volume of the source.
 
 ### destroySource
 
@@ -112,11 +138,15 @@ function setSourceVolume(source:SourceHandle, value:Float):Void
 function destroySource(source:SourceHandle):Void
 ```
 
+Releases the source.
+
 ### createBuffer
 
 ```haxe
 function createBuffer():BufferHandle
 ```
+
+Creates a buffer.
 
 ### setBufferData
 
@@ -124,11 +154,15 @@ function createBuffer():BufferHandle
 function setBufferData(buffer:BufferHandle, data:Bytes, size:Int, format:hxd.snd.SampleFormat, channelCount:Int, samplingRate:Int):Void
 ```
 
+Fills the buffer with `size` bytes of samples.
+
 ### destroyBuffer
 
 ```haxe
 function destroyBuffer(buffer:BufferHandle):Void
 ```
+
+Releases the buffer.
 
 ### queueBuffer
 
@@ -136,11 +170,15 @@ function destroyBuffer(buffer:BufferHandle):Void
 function queueBuffer(source:SourceHandle, buffer:BufferHandle, sampleStart:Int, endOfStream:Bool):Void
 ```
 
+Queues the buffer on the source, starting at the sample `sampleStart`. `endOfStream` tells if it is the last buffer of the sound.
+
 ### unqueueBuffer
 
 ```haxe
 function unqueueBuffer(source:SourceHandle, buffer:BufferHandle):Void
 ```
+
+Removes the buffer from the queue of the source.
 
 ### getProcessedBuffers
 
@@ -148,11 +186,15 @@ function unqueueBuffer(source:SourceHandle, buffer:BufferHandle):Void
 function getProcessedBuffers(source:SourceHandle):Int
 ```
 
+Returns the number of queued buffers that were played.
+
 ### getPlayedSampleCount
 
 ```haxe
 function getPlayedSampleCount(source:SourceHandle):Int
 ```
+
+Returns the number of samples played by the source in its current buffer.
 
 ### update
 
@@ -160,14 +202,20 @@ function getPlayedSampleCount(source:SourceHandle):Int
 function update():Void
 ```
 
+Called on each update of the manager.
+
 ### dispose
 
 ```haxe
 function dispose():Void
 ```
 
+Releases the driver.
+
 ### getEffectDriver
 
 ```haxe
 function getEffectDriver(type:String):hxd.snd.EffectDriver<Dynamic>
 ```
+
+Returns the driver of the given effect type, or a driver doing nothing if the effect is not supported.

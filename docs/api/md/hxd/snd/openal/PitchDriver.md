@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 
+Implements `hxd.snd.effect.Pitch` with the OpenAL source pitch.
+
 ## Constructor
 
 ### new

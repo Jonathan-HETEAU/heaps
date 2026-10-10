@@ -14,8 +14,12 @@ or it can be embedded manually with hxd.res.Embed.embedFont
 static function getFont(name:String, size:Int, ?options:Null<FontBuildOptions>):Null<h2d.Font>
 ```
 
+Returns a bitmap font built from the font of the given name, cached by name and size.
+
 ### dispose
 
 ```haxe
 static function dispose():Void
 ```
+
+Disposes all the built fonts.

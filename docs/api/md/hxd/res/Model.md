@@ -4,6 +4,8 @@
 
 Extends: [`hxd.res.Resource`](Resource.md)
 
+A 3D model file. FBX files are converted to the HMD format when the resources are built.
+
 ## Constructor
 
 ### new
@@ -19,6 +21,8 @@ function new(entry:hxd.fs.FileEntry):Void
 ```haxe
 function toHmd():hxd.fmt.hmd.Library
 ```
+
+Reads the header of the HMD file and returns the library to create its objects and animations.
 
 ## Inherited members
 

@@ -4,6 +4,9 @@
 
 Extends: [`hxd.snd.ChannelBase`](ChannelBase.md)
 
+A group of channels sharing a volume, a priority and effects, such as the music or the sound effects.
+The channels without a group use `Manager.masterChannelGroup`.
+
 ## Constructor
 
 ### new
@@ -12,6 +15,8 @@ Extends: [`hxd.snd.ChannelBase`](ChannelBase.md)
 function new(name:String):Void
 ```
 
+Creates a group.
+
 ## Variables
 
 ### name
@@ -19,6 +24,8 @@ function new(name:String):Void
 ```haxe
 var name(default, null):String
 ```
+
+The name of the group.
 
 ## Inherited members
 

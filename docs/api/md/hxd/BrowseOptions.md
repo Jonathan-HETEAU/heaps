@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd`](README.md) · module `hxd.File` · source [`hxd/File.hx`](../../../../hxd/File.hx)
 
+Options for `File.browse` and `File.saveAs`.
+
 ## Fields
 
 ### writeFile

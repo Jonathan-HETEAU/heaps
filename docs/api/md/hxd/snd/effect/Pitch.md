@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Effect`](../Effect.md)
 
+Changes the pitch (and speed) of the sound.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`hxd.snd.Effect`](../Effect.md)
 function new(?value:Float = 1.0):Void
 ```
 
+Creates a pitch effect.
+
 ## Variables
 
 ### value
@@ -19,6 +23,8 @@ function new(?value:Float = 1.0):Void
 ```haxe
 var value:Float
 ```
+
+The pitch multiplier: `1` is the normal pitch, `2` one octave higher.
 
 ## Inherited members
 

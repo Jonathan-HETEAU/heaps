@@ -1,10 +1,10 @@
 package hxd.res;
 import haxe.macro.Context;
 
-#if js @:keep #end
 /**
 	Macros to embed files and fonts in the compiled application.
 **/
+#if js @:keep #end
 class Embed {
 
 	#if macro

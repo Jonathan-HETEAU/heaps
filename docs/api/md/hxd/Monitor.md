@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd`](README.md) · module `hxd.Window` · source [`hxd/Window.hl.hx`](../../../../hxd/Window.hl.hx) · available on hl/sdl, hl/directx
 
+A monitor, as returned by `Window.getMonitors`.
+
 ## Fields
 
 ### width

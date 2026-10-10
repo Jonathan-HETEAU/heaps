@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Data`](Data.md)
 
+The decoder of Ogg Vorbis data: native on HashLink, with the `stb_ogg_sound` library on other targets (without it, decoding throws an error).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.Data`](Data.md)
 ```haxe
 function new(bytes:Bytes):Void
 ```
+
+Opens the Ogg data.
 
 ## Methods
 

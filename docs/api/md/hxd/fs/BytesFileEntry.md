@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.FileEntry`](FileEntry.md)
 
+A file entry whose content is in memory.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fs.FileEntry`](FileEntry.md)
 ```haxe
 function new(path:String, bytes:Bytes):Void
 ```
+
+Creates an entry for the given path and content.
 
 ## Methods
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts SVG images to multi-channel signed distance field PNG images with the `msdfgen` command. Parameter: `size` (default 128).
+
 ## Constructor
 
 ### new

@@ -17,6 +17,8 @@ Other textures having the AsyncLoading flag use a 1x1 black placeholder while th
 function new(image:Image):Void
 ```
 
+Creates the stream for the image. Done by `Image` when needed.
+
 ## Static variables
 
 ### BASE_SIZE
@@ -44,11 +46,15 @@ A request bigger than this size is read without waiting. The released buffers ar
 var image(default, null):Image
 ```
 
+The image being loaded.
+
 ### texture
 
 ```haxe
 var texture(get, null):h3d.mat.Texture
 ```
+
+The texture of the image.
 
 ### mipStreaming
 

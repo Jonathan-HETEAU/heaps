@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd`](README.md) · module `hxd.Event` · source [`hxd/Event.hx`](../../../../hxd/Event.hx)
 
+The kinds of `Event`.
+
 ## Constructors
 
 ### EPush
@@ -10,11 +12,15 @@
 EPush
 ```
 
+A mouse button or a touch is pressed.
+
 ### ERelease
 
 ```haxe
 ERelease
 ```
+
+A mouse button or a touch is released.
 
 ### EMove
 
@@ -22,11 +28,15 @@ ERelease
 EMove
 ```
 
+The mouse or a touch moves.
+
 ### EOver
 
 ```haxe
 EOver
 ```
+
+The cursor enters an interactive.
 
 ### EOut
 
@@ -34,11 +44,15 @@ EOver
 EOut
 ```
 
+The cursor leaves an interactive.
+
 ### EWheel
 
 ```haxe
 EWheel
 ```
+
+The mouse wheel is used (see `Event.wheelDelta`).
 
 ### EFocus
 
@@ -46,11 +60,15 @@ EWheel
 EFocus
 ```
 
+An interactive gets the focus.
+
 ### EFocusLost
 
 ```haxe
 EFocusLost
 ```
+
+An interactive loses the focus.
 
 ### EKeyDown
 
@@ -58,11 +76,15 @@ EFocusLost
 EKeyDown
 ```
 
+A key is pressed (see `Event.keyCode`).
+
 ### EKeyUp
 
 ```haxe
 EKeyUp
 ```
+
+A key is released (see `Event.keyCode`).
 
 ### EReleaseOutside
 
@@ -70,11 +92,15 @@ EKeyUp
 EReleaseOutside
 ```
 
+A button pressed on an interactive is released outside of it.
+
 ### ETextInput
 
 ```haxe
 ETextInput
 ```
+
+A character is typed (see `Event.charCode`).
 
 ### ECheck
 

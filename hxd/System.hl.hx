@@ -46,11 +46,11 @@ enum KeyboardLayout {
 class System {
 
 	/**
-		The width of the screen in pixels.
+		The width of the screen in pixels (of the page on JS: the body width multiplied by the device pixel ratio).
 	**/
 	public static var width(get,never) : Int;
 	/**
-		The height of the screen in pixels.
+		The height of the screen in pixels (of the page on JS: the body height multiplied by the device pixel ratio).
 	**/
 	public static var height(get, never) : Int;
 	/**
@@ -163,7 +163,7 @@ class System {
 	}
 
 	/**
-		Initializes the system and creates the window with `createWindow`, then calls `init` and runs the main loop until the application exits. Called by `hxd.App`.
+		Initializes the system and calls the given function. On HashLink, the window is created with `createWindow` first, and the main loop then runs until the application exits. Called by `hxd.App`.
 	**/
 	public static function start( init : Void -> Void ) : Void {
 		#if usesys
@@ -399,7 +399,7 @@ class System {
 
 	#if (hl_ver < version("1.12.0"))
 	/**
-		Returns the text in the system clipboard, or `null` if not supported.
+		Returns the text in the system clipboard, or `null` if not supported. On JS, returns the last text set with `setClipboardText`, since the browser clipboard can't be read synchronously.
 	**/
 	public static function getClipboardText() : String {
 		return null;
@@ -413,7 +413,7 @@ class System {
 	}
 	#elseif hlsdl
 	/**
-		Returns the text in the system clipboard, or `null` if not supported.
+		Returns the text in the system clipboard, or `null` if not supported. On JS, returns the last text set with `setClipboardText`, since the browser clipboard can't be read synchronously.
 	**/
 	public static function getClipboardText() : String {
 		return sdl.Sdl.getClipboardText();
@@ -427,7 +427,7 @@ class System {
 	}
 	#else
 	/**
-		Returns the text in the system clipboard, or `null` if not supported.
+		Returns the text in the system clipboard, or `null` if not supported. On JS, returns the last text set with `setClipboardText`, since the browser clipboard can't be read synchronously.
 	**/
 	public static function getClipboardText() : String {
 		return hl.UI.getClipboardText();
@@ -442,7 +442,7 @@ class System {
 	#end
 
 	/**
-		Returns a description of the device, such as `"PC/"` followed by the graphics device name.
+		Returns a description of the device, such as `"PC/"` followed by the graphics device name (`"Unknown"` on JS).
 	**/
 	public static function getDeviceName() : String {
 		#if usesys
@@ -528,7 +528,7 @@ class System {
 	**/
 	static var _loc : String;
 	/**
-		Returns the locale of the user, including the region code (such as `"en-US"`).
+		Returns the locale of the user, including the region code (such as `"en-US"`), based on the system or browser language.
 	**/
 	public static function getLocale() {
 		if( _loc == null ) {
@@ -541,7 +541,7 @@ class System {
 	}
 
 	/**
-		The value isn't reliable on SDL when used without a window.
+		Returns the detected keyboard layout, or `Unknown` if it can't be detected (always on JS). The value isn't reliable on SDL without a window.
 	**/
 	public static function getKeyboardLayout() : KeyboardLayout {
 		var layoutStr = null;

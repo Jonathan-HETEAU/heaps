@@ -4,6 +4,9 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts images to compressed DDS textures with the `texconv` or `CompressonatorCLI` commands.
+Parameters: `format` (required, such as `BC1`, `BC3` or `RGBA`), `mips`, `size` (maximum size), `alpha` (BC1 alpha threshold).
+
 ## Constructor
 
 ### new

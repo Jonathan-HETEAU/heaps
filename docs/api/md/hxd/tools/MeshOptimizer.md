@@ -2,6 +2,8 @@
 
 **class** · package [`hxd.tools`](README.md) · source [`hxd/tools/MeshOptimizer.hx`](../../../../../hxd/tools/MeshOptimizer.hx) · available on hl/sdl, hl/directx
 
+Bindings to the meshoptimizer library (HashLink 1.15+): vertex remapping, cache optimization, simplification and tangents generation.
+
 ## Static methods
 
 ### generateVertexRemap

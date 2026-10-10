@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+A conversion running an external command. `%SRC` and `%DST` in the arguments are replaced by the source and destination paths.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fs.Convert`](Convert.md)
 ```haxe
 function new(fr:String, to:String, cmd:String, args:Array<String>):Void
 ```
+
+Creates a conversion from the `fr` to the `to` extensions, running `cmd` with `args`.
 
 ## Methods
 

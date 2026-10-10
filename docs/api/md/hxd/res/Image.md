@@ -4,6 +4,9 @@
 
 Extends: [`hxd.res.Resource`](Resource.md)
 
+An image resource (PNG, JPEG, GIF, TGA, DDS, HDR or RAW).
+Use `toTile` for 2D, `toTexture` for 3D, or `getPixels` to read its pixels.
+
 ## Constructor
 
 ### new
@@ -20,7 +23,7 @@ function new(entry:hxd.fs.FileEntry):Void
 static var DEFAULT_FILTER:h3d.mat.Filter
 ```
 
-Specify if we will automatically convert non-power-of-two textures to power-of-two.
+The filter of the loaded textures.
 
 ### MIPMAP_MAX_SIZE
 
@@ -46,11 +49,15 @@ Set to false to load synchronously the textures having the AsyncLoading flag.
 static dynamic function setupTextureFlags(tex:h3d.mat.Texture):Void
 ```
 
+Called when a texture is created, before it is loaded. Can be replaced to set texture flags, such as `AsyncLoading`.
+
 ### getMipMapMaxSize
 
 ```haxe
 static dynamic function getMipMapMaxSize(img:Image):Int
 ```
+
+Returns the maximum size of the loaded mip levels of the image. Can be replaced to use a different size per image.
 
 ## Variables
 
@@ -59,6 +66,8 @@ static dynamic function getMipMapMaxSize(img:Image):Int
 ```haxe
 var enableAsyncLoading:Bool
 ```
+
+Currently unused.
 
 ### stream
 
@@ -85,11 +94,15 @@ Must be set before the texture is loaded.
 inline function getFormat():ImageFormat
 ```
 
+Returns the file format of the image.
+
 ### getPixelFormat
 
 ```haxe
 inline function getPixelFormat():hxd.PixelFormat
 ```
+
+Returns the pixel format of the decoded image.
 
 ### getSize
 
@@ -97,11 +110,15 @@ inline function getPixelFormat():hxd.PixelFormat
 inline function getSize():ImageInfo
 ```
 
+Returns the information of the image, to read its `width` and `height`.
+
 ### getInfo
 
 ```haxe
 function getInfo():ImageInfo
 ```
+
+Reads the header of the image file (once) and returns its information.
 
 ### getPixels
 
@@ -109,11 +126,16 @@ function getInfo():ImageInfo
 function getPixels(?fmt:hxd.PixelFormat, ?index:Int):hxd.Pixels
 ```
 
+Decodes the image and returns its pixels, converted to `fmt` if set.
+For a DDS file, `index` selects the image: `layer * mipLevels + mipLevel`.
+
 ### toBitmap
 
 ```haxe
 function toBitmap():hxd.BitmapData
 ```
+
+Decodes the image into a `BitmapData`.
 
 ### loadSync
 
@@ -129,6 +151,8 @@ Use this when the texture data is required immediately (bakes, caches, etc.)
 ```haxe
 function toTexture():h3d.mat.Texture
 ```
+
+Returns the texture of the image, created on the first call. Depending on the texture flags, it may be loaded or streamed asynchronously (see `stream`).
 
 ### toTile
 

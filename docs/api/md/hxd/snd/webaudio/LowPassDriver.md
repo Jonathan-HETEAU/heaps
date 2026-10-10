@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 
+Implements `hxd.snd.effect.LowPass` with a Web Audio biquad filter.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 ```haxe
 function new():Void
 ```
+
+Creates the effect driver.
 
 ## Methods
 

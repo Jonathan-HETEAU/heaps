@@ -2,6 +2,8 @@
 
 **enum abstract** · package [`hxd.tools`](README.md) · module `hxd.tools.RenderDoc` · source [`hxd/tools/RenderDoc.hx`](../../../../../hxd/tools/RenderDoc.hx) · available on hl/sdl, hl/directx
 
+The keys that can trigger a RenderDoc capture.
+
 Underlying type: `Int`
 
 ## Values

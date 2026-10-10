@@ -15374,8 +15374,8 @@
   "hxd.App": {
    "file": "hxd/App.hx",
    "package": "hxd",
-   "lines": 237,
-   "doc_blocks": 11,
+   "lines": 243,
+   "doc_blocks": 13,
    "types": [
     "class App"
    ],
@@ -15424,8 +15424,8 @@
   "hxd.BitmapData": {
    "file": "hxd/BitmapData.hx",
    "package": "hxd",
-   "lines": 529,
-   "doc_blocks": 4,
+   "lines": 604,
+   "doc_blocks": 29,
    "types": [
     "typedef BitmapInnerData",
     "typedef BitmapInnerData",
@@ -15460,8 +15460,8 @@
   "hxd.BufferFormat": {
    "file": "hxd/BufferFormat.hx",
    "package": "hxd",
-   "lines": 565,
-   "doc_blocks": 1,
+   "lines": 792,
+   "doc_blocks": 76,
    "types": [
     "enum_abstract Precision",
     "enum_abstract InputFormat",
@@ -15547,8 +15547,8 @@
   "hxd.BytesBuffer": {
    "file": "hxd/BytesBuffer.hx",
    "package": "hxd",
-   "lines": 47,
-   "doc_blocks": 0,
+   "lines": 74,
+   "doc_blocks": 9,
    "types": [
     "abstract BytesBuffer"
    ],
@@ -15559,8 +15559,8 @@
   "hxd.Charset": {
    "file": "hxd/Charset.hx",
    "package": "hxd",
-   "lines": 156,
-   "doc_blocks": 7,
+   "lines": 181,
+   "doc_blocks": 15,
    "types": [
     "class Charset"
    ],
@@ -15574,8 +15574,8 @@
   "hxd.Cursor": {
    "file": "hxd/Cursor.hx",
    "package": "hxd",
-   "lines": 114,
-   "doc_blocks": 1,
+   "lines": 139,
+   "doc_blocks": 8,
    "types": [
     "enum Cursor",
     "class CustomCursor"
@@ -15602,8 +15602,8 @@
   "hxd.Direction": {
    "file": "hxd/Direction.hx",
    "package": "hxd",
-   "lines": 61,
-   "doc_blocks": 0,
+   "lines": 98,
+   "doc_blocks": 12,
    "types": [
     "enum_abstract Direction"
    ],
@@ -15618,8 +15618,8 @@
   "hxd.DropFileEvent": {
    "file": "hxd/DropFileEvent.hx",
    "package": "hxd",
-   "lines": 69,
-   "doc_blocks": 9,
+   "lines": 75,
+   "doc_blocks": 11,
    "types": [
     "class DroppedFile",
     "class DropFileEvent"
@@ -15635,8 +15635,8 @@
   "hxd.Event": {
    "file": "hxd/Event.hx",
    "package": "hxd",
-   "lines": 58,
-   "doc_blocks": 3,
+   "lines": 133,
+   "doc_blocks": 28,
    "types": [
     "enum EventKind",
     "class Event"
@@ -15654,8 +15654,8 @@
   "hxd.File": {
    "file": "hxd/File.hx",
    "package": "hxd",
-   "lines": 246,
-   "doc_blocks": 9,
+   "lines": 286,
+   "doc_blocks": 21,
    "types": [
     "typedef BrowseOptions",
     "typedef BrowseSelect",
@@ -15680,8 +15680,8 @@
   "hxd.FloatBuffer": {
    "file": "hxd/FloatBuffer.hx",
    "package": "hxd",
-   "lines": 118,
-   "doc_blocks": 0,
+   "lines": 142,
+   "doc_blocks": 8,
    "types": [
     "typedef InnerData",
     "abstract Float32Expand",
@@ -15733,8 +15733,8 @@
   "hxd.FloatBufferLoader": {
    "file": "hxd/FloatBufferLoader.hx",
    "package": "hxd",
-   "lines": 83,
-   "doc_blocks": 0,
+   "lines": 117,
+   "doc_blocks": 11,
    "types": [
     "class FloatBufferLoader"
    ],
@@ -15765,8 +15765,8 @@
   "hxd.IndexBuffer": {
    "file": "hxd/IndexBuffer.hx",
    "package": "hxd",
-   "lines": 75,
-   "doc_blocks": 0,
+   "lines": 99,
+   "doc_blocks": 8,
    "types": [
     "typedef InnerData",
     "class InnerIterator",
@@ -15806,8 +15806,8 @@
   "hxd.Key": {
    "file": "hxd/Key.hx",
    "package": "hxd",
-   "lines": 311,
-   "doc_blocks": 3,
+   "lines": 473,
+   "doc_blocks": 146,
    "types": [
     "class Key"
    ],
@@ -15835,8 +15835,8 @@
   "hxd.Math": {
    "file": "hxd/Math.hx",
    "package": "hxd",
-   "lines": 352,
-   "doc_blocks": 10,
+   "lines": 489,
+   "doc_blocks": 57,
    "types": [
     "class Math"
    ],
@@ -15991,8 +15991,8 @@
   "hxd.Pad": {
    "file": "hxd/Pad.hx",
    "package": "hxd",
-   "lines": 560,
-   "doc_blocks": 6,
+   "lines": 631,
+   "doc_blocks": 29,
    "types": [
     "typedef Event",
     "class GameController",
@@ -16030,8 +16030,8 @@
   "hxd.Perlin": {
    "file": "hxd/Perlin.hx",
    "package": "hxd",
-   "lines": 441,
-   "doc_blocks": 2,
+   "lines": 479,
+   "doc_blocks": 14,
    "types": [
     "class Perlin"
    ],
@@ -16046,8 +16046,8 @@
   "hxd.PixelFormat": {
    "file": "hxd/PixelFormat.hx",
    "package": "hxd",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 36,
+   "doc_blocks": 1,
    "types": [
     "enum PixelFormat"
    ],
@@ -16073,8 +16073,8 @@
   "hxd.Pixels": {
    "file": "hxd/Pixels.hx",
    "package": "hxd",
-   "lines": 780,
-   "doc_blocks": 2,
+   "lines": 941,
+   "doc_blocks": 55,
    "types": [
     "enum Flags",
     "abstract PixelsARGB",
@@ -16124,8 +16124,8 @@
   "hxd.Rand": {
    "file": "hxd/Rand.hx",
    "package": "hxd",
-   "lines": 106,
-   "doc_blocks": 8,
+   "lines": 112,
+   "doc_blocks": 10,
    "types": [
     "class Rand"
    ],
@@ -16139,8 +16139,8 @@
   "hxd.Res": {
    "file": "hxd/Res.hx",
    "package": "hxd",
-   "lines": 45,
-   "doc_blocks": 0,
+   "lines": 70,
+   "doc_blocks": 5,
    "types": [
     "class Res"
    ],
@@ -16185,8 +16185,8 @@
   "hxd.SceneEvents": {
    "file": "hxd/SceneEvents.hx",
    "package": "hxd",
-   "lines": 456,
-   "doc_blocks": 3,
+   "lines": 531,
+   "doc_blocks": 24,
    "types": [
     "interface InteractiveScene",
     "interface Interactive",
@@ -16238,8 +16238,8 @@
   "hxd.System": {
    "file": "hxd/System.hx",
    "package": "hxd",
-   "lines": 117,
-   "doc_blocks": 4,
+   "lines": 184,
+   "doc_blocks": 26,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16257,8 +16257,8 @@
   "hxd.System.hl": {
    "file": "hxd/System.hl.hx",
    "package": "hxd",
-   "lines": 556,
-   "doc_blocks": 3,
+   "lines": 653,
+   "doc_blocks": 35,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16288,8 +16288,8 @@
   "hxd.System.js": {
    "file": "hxd/System.js.hx",
    "package": "hxd",
-   "lines": 199,
-   "doc_blocks": 1,
+   "lines": 278,
+   "doc_blocks": 27,
    "types": [
     "enum Platform",
     "enum SystemValue",
@@ -16373,8 +16373,8 @@
   "hxd.WaitEvent": {
    "file": "hxd/WaitEvent.hx",
    "package": "hxd",
-   "lines": 61,
-   "doc_blocks": 0,
+   "lines": 95,
+   "doc_blocks": 9,
    "types": [
     "class WaitEvent"
    ],
@@ -16385,8 +16385,8 @@
   "hxd.Window": {
    "file": "hxd/Window.hx",
    "package": "hxd",
-   "lines": 207,
-   "doc_blocks": 6,
+   "lines": 301,
+   "doc_blocks": 36,
    "types": [
     "enum DisplayMode",
     "class Window"
@@ -16419,8 +16419,8 @@
   "hxd.Window.hl": {
    "file": "hxd/Window.hl.hx",
    "package": "hxd",
-   "lines": 987,
-   "doc_blocks": 3,
+   "lines": 1139,
+   "doc_blocks": 52,
    "types": [
     "typedef DisplayMode",
     "typedef DisplayMode",
@@ -16471,8 +16471,8 @@
   "hxd.Window.js": {
    "file": "hxd/Window.js.hx",
    "package": "hxd",
-   "lines": 623,
-   "doc_blocks": 5,
+   "lines": 739,
+   "doc_blocks": 42,
    "types": [
     "enum DisplayMode",
     "class NativeDroppedFile",
@@ -17926,8 +17926,8 @@
   "hxd.fs.AsyncRead": {
    "file": "hxd/fs/AsyncRead.hx",
    "package": "hxd.fs",
-   "lines": 238,
-   "doc_blocks": 8,
+   "lines": 277,
+   "doc_blocks": 21,
    "types": [
     "typedef ThreadLoop",
     "typedef ThreadLoop",
@@ -17950,8 +17950,8 @@
   "hxd.fs.BytesFileSystem": {
    "file": "hxd/fs/BytesFileSystem.hx",
    "package": "hxd.fs",
-   "lines": 98,
-   "doc_blocks": 0,
+   "lines": 126,
+   "doc_blocks": 9,
    "types": [
     "class BytesFileEntry",
     "class BytesFileSystem"
@@ -17992,8 +17992,8 @@
   "hxd.fs.Convert": {
    "file": "hxd/fs/Convert.hx",
    "package": "hxd.fs",
-   "lines": 709,
-   "doc_blocks": 3,
+   "lines": 807,
+   "doc_blocks": 36,
    "types": [
     "class Convert",
     "typedef MatCollideInfo",
@@ -18117,8 +18117,8 @@
   "hxd.fs.EmbedFileSystem": {
    "file": "hxd/fs/EmbedFileSystem.hx",
    "package": "hxd.fs",
-   "lines": 200,
-   "doc_blocks": 0,
+   "lines": 224,
+   "doc_blocks": 8,
    "types": [
     "class EmbedEntry",
     "class EmbedFileSystem"
@@ -18161,8 +18161,8 @@
   "hxd.fs.Exclusive": {
    "file": "hxd/fs/Exclusive.hx",
    "package": "hxd.fs",
-   "lines": 20,
-   "doc_blocks": 0,
+   "lines": 26,
+   "doc_blocks": 2,
    "types": [
     "class Exclusive"
    ],
@@ -18175,8 +18175,8 @@
   "hxd.fs.FileConfig": {
    "file": "hxd/fs/FileConfig.hx",
    "package": "hxd.fs",
-   "lines": 59,
-   "doc_blocks": 0,
+   "lines": 71,
+   "doc_blocks": 4,
    "types": [
     "class FileConfig"
    ],
@@ -18193,8 +18193,8 @@
   "hxd.fs.FileConverter": {
    "file": "hxd/fs/FileConverter.hx",
    "package": "hxd.fs",
-   "lines": 489,
-   "doc_blocks": 1,
+   "lines": 547,
+   "doc_blocks": 20,
    "types": [
     "typedef ConvertConfig",
     "typedef ConvertRule",
@@ -18226,8 +18226,8 @@
   "hxd.fs.FileEntry": {
    "file": "hxd/fs/FileEntry.hx",
    "package": "hxd.fs",
-   "lines": 94,
-   "doc_blocks": 3,
+   "lines": 154,
+   "doc_blocks": 23,
    "types": [
     "class FileEntry"
    ],
@@ -18264,8 +18264,8 @@
   "hxd.fs.FileInput": {
    "file": "hxd/fs/FileInput.hx",
    "package": "hxd.fs",
-   "lines": 96,
-   "doc_blocks": 0,
+   "lines": 108,
+   "doc_blocks": 4,
    "types": [
     "class FileInput"
    ],
@@ -18291,8 +18291,8 @@
   "hxd.fs.FileSystem": {
    "file": "hxd/fs/FileSystem.hx",
    "package": "hxd.fs",
-   "lines": 10,
-   "doc_blocks": 0,
+   "lines": 31,
+   "doc_blocks": 7,
    "types": [
     "interface FileSystem"
    ],
@@ -18314,8 +18314,8 @@
   "hxd.fs.LoadedBitmap": {
    "file": "hxd/fs/LoadedBitmap.hx",
    "package": "hxd.fs",
-   "lines": 29,
-   "doc_blocks": 0,
+   "lines": 47,
+   "doc_blocks": 6,
    "types": [
     "typedef LoadedBitmapData",
     "typedef LoadedBitmapData",
@@ -18338,8 +18338,8 @@
   "hxd.fs.LocalFileSystem": {
    "file": "hxd/fs/LocalFileSystem.hx",
    "package": "hxd.fs",
-   "lines": 509,
-   "doc_blocks": 0,
+   "lines": 585,
+   "doc_blocks": 24,
    "types": [
     "class LocalEntry"
    ],
@@ -18379,8 +18379,8 @@
   "hxd.fs.MultiFileSystem": {
    "file": "hxd/fs/MultiFileSystem.hx",
    "package": "hxd.fs",
-   "lines": 111,
-   "doc_blocks": 0,
+   "lines": 138,
+   "doc_blocks": 9,
    "types": [
     "class MultiFileEntry",
     "class MultiFileSystem"
@@ -18421,8 +18421,8 @@
   "hxd.fs.NotFound": {
    "file": "hxd/fs/NotFound.hx",
    "package": "hxd.fs",
-   "lines": 11,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 3,
    "types": [
     "class NotFound"
    ],
@@ -18437,8 +18437,8 @@
   "hxd.fs.SourceLoader": {
    "file": "hxd/fs/SourceLoader.hx",
    "package": "hxd.fs",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 53,
+   "doc_blocks": 6,
    "types": [
     "class SourceLoader"
    ],
@@ -18461,8 +18461,8 @@
   "hxd.impl.AllocPos": {
    "file": "hxd/impl/AllocPos.hx",
    "package": "hxd.impl",
-   "lines": 42,
-   "doc_blocks": 0,
+   "lines": 58,
+   "doc_blocks": 5,
    "types": [
     "class AllocPos"
    ],
@@ -18479,8 +18479,8 @@
   "hxd.impl.Allocator": {
    "file": "hxd/impl/Allocator.hx",
    "package": "hxd.impl",
-   "lines": 114,
-   "doc_blocks": 0,
+   "lines": 187,
+   "doc_blocks": 24,
    "types": [
     "enum_abstract BufferFlags",
     "class Allocator"
@@ -18528,8 +18528,8 @@
   "hxd.impl.AnyProps": {
    "file": "hxd/impl/AnyProps.hx",
    "package": "hxd.impl",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 56,
+   "doc_blocks": 7,
    "types": [
     "class AnyProps"
    ],
@@ -18543,8 +18543,8 @@
   "hxd.impl.AppContext": {
    "file": "hxd/impl/AppContext.hx",
    "package": "hxd.impl",
-   "lines": 67,
-   "doc_blocks": 1,
+   "lines": 82,
+   "doc_blocks": 6,
    "types": [
     "class AppContext"
    ],
@@ -18568,8 +18568,8 @@
   "hxd.impl.ArrayIterator": {
    "file": "hxd/impl/ArrayIterator.hx",
    "package": "hxd.impl",
-   "lines": 18,
-   "doc_blocks": 0,
+   "lines": 30,
+   "doc_blocks": 4,
    "types": [
     "class ArrayIterator"
    ],
@@ -18596,8 +18596,8 @@
   "hxd.impl.BitSet": {
    "file": "hxd/impl/BitSet.hx",
    "package": "hxd.impl",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 56,
+   "doc_blocks": 7,
    "types": [
     "abstract BitSet"
    ],
@@ -18610,8 +18610,8 @@
   "hxd.impl.BitsBuilder": {
    "file": "hxd/impl/BitsBuilder.hx",
    "package": "hxd.impl",
-   "lines": 148,
-   "doc_blocks": 0,
+   "lines": 154,
+   "doc_blocks": 2,
    "types": [
     "class BitsBuilder"
    ],
@@ -18626,8 +18626,8 @@
   "hxd.impl.CacheAllocator": {
    "file": "hxd/impl/CacheAllocator.hx",
    "package": "hxd.impl",
-   "lines": 366,
-   "doc_blocks": 2,
+   "lines": 397,
+   "doc_blocks": 12,
    "types": [
     "class Bucket",
     "class Cache",
@@ -18667,8 +18667,8 @@
   "hxd.impl.FIFOBufferAllocator": {
    "file": "hxd/impl/FIFOBufferAllocator.hx",
    "package": "hxd.impl",
-   "lines": 215,
-   "doc_blocks": 2,
+   "lines": 249,
+   "doc_blocks": 13,
    "types": [
     "class Cache",
     "typedef BufferConfig",
@@ -18705,8 +18705,8 @@
   "hxd.impl.Float32": {
    "file": "hxd/impl/Float32.hx",
    "package": "hxd.impl",
-   "lines": 3,
-   "doc_blocks": 0,
+   "lines": 6,
+   "doc_blocks": 1,
    "types": [
     "typedef Float32"
    ],
@@ -18747,8 +18747,8 @@
   "hxd.impl.Properties": {
    "file": "hxd/impl/Properties.hx",
    "package": "hxd.impl",
-   "lines": 80,
-   "doc_blocks": 0,
+   "lines": 93,
+   "doc_blocks": 4,
    "types": [
     "class Properties"
    ],
@@ -18766,8 +18766,8 @@
   "hxd.impl.TypedArray": {
    "file": "hxd/impl/TypedArray.hx",
    "package": "hxd.impl",
-   "lines": 15,
-   "doc_blocks": 0,
+   "lines": 39,
+   "doc_blocks": 8,
    "types": [
     "typedef Float32Array",
     "typedef Uint16Array",
@@ -18801,8 +18801,8 @@
   "hxd.impl.UInt16": {
    "file": "hxd/impl/UInt16.hx",
    "package": "hxd.impl",
-   "lines": 3,
-   "doc_blocks": 0,
+   "lines": 6,
+   "doc_blocks": 1,
    "types": [
     "typedef UInt16"
    ],
@@ -18815,8 +18815,8 @@
   "hxd.impl.UncheckedBytes": {
    "file": "hxd/impl/UncheckedBytes.hx",
    "package": "hxd.impl",
-   "lines": 38,
-   "doc_blocks": 0,
+   "lines": 44,
+   "doc_blocks": 2,
    "types": [
     "typedef InnerData",
     "abstract UncheckedBytes"
@@ -18834,8 +18834,8 @@
   "hxd.net.BinaryLoader": {
    "file": "hxd/net/BinaryLoader.hx",
    "package": "hxd.net",
-   "lines": 51,
-   "doc_blocks": 0,
+   "lines": 72,
+   "doc_blocks": 7,
    "types": [
     "class BinaryLoader"
    ],
@@ -18848,8 +18848,8 @@
   "hxd.net.Socket": {
    "file": "hxd/net/Socket.hx",
    "package": "hxd.net",
-   "lines": 348,
-   "doc_blocks": 1,
+   "lines": 408,
+   "doc_blocks": 21,
    "types": [
     "class SocketOutput",
     "class SocketInput",
@@ -18899,8 +18899,8 @@
   "hxd.net.SocketHost": {
    "file": "hxd/net/SocketHost.hx",
    "package": "hxd.net",
-   "lines": 130,
-   "doc_blocks": 0,
+   "lines": 154,
+   "doc_blocks": 8,
    "types": [
     "class SocketClient",
     "class SocketHost"
@@ -19260,8 +19260,8 @@
   "hxd.res.AnimGraph": {
    "file": "hxd/res/AnimGraph.hx",
    "package": "hxd.res",
-   "lines": 8,
-   "doc_blocks": 0,
+   "lines": 14,
+   "doc_blocks": 2,
    "types": [
     "typedef AnimGraph",
     "typedef AnimGraph"
@@ -19279,8 +19279,8 @@
   "hxd.res.Any": {
    "file": "hxd/res/Any.hx",
    "package": "hxd.res",
-   "lines": 75,
-   "doc_blocks": 0,
+   "lines": 112,
+   "doc_blocks": 12,
    "types": [
     "class SingleFileSystem",
     "class Any"
@@ -19337,8 +19337,8 @@
   "hxd.res.Atlas": {
    "file": "hxd/res/Atlas.hx",
    "package": "hxd.res",
-   "lines": 140,
-   "doc_blocks": 0,
+   "lines": 154,
+   "doc_blocks": 4,
    "types": [
     "class Atlas"
    ],
@@ -19369,8 +19369,8 @@
   "hxd.res.BDFFont": {
    "file": "hxd/res/BDFFont.hx",
    "package": "hxd.res",
-   "lines": 415,
-   "doc_blocks": 8,
+   "lines": 448,
+   "doc_blocks": 18,
    "types": [
     "class BDFFontChar",
     "class BDFFont"
@@ -19405,8 +19405,8 @@
   "hxd.res.BitmapFont": {
    "file": "hxd/res/BitmapFont.hx",
    "package": "hxd.res",
-   "lines": 68,
-   "doc_blocks": 2,
+   "lines": 75,
+   "doc_blocks": 4,
    "types": [
     "class BitmapFont"
    ],
@@ -19443,8 +19443,8 @@
   "hxd.res.Config": {
    "file": "hxd/res/Config.hx",
    "package": "hxd.res",
-   "lines": 103,
-   "doc_blocks": 5,
+   "lines": 124,
+   "doc_blocks": 12,
    "types": [
     "enum Platform",
     "class Config"
@@ -19458,8 +19458,8 @@
   "hxd.res.DefaultFont": {
    "file": "hxd/res/DefaultFont.hx",
    "package": "hxd.res",
-   "lines": 19,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 2,
    "types": [
     "class DefaultFont"
    ],
@@ -19489,8 +19489,8 @@
   "hxd.res.DynamicText": {
    "file": "hxd/res/DynamicText.hx",
    "package": "hxd.res",
-   "lines": 454,
-   "doc_blocks": 0,
+   "lines": 495,
+   "doc_blocks": 13,
    "types": [
     "typedef DynamicTextMeta",
     "typedef DynamicTextMetaContent",
@@ -19509,8 +19509,8 @@
   "hxd.res.Embed": {
    "file": "hxd/res/Embed.hx",
    "package": "hxd.res",
-   "lines": 110,
-   "doc_blocks": 0,
+   "lines": 125,
+   "doc_blocks": 5,
    "types": [
     "class Embed"
    ],
@@ -19531,8 +19531,8 @@
   "hxd.res.EmbedOptions": {
    "file": "hxd/res/EmbedOptions.hx",
    "package": "hxd.res",
-   "lines": 6,
-   "doc_blocks": 0,
+   "lines": 15,
+   "doc_blocks": 3,
    "types": [
     "typedef EmbedOptions"
    ],
@@ -19547,8 +19547,8 @@
   "hxd.res.FileTree": {
    "file": "hxd/res/FileTree.hx",
    "package": "hxd.res",
-   "lines": 379,
-   "doc_blocks": 0,
+   "lines": 418,
+   "doc_blocks": 13,
    "types": [
     "typedef FileEntry",
     "typedef FileTreeData",
@@ -19587,8 +19587,8 @@
   "hxd.res.Font": {
    "file": "hxd/res/Font.hx",
    "package": "hxd.res",
-   "lines": 21,
-   "doc_blocks": 1,
+   "lines": 24,
+   "doc_blocks": 2,
    "types": [
     "class Font"
    ],
@@ -19616,8 +19616,8 @@
   "hxd.res.FontBuilder": {
    "file": "hxd/res/FontBuilder.hx",
    "package": "hxd.res",
-   "lines": 167,
-   "doc_blocks": 1,
+   "lines": 185,
+   "doc_blocks": 7,
    "types": [
     "typedef FontBuildOptions",
     "class FontBuilder"
@@ -19650,8 +19650,8 @@
   "hxd.res.Gradients": {
    "file": "hxd/res/Gradients.hx",
    "package": "hxd.res",
-   "lines": 133,
-   "doc_blocks": 0,
+   "lines": 142,
+   "doc_blocks": 4,
    "types": [
     "class Gradients"
    ],
@@ -19695,8 +19695,8 @@
   "hxd.res.Image": {
    "file": "hxd/res/Image.hx",
    "package": "hxd.res",
-   "lines": 724,
-   "doc_blocks": 7,
+   "lines": 825,
+   "doc_blocks": 41,
    "types": [
     "enum_abstract ImageFormat",
     "enum ImageInfoFlag",
@@ -19762,8 +19762,8 @@
   "hxd.res.Loader": {
    "file": "hxd/res/Loader.hx",
    "package": "hxd.res",
-   "lines": 67,
-   "doc_blocks": 1,
+   "lines": 98,
+   "doc_blocks": 10,
    "types": [
     "class Loader"
    ],
@@ -19809,8 +19809,8 @@
   "hxd.res.Model": {
    "file": "hxd/res/Model.hx",
    "package": "hxd.res",
-   "lines": 12,
-   "doc_blocks": 0,
+   "lines": 18,
+   "doc_blocks": 2,
    "types": [
     "class Model"
    ],
@@ -19842,8 +19842,8 @@
   "hxd.res.NanoJpeg": {
    "file": "hxd/res/NanoJpeg.hx",
    "package": "hxd.res",
-   "lines": 732,
-   "doc_blocks": 0,
+   "lines": 747,
+   "doc_blocks": 5,
    "types": [
     "enum Filter",
     "abstract FastBytes",
@@ -19859,8 +19859,8 @@
   "hxd.res.NotFound": {
    "file": "hxd/res/NotFound.hx",
    "package": "hxd.res",
-   "lines": 3,
-   "doc_blocks": 0,
+   "lines": 6,
+   "doc_blocks": 1,
    "types": [
     "typedef NotFound"
    ],
@@ -19889,8 +19889,8 @@
   "hxd.res.Prefab": {
    "file": "hxd/res/Prefab.hx",
    "package": "hxd.res",
-   "lines": 8,
-   "doc_blocks": 0,
+   "lines": 14,
+   "doc_blocks": 2,
    "types": [
     "typedef Prefab",
     "typedef Prefab"
@@ -19909,8 +19909,8 @@
   "hxd.res.Resource": {
    "file": "hxd/res/Resource.hx",
    "package": "hxd.res",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 53,
+   "doc_blocks": 7,
    "types": [
     "class Resource"
    ],
@@ -19946,8 +19946,8 @@
   "hxd.res.Sound": {
    "file": "hxd/res/Sound.hx",
    "package": "hxd.res",
-   "lines": 94,
-   "doc_blocks": 0,
+   "lines": 130,
+   "doc_blocks": 12,
    "types": [
     "enum SoundFormat",
     "class Sound"
@@ -19996,8 +19996,8 @@
   "hxd.res.TextureStream": {
    "file": "hxd/res/TextureStream.hx",
    "package": "hxd.res",
-   "lines": 367,
-   "doc_blocks": 10,
+   "lines": 376,
+   "doc_blocks": 13,
    "types": [
     "class TextureStream"
    ],
@@ -20032,8 +20032,8 @@
   "hxd.res.TiledMap": {
    "file": "hxd/res/TiledMap.hx",
    "package": "hxd.res",
-   "lines": 61,
-   "doc_blocks": 0,
+   "lines": 94,
+   "doc_blocks": 11,
    "types": [
     "typedef TiledMapLayer",
     "typedef TiledMapData",
@@ -20057,8 +20057,8 @@
   "hxd.snd.Channel": {
    "file": "hxd/snd/Channel.hx",
    "package": "hxd.snd",
-   "lines": 97,
-   "doc_blocks": 2,
+   "lines": 134,
+   "doc_blocks": 14,
    "types": [
     "class Channel"
    ],
@@ -20095,8 +20095,8 @@
   "hxd.snd.ChannelBase": {
    "file": "hxd/snd/ChannelBase.hx",
    "package": "hxd.snd",
-   "lines": 64,
-   "doc_blocks": 0,
+   "lines": 94,
+   "doc_blocks": 10,
    "types": [
     "class ChannelBase"
    ],
@@ -20118,8 +20118,8 @@
   "hxd.snd.ChannelGroup": {
    "file": "hxd/snd/ChannelGroup.hx",
    "package": "hxd.snd",
-   "lines": 12,
-   "doc_blocks": 0,
+   "lines": 22,
+   "doc_blocks": 3,
    "types": [
     "class ChannelGroup"
    ],
@@ -20144,8 +20144,8 @@
   "hxd.snd.Data": {
    "file": "hxd/snd/Data.hx",
    "package": "hxd.snd",
-   "lines": 186,
-   "doc_blocks": 1,
+   "lines": 234,
+   "doc_blocks": 17,
    "types": [
     "enum SampleFormat",
     "class Data"
@@ -20174,8 +20174,8 @@
   "hxd.snd.Driver": {
    "file": "hxd/snd/Driver.hx",
    "package": "hxd.snd",
-   "lines": 53,
-   "doc_blocks": 0,
+   "lines": 155,
+   "doc_blocks": 34,
    "types": [
     "typedef SourceHandle",
     "typedef BufferHandle",
@@ -20220,8 +20220,8 @@
   "hxd.snd.Effect": {
    "file": "hxd/snd/Effect.hx",
    "package": "hxd.snd",
-   "lines": 36,
-   "doc_blocks": 0,
+   "lines": 48,
+   "doc_blocks": 4,
    "types": [
     "class Effect"
    ],
@@ -20248,8 +20248,8 @@
   "hxd.snd.Listener": {
    "file": "hxd/snd/Listener.hx",
    "package": "hxd.snd",
-   "lines": 25,
-   "doc_blocks": 0,
+   "lines": 46,
+   "doc_blocks": 7,
    "types": [
     "class Listener"
    ],
@@ -20269,8 +20269,8 @@
   "hxd.snd.LoadingData": {
    "file": "hxd/snd/LoadingData.hx",
    "package": "hxd.snd",
-   "lines": 31,
-   "doc_blocks": 0,
+   "lines": 37,
+   "doc_blocks": 2,
    "types": [
     "class LoadingData"
    ],
@@ -20295,8 +20295,8 @@
   "hxd.snd.Manager": {
    "file": "hxd/snd/Manager.hx",
    "package": "hxd.snd",
-   "lines": 821,
-   "doc_blocks": 2,
+   "lines": 965,
+   "doc_blocks": 50,
    "types": [
     "class Source",
     "class Buffer",
@@ -20358,8 +20358,8 @@
   "hxd.snd.Mp3Data": {
    "file": "hxd/snd/Mp3Data.hx",
    "package": "hxd.snd",
-   "lines": 197,
-   "doc_blocks": 0,
+   "lines": 203,
+   "doc_blocks": 2,
    "types": [
     "typedef Mp3File",
     "class Mp3Data"
@@ -20393,8 +20393,8 @@
   "hxd.snd.NativeChannel": {
    "file": "hxd/snd/NativeChannel.hx",
    "package": "hxd.snd",
-   "lines": 232,
-   "doc_blocks": 0,
+   "lines": 248,
+   "doc_blocks": 5,
    "types": [
     "class ALChannel",
     "class NativeChannel"
@@ -20420,8 +20420,8 @@
   "hxd.snd.OggData": {
    "file": "hxd/snd/OggData.hx",
    "package": "hxd.snd",
-   "lines": 199,
-   "doc_blocks": 0,
+   "lines": 217,
+   "doc_blocks": 6,
    "types": [
     "typedef OggFile",
     "class OggData",
@@ -20465,8 +20465,8 @@
   "hxd.snd.SoundGroup": {
    "file": "hxd/snd/SoundGroup.hx",
    "package": "hxd.snd",
-   "lines": 19,
-   "doc_blocks": 0,
+   "lines": 38,
+   "doc_blocks": 6,
    "types": [
     "class SoundGroup"
    ],
@@ -20484,8 +20484,8 @@
   "hxd.snd.WavData": {
    "file": "hxd/snd/WavData.hx",
    "package": "hxd.snd",
-   "lines": 32,
-   "doc_blocks": 0,
+   "lines": 38,
+   "doc_blocks": 2,
    "types": [
     "class WavData"
    ],
@@ -20510,8 +20510,8 @@
   "hxd.snd.effect.LowPass": {
    "file": "hxd/snd/effect/LowPass.hx",
    "package": "hxd.snd.effect",
-   "lines": 11,
-   "doc_blocks": 0,
+   "lines": 20,
+   "doc_blocks": 3,
    "types": [
     "class LowPass"
    ],
@@ -20537,8 +20537,8 @@
   "hxd.snd.effect.Pitch": {
    "file": "hxd/snd/effect/Pitch.hx",
    "package": "hxd.snd.effect",
-   "lines": 10,
-   "doc_blocks": 0,
+   "lines": 19,
+   "doc_blocks": 3,
    "types": [
     "class Pitch"
    ],
@@ -20563,8 +20563,8 @@
   "hxd.snd.effect.Reverb": {
    "file": "hxd/snd/effect/Reverb.hx",
    "package": "hxd.snd.effect",
-   "lines": 40,
-   "doc_blocks": 0,
+   "lines": 88,
+   "doc_blocks": 16,
    "types": [
     "class Reverb"
    ],
@@ -20591,8 +20591,8 @@
   "hxd.snd.effect.ReverbPreset": {
    "file": "hxd/snd/effect/ReverbPreset.hx",
    "package": "hxd.snd.effect",
-   "lines": 161,
-   "doc_blocks": 0,
+   "lines": 316,
+   "doc_blocks": 128,
    "types": [
     "class ReverbPreset"
    ],
@@ -20605,8 +20605,8 @@
   "hxd.snd.effect.Spatialization": {
    "file": "hxd/snd/effect/Spatialization.hx",
    "package": "hxd.snd.effect",
-   "lines": 41,
-   "doc_blocks": 0,
+   "lines": 68,
+   "doc_blocks": 9,
    "types": [
     "class Spatialization"
    ],
@@ -20640,8 +20640,8 @@
   "hxd.snd.openal.AudioTypes": {
    "file": "hxd/snd/openal/AudioTypes.hx",
    "package": "hxd.snd.openal",
-   "lines": 52,
-   "doc_blocks": 0,
+   "lines": 97,
+   "doc_blocks": 15,
    "types": [
     "typedef AL",
     "typedef EFX",
@@ -20671,8 +20671,8 @@
   "hxd.snd.openal.Driver": {
    "file": "hxd/snd/openal/Driver.hx",
    "package": "hxd.snd.openal",
-   "lines": 224,
-   "doc_blocks": 0,
+   "lines": 296,
+   "doc_blocks": 24,
    "types": [
     "class Driver"
    ],
@@ -20725,8 +20725,8 @@
   "hxd.snd.openal.Emulator": {
    "file": "hxd/snd/openal/Emulator.hx",
    "package": "hxd.snd.openal",
-   "lines": 870,
-   "doc_blocks": 1,
+   "lines": 1169,
+   "doc_blocks": 226,
    "types": [
     "typedef F32",
     "typedef Bytes",
@@ -20764,8 +20764,8 @@
   "hxd.snd.openal.LowPassDriver": {
    "file": "hxd/snd/openal/LowPassDriver.hx",
    "package": "hxd.snd.openal",
-   "lines": 40,
-   "doc_blocks": 0,
+   "lines": 46,
+   "doc_blocks": 2,
    "types": [
     "class LowPassDriver"
    ],
@@ -20801,8 +20801,8 @@
   "hxd.snd.openal.PitchDriver": {
    "file": "hxd/snd/openal/PitchDriver.hx",
    "package": "hxd.snd.openal",
-   "lines": 16,
-   "doc_blocks": 0,
+   "lines": 19,
+   "doc_blocks": 1,
    "types": [
     "class PitchDriver"
    ],
@@ -20835,8 +20835,8 @@
   "hxd.snd.openal.ReverbDriver": {
    "file": "hxd/snd/openal/ReverbDriver.hx",
    "package": "hxd.snd.openal",
-   "lines": 92,
-   "doc_blocks": 0,
+   "lines": 98,
+   "doc_blocks": 2,
    "types": [
     "class ReverbDriver"
    ],
@@ -20879,8 +20879,8 @@
   "hxd.snd.openal.SpatializationDriver": {
    "file": "hxd/snd/openal/SpatializationDriver.hx",
    "package": "hxd.snd.openal",
-   "lines": 37,
-   "doc_blocks": 0,
+   "lines": 43,
+   "doc_blocks": 2,
    "types": [
     "class SpatializationDriver"
    ],
@@ -20913,8 +20913,8 @@
   "hxd.snd.webaudio.AudioTypes": {
    "file": "hxd/snd/webaudio/AudioTypes.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 184,
-   "doc_blocks": 0,
+   "lines": 289,
+   "doc_blocks": 35,
    "types": [
     "class BufferHandle",
     "class SourceHandle",
@@ -20943,8 +20943,8 @@
   "hxd.snd.webaudio.Context": {
    "file": "hxd/snd/webaudio/Context.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 134,
-   "doc_blocks": 3,
+   "lines": 149,
+   "doc_blocks": 8,
    "types": [
     "class Context",
     "class BufferPool"
@@ -20962,8 +20962,8 @@
   "hxd.snd.webaudio.Driver": {
    "file": "hxd/snd/webaudio/Driver.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 263,
-   "doc_blocks": 3,
+   "lines": 335,
+   "doc_blocks": 27,
    "types": [
     "class Driver"
    ],
@@ -21017,8 +21017,8 @@
   "hxd.snd.webaudio.LowPassDriver": {
    "file": "hxd/snd/webaudio/LowPassDriver.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 50,
-   "doc_blocks": 0,
+   "lines": 56,
+   "doc_blocks": 2,
    "types": [
     "class LowPassDriver"
    ],
@@ -21054,8 +21054,8 @@
   "hxd.snd.webaudio.PitchDriver": {
    "file": "hxd/snd/webaudio/PitchDriver.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 22,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 1,
    "types": [
     "class PitchDriver"
    ],
@@ -21087,8 +21087,8 @@
   "hxd.snd.webaudio.SpatializationDriver": {
    "file": "hxd/snd/webaudio/SpatializationDriver.hx",
    "package": "hxd.snd.webaudio",
-   "lines": 51,
-   "doc_blocks": 0,
+   "lines": 57,
+   "doc_blocks": 2,
    "types": [
     "class SpatializationDriver"
    ],
@@ -21121,8 +21121,8 @@
   "hxd.tools.MeshOptimizer": {
    "file": "hxd/tools/MeshOptimizer.hx",
    "package": "hxd.tools",
-   "lines": 160,
-   "doc_blocks": 8,
+   "lines": 169,
+   "doc_blocks": 17,
    "types": [
     "enum_abstract SimplifyOptions",
     "enum_abstract TangentOptions",
@@ -21137,8 +21137,8 @@
   "hxd.tools.Mikktspace": {
    "file": "hxd/tools/Mikktspace.hx",
    "package": "hxd.tools",
-   "lines": 33,
-   "doc_blocks": 0,
+   "lines": 73,
+   "doc_blocks": 13,
    "types": [
     "class Mikktspace"
    ],
@@ -21151,8 +21151,8 @@
   "hxd.tools.RenderDoc": {
    "file": "hxd/tools/RenderDoc.hx",
    "package": "hxd.tools",
-   "lines": 202,
-   "doc_blocks": 2,
+   "lines": 241,
+   "doc_blocks": 15,
    "types": [
     "enum_abstract RenderDocInputButton",
     "class RenderDocNative",
@@ -21165,8 +21165,8 @@
   "hxd.tools.VHACD": {
    "file": "hxd/tools/VHACD.hx",
    "package": "hxd.tools",
-   "lines": 104,
-   "doc_blocks": 0,
+   "lines": 219,
+   "doc_blocks": 45,
    "types": [
     "enum_abstract FillMode",
     "abstract Instance",

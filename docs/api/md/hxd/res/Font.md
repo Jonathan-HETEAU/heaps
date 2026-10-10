@@ -24,6 +24,8 @@ function new(entry:hxd.fs.FileEntry):Void
 function build(size:Int, ?options:FontBuildOptions):h2d.Font
 ```
 
+Builds a bitmap font of the given size from the vector font. Only supported on JS.
+
 ## Inherited members
 
 - from [`hxd.res.Resource`](Resource.md): `name`, `entry`, `watch`

@@ -4,6 +4,9 @@
 
 Extends: [`hxd.impl.Allocator`](Allocator.md)
 
+An allocator keeping the disposed GPU buffers to reuse them for the next allocations of the same size, format and flags.
+The unused buffers are released after `maxKeepTime` seconds, or when `maxMemSize` is exceeded.
+
 ## Constructor
 
 ### new
@@ -12,6 +15,8 @@ Extends: [`hxd.impl.Allocator`](Allocator.md)
 function new(?debug:Bool = false):Void
 ```
 
+Creates the allocator.
+
 ## Variables
 
 ### currentFrame
@@ -19,6 +24,8 @@ function new(?debug:Bool = false):Void
 ```haxe
 var currentFrame:Int
 ```
+
+The frame of the last allocation.
 
 ### maxKeepTime
 
@@ -34,6 +41,8 @@ var maxKeepTime:Float
 var maxMemSize:Int
 ```
 
+The maximum memory of the cached buffers, in bytes.
+
 ### cacheThreshold
 
 ```haxe
@@ -47,6 +56,8 @@ var cacheThreshold:Int
 ```haxe
 var hitRate:Float
 ```
+
+The moving average of the allocations served from the cache, from `0` to `1`.
 
 ## Methods
 
@@ -86,11 +97,15 @@ override function onContextLost():Void
 function checkFrame():Void
 ```
 
+Makes the buffers disposed in the previous frames available.
+
 ### checkGC
 
 ```haxe
 function checkGC():Void
 ```
+
+Runs `gc` if it was not run recently.
 
 ### gc
 
@@ -98,17 +113,23 @@ function checkGC():Void
 function gc():Void
 ```
 
+Releases the cached buffers over `maxMemSize`, and those unused for more than `maxKeepTime`.
+
 ### clear
 
 ```haxe
 function clear():Void
 ```
 
+Releases all the cached buffers.
+
 ### printStats _(hl/sdl, hl/directx only)_
 
 ```haxe
 function printStats(filePath:String):Void
 ```
+
+Writes statistics on the cached buffers to a file.
 
 ## Inherited members
 

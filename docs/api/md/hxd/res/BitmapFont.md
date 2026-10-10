@@ -4,6 +4,9 @@
 
 Extends: [`hxd.res.Resource`](Resource.md)
 
+A bitmap font: a font description file (`.fnt`, in BMFont text or XML format, or other supported formats) with its image.
+Use `toFont` to get the `h2d.Font`.
+
 ## Constructor
 
 ### new
@@ -11,6 +14,8 @@ Extends: [`hxd.res.Resource`](Resource.md)
 ```haxe
 function new(entry:hxd.fs.FileEntry):Void
 ```
+
+Creates the resource for the font description file entry.
 
 ## Methods
 

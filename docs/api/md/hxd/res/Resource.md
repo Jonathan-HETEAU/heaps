@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.res.Any`](Any.md), [`hxd.res.Atlas`](Atlas.md), [`hxd.res.BDFFont`](BDFFont.md), [`hxd.res.BitmapFont`](BitmapFont.md), [`hxd.res.Font`](Font.md), [`hxd.res.Gradients`](Gradients.md), [`hxd.res.Image`](Image.md), [`hxd.res.Model`](Model.md), [`hxd.res.Sound`](Sound.md), [`hxd.res.TiledMap`](TiledMap.md)
 
+The base class of all the resources loaded by `hxd.res.Loader`. A resource wraps a file entry and loads it on demand.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Subclasses: [`hxd.res.Any`](Any.md), [`hxd.res.Atlas`](Atlas.md), [`hxd.res.BDFF
 ```haxe
 function new(entry:hxd.fs.FileEntry):Void
 ```
+
+Creates a resource for the file entry.
 
 ## Static variables
 
@@ -20,6 +24,8 @@ function new(entry:hxd.fs.FileEntry):Void
 static var LIVE_UPDATE:Bool
 ```
 
+If set, `watch` reloads the resources when their file changes. Enabled by default in debug builds.
+
 ## Variables
 
 ### name
@@ -28,11 +34,15 @@ static var LIVE_UPDATE:Bool
 var name(get, null):String
 ```
 
+The file name of the resource, with its extension.
+
 ### entry
 
 ```haxe
 var entry(default, null):hxd.fs.FileEntry
 ```
+
+The file entry of the resource.
 
 ## Methods
 
@@ -41,3 +51,5 @@ var entry(default, null):hxd.fs.FileEntry
 ```haxe
 function watch(onChanged:Null<() -> Void>):Void
 ```
+
+Calls `onChanged` when the file changes, if `LIVE_UPDATE` is set. Set `null` to stop watching.

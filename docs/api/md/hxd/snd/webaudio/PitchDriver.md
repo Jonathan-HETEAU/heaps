@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 
+Implements `hxd.snd.effect.Pitch` with the playback rate of the Web Audio buffers.
+
 ## Constructor
 
 ### new

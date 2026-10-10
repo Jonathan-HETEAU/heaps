@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 
+Implements `hxd.snd.effect.Reverb` with an OpenAL EFX reverb on an auxiliary send.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 ```haxe
 function new(driver:Driver):Void
 ```
+
+Creates the effect driver.
 
 ## Methods
 

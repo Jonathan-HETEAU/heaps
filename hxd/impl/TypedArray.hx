@@ -3,7 +3,7 @@ package hxd.impl;
 #if js
 
 /**
-	A 32 bits float typed array.
+	A 32 bits float array (a typed array on JS).
 **/
 typedef Float32Array = js.lib.Float32Array;
 /**
@@ -33,7 +33,7 @@ typedef ArrayBufferView = js.lib.ArrayBufferView;
 
 #else
 /**
-	A 32 bits float array.
+	A 32 bits float array (a typed array on JS).
 **/
 typedef Float32Array = haxe.ds.Vector<Float32>;
 #end

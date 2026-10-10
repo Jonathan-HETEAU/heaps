@@ -30,8 +30,12 @@ Set to false to emulate all async reads synchronously.
 static function isAsync():Bool
 ```
 
+Tells if the reads are really asynchronous (on threaded targets when `ENABLED` is set), or emulated.
+
 ### read
 
 ```haxe
 static function read(entry:FileEntry, out:Bytes, outPos:Int, pos:Int, len:Int, onDone:() -> Void, priority:Float):AsyncRead
 ```
+
+Requests the read of `len` bytes at `pos` in the file into `out` at `outPos`. `onDone` is called with the number of bytes read.

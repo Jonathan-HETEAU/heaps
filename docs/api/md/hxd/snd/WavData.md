@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Data`](Data.md)
 
+The decoder of WAV (PCM) data.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.Data`](Data.md)
 ```haxe
 function new(bytes:Null<Bytes>):Void
 ```
+
+Reads the WAV data.
 
 ## Inherited members
 

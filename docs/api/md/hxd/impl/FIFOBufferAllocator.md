@@ -4,6 +4,9 @@
 
 Extends: [`hxd.impl.Allocator`](Allocator.md)
 
+An allocator keeping the disposed GPU buffers to reuse them, in first in first out order.
+The unused buffers are released after `maxKeepFrame` frames, or when `maxMemSize` is exceeded.
+
 ## Constructor
 
 ### new
@@ -19,6 +22,8 @@ function new():Void
 ```haxe
 var currentFrame:Int
 ```
+
+The frame of the last allocation.
 
 ### maxKeepFrame
 
@@ -80,11 +85,15 @@ override function onContextLost():Void
 function checkFrame():Void
 ```
 
+Makes the buffers disposed in the previous frames available.
+
 ### checkGC
 
 ```haxe
 function checkGC():Void
 ```
+
+Runs `gc` once per frame.
 
 ### gc
 
@@ -92,11 +101,15 @@ function checkGC():Void
 function gc():Void
 ```
 
+Releases the cached buffers unused for more than `maxKeepFrame` frames, or over `maxMemSize`.
+
 ### clear
 
 ```haxe
 function clear():Void
 ```
+
+Releases all the cached buffers.
 
 ## Inherited members
 

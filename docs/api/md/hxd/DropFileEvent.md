@@ -15,6 +15,8 @@ The drag&drop operation event.
 function new(files:Array<DroppedFile>, dx:Int, dy:Int):Void
 ```
 
+Creates a drop event of `files` at the position (`dx`, `dy`).
+
 ## Variables
 
 ### files

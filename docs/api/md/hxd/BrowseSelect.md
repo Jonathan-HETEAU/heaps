@@ -2,7 +2,7 @@
 
 **typedef** · package [`hxd`](README.md) · module `hxd.File` · source [`hxd/File.hx`](../../../../hxd/File.hx)
 
-this will be called when saving a file, and allow you to write it again without displaying the browser, if supported
+The file selected by `File.browse`.
 
 ## Fields
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Data`](Data.md)
 
+The decoder of MP3 data: with the native decoder on HashLink, with the browser decoder on JS (asynchronously).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.Data`](Data.md)
 ```haxe
 function new(bytes:Bytes):Void
 ```
+
+Reads the MP3 header and prepares the decoding.
 
 ## Methods
 

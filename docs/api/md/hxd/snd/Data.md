@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.snd.LoadingData`](LoadingData.md), [`hxd.snd.Mp3Data`](Mp3Data.md), [`hxd.snd.OggData`](OggData.md), [`hxd.snd.WavData`](WavData.md)
 
+Decoded audio data: the base class of the decoders of each file format.
+
 ## Static methods
 
 ### formatBytes
@@ -11,6 +13,8 @@ Subclasses: [`hxd.snd.LoadingData`](LoadingData.md), [`hxd.snd.Mp3Data`](Mp3Data
 ```haxe
 static inline function formatBytes(format:SampleFormat):Int
 ```
+
+Returns the size of a sample of one channel in bytes.
 
 ## Variables
 
@@ -20,11 +24,15 @@ static inline function formatBytes(format:SampleFormat):Int
 var samples(default, null):Int
 ```
 
+The number of samples (per channel).
+
 ### samplingRate
 
 ```haxe
 var samplingRate(default, null):Int
 ```
+
+The number of samples per second.
 
 ### sampleFormat
 
@@ -32,17 +40,23 @@ var samplingRate(default, null):Int
 var sampleFormat(default, null):SampleFormat
 ```
 
+The format of the samples.
+
 ### channels
 
 ```haxe
 var channels(default, null):Int
 ```
 
+The number of channels (1 for mono, 2 for stereo).
+
 ### duration
 
 ```haxe
 var duration(get, null):Float
 ```
+
+The duration, in seconds.
 
 ## Methods
 
@@ -52,11 +66,15 @@ var duration(get, null):Float
 function isLoading():Bool
 ```
 
+Tells if the data is still loading: the number of samples might not be known yet.
+
 ### decode
 
 ```haxe
 function decode(out:Bytes, outPos:Int, sampleStart:Int, sampleCount:Int):Void
 ```
+
+Decodes `sampleCount` samples from `sampleStart` into `out` at `outPos`. The samples after the end are filled with silence.
 
 ### resample
 
@@ -64,17 +82,23 @@ function decode(out:Bytes, outPos:Int, sampleStart:Int, sampleCount:Int):Void
 function resample(rate:Int, format:SampleFormat, channels:Int):Data
 ```
 
+Returns the data converted to the given rate, format and number of channels (or this data if it already matches).
+
 ### resampleBuffer
 
 ```haxe
 function resampleBuffer(out:Bytes, outPos:Int, input:Bytes, inPos:Int, rate:Int, format:SampleFormat, channels:Int, samples:Int):Void
 ```
 
+Converts `samples` samples of `input` (in the format of this data) to the given rate, format and number of channels, into `out`.
+
 ### getBytesPerSample
 
 ```haxe
 function getBytesPerSample():Int
 ```
+
+Returns the size of a sample in bytes, for all channels.
 
 ### load
 

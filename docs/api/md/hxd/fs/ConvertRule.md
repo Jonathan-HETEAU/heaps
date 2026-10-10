@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd.fs`](README.md) · module `hxd.fs.FileConverter` · source [`hxd/fs/FileConverter.hx`](../../../../../hxd/fs/FileConverter.hx) · available on hl/sdl, hl/directx
 
+A conversion rule: the files matching `pt` are converted with `cmd`. `version` comes from `fs.convertVersion` and forces a new conversion when changed.
+
 ## Fields
 
 ### version

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Effect`](../Effect.md)
 
+Positions the sound in 3D, relative to `Manager.listener`: the volume decreases with the distance.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.Effect`](../Effect.md)
 ```haxe
 function new():Void
 ```
+
+Creates the effect at the origin.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var position:h3d.Vector
 ```
 
+The position of the sound.
+
 ### velocity
 
 ```haxe
 var velocity:h3d.Vector
 ```
+
+The velocity of the sound, for the Doppler effect.
 
 ### direction
 
@@ -32,11 +40,15 @@ var velocity:h3d.Vector
 var direction:h3d.Vector
 ```
 
+The direction of the sound.
+
 ### referenceDistance
 
 ```haxe
 var referenceDistance:Float
 ```
+
+The distance under which the volume is not attenuated.
 
 ### maxDistance
 
@@ -44,17 +56,23 @@ var referenceDistance:Float
 var maxDistance:Null<Float>
 ```
 
+The distance after which the volume is no longer attenuated, or `null` for no limit.
+
 ### fadeDistance
 
 ```haxe
 var fadeDistance:Null<Float>
 ```
 
+If set, the volume also fades linearly to `0` over this distance, after `maxDistance` (or `referenceDistance`).
+
 ### rollOffFactor
 
 ```haxe
 var rollOffFactor:Float
 ```
+
+How fast the volume is attenuated with the distance (inverse distance model).
 
 ## Methods
 

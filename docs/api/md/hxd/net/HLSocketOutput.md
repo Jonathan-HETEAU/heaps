@@ -4,6 +4,8 @@
 
 Extends: `hxd.net._Socket.SocketOutput`
 
+The output of a HashLink socket.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: `hxd.net._Socket.SocketOutput`
 ```haxe
 function new(s:Socket):Void
 ```
+
+Creates the output of the socket.
 
 ## Methods
 

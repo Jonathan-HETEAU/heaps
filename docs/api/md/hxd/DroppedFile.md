@@ -12,6 +12,8 @@ The information about the dropped file.
 function new(file:String):Void
 ```
 
+Creates a dropped file of the given path.
+
 ## Variables
 
 ### file

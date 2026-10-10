@@ -5,7 +5,7 @@ package hxd.snd;
 private typedef OggFile = hl.Abstract<"fmt_ogg">;
 
 /**
-	The decoder of Ogg Vorbis data, with the native HashLink decoder.
+	The decoder of Ogg Vorbis data: native on HashLink, with the `stb_ogg_sound` library on other targets (without it, decoding throws an error).
 **/
 class OggData extends Data {
 
@@ -117,7 +117,7 @@ private class BytesOutput extends haxe.io.Output {
 }
 
 /**
-	The decoder of Ogg Vorbis data, with the `stb_ogg_sound` library.
+	The decoder of Ogg Vorbis data: native on HashLink, with the `stb_ogg_sound` library on other targets (without it, decoding throws an error).
 **/
 class OggData extends Data {
 
@@ -198,12 +198,12 @@ class OggData extends Data {
 #else
 
 /**
-	Ogg Vorbis is not supported without the `stb_ogg_sound` library: decoding throws an error.
+	The decoder of Ogg Vorbis data: native on HashLink, with the `stb_ogg_sound` library on other targets (without it, decoding throws an error).
 **/
 class OggData extends Data {
 
 	/**
-		Creates the data.
+		Opens the Ogg data.
 	**/
 	public function new( bytes : haxe.io.Bytes ) {
 	}

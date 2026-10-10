@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Replaces the file by an empty one. Registered as `dummy` and `remove`, to exclude files from the resources.
+
 ## Constructor
 
 ### new

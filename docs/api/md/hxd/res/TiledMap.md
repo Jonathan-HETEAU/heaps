@@ -4,6 +4,8 @@
 
 Extends: [`hxd.res.Resource`](Resource.md)
 
+A map made with the Tiled editor (`.tmx`). Only base64 encoded and zlib compressed layers are supported.
+
 ## Constructor
 
 ### new
@@ -19,6 +21,8 @@ function new(entry:hxd.fs.FileEntry):Void
 ```haxe
 function toMap():TiledMapData
 ```
+
+Parses the map.
 
 ## Inherited members
 

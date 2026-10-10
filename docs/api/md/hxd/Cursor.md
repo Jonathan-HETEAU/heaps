@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd`](README.md) · source [`hxd/Cursor.hx`](../../../../hxd/Cursor.hx)
 
+A mouse cursor (see `hxd.System.setCursor` and `h2d.Interactive.cursor`).
+
 ## Constructors
 
 ### Default

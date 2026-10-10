@@ -2,6 +2,9 @@
 
 **typedef** · package [`hxd`](README.md) · module `hxd.Pad` · source [`hxd/Pad.hx`](../../../../hxd/Pad.hx)
 
+The mapping of the buttons and axes of a game pad: each field is the index of the button or axis in `Pad.buttons` and `Pad.values`.
+`names` gives a display name for each index.
+
 ## Fields
 
 ### start

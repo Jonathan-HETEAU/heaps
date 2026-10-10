@@ -14,11 +14,15 @@ Usage: Install RenderDoc and place/copy it's lib file in your PATH (e.g. `render
 static function init():Bool
 ```
 
+Loads the RenderDoc library. Returns `false` if it is not available.
+
 ### setCaptureKeys
 
 ```haxe
 static function setCaptureKeys(keys:Array<RenderDocInputButton>):Bool
 ```
+
+Sets the keys triggering a capture.
 
 ### setCaptureFilePathTemplate
 
@@ -26,11 +30,15 @@ static function setCaptureKeys(keys:Array<RenderDocInputButton>):Bool
 static function setCaptureFilePathTemplate(pathTemplate:String):Bool
 ```
 
+Sets the path template of the capture files.
+
 ### getCaptureFilePathTemplate
 
 ```haxe
 static function getCaptureFilePathTemplate():String
 ```
+
+Returns the path template of the capture files.
 
 ### getNumCaptures
 
@@ -38,11 +46,15 @@ static function getCaptureFilePathTemplate():String
 static function getNumCaptures():Int
 ```
 
+Returns the number of captures made.
+
 ### getCapture
 
 ```haxe
 static function getCapture(index:Int):String
 ```
+
+Returns the file path of the capture, or `null`.
 
 ### triggerCapture
 
@@ -50,17 +62,23 @@ static function getCapture(index:Int):String
 static function triggerCapture():Bool
 ```
 
+Captures the next frame.
+
 ### isTargetControlConnected
 
 ```haxe
 static function isTargetControlConnected():Bool
 ```
 
+Tells if the RenderDoc UI is connected to the application.
+
 ### launchReplayUi
 
 ```haxe
 static function launchReplayUi(connectTargetControl:Bool, cmdline:String):Bool
 ```
+
+Launches the RenderDoc UI, optionally connected to the application.
 
 ### startFrameCapture
 
@@ -76,8 +94,12 @@ Pass `null` to use default
 static function isFrameCapturing():Bool
 ```
 
+Tells if a frame is being captured.
+
 ### endFrameCapture
 
 ```haxe
 static function endFrameCapture(device:Dynamic, wndHandle:Dynamic):Bool
 ```
+
+Ends the capture started with `startFrameCapture`. Pass `null` to use the default device and window.

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Data`](Data.md)
 
+The data of a sound that is not loaded yet: decoding it throws until `load` completes.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.Data`](Data.md)
 ```haxe
 function new(snd:hxd.res.Sound):Void
 ```
+
+Creates the data for the sound.
 
 ## Methods
 

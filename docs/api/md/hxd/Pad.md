@@ -2,6 +2,9 @@
 
 **class** · package [`hxd`](README.md) · source [`hxd/Pad.hx`](../../../../hxd/Pad.hx)
 
+A game pad (controller). Use `Pad.wait` to be notified of connected pads, and read `buttons`, `values` and the axes every frame.
+`Pad.createDummy` returns an unconnected pad that can be used before a real one is connected.
+
 ## Static variables
 
 ### CONFIG_JS_STD _(js only)_
@@ -36,6 +39,8 @@ D-Pad isn't working
 static var DEFAULT_CONFIG:PadConfig
 ```
 
+The default configuration for the current platform.
+
 ### CONFIG_SDL _(hl/sdl only)_
 
 ```haxe
@@ -50,6 +55,8 @@ Works with both DualShock and XBox controllers
 static var ANALOG_BUTTON_THRESHOLDS:{ release:Float, press:Float }
 ```
 
+The values at which an analog input (trigger or axis) is considered as pressed and released in `buttons`.
+
 ## Static methods
 
 ### pickConfig _(js only)_
@@ -57,6 +64,8 @@ static var ANALOG_BUTTON_THRESHOLDS:{ release:Float, press:Float }
 ```haxe
 static function pickConfig(name:String):PadConfig
 ```
+
+Returns the configuration matching the pad name reported by the browser.
 
 ### createDummy
 
@@ -82,11 +91,15 @@ Wait until a gamepad gets connected. On some platforms, this might require the u
 var connected(default, null):Bool
 ```
 
+Tells if the pad is connected. It is `false` for a dummy pad and after a disconnection.
+
 ### name
 
 ```haxe
 var name(get, null):String
 ```
+
+The name of the pad, as reported by the system.
 
 ### index
 
@@ -94,11 +107,15 @@ var name(get, null):String
 var index:Int
 ```
 
+The index of the pad, or `-1` for a dummy pad.
+
 ### config
 
 ```haxe
 var config:PadConfig
 ```
+
+The mapping of the buttons and axes, used to read `buttons` and `values` by name, as in `pad.isDown(pad.config.A)`.
 
 ### xAxis
 
@@ -106,11 +123,15 @@ var config:PadConfig
 var xAxis(get, null):Float
 ```
 
+The X axis of the left stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+
 ### yAxis
 
 ```haxe
 var yAxis(get, null):Float
 ```
+
+The Y axis of the left stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
 
 ### rxAxis
 
@@ -118,11 +139,15 @@ var yAxis(get, null):Float
 var rxAxis(get, null):Float
 ```
 
+The X axis of the right stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
+
 ### ryAxis
 
 ```haxe
 var ryAxis(get, null):Float
 ```
+
+The Y axis of the right stick, from `-1` to `1`. It is `0` when the stick is inside `axisDeadZone`.
 
 ### axisDeadZone
 
@@ -130,11 +155,15 @@ var ryAxis(get, null):Float
 var axisDeadZone:Float
 ```
 
+The radius around the center under which the sticks report `0`.
+
 ### buttons
 
 ```haxe
 var buttons:Array<Bool>
 ```
+
+The state of each button, indexed as in `config`.
 
 ### values
 
@@ -142,11 +171,15 @@ var buttons:Array<Bool>
 var values:Array<Float>
 ```
 
+The value of each button (`0` to `1`) or axis (`-1` to `1`), indexed as in `config`.
+
 ### prevValues
 
 ```haxe
 var prevValues:Array<Float>
 ```
+
+The values of the previous frame.
 
 ## Methods
 
@@ -156,11 +189,15 @@ var prevValues:Array<Float>
 dynamic function onDisconnect():Void
 ```
 
+Called when the pad is disconnected.
+
 ### isDown
 
 ```haxe
 function isDown(button:Int):Bool
 ```
+
+Tells if the button is down.
 
 ### isPressed
 
@@ -168,11 +205,15 @@ function isDown(button:Int):Bool
 function isPressed(button:Int):Bool
 ```
 
+Tells if the button was pressed since the previous frame.
+
 ### isReleased
 
 ```haxe
 function isReleased(button:Int):Bool
 ```
+
+Tells if the button was released since the previous frame.
 
 ### reset
 
@@ -180,8 +221,12 @@ function isReleased(button:Int):Bool
 function reset():Void
 ```
 
+Resets all buttons and axes to their released state.
+
 ### rumble
 
 ```haxe
 function rumble(strength:Float, time_s:Float):Void
 ```
+
+Makes the pad vibrate with the given `strength` (`0` to `1`) for `time_s` seconds, if supported.

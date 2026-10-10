@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts WAV to Ogg Vorbis with the `oggenc` command (`oggenc2` on Windows). Parameters: `samplerate` (default 44100), `mono`, `bitrate`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fs.Convert`](Convert.md)
 ```haxe
 function new():Void
 ```
+
+Creates the conversion.
 
 ## Methods
 

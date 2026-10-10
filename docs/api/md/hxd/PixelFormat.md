@@ -2,6 +2,9 @@
 
 **enum** · package [`hxd`](README.md) · source [`hxd/PixelFormat.hx`](../../../../hxd/PixelFormat.hx)
 
+The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed
+formats (`S3TC`, `ASTC`, `ETC`...) and depth formats.
+
 ## Constructors
 
 ### ARGB

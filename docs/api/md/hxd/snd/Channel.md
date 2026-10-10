@@ -4,6 +4,9 @@
 
 Extends: [`hxd.snd.ChannelBase`](ChannelBase.md)
 
+A sound being played, returned by `hxd.res.Sound.play` or `Manager.play`.
+When there are more channels than hardware sources, or a channel is not audible, it becomes virtual: its position still advances, but it is not played.
+
 ## Variables
 
 ### sound
@@ -12,11 +15,15 @@ Extends: [`hxd.snd.ChannelBase`](ChannelBase.md)
 var sound(default, null):hxd.res.Sound
 ```
 
+The sound being played.
+
 ### duration
 
 ```haxe
 var duration(default, null):Float
 ```
+
+The duration of the sound, in seconds.
 
 ### soundGroup
 
@@ -24,11 +31,15 @@ var duration(default, null):Float
 var soundGroup(default, null):SoundGroup
 ```
 
+The sound group of the channel.
+
 ### channelGroup
 
 ```haxe
 var channelGroup(default, null):ChannelGroup
 ```
+
+The channel group of the channel.
 
 ### position
 
@@ -36,11 +47,15 @@ var channelGroup(default, null):ChannelGroup
 var position(default, set):Float
 ```
 
+The play position, in seconds.
+
 ### pause
 
 ```haxe
 var pause(default, set):Bool
 ```
+
+Pauses the channel.
 
 ### loop
 
@@ -48,11 +63,15 @@ var pause(default, set):Bool
 var loop:Bool
 ```
 
+If set, the sound loops instead of stopping at its end.
+
 ### allowVirtual
 
 ```haxe
 var allowVirtual:Bool
 ```
+
+If set, the channel is virtualized when its volume is inaudible.
 
 ## Methods
 
@@ -72,6 +91,8 @@ or when a sound which is streamed loops.
 function calcAudibleVolume(now:Float):Void
 ```
 
+Updates the volume of the channel, including the fades and effects.
+
 ### queueSound
 
 ```haxe
@@ -87,11 +108,15 @@ This will also trigger an onEnd() event.
 function stop():Void
 ```
 
+Stops the channel.
+
 ### isReleased
 
 ```haxe
 function isReleased():Bool
 ```
+
+Tells if the channel was stopped.
 
 ## Inherited members
 

@@ -4,6 +4,8 @@
 
 Type parameters: `<T>`
 
+An inlined iterator over an array.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Type parameters: `<T>`
 ```haxe
 inline function new(a:Array<hxd.impl.ArrayIterator.T>):Void
 ```
+
+Creates an iterator over the array.
 
 ## Methods
 
@@ -20,8 +24,12 @@ inline function new(a:Array<hxd.impl.ArrayIterator.T>):Void
 inline function hasNext():Bool
 ```
 
+Tells if there is an element left.
+
 ### next
 
 ```haxe
 inline function next():hxd.impl.ArrayIterator.T
 ```
+
+Returns the next element.

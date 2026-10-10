@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd`](README.md) · module `hxd.Window` · source [`hxd/Window.hl.hx`](../../../../hxd/Window.hl.hx) · available on hl/sdl, hl/directx
 
+A display mode of a monitor: resolution and refresh rate.
+
 ## Fields
 
 ### width

@@ -4,7 +4,7 @@
 
 ## hxd.snd.effect.LowPass
 
-- Fichier : `hxd/snd/effect/LowPass.hx` — 11 lignes — 0 blocs doc
+- Fichier : `hxd/snd/effect/LowPass.hx` — 20 lignes — 3 blocs doc
 - Types : `class LowPass`
 - Héritage : `LowPass` extends `hxd.snd.Effect`
 - Dépend de : `hxd.snd.Effect` (extends/use)
@@ -12,7 +12,7 @@
 
 ## hxd.snd.effect.Pitch
 
-- Fichier : `hxd/snd/effect/Pitch.hx` — 10 lignes — 0 blocs doc
+- Fichier : `hxd/snd/effect/Pitch.hx` — 19 lignes — 3 blocs doc
 - Types : `class Pitch`
 - Héritage : `Pitch` extends `hxd.snd.Effect`
 - Dépend de : `hxd.snd.Effect` (extends/use)
@@ -20,7 +20,7 @@
 
 ## hxd.snd.effect.Reverb
 
-- Fichier : `hxd/snd/effect/Reverb.hx` — 40 lignes — 0 blocs doc
+- Fichier : `hxd/snd/effect/Reverb.hx` — 88 lignes — 16 blocs doc
 - Types : `class Reverb`
 - Héritage : `Reverb` extends `hxd.snd.Effect`
 - Dépend de : `hxd.snd.Effect` (extends/use), `hxd.snd.effect.ReverbPreset`
@@ -28,13 +28,13 @@
 
 ## hxd.snd.effect.ReverbPreset
 
-- Fichier : `hxd/snd/effect/ReverbPreset.hx` — 161 lignes — 0 blocs doc
+- Fichier : `hxd/snd/effect/ReverbPreset.hx` — 316 lignes — 128 blocs doc
 - Types : `class ReverbPreset`
 - Utilisé par : `hxd.snd.effect.Reverb`
 
 ## hxd.snd.effect.Spatialization
 
-- Fichier : `hxd/snd/effect/Spatialization.hx` — 41 lignes — 0 blocs doc
+- Fichier : `hxd/snd/effect/Spatialization.hx` — 68 lignes — 9 blocs doc
 - Types : `class Spatialization`
 - Héritage : `Spatialization` extends `hxd.snd.Effect`
 - Dépend de : `h3d.Vector`, `hxd.Math`, `hxd.snd.Effect` (extends/use), `hxd.snd.Manager`

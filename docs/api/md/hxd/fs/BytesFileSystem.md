@@ -4,6 +4,9 @@
 
 Implements: [`hxd.fs.FileSystem`](FileSystem.md)
 
+Base class of the file systems whose files are in memory (such as the embedded files): subclasses implement `getBytes`.
+Directories are not supported.
+
 ## Methods
 
 ### getRoot
@@ -12,11 +15,15 @@ Implements: [`hxd.fs.FileSystem`](FileSystem.md)
 function getRoot():Null<FileEntry>
 ```
 
+Not implemented.
+
 ### exists
 
 ```haxe
 function exists(path:String):Bool
 ```
+
+Tells if a file exists at the path.
 
 ### get
 
@@ -24,11 +31,15 @@ function exists(path:String):Bool
 function get(path:String):BytesFileEntry
 ```
 
+Returns the file entry at the path. Throws if it does not exist.
+
 ### dispose
 
 ```haxe
 function dispose():Void
 ```
+
+Does nothing.
 
 ### dir
 
@@ -36,8 +47,12 @@ function dispose():Void
 function dir(path:String):Array<FileEntry>
 ```
 
+Not implemented.
+
 ### delete
 
 ```haxe
 function delete(path:String):Bool
 ```
+
+Not supported.

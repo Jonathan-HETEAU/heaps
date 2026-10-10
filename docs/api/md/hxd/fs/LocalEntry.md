@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.FileEntry`](FileEntry.md)
 
+A file or directory of a `LocalFileSystem`.
+
 ## Methods
 
 ### getBytes

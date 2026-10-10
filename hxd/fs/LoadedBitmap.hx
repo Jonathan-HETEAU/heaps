@@ -2,12 +2,12 @@ package hxd.fs;
 
 #if js
 /**
-	The native type of a `LoadedBitmap`: an image element.
+	The native type of a `LoadedBitmap`: an image element on JS, a `BitmapData` on other targets.
 **/
 typedef LoadedBitmapData = js.html.Image;
 #else
 /**
-	The native type of a `LoadedBitmap`.
+	The native type of a `LoadedBitmap`: an image element on JS, a `BitmapData` on other targets.
 **/
 typedef LoadedBitmapData = hxd.BitmapData;
 #end

@@ -4,7 +4,7 @@ import js.Browser;
 import hxd.impl.MouseMode;
 
 /**
-	How the window is displayed (see `Window.displayMode`).
+	How the window is displayed (see `Window.displayMode`). On HashLink, it is the display mode type of the native library (SDL or DirectX) when one is used.
 **/
 enum DisplayMode {
 	/**
@@ -148,8 +148,8 @@ class Window {
 	var canLockMouse : Bool = true;
 
 	/**
-		Creates a window for the given canvas, or for the `#webgl` canvas of the page.
-		If `globalEvents` is set (or the canvas has the `globalEvents="1"` attribute), events are captured on the whole page instead of only the canvas.
+		Creates a window. On HashLink: with the given title and size; flags: `fixed` disables resizing, `hidden` creates it hidden, `background` (DirectX) creates it without activating it. The main window is created by `hxd.System.createWindow`.
+		On JS: for the given canvas, or for the `#webgl` canvas of the page. If `globalEvents` is set (or the canvas has the `globalEvents="1"` attribute), events are captured on the whole page instead of only the canvas.
 	**/
 	public function new( ?canvas : js.html.CanvasElement, ?globalEvents ) : Void {
 		var customCanvas = canvas != null;
@@ -410,7 +410,8 @@ class Window {
 
 
 	/**
-		Sets the mouse position, relative to the canvas. Only allowed in relative mouse modes, since the browser can't move the cursor. If `emitEvent` is set, an `EMove` event is sent.
+		Moves the mouse cursor, relative to the window. If `emitEvent` is set, an `EMove` event is sent.
+		On JS, the browser can't move the cursor: it is only allowed in relative mouse modes, and sets the mouse position.
 	**/
 	public function setCursorPos( x : Int, y : Int, emitEvent : Bool = false ) : Void {
 		if ( mouseMode == Absolute ) throw "setCursorPos only allowed in relative mouse modes on this platform.";
@@ -445,7 +446,7 @@ class Window {
 
 	static var inst : Window = null;
 	/**
-		Returns the current window, creating it for the `#webgl` canvas if needed.
+		Returns the current window (on JS, it is created for the `#webgl` canvas if needed).
 	**/
 	public static function getInstance() : Window {
 		if( inst == null ) inst = new Window();

@@ -2,12 +2,12 @@ package hxd;
 
 #if js
 /**
-	The native data of a `BitmapData`: a canvas 2D context.
+	The native data of a `BitmapData`: a canvas 2D context on JS, an array of pixels on other targets.
 **/
 typedef BitmapInnerData = js.html.CanvasRenderingContext2D;
 #else
 /**
-	The native data of a `BitmapData`.
+	The native data of a `BitmapData`: a canvas 2D context on JS, an array of pixels on other targets.
 **/
 typedef BitmapInnerData = BitmapInnerDataImpl;
 /**

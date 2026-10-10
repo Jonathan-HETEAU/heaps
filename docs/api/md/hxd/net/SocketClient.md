@@ -4,6 +4,8 @@
 
 Extends: `hxbit.NetworkClient`
 
+A hxbit network client communicating through a `Socket`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: `hxbit.NetworkClient`
 ```haxe
 function new(host:hxbit.NetworkHost, s:Socket):Void
 ```
+
+Creates a client of the host using the socket (`null` for the local client).
 
 ## Methods
 

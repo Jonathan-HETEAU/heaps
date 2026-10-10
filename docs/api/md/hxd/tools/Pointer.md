@@ -2,6 +2,8 @@
 
 **abstract** · package [`hxd.tools`](README.md) · module `hxd.tools.VHACD` · source [`hxd/tools/VHACD.hx`](../../../../../hxd/tools/VHACD.hx) · available on hl/sdl, hl/directx
 
+A native pointer.
+
 Underlying type: `Int64`
 
 Implicit casts from: `Int64`

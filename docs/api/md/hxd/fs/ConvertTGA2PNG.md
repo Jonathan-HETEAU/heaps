@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts uncompressed 32 bits TGA images to PNG.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fs.Convert`](Convert.md)
 ```haxe
 function new():Void
 ```
+
+Creates the conversion.
 
 ## Methods
 

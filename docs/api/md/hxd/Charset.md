@@ -2,6 +2,9 @@
 
 **class** · package [`hxd`](README.md) · source [`hxd/Charset.hx`](../../../../hxd/Charset.hx)
 
+Character set helpers used by the fonts: the default characters, the fallback characters used when a glyph is missing
+(for instance curly quotes replaced by straight ones), and line breaking rules (spaces, CJK characters).
+
 ## Static variables
 
 ### ASCII
@@ -66,6 +69,8 @@ Special unicode chars (fallback chars)
 static var DEFAULT_CHARS:String
 ```
 
+The characters included by default when generating fonts: ASCII and Latin-1.
+
 ## Static methods
 
 ### getDefault
@@ -73,6 +78,8 @@ static var DEFAULT_CHARS:String
 ```haxe
 static function getDefault():Charset
 ```
+
+Returns the default charset.
 
 ## Methods
 
@@ -82,11 +89,15 @@ static function getDefault():Charset
 function resolveChar(code:Int, glyphs:Map<Int, resolveChar.T>):Null<resolveChar.T>
 ```
 
+Returns the glyph of `code`, or of its fallback characters if missing, or `null`.
+
 ### isCJK
 
 ```haxe
 function isCJK(code:Int):Bool
 ```
+
+Tells if `code` is a CJK (Chinese, Japanese, Korean) character, where lines can break.
 
 ### isSpace
 
@@ -94,14 +105,20 @@ function isCJK(code:Int):Bool
 function isSpace(code:Int):Bool
 ```
 
+Tells if `code` is a space (including the ideographic space).
+
 ### isBreakChar
 
 ```haxe
 function isBreakChar(code:Int):Bool
 ```
 
+Tells if a line can break at `code`.
+
 ### isComplementChar
 
 ```haxe
 function isComplementChar(code:Int):Bool
 ```
+
+Tells if `code` is a Japanese or punctuation character which must not start a line.

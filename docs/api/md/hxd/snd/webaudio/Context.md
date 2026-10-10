@@ -12,11 +12,15 @@ Common part between webaudio and OpenAL emulator - AudioContext and masterGain.
 static var destination:js.html.audio.AudioNode
 ```
 
+The node the sources are connected to.
+
 ### masterGain
 
 ```haxe
 static var masterGain:js.html.audio.GainNode
 ```
+
+The node applying the master volume.
 
 ## Static methods
 
@@ -26,17 +30,23 @@ static var masterGain:js.html.audio.GainNode
 static function get():js.html.audio.AudioContext
 ```
 
+Returns the audio context, created on the first call. Throws if Web Audio is not available.
+
 ### getGain
 
 ```haxe
 static inline function getGain():js.html.audio.GainNode
 ```
 
+Returns a gain node from the pool.
+
 ### putGain
 
 ```haxe
 static inline function putGain(gain:js.html.audio.GainNode):Void
 ```
+
+Puts a gain node back in the pool.
 
 ### getBuffer
 

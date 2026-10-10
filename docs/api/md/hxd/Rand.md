@@ -22,11 +22,15 @@ Create a random generator with a seed.
 static function hash(n:Int, ?seed:Int = 5381):Int
 ```
 
+Returns a well distributed hash of the integer `n` (Murmur3 mixing), useful as a stateless random value.
+
 ### inlineHash
 
 ```haxe
 static inline function inlineHash(n:Int, seed:Int):Int
 ```
+
+Inline version of `hash`.
 
 ### create
 

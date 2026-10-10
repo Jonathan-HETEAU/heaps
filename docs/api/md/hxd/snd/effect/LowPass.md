@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.Effect`](../Effect.md)
 
+A low pass filter, attenuating the high frequencies.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`hxd.snd.Effect`](../Effect.md)
 function new():Void
 ```
 
+Creates an unfiltered low pass effect.
+
 ## Variables
 
 ### gainHF
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 var gainHF:Float
 ```
+
+The gain of the high frequencies, from `0` (removed) to `1` (unfiltered).
 
 ## Inherited members
 

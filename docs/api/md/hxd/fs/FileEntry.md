@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.fs.BytesFileEntry`](BytesFileEntry.md), [`hxd.fs.LocalEntry`](LocalEntry.md)
 
+A file or directory of a `FileSystem`. Subclasses implement the access for each kind of file system.
+
 ## Variables
 
 ### name
@@ -12,11 +14,15 @@ Subclasses: [`hxd.fs.BytesFileEntry`](BytesFileEntry.md), [`hxd.fs.LocalEntry`](
 var name(default, null):String
 ```
 
+The name of the file, with its extension.
+
 ### path
 
 ```haxe
 var path(get, null):String
 ```
+
+The path of the file, relative to the file system root.
 
 ### directory
 
@@ -24,11 +30,15 @@ var path(get, null):String
 var directory(get, null):String
 ```
 
+The path of the parent directory.
+
 ### extension
 
 ```haxe
 var extension(get, null):String
 ```
+
+The extension of the file name, in lowercase, without the dot.
 
 ### size
 
@@ -36,17 +46,23 @@ var extension(get, null):String
 var size(get, null):Int
 ```
 
+The size of the file in bytes.
+
 ### isDirectory
 
 ```haxe
 var isDirectory(get, null):Bool
 ```
 
+Tells if the entry is a directory.
+
 ### isAvailable
 
 ```haxe
 var isAvailable(get, null):Bool
 ```
+
+Tells if the content is available. When it is not (files loaded on demand), call `load` first.
 
 ## Methods
 
@@ -56,11 +72,15 @@ var isAvailable(get, null):Bool
 function getBytes():Bytes
 ```
 
+Returns the whole content of the file.
+
 ### readBytes
 
 ```haxe
 function readBytes(out:Bytes, outPos:Int, pos:Int, len:Int):Int
 ```
+
+Reads `len` bytes at `pos` in the file into `out` at `outPos`, and returns the number of bytes read.
 
 ### readBytesAsync
 
@@ -88,6 +108,8 @@ b) it will throw an Eof exception if the data is not available
 function readFull(bytes:Bytes, pos:Int, len:Int):Void
 ```
 
+Reads `len` bytes at `pos` in the file into `bytes`. Throws `haxe.io.Eof` if fewer bytes are available.
+
 ### getSign
 
 ```haxe
@@ -102,11 +124,15 @@ Read first 4 bytes of the file.
 function getText():String
 ```
 
+Returns the content of the file as text.
+
 ### open
 
 ```haxe
 function open():FileInput
 ```
+
+Returns an input to read the file.
 
 ### load
 
@@ -114,11 +140,15 @@ function open():FileInput
 function load(?onReady:() -> Void):Void
 ```
 
+Makes the content available, then calls `onReady`.
+
 ### loadBitmap
 
 ```haxe
 function loadBitmap(onLoaded:() -> Void):Void
 ```
+
+Decodes the image file with the platform decoder (asynchronously on JS).
 
 ### watch
 
@@ -126,11 +156,15 @@ function loadBitmap(onLoaded:() -> Void):Void
 function watch(onChanged:Null<() -> Void>):Void
 ```
 
+Calls `onChanged` when the file changes, if the file system supports it. Set `null` to stop watching.
+
 ### exists
 
 ```haxe
 function exists(name:String):Bool
 ```
+
+For a directory, tells if it contains an entry with the given name.
 
 ### get
 
@@ -138,8 +172,12 @@ function exists(name:String):Bool
 function get(name:String):FileEntry
 ```
 
+For a directory, returns the entry with the given name.
+
 ### iterator
 
 ```haxe
 function iterator():hxd.impl.ArrayIterator_hxd_fs_FileEntry
 ```
+
+For a directory, iterates over its entries.

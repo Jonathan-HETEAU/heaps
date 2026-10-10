@@ -4,6 +4,8 @@
 
 Type parameters: `<T>`
 
+A reference to a text by its path, created by `makeID`. `T` is the type of the text parameters.
+
 Underlying type: `String`
 
 ## Methods
@@ -13,3 +15,5 @@ Underlying type: `String`
 ```haxe
 function getID():String
 ```
+
+Returns the path of the text.

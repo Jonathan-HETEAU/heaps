@@ -4,6 +4,8 @@
 
 Extends: `hxd.net._Socket.SocketInput`
 
+The input of a HashLink socket.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: `hxd.net._Socket.SocketInput`
 ```haxe
 function new(sock:Socket):Void
 ```
+
+Creates the input of the socket.
 
 ## Methods
 

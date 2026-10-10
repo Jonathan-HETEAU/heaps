@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd.snd`](README.md) · module `hxd.snd.Driver` · source [`hxd/snd/Driver.hx`](../../../../../hxd/snd/Driver.hx)
 
+The optional features of a sound driver.
+
 ## Constructors
 
 ### MasterVolume

@@ -39,11 +39,11 @@ enum KeyboardLayout {
 class System {
 
 	/**
-		The width of the page in pixels (the body width multiplied by the device pixel ratio).
+		The width of the screen in pixels (of the page on JS: the body width multiplied by the device pixel ratio).
 	**/
 	public static var width(get,never) : Int;
 	/**
-		The height of the page in pixels (the body height multiplied by the device pixel ratio).
+		The height of the screen in pixels (of the page on JS: the body height multiplied by the device pixel ratio).
 	**/
 	public static var height(get, never) : Int;
 	/**
@@ -123,7 +123,7 @@ class System {
 	}
 
 	/**
-		Initializes the system (and creates the window on desktop targets), then calls the given function. Called by `hxd.App`.
+		Initializes the system and calls the given function. On HashLink, the window is created with `createWindow` first, and the main loop then runs until the application exits. Called by `hxd.App`.
 	**/
 	public static function start( callb : Void -> Void ) : Void {
 		callb();
@@ -167,7 +167,7 @@ class System {
 	}
 
 	/**
-		Returns a description of the device (always `"Unknown"` on JS).
+		Returns a description of the device, such as `"PC/"` followed by the graphics device name (`"Unknown"` on JS).
 	**/
 	public static function getDeviceName() : String {
 		return "Unknown";
@@ -218,7 +218,7 @@ class System {
 	}
 
 	/**
-		Returns the last text set with `setClipboardText` (the browser clipboard can't be read synchronously).
+		Returns the text in the system clipboard, or `null` if not supported. On JS, returns the last text set with `setClipboardText`, since the browser clipboard can't be read synchronously.
 	**/
 	public static dynamic function getClipboardText() : String {
 		return CLIPBOARD_TEXT;
@@ -234,7 +234,7 @@ class System {
 	}
 
 	/**
-		Returns the locale of the user, based on the browser language.
+		Returns the locale of the user, including the region code (such as `"en-US"`), based on the system or browser language.
 	**/
 	public static function getLocale() : String {
 		return js.Browser.navigator.language + "_" + js.Browser.navigator.language.toUpperCase();

@@ -21,6 +21,8 @@ custom code. See API documentation for more information.
 function new():Void
 ```
 
+Creates the application: initializes the engine (if not already done), then calls `init` once it is ready.
+
 ## Variables
 
 ### engine
@@ -80,3 +82,5 @@ function setCurrent():Void
 ```haxe
 function render(e:h3d.Engine):Void
 ```
+
+Renders the 3D scene then the 2D scene. Called every frame; override it to customize the rendering.

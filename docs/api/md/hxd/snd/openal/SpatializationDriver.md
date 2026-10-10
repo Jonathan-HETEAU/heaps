@@ -4,6 +4,8 @@
 
 Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 
+Implements `hxd.snd.effect.Spatialization` with the OpenAL source position.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.snd.EffectDriver`](../EffectDriver.md)
 ```haxe
 function new(driver:hxd.snd.Driver):Void
 ```
+
+Creates the effect driver.
 
 ## Methods
 

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts JSON files (and Hide files such as prefabs) to the binary HBSON format.
+
 ## Constructor
 
 ### new

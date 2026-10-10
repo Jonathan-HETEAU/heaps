@@ -4,6 +4,8 @@
 
 Subclasses: [`h3d.mat.BaseMaterial`](../../h3d/mat/BaseMaterial.md), [`h3d.scene.Renderer`](../../h3d/scene/Renderer.md)
 
+Base class of the objects configured by a dynamic properties object, such as the renderers and materials.
+
 ## Variables
 
 ### props
@@ -11,6 +13,8 @@ Subclasses: [`h3d.mat.BaseMaterial`](../../h3d/mat/BaseMaterial.md), [`h3d.scene
 ```haxe
 var props(default, set):Any
 ```
+
+The properties. Setting them calls `refreshProps`.
 
 ## Methods
 
@@ -20,11 +24,15 @@ var props(default, set):Any
 function setDefaultProps(kind:String):Void
 ```
 
+Sets the default properties of the given kind.
+
 ### getDefaultProps
 
 ```haxe
 function getDefaultProps(?kind:String):Any
 ```
+
+Returns the default properties of the given kind. Overridden by the subclasses.
 
 ### loadProps
 
@@ -32,8 +40,12 @@ function getDefaultProps(?kind:String):Any
 function loadProps(v:Dynamic):Any
 ```
 
+Returns the properties to use from loaded data.
+
 ### refreshProps
 
 ```haxe
 function refreshProps():Void
 ```
+
+Called when the properties change, to apply them.

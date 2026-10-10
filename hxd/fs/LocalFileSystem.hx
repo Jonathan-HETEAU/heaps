@@ -320,7 +320,7 @@ class LocalEntry extends FileEntry {
 
 /**
 	A file system reading the files of a local directory, converting them when needed (see `FileConverter`) and watching their changes.
-	Only available on `sys` targets and Node.js.
+	Only available on `sys` targets and Node.js: on other platforms, creating one throws an error.
 **/
 class LocalFileSystem implements FileSystem {
 
@@ -521,58 +521,60 @@ class LocalFileSystem implements FileSystem {
 #else
 
 /**
-	The local file system is not supported on this platform: creating one throws an error.
+	A file system reading the files of a local directory, converting them when needed (see `FileConverter`) and watching their changes.
+	Only available on `sys` targets and Node.js: on other platforms, creating one throws an error.
 **/
 class LocalFileSystem implements FileSystem {
 
 	/**
-		Not supported.
+		The full path of the root directory, ending with `/`.
 	**/
 	public var baseDir(default,null) : String;
 
 	/**
-		Throws an error.
+		Creates a file system for the directory, searched relative to the executable (or `storagePath`) then to the current directory.
+		`configuration` selects the conversion rules (`"default"` if `null`).
 	**/
 	public function new( dir : String ) {
 		throw "Local file system is not supported for this platform";
 	}
 
 	/**
-		Not supported.
+		Tells if a file exists at the path. The case of the path must match the file name.
 	**/
 	public function exists(path:String) {
 		return false;
 	}
 
 	/**
-		Not supported.
+		Returns the file entry at the path. Throws `NotFound` if it does not exist.
 	**/
 	public function get(path:String) : FileEntry {
 		return null;
 	}
 
 	/**
-		Not supported.
+		Returns the root directory.
 	**/
 	public function getRoot() : FileEntry {
 		return null;
 	}
 
 	/**
-		Not supported.
+		Clears the cache.
 	**/
 	public function dispose() {
 	}
 
 	/**
-		Not supported.
+		Returns the entries of the directory.
 	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		return null;
 	}
 
 	/**
-		Not supported.
+		Deletes the file. Returns `false` if it can't be deleted.
 	**/
 	public function delete( path : String ) : Bool {
 		return false;

@@ -551,59 +551,59 @@ Each link points to a Markdown page with the full public API of a type: signatur
 ## hxd
 
 - [hxd.App](api/md/hxd/App.md): Base class for a Heaps application.
-- [hxd.BitmapData](api/md/hxd/BitmapData.md)
-- [hxd.BitmapInnerData](api/md/hxd/BitmapInnerData.md)
-- [hxd.BitmapInnerDataImpl](api/md/hxd/BitmapInnerDataImpl.md)
-- [hxd.BrowseOptions](api/md/hxd/BrowseOptions.md)
-- [hxd.BrowseSelect](api/md/hxd/BrowseSelect.md): this will be called when saving a file, and allow you to write it again without displaying the browser, if supported
-- [hxd.BufferFormat](api/md/hxd/BufferFormat.md)
-- [hxd.BufferInput](api/md/hxd/BufferInput.md)
-- [hxd.BufferMapping](api/md/hxd/BufferMapping.md)
+- [hxd.BitmapData](api/md/hxd/BitmapData.md): A CPU image that can be drawn into, used for icons, cursors and fonts.
+- [hxd.BitmapInnerData](api/md/hxd/BitmapInnerData.md): The native data of a `BitmapData`: a canvas 2D context on JS, an array of pixels on other targets.
+- [hxd.BitmapInnerDataImpl](api/md/hxd/BitmapInnerDataImpl.md): The native data of a `BitmapData` on non JS targets: an array of 32 bit pixels.
+- [hxd.BrowseOptions](api/md/hxd/BrowseOptions.md): Options for `File.browse` and `File.saveAs`.
+- [hxd.BrowseSelect](api/md/hxd/BrowseSelect.md): The file selected by `File.browse`.
+- [hxd.BufferFormat](api/md/hxd/BufferFormat.md): The vertex layout of a `h3d.Buffer`: the list of its inputs.
+- [hxd.BufferInput](api/md/hxd/BufferInput.md): An input (vertex attribute) of a `BufferFormat`: its name, type and precision.
+- [hxd.BufferMapping](api/md/hxd/BufferMapping.md): The location of a shader input in the buffers of a mesh: the index of the buffer, the byte offset in a vertex, and the precision.
 - [hxd.ByteConversions](api/md/hxd/ByteConversions.md): * Tries to provide consistent access to haxe.io.bytes from any primitive
-- [hxd.BytesBuffer](api/md/hxd/BytesBuffer.md)
-- [hxd.Channel](api/md/hxd/Channel.md)
-- [hxd.Charset](api/md/hxd/Charset.md)
-- [hxd.Cursor](api/md/hxd/Cursor.md)
-- [hxd.CustomCursor](api/md/hxd/CustomCursor.md)
-- [hxd.Direction](api/md/hxd/Direction.md)
-- [hxd.DisplayMode](api/md/hxd/DisplayMode.md)
-- [hxd.DisplaySetting](api/md/hxd/DisplaySetting.md)
+- [hxd.BytesBuffer](api/md/hxd/BytesBuffer.md): A growable byte buffer for writing binary data.
+- [hxd.Channel](api/md/hxd/Channel.md): A color channel.
+- [hxd.Charset](api/md/hxd/Charset.md): Character set helpers used by the fonts: the default characters, the fallback characters used when a glyph is missing (for instance curly quotes replaced by straight ones), and line breaking rules (spaces, CJK charact...
+- [hxd.Cursor](api/md/hxd/Cursor.md): A mouse cursor (see `hxd.System.setCursor` and `h2d.Interactive.cursor`).
+- [hxd.CustomCursor](api/md/hxd/CustomCursor.md): A cursor made of bitmaps, possibly animated.
+- [hxd.Direction](api/md/hxd/Direction.md): One of the 4 directions on a 2D grid, with Y pointing down.
+- [hxd.DisplayMode](api/md/hxd/DisplayMode.md): How the window is displayed (see `Window.displayMode`).
+- [hxd.DisplaySetting](api/md/hxd/DisplaySetting.md): A display mode of a monitor: resolution and refresh rate.
 - [hxd.DropFileEvent](api/md/hxd/DropFileEvent.md): The drag&drop operation event.
 - [hxd.DroppedFile](api/md/hxd/DroppedFile.md): The information about the dropped file.
-- [hxd.Event](api/md/hxd/Event.md)
-- [hxd.EventKind](api/md/hxd/EventKind.md)
-- [hxd.File](api/md/hxd/File.md)
-- [hxd.Flags](api/md/hxd/Flags.md)
-- [hxd.FloatBuffer](api/md/hxd/FloatBuffer.md)
-- [hxd.FloatBufferLoader](api/md/hxd/FloatBufferLoader.md)
-- [hxd.IndexBuffer](api/md/hxd/IndexBuffer.md)
-- [hxd.InputFormat](api/md/hxd/InputFormat.md)
-- [hxd.Interactive](api/md/hxd/Interactive.md)
-- [hxd.InteractiveScene](api/md/hxd/InteractiveScene.md)
-- [hxd.Key](api/md/hxd/Key.md)
-- [hxd.KeyboardLayout](api/md/hxd/KeyboardLayout.md)
-- [hxd.Math](api/md/hxd/Math.md)
-- [hxd.Monitor](api/md/hxd/Monitor.md)
-- [hxd.MultiFormat](api/md/hxd/MultiFormat.md)
-- [hxd.MultiFormatCache](api/md/hxd/MultiFormatCache.md)
-- [hxd.Pad](api/md/hxd/Pad.md)
-- [hxd.PadConfig](api/md/hxd/PadConfig.md)
-- [hxd.Perlin](api/md/hxd/Perlin.md)
-- [hxd.PixelFormat](api/md/hxd/PixelFormat.md)
-- [hxd.Pixels](api/md/hxd/Pixels.md)
-- [hxd.PixelsARGB](api/md/hxd/PixelsARGB.md)
-- [hxd.PixelsFloat](api/md/hxd/PixelsFloat.md)
-- [hxd.PixelsFloatRGBA](api/md/hxd/PixelsFloatRGBA.md)
-- [hxd.Platform](api/md/hxd/Platform.md)
-- [hxd.Precision](api/md/hxd/Precision.md)
+- [hxd.Event](api/md/hxd/Event.md): An input event, sent by the window and dispatched to the interactives by `SceneEvents`.
+- [hxd.EventKind](api/md/hxd/EventKind.md): The kinds of `Event`.
+- [hxd.File](api/md/hxd/File.md): Cross-platform file access.
+- [hxd.Flags](api/md/hxd/Flags.md): Flags of a `Pixels`.
+- [hxd.FloatBuffer](api/md/hxd/FloatBuffer.md): A growable array of 32-bit floats, used to build vertex data.
+- [hxd.FloatBufferLoader](api/md/hxd/FloatBufferLoader.md): Writes values sequentially into a `FloatBuffer`, starting at a given position.
+- [hxd.IndexBuffer](api/md/hxd/IndexBuffer.md): A growable array of integer indexes, used to build index data.
+- [hxd.InputFormat](api/md/hxd/InputFormat.md): The type of a buffer input.
+- [hxd.Interactive](api/md/hxd/Interactive.md): An object which can receive events from `SceneEvents`, such as `h2d.Interactive` and `h3d.scene.Interactive`.
+- [hxd.InteractiveScene](api/md/hxd/InteractiveScene.md): A scene which can receive events from `SceneEvents`, such as `h2d.Scene` and `h3d.scene.Scene`.
+- [hxd.Key](api/md/hxd/Key.md): The key codes, and the state of the keyboard and mouse buttons, to poll in the update loop.
+- [hxd.KeyboardLayout](api/md/hxd/KeyboardLayout.md): The detected keyboard layout (see `System.getKeyboardLayout`).
+- [hxd.Math](api/md/hxd/Math.md): Math helpers, inlined where possible: most functions call `std.Math`, with `Int` and `Float` variants and game-oriented additions (angles, interpolation, random).
+- [hxd.Monitor](api/md/hxd/Monitor.md): A monitor, as returned by `Window.getMonitors`.
+- [hxd.MultiFormat](api/md/hxd/MultiFormat.md): The combination of the formats of several buffers, used to draw a mesh with more than one vertex buffer.
+- [hxd.MultiFormatCache](api/md/hxd/MultiFormatCache.md): The cache of `MultiFormat.make`, indexed by format uids.
+- [hxd.Pad](api/md/hxd/Pad.md): A game pad (controller).
+- [hxd.PadConfig](api/md/hxd/PadConfig.md): The mapping of the buttons and axes of a game pad: each field is the index of the button or axis in `Pad.buttons` and `Pad.values`.
+- [hxd.Perlin](api/md/hxd/Perlin.md): Gradient (Perlin) noise generator in 1D, 2D and 3D, with fractal (multi-octave) and ridged variants.
+- [hxd.PixelFormat](api/md/hxd/PixelFormat.md): The pixel formats of textures and `Pixels`: color formats (8 bits, half and full floats per channel), compressed formats (`S3TC`, `ASTC`, `ETC`...) and depth formats.
+- [hxd.Pixels](api/md/hxd/Pixels.md): An image in CPU memory: its bytes, size and `PixelFormat`.
+- [hxd.PixelsARGB](api/md/hxd/PixelsARGB.md): `Pixels` converted to the `ARGB` format, with fast pixel access.
+- [hxd.PixelsFloat](api/md/hxd/PixelsFloat.md): `Pixels` converted to the `R32F` format, with fast pixel access.
+- [hxd.PixelsFloatRGBA](api/md/hxd/PixelsFloatRGBA.md): `Pixels` converted to the `RGBA32F` format, with fast pixel access.
+- [hxd.Platform](api/md/hxd/Platform.md): The kind of platform the application runs on (see `System.platform`).
+- [hxd.Precision](api/md/hxd/Precision.md): The storage precision of a buffer input.
 - [hxd.Rand](api/md/hxd/Rand.md): `hxd.Rand` is a seeded random number generator, that allows to get always the same results starting from a given seed.
 - [hxd.Save](api/md/hxd/Save.md): Save provides simple interface to save and load serialized user data.
-- [hxd.SceneEvents](api/md/hxd/SceneEvents.md)
-- [hxd.System](api/md/hxd/System.md)
-- [hxd.SystemValue](api/md/hxd/SystemValue.md)
+- [hxd.SceneEvents](api/md/hxd/SceneEvents.md): Dispatches the window input events to the interactives of one or more scenes.
+- [hxd.System](api/md/hxd/System.md): Platform-specific services: main loop, cursor, clipboard, locale, and screen information.
+- [hxd.SystemValue](api/md/hxd/SystemValue.md): Boolean system properties, queried with `System.getValue`.
 - [hxd.Timer](api/md/hxd/Timer.md): The Timer class acts as a global time measurement that can be accessed from various parts of the engine.
-- [hxd.WaitEvent](api/md/hxd/WaitEvent.md)
-- [hxd.Window](api/md/hxd/Window.md)
+- [hxd.WaitEvent](api/md/hxd/WaitEvent.md): A list of callbacks updated every frame, to run code after a delay or until a condition is met.
+- [hxd.Window](api/md/hxd/Window.md): The application window, which receives the input events and resize notifications.
 - [hxd.clipper.ClipType](api/md/hxd/clipper/ClipType.md)
 - [hxd.clipper.Clipper](api/md/hxd/clipper/Clipper.md)
 - [hxd.clipper.ClipperOffset](api/md/hxd/clipper/ClipperOffset.md)
@@ -731,68 +731,68 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [hxd.fmt.tiff.Utils](api/md/hxd/fmt/tiff/Utils.md)
 - [hxd.fmt.tiff.Writer](api/md/hxd/fmt/tiff/Writer.md)
 - [hxd.fs.AsyncRead](api/md/hxd/fs/AsyncRead.md): A pending asynchronous read, returned by `FileEntry.readBytesAsync`.
-- [hxd.fs.AsyncReadState](api/md/hxd/fs/AsyncReadState.md)
+- [hxd.fs.AsyncReadState](api/md/hxd/fs/AsyncReadState.md): The state of an `AsyncRead`.
 - [hxd.fs.AsyncReader](api/md/hxd/fs/AsyncReader.md): Reads file data asynchronously : a single IO thread is shared by all file systems, reading the pending requests by priority order.
-- [hxd.fs.BytesFileEntry](api/md/hxd/fs/BytesFileEntry.md)
-- [hxd.fs.BytesFileSystem](api/md/hxd/fs/BytesFileSystem.md)
-- [hxd.fs.Command](api/md/hxd/fs/Command.md)
-- [hxd.fs.CompressIMG](api/md/hxd/fs/CompressIMG.md)
-- [hxd.fs.Convert](api/md/hxd/fs/Convert.md)
-- [hxd.fs.ConvertBinJSON](api/md/hxd/fs/ConvertBinJSON.md)
-- [hxd.fs.ConvertCacheItem](api/md/hxd/fs/ConvertCacheItem.md)
-- [hxd.fs.ConvertCommand](api/md/hxd/fs/ConvertCommand.md)
-- [hxd.fs.ConvertConfig](api/md/hxd/fs/ConvertConfig.md)
-- [hxd.fs.ConvertFBX2HMD](api/md/hxd/fs/ConvertFBX2HMD.md)
-- [hxd.fs.ConvertFNT2BFNT](api/md/hxd/fs/ConvertFNT2BFNT.md)
-- [hxd.fs.ConvertPattern](api/md/hxd/fs/ConvertPattern.md)
-- [hxd.fs.ConvertRule](api/md/hxd/fs/ConvertRule.md)
-- [hxd.fs.ConvertSVGToMSDF](api/md/hxd/fs/ConvertSVGToMSDF.md)
-- [hxd.fs.ConvertTGA2PNG](api/md/hxd/fs/ConvertTGA2PNG.md)
-- [hxd.fs.ConvertWAV2MP3](api/md/hxd/fs/ConvertWAV2MP3.md)
-- [hxd.fs.ConvertWAV2OGG](api/md/hxd/fs/ConvertWAV2OGG.md)
-- [hxd.fs.DummyConvert](api/md/hxd/fs/DummyConvert.md)
-- [hxd.fs.EmbedFileSystem](api/md/hxd/fs/EmbedFileSystem.md)
-- [hxd.fs.Exclusive](api/md/hxd/fs/Exclusive.md)
-- [hxd.fs.FileConfig](api/md/hxd/fs/FileConfig.md)
-- [hxd.fs.FileConverter](api/md/hxd/fs/FileConverter.md)
-- [hxd.fs.FileEntry](api/md/hxd/fs/FileEntry.md)
-- [hxd.fs.FileInput](api/md/hxd/fs/FileInput.md)
-- [hxd.fs.FileSystem](api/md/hxd/fs/FileSystem.md)
-- [hxd.fs.LoadedBitmap](api/md/hxd/fs/LoadedBitmap.md)
-- [hxd.fs.LoadedBitmapData](api/md/hxd/fs/LoadedBitmapData.md)
-- [hxd.fs.LocalEntry](api/md/hxd/fs/LocalEntry.md)
-- [hxd.fs.LocalFileSystem](api/md/hxd/fs/LocalFileSystem.md)
-- [hxd.fs.MultiFileSystem](api/md/hxd/fs/MultiFileSystem.md)
-- [hxd.fs.NotFound](api/md/hxd/fs/NotFound.md)
-- [hxd.fs.SourceLoader](api/md/hxd/fs/SourceLoader.md)
-- [hxd.impl.AllocPos](api/md/hxd/impl/AllocPos.md)
-- [hxd.impl.Allocator](api/md/hxd/impl/Allocator.md)
-- [hxd.impl.AnyProps](api/md/hxd/impl/AnyProps.md)
+- [hxd.fs.BytesFileEntry](api/md/hxd/fs/BytesFileEntry.md): A file entry whose content is in memory.
+- [hxd.fs.BytesFileSystem](api/md/hxd/fs/BytesFileSystem.md): Base class of the file systems whose files are in memory (such as the embedded files): subclasses implement `getBytes`.
+- [hxd.fs.Command](api/md/hxd/fs/Command.md): A conversion running an external command.
+- [hxd.fs.CompressIMG](api/md/hxd/fs/CompressIMG.md): Converts images to compressed DDS textures with the `texconv` or `CompressonatorCLI` commands.
+- [hxd.fs.Convert](api/md/hxd/fs/Convert.md): A resource file conversion, such as FBX to HMD.
+- [hxd.fs.ConvertBinJSON](api/md/hxd/fs/ConvertBinJSON.md): Converts JSON files (and Hide files such as prefabs) to the binary HBSON format.
+- [hxd.fs.ConvertCacheItem](api/md/hxd/fs/ConvertCacheItem.md): A conversion stored in the cache (`.tmp/cache.dat`), used to skip the conversion when the source file did not change.
+- [hxd.fs.ConvertCommand](api/md/hxd/fs/ConvertCommand.md): The conversions of a rule, with their parameters, and the next command applied to the result.
+- [hxd.fs.ConvertConfig](api/md/hxd/fs/ConvertConfig.md): The conversion rules of a directory.
+- [hxd.fs.ConvertFBX2HMD](api/md/hxd/fs/ConvertFBX2HMD.md): Converts FBX models to the HMD format.
+- [hxd.fs.ConvertFNT2BFNT](api/md/hxd/fs/ConvertFNT2BFNT.md): Converts bitmap font descriptions to the binary BFNT format.
+- [hxd.fs.ConvertPattern](api/md/hxd/fs/ConvertPattern.md): The files matched by a conversion rule, from the key of the `fs.convert` entry.
+- [hxd.fs.ConvertRule](api/md/hxd/fs/ConvertRule.md): A conversion rule: the files matching `pt` are converted with `cmd`.
+- [hxd.fs.ConvertSVGToMSDF](api/md/hxd/fs/ConvertSVGToMSDF.md): Converts SVG images to multi-channel signed distance field PNG images with the `msdfgen` command.
+- [hxd.fs.ConvertTGA2PNG](api/md/hxd/fs/ConvertTGA2PNG.md): Converts uncompressed 32 bits TGA images to PNG.
+- [hxd.fs.ConvertWAV2MP3](api/md/hxd/fs/ConvertWAV2MP3.md): Converts WAV to MP3 with the `lame` command.
+- [hxd.fs.ConvertWAV2OGG](api/md/hxd/fs/ConvertWAV2OGG.md): Converts WAV to Ogg Vorbis with the `oggenc` command (`oggenc2` on Windows).
+- [hxd.fs.DummyConvert](api/md/hxd/fs/DummyConvert.md): Replaces the file by an empty one.
+- [hxd.fs.EmbedFileSystem](api/md/hxd/fs/EmbedFileSystem.md): A read-only file system whose files are embedded in the application as Haxe resources.
+- [hxd.fs.Exclusive](api/md/hxd/fs/Exclusive.md): A global lock protecting the resource loading when the `heaps_mt_loader` define is set, to load resources from several threads.
+- [hxd.fs.FileConfig](api/md/hxd/fs/FileConfig.md): Per directory configuration read from JSON files (such as `props.json`) in the resources: the configuration of a directory is merged with the one of its parent directories.
+- [hxd.fs.FileConverter](api/md/hxd/fs/FileConverter.md): Converts the resource files of a `LocalFileSystem` according to the `fs.convert` rules of the `props.json` files, and caches the results in the `.tmp` directory.
+- [hxd.fs.FileEntry](api/md/hxd/fs/FileEntry.md): A file or directory of a `FileSystem`.
+- [hxd.fs.FileInput](api/md/hxd/fs/FileInput.md): A buffered input reading a file entry, returned by `FileEntry.open`.
+- [hxd.fs.FileSystem](api/md/hxd/fs/FileSystem.md): A file system containing the resources, used by `hxd.res.Loader`.
+- [hxd.fs.LoadedBitmap](api/md/hxd/fs/LoadedBitmap.md): An image decoded by the platform, returned by `FileEntry.loadBitmap`.
+- [hxd.fs.LoadedBitmapData](api/md/hxd/fs/LoadedBitmapData.md): The native type of a `LoadedBitmap`: an image element on JS, a `BitmapData` on other targets.
+- [hxd.fs.LocalEntry](api/md/hxd/fs/LocalEntry.md): A file or directory of a `LocalFileSystem`.
+- [hxd.fs.LocalFileSystem](api/md/hxd/fs/LocalFileSystem.md): A file system reading the files of a local directory, converting them when needed (see `FileConverter`) and watching their changes.
+- [hxd.fs.MultiFileSystem](api/md/hxd/fs/MultiFileSystem.md): Combines several file systems: a file is searched in each of them, in order.
+- [hxd.fs.NotFound](api/md/hxd/fs/NotFound.md): The error thrown when a resource file is not found.
+- [hxd.fs.SourceLoader](api/md/hxd/fs/SourceLoader.md): Locates the source files of the application at runtime, for live reloading (used for shaders).
+- [hxd.impl.AllocPos](api/md/hxd/impl/AllocPos.md): The code position where a GPU resource (buffer, texture) was allocated, recorded to track memory leaks.
+- [hxd.impl.Allocator](api/md/hxd/impl/Allocator.md): Allocates the GPU buffers and CPU arrays used by the engine.
+- [hxd.impl.AnyProps](api/md/hxd/impl/AnyProps.md): Base class of the objects configured by a dynamic properties object, such as the renderers and materials.
 - [hxd.impl.AppContext](api/md/hxd/impl/AppContext.md): Create an app context to allow multiple apps to run in parallel.
-- [hxd.impl.ArrayBuffer](api/md/hxd/impl/ArrayBuffer.md)
-- [hxd.impl.ArrayBufferView](api/md/hxd/impl/ArrayBufferView.md)
-- [hxd.impl.ArrayIterator](api/md/hxd/impl/ArrayIterator.md)
-- [hxd.impl.BitSet](api/md/hxd/impl/BitSet.md)
-- [hxd.impl.BufferConfig](api/md/hxd/impl/BufferConfig.md)
-- [hxd.impl.BufferFlags](api/md/hxd/impl/BufferFlags.md)
-- [hxd.impl.CacheAllocator](api/md/hxd/impl/CacheAllocator.md)
-- [hxd.impl.FIFOBufferAllocator](api/md/hxd/impl/FIFOBufferAllocator.md)
-- [hxd.impl.Float32](api/md/hxd/impl/Float32.md)
-- [hxd.impl.Float32Array](api/md/hxd/impl/Float32Array.md)
-- [hxd.impl.Int16Array](api/md/hxd/impl/Int16Array.md)
+- [hxd.impl.ArrayBuffer](api/md/hxd/impl/ArrayBuffer.md): A binary data buffer.
+- [hxd.impl.ArrayBufferView](api/md/hxd/impl/ArrayBufferView.md): A view on a binary data buffer.
+- [hxd.impl.ArrayIterator](api/md/hxd/impl/ArrayIterator.md): An inlined iterator over an array.
+- [hxd.impl.BitSet](api/md/hxd/impl/BitSet.md): A fixed size set of bits.
+- [hxd.impl.BufferConfig](api/md/hxd/impl/BufferConfig.md): The key of a cache of buffers.
+- [hxd.impl.BufferFlags](api/md/hxd/impl/BufferFlags.md): The kind of buffer requested from an `Allocator`.
+- [hxd.impl.CacheAllocator](api/md/hxd/impl/CacheAllocator.md): An allocator keeping the disposed GPU buffers to reuse them for the next allocations of the same size, format and flags.
+- [hxd.impl.FIFOBufferAllocator](api/md/hxd/impl/FIFOBufferAllocator.md): An allocator keeping the disposed GPU buffers to reuse them, in first in first out order.
+- [hxd.impl.Float32](api/md/hxd/impl/Float32.md): A 32 bits float on HashLink, a `Float` on other targets.
+- [hxd.impl.Float32Array](api/md/hxd/impl/Float32Array.md): A 32 bits float array (a typed array on JS).
+- [hxd.impl.Int16Array](api/md/hxd/impl/Int16Array.md): A signed 16 bits integer typed array.
 - [hxd.impl.MouseMode](api/md/hxd/impl/MouseMode.md): The mouse movement input handling mode.
-- [hxd.impl.Properties](api/md/hxd/impl/Properties.md)
-- [hxd.impl.UInt16](api/md/hxd/impl/UInt16.md)
-- [hxd.impl.Uint16Array](api/md/hxd/impl/Uint16Array.md)
-- [hxd.impl.Uint32Array](api/md/hxd/impl/Uint32Array.md)
-- [hxd.impl.Uint8Array](api/md/hxd/impl/Uint8Array.md)
-- [hxd.impl.UncheckedBytes](api/md/hxd/impl/UncheckedBytes.md)
-- [hxd.net.BinaryLoader](api/md/hxd/net/BinaryLoader.md)
-- [hxd.net.HLSocketInput](api/md/hxd/net/HLSocketInput.md)
-- [hxd.net.HLSocketOutput](api/md/hxd/net/HLSocketOutput.md)
-- [hxd.net.Socket](api/md/hxd/net/Socket.md)
-- [hxd.net.SocketClient](api/md/hxd/net/SocketClient.md)
-- [hxd.net.SocketHost](api/md/hxd/net/SocketHost.md)
+- [hxd.impl.Properties](api/md/hxd/impl/Properties.md): Applies a dynamic properties object to an object, recursively.
+- [hxd.impl.UInt16](api/md/hxd/impl/UInt16.md): An unsigned 16 bits integer on HashLink, an `Int` on other targets.
+- [hxd.impl.Uint16Array](api/md/hxd/impl/Uint16Array.md): An unsigned 16 bits integer typed array.
+- [hxd.impl.Uint32Array](api/md/hxd/impl/Uint32Array.md): An unsigned 32 bits integer typed array.
+- [hxd.impl.Uint8Array](api/md/hxd/impl/Uint8Array.md): An unsigned 8 bits integer typed array.
+- [hxd.impl.UncheckedBytes](api/md/hxd/impl/UncheckedBytes.md): Fast byte access without bounds checking.
+- [hxd.net.BinaryLoader](api/md/hxd/net/BinaryLoader.md): Loads binary data from a URL (JS only).
+- [hxd.net.HLSocketInput](api/md/hxd/net/HLSocketInput.md): The input of a HashLink socket.
+- [hxd.net.HLSocketOutput](api/md/hxd/net/HLSocketOutput.md): The output of a HashLink socket.
+- [hxd.net.Socket](api/md/hxd/net/Socket.md): An asynchronous TCP socket, on HashLink (with libuv) and Node.js.
+- [hxd.net.SocketClient](api/md/hxd/net/SocketClient.md): A hxbit network client communicating through a `Socket`.
+- [hxd.net.SocketHost](api/md/hxd/net/SocketHost.md): A hxbit network host using TCP sockets, as a client (`connect`) or as a server (`wait`).
 - [hxd.poly2tri.AdvancingFront](api/md/hxd/poly2tri/AdvancingFront.md)
 - [hxd.poly2tri.Basin](api/md/hxd/poly2tri/Basin.md)
 - [hxd.poly2tri.Constants](api/md/hxd/poly2tri/Constants.md)
@@ -807,97 +807,97 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [hxd.poly2tri.Unit](api/md/hxd/poly2tri/Unit.md)
 - [hxd.poly2tri.Utils](api/md/hxd/poly2tri/Utils.md)
 - [hxd.poly2tri.VisiblePolygon](api/md/hxd/poly2tri/VisiblePolygon.md)
-- [hxd.res.AnimGraph](api/md/hxd/res/AnimGraph.md)
-- [hxd.res.Any](api/md/hxd/res/Any.md)
-- [hxd.res.Atlas](api/md/hxd/res/Atlas.md)
+- [hxd.res.AnimGraph](api/md/hxd/res/AnimGraph.md): An animation graph resource.
+- [hxd.res.Any](api/md/hxd/res/Any.md): A resource of unknown type, as returned by `hxd.res.Loader.load`: use one of its `toXXX` methods to load it as a specific type.
+- [hxd.res.Atlas](api/md/hxd/res/Atlas.md): A texture atlas in the libGDX/Spine `.atlas` text format, giving named tiles in one or more images.
 - [hxd.res.BDFFont](api/md/hxd/res/BDFFont.md): * Parse BDF font format to h2d.Font
 - [hxd.res.BDFFontChar](api/md/hxd/res/BDFFontChar.md): * Intermediate representation of a glyph.
-- [hxd.res.BitmapFont](api/md/hxd/res/BitmapFont.md)
-- [hxd.res.DefaultFont](api/md/hxd/res/DefaultFont.md)
-- [hxd.res.DynamicText](api/md/hxd/res/DynamicText.md)
-- [hxd.res.DynamicTextMeta](api/md/hxd/res/DynamicTextMeta.md)
-- [hxd.res.DynamicTextMetaContent](api/md/hxd/res/DynamicTextMetaContent.md)
-- [hxd.res.Embed](api/md/hxd/res/Embed.md)
-- [hxd.res.EmbedOptions](api/md/hxd/res/EmbedOptions.md)
-- [hxd.res.Filter](api/md/hxd/res/Filter.md)
+- [hxd.res.BitmapFont](api/md/hxd/res/BitmapFont.md): A bitmap font: a font description file (`.fnt`, in BMFont text or XML format, or other supported formats) with its image.
+- [hxd.res.DefaultFont](api/md/hxd/res/DefaultFont.md): The default font embedded in Heaps.
+- [hxd.res.DynamicText](api/md/hxd/res/DynamicText.md): Typed texts loaded from an XML file, for localization.
+- [hxd.res.DynamicTextMeta](api/md/hxd/res/DynamicTextMeta.md): The metadata of the texts of a group, by id.
+- [hxd.res.DynamicTextMetaContent](api/md/hxd/res/DynamicTextMetaContent.md): The metadata of a text: `skip` is set by the `skip` attribute, `sub` is the metadata of a group's children.
+- [hxd.res.Embed](api/md/hxd/res/Embed.md): Macros to embed files and fonts in the compiled application.
+- [hxd.res.EmbedOptions](api/md/hxd/res/EmbedOptions.md): Options for embedding resources in the application.
+- [hxd.res.Filter](api/md/hxd/res/Filter.md): The chroma upsampling filter of `NanoJpeg`.
 - [hxd.res.Font](api/md/hxd/res/Font.md): Allows to build a font bitmap to be used by h2d.Text.
-- [hxd.res.FontBuildOptions](api/md/hxd/res/FontBuildOptions.md)
+- [hxd.res.FontBuildOptions](api/md/hxd/res/FontBuildOptions.md): Options for `FontBuilder.getFont`.
 - [hxd.res.FontBuilder](api/md/hxd/res/FontBuilder.md): FontBuilder allows to dynamicaly create a Bitmap font from a vector font.
-- [hxd.res.Gradients](api/md/hxd/res/Gradients.md)
-- [hxd.res.Image](api/md/hxd/res/Image.md)
-- [hxd.res.ImageFormat](api/md/hxd/res/ImageFormat.md)
-- [hxd.res.ImageInfo](api/md/hxd/res/ImageInfo.md)
-- [hxd.res.ImageInfoFlag](api/md/hxd/res/ImageInfoFlag.md)
-- [hxd.res.Key](api/md/hxd/res/Key.md)
-- [hxd.res.Loader](api/md/hxd/res/Loader.md)
-- [hxd.res.Model](api/md/hxd/res/Model.md)
-- [hxd.res.NanoJpeg](api/md/hxd/res/NanoJpeg.md)
-- [hxd.res.NoArg](api/md/hxd/res/NoArg.md)
-- [hxd.res.NotFound](api/md/hxd/res/NotFound.md)
-- [hxd.res.Prefab](api/md/hxd/res/Prefab.md)
-- [hxd.res.Resource](api/md/hxd/res/Resource.md)
-- [hxd.res.Sound](api/md/hxd/res/Sound.md)
-- [hxd.res.SoundFormat](api/md/hxd/res/SoundFormat.md)
+- [hxd.res.Gradients](api/md/hxd/res/Gradients.md): A Photoshop gradients file (`.grd`), converted to textures of horizontal gradients.
+- [hxd.res.Image](api/md/hxd/res/Image.md): An image resource (PNG, JPEG, GIF, TGA, DDS, HDR or RAW).
+- [hxd.res.ImageFormat](api/md/hxd/res/ImageFormat.md): The file format of an image.
+- [hxd.res.ImageInfo](api/md/hxd/res/ImageInfo.md): The information read from the header of an image file.
+- [hxd.res.ImageInfoFlag](api/md/hxd/res/ImageInfoFlag.md): Flags of an `ImageInfo`.
+- [hxd.res.Key](api/md/hxd/res/Key.md): A reference to a text by its path, created by `makeID`.
+- [hxd.res.Loader](api/md/hxd/res/Loader.md): Loads the resources of a file system and caches them by path.
+- [hxd.res.Model](api/md/hxd/res/Model.md): A 3D model file.
+- [hxd.res.NanoJpeg](api/md/hxd/res/NanoJpeg.md): A pure Haxe baseline JPEG decoder (progressive and lossless JPEG are not supported).
+- [hxd.res.NoArg](api/md/hxd/res/NoArg.md): The argument type of the `Key` of a text without parameters.
+- [hxd.res.NotFound](api/md/hxd/res/NotFound.md): The error thrown when a resource file is not found.
+- [hxd.res.Prefab](api/md/hxd/res/Prefab.md): A prefab resource.
+- [hxd.res.Resource](api/md/hxd/res/Resource.md): The base class of all the resources loaded by `hxd.res.Loader`.
+- [hxd.res.Sound](api/md/hxd/res/Sound.md): A sound file resource (WAV, MP3 or Ogg Vorbis), played with `hxd.snd.Manager`.
+- [hxd.res.SoundFormat](api/md/hxd/res/SoundFormat.md): The supported sound file formats.
 - [hxd.res.TextureStream](api/md/hxd/res/TextureStream.md): Handles the asynchronous loading of an Image texture.
-- [hxd.res.TiledMap](api/md/hxd/res/TiledMap.md)
-- [hxd.res.TiledMapData](api/md/hxd/res/TiledMapData.md)
-- [hxd.res.TiledMapLayer](api/md/hxd/res/TiledMapLayer.md)
-- [hxd.snd.Buffer](api/md/hxd/snd/Buffer.md)
-- [hxd.snd.BufferHandle](api/md/hxd/snd/BufferHandle.md)
-- [hxd.snd.Channel](api/md/hxd/snd/Channel.md)
-- [hxd.snd.ChannelBase](api/md/hxd/snd/ChannelBase.md)
-- [hxd.snd.ChannelGroup](api/md/hxd/snd/ChannelGroup.md)
-- [hxd.snd.Data](api/md/hxd/snd/Data.md)
-- [hxd.snd.Driver](api/md/hxd/snd/Driver.md)
-- [hxd.snd.DriverFeature](api/md/hxd/snd/DriverFeature.md)
-- [hxd.snd.Effect](api/md/hxd/snd/Effect.md)
-- [hxd.snd.EffectDriver](api/md/hxd/snd/EffectDriver.md)
-- [hxd.snd.Listener](api/md/hxd/snd/Listener.md)
-- [hxd.snd.LoadingData](api/md/hxd/snd/LoadingData.md)
-- [hxd.snd.Manager](api/md/hxd/snd/Manager.md)
-- [hxd.snd.Mp3Data](api/md/hxd/snd/Mp3Data.md)
-- [hxd.snd.NativeChannel](api/md/hxd/snd/NativeChannel.md)
-- [hxd.snd.OggData](api/md/hxd/snd/OggData.md)
-- [hxd.snd.SampleFormat](api/md/hxd/snd/SampleFormat.md)
-- [hxd.snd.SoundGroup](api/md/hxd/snd/SoundGroup.md)
-- [hxd.snd.Source](api/md/hxd/snd/Source.md)
-- [hxd.snd.SourceHandle](api/md/hxd/snd/SourceHandle.md)
-- [hxd.snd.WavData](api/md/hxd/snd/WavData.md)
-- [hxd.snd.effect.LowPass](api/md/hxd/snd/effect/LowPass.md)
-- [hxd.snd.effect.Pitch](api/md/hxd/snd/effect/Pitch.md)
-- [hxd.snd.effect.Reverb](api/md/hxd/snd/effect/Reverb.md)
-- [hxd.snd.effect.ReverbPreset](api/md/hxd/snd/effect/ReverbPreset.md)
-- [hxd.snd.effect.Spatialization](api/md/hxd/snd/effect/Spatialization.md)
-- [hxd.snd.openal.AL](api/md/hxd/snd/openal/AL.md)
-- [hxd.snd.openal.BufferHandle](api/md/hxd/snd/openal/BufferHandle.md)
-- [hxd.snd.openal.Driver](api/md/hxd/snd/openal/Driver.md)
-- [hxd.snd.openal.EFX](api/md/hxd/snd/openal/EFX.md)
-- [hxd.snd.openal.LowPassDriver](api/md/hxd/snd/openal/LowPassDriver.md)
-- [hxd.snd.openal.PitchDriver](api/md/hxd/snd/openal/PitchDriver.md)
-- [hxd.snd.openal.ReverbDriver](api/md/hxd/snd/openal/ReverbDriver.md)
-- [hxd.snd.openal.SourceHandle](api/md/hxd/snd/openal/SourceHandle.md)
-- [hxd.snd.openal.SpatializationDriver](api/md/hxd/snd/openal/SpatializationDriver.md)
-- [hxd.snd.webaudio.BufferHandle](api/md/hxd/snd/webaudio/BufferHandle.md)
-- [hxd.snd.webaudio.BufferPlayback](api/md/hxd/snd/webaudio/BufferPlayback.md)
+- [hxd.res.TiledMap](api/md/hxd/res/TiledMap.md): A map made with the Tiled editor (`.tmx`).
+- [hxd.res.TiledMapData](api/md/hxd/res/TiledMapData.md): The content of a Tiled map.
+- [hxd.res.TiledMapLayer](api/md/hxd/res/TiledMapLayer.md): A layer of a Tiled map.
+- [hxd.snd.Buffer](api/md/hxd/snd/Buffer.md): A driver buffer containing the samples of a sound, or a part of a streamed sound.
+- [hxd.snd.BufferHandle](api/md/hxd/snd/BufferHandle.md): The driver handle of a sound buffer.
+- [hxd.snd.Channel](api/md/hxd/snd/Channel.md): A sound being played, returned by `hxd.res.Sound.play` or `Manager.play`.
+- [hxd.snd.ChannelBase](api/md/hxd/snd/ChannelBase.md): The common properties of a `Channel` and a `ChannelGroup`: volume, fading, priority and effects.
+- [hxd.snd.ChannelGroup](api/md/hxd/snd/ChannelGroup.md): A group of channels sharing a volume, a priority and effects, such as the music or the sound effects.
+- [hxd.snd.Data](api/md/hxd/snd/Data.md): Decoded audio data: the base class of the decoders of each file format.
+- [hxd.snd.Driver](api/md/hxd/snd/Driver.md): The interface of the low level sound API used by `hxd.snd.Manager`: OpenAL (`hxd.snd.openal.Driver`) or Web Audio (`hxd.snd.webaudio.Driver`).
+- [hxd.snd.DriverFeature](api/md/hxd/snd/DriverFeature.md): The optional features of a sound driver.
+- [hxd.snd.Effect](api/md/hxd/snd/Effect.md): The base class of the sound effects (such as `hxd.snd.effect.Spatialization` or `hxd.snd.effect.Reverb`), added to a `Channel` or `ChannelGroup`.
+- [hxd.snd.EffectDriver](api/md/hxd/snd/EffectDriver.md): The driver implementation of an effect type: it applies the effect parameters to the sources.
+- [hxd.snd.Listener](api/md/hxd/snd/Listener.md): The position and orientation of the listener of spatialized sounds (see `hxd.snd.effect.Spatialization`).
+- [hxd.snd.LoadingData](api/md/hxd/snd/LoadingData.md): The data of a sound that is not loaded yet: decoding it throws until `load` completes.
+- [hxd.snd.Manager](api/md/hxd/snd/Manager.md): Plays the sounds: it assigns the channels to the hardware sources of the driver (Web Audio on JS, OpenAL otherwise), streams the long sounds and applies the effects.
+- [hxd.snd.Mp3Data](api/md/hxd/snd/Mp3Data.md): The decoder of MP3 data: with the native decoder on HashLink, with the browser decoder on JS (asynchronously).
+- [hxd.snd.NativeChannel](api/md/hxd/snd/NativeChannel.md): A channel playing generated samples: subclass it and override `onSample` to fill the buffers with stereo float samples.
+- [hxd.snd.OggData](api/md/hxd/snd/OggData.md): The decoder of Ogg Vorbis data: native on HashLink, with the `stb_ogg_sound` library on other targets (without it, decoding throws an error).
+- [hxd.snd.SampleFormat](api/md/hxd/snd/SampleFormat.md): The format of the audio samples.
+- [hxd.snd.SoundGroup](api/md/hxd/snd/SoundGroup.md): A group of sounds sharing a volume and a limit of channels playing at the same time.
+- [hxd.snd.Source](api/md/hxd/snd/Source.md): A hardware source of the sound driver, playing a channel.
+- [hxd.snd.SourceHandle](api/md/hxd/snd/SourceHandle.md): The driver handle of a sound source.
+- [hxd.snd.WavData](api/md/hxd/snd/WavData.md): The decoder of WAV (PCM) data.
+- [hxd.snd.effect.LowPass](api/md/hxd/snd/effect/LowPass.md): A low pass filter, attenuating the high frequencies.
+- [hxd.snd.effect.Pitch](api/md/hxd/snd/effect/Pitch.md): Changes the pitch (and speed) of the sound.
+- [hxd.snd.effect.Reverb](api/md/hxd/snd/effect/Reverb.md): An I3DL2 environmental reverb.
+- [hxd.snd.effect.ReverbPreset](api/md/hxd/snd/effect/ReverbPreset.md): Parameters of a `Reverb`, with the standard I3DL2 and EFX environment presets.
+- [hxd.snd.effect.Spatialization](api/md/hxd/snd/effect/Spatialization.md): Positions the sound in 3D, relative to `Manager.listener`: the volume decreases with the distance.
+- [hxd.snd.openal.AL](api/md/hxd/snd/openal/AL.md): The OpenAL API.
+- [hxd.snd.openal.BufferHandle](api/md/hxd/snd/openal/BufferHandle.md): An OpenAL sound buffer.
+- [hxd.snd.openal.Driver](api/md/hxd/snd/openal/Driver.md): The OpenAL sound driver, used on HashLink (with the `hlopenal` library) and on JS with `-D useal` (through an emulator over Web Audio).
+- [hxd.snd.openal.EFX](api/md/hxd/snd/openal/EFX.md): The OpenAL effects extension API.
+- [hxd.snd.openal.LowPassDriver](api/md/hxd/snd/openal/LowPassDriver.md): Implements `hxd.snd.effect.LowPass` with an OpenAL EFX filter.
+- [hxd.snd.openal.PitchDriver](api/md/hxd/snd/openal/PitchDriver.md): Implements `hxd.snd.effect.Pitch` with the OpenAL source pitch.
+- [hxd.snd.openal.ReverbDriver](api/md/hxd/snd/openal/ReverbDriver.md): Implements `hxd.snd.effect.Reverb` with an OpenAL EFX reverb on an auxiliary send.
+- [hxd.snd.openal.SourceHandle](api/md/hxd/snd/openal/SourceHandle.md): An OpenAL sound source, with the auxiliary sends used by its effects.
+- [hxd.snd.openal.SpatializationDriver](api/md/hxd/snd/openal/SpatializationDriver.md): Implements `hxd.snd.effect.Spatialization` with the OpenAL source position.
+- [hxd.snd.webaudio.BufferHandle](api/md/hxd/snd/webaudio/BufferHandle.md): A Web Audio sound buffer.
+- [hxd.snd.webaudio.BufferPlayback](api/md/hxd/snd/webaudio/BufferPlayback.md): A buffer queued on a Web Audio source, with its scheduled play times.
 - [hxd.snd.webaudio.Context](api/md/hxd/snd/webaudio/Context.md): Common part between webaudio and OpenAL emulator - AudioContext and masterGain.
-- [hxd.snd.webaudio.Driver](api/md/hxd/snd/webaudio/Driver.md)
-- [hxd.snd.webaudio.LowPassDriver](api/md/hxd/snd/webaudio/LowPassDriver.md)
-- [hxd.snd.webaudio.PitchDriver](api/md/hxd/snd/webaudio/PitchDriver.md)
-- [hxd.snd.webaudio.SourceHandle](api/md/hxd/snd/webaudio/SourceHandle.md)
-- [hxd.snd.webaudio.SpatializationDriver](api/md/hxd/snd/webaudio/SpatializationDriver.md)
-- [hxd.tools.ConvexHull](api/md/hxd/tools/ConvexHull.md)
-- [hxd.tools.FillMode](api/md/hxd/tools/FillMode.md)
-- [hxd.tools.Instance](api/md/hxd/tools/Instance.md)
-- [hxd.tools.MeshOptimizer](api/md/hxd/tools/MeshOptimizer.md)
-- [hxd.tools.Mikktspace](api/md/hxd/tools/Mikktspace.md)
-- [hxd.tools.Parameters](api/md/hxd/tools/Parameters.md)
-- [hxd.tools.Pointer](api/md/hxd/tools/Pointer.md)
+- [hxd.snd.webaudio.Driver](api/md/hxd/snd/webaudio/Driver.md): The Web Audio sound driver, used on JS (unless `-D useal` is set).
+- [hxd.snd.webaudio.LowPassDriver](api/md/hxd/snd/webaudio/LowPassDriver.md): Implements `hxd.snd.effect.LowPass` with a Web Audio biquad filter.
+- [hxd.snd.webaudio.PitchDriver](api/md/hxd/snd/webaudio/PitchDriver.md): Implements `hxd.snd.effect.Pitch` with the playback rate of the Web Audio buffers.
+- [hxd.snd.webaudio.SourceHandle](api/md/hxd/snd/webaudio/SourceHandle.md): A Web Audio sound source: the chain of nodes (effects and gain) the buffers are played through.
+- [hxd.snd.webaudio.SpatializationDriver](api/md/hxd/snd/webaudio/SpatializationDriver.md): Implements `hxd.snd.effect.Spatialization` with a Web Audio panner node.
+- [hxd.tools.ConvexHull](api/md/hxd/tools/ConvexHull.md): A convex hull computed by V-HACD.
+- [hxd.tools.FillMode](api/md/hxd/tools/FillMode.md): How V-HACD fills the interior of the voxelized mesh.
+- [hxd.tools.Instance](api/md/hxd/tools/Instance.md): The native V-HACD instance.
+- [hxd.tools.MeshOptimizer](api/md/hxd/tools/MeshOptimizer.md): Bindings to the meshoptimizer library (HashLink 1.15+): vertex remapping, cache optimization, simplification and tangents generation.
+- [hxd.tools.Mikktspace](api/md/hxd/tools/Mikktspace.md): Computes the tangents of a mesh with the MikkTSpace algorithm (HashLink only), the standard used by normal map bakers.
+- [hxd.tools.Parameters](api/md/hxd/tools/Parameters.md): The parameters of the V-HACD decomposition.
+- [hxd.tools.Pointer](api/md/hxd/tools/Pointer.md): A native pointer.
 - [hxd.tools.RenderDoc](api/md/hxd/tools/RenderDoc.md): RenderDoc In-application API
-- [hxd.tools.RenderDocInputButton](api/md/hxd/tools/RenderDocInputButton.md)
-- [hxd.tools.RenderDocNative](api/md/hxd/tools/RenderDocNative.md)
-- [hxd.tools.SimplifyOptions](api/md/hxd/tools/SimplifyOptions.md)
-- [hxd.tools.TangentOptions](api/md/hxd/tools/TangentOptions.md)
-- [hxd.tools.VHACD](api/md/hxd/tools/VHACD.md)
+- [hxd.tools.RenderDocInputButton](api/md/hxd/tools/RenderDocInputButton.md): The keys that can trigger a RenderDoc capture.
+- [hxd.tools.RenderDocNative](api/md/hxd/tools/RenderDocNative.md): The native bindings of `RenderDoc`.
+- [hxd.tools.SimplifyOptions](api/md/hxd/tools/SimplifyOptions.md): Options of the meshoptimizer simplification functions.
+- [hxd.tools.TangentOptions](api/md/hxd/tools/TangentOptions.md): Options of the meshoptimizer tangent generation.
+- [hxd.tools.VHACD](api/md/hxd/tools/VHACD.md): Approximate convex decomposition of a mesh with the V-HACD library (HashLink 1.15+), to build collision shapes.
 
 ## hxsl
 

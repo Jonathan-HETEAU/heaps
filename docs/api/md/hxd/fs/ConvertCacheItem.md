@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd.fs`](README.md) · module `hxd.fs.FileConverter` · source [`hxd/fs/FileConverter.hx`](../../../../../hxd/fs/FileConverter.hx) · available on hl/sdl, hl/directx
 
+A conversion stored in the cache (`.tmp/cache.dat`), used to skip the conversion when the source file did not change.
+
 ## Fields
 
 ### ver

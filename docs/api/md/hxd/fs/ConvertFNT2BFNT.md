@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fs.Convert`](Convert.md)
 
+Converts bitmap font descriptions to the binary BFNT format.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fs.Convert`](Convert.md)
 ```haxe
 function new():Void
 ```
+
+Creates the conversion.
 
 ## Methods
 

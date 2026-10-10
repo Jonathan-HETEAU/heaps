@@ -4,6 +4,8 @@
 
 Extends: `haxe.io.Input`
 
+A buffered input reading a file entry, returned by `FileEntry.open`.
+
 ## Variables
 
 ### position
@@ -11,6 +13,8 @@ Extends: `haxe.io.Input`
 ```haxe
 var position(get, null):Int
 ```
+
+The position of the next byte to read in the file.
 
 ## Methods
 
@@ -20,11 +24,15 @@ var position(get, null):Int
 function fetch(?dataSize:Int = 256):Void
 ```
 
+Reads the next `dataSize` bytes in the buffer. Throws `haxe.io.Eof` at the end of the file.
+
 ### skip
 
 ```haxe
 function skip(nbytes:Int):Void
 ```
+
+Skips `nbytes` bytes.
 
 ### readByte
 
