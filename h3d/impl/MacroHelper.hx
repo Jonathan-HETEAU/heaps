@@ -2,6 +2,9 @@ package h3d.impl;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
+/**
+	Macros used by the drivers.
+**/
 class MacroHelper {
 
 #if macro
@@ -15,6 +18,9 @@ class MacroHelper {
 		}
 	}
 
+	/**
+		Build macro replacing the `gl` identifiers by `GL` (the static OpenGL API of HashLink).
+	**/
 	public static function replaceGL() {
 		var fields = Context.getBuildFields();
 		for( f in fields )
@@ -30,6 +36,9 @@ class MacroHelper {
 
 #end
 
+	/**
+		Returns the full path of the resources directory (`-D resourcesPath`, `res` by default), or `null` if not found.
+	**/
 	public static macro function getResourcesPath() {
 		var dir = haxe.macro.Context.definedValue("resourcesPath");
 		if( dir == null ) dir = "res";

@@ -1,25 +1,71 @@
 package h3d.impl;
 
+/**
+	The allocations made from the same call stack (see `MemoryManager.allocStats`).
+**/
 typedef StackStats = {
+	/**
+		The allocated textures or buffers.
+	**/
 	var stats: Array<TextureStat>;
+	/**
+		The call stack.
+	**/
 	var stack : String;
+	/**
+		The number of allocations.
+	**/
 	var count : Int;
+	/**
+		The memory size in bytes.
+	**/
 	var size : Float;
 }
 
+/**
+	The allocations made from the same code position (see `MemoryManager.allocStats`).
+**/
 typedef AllocStats = {
+	/**
+		The code position.
+	**/
 	var position : String;
+	/**
+		The number of allocations.
+	**/
 	var count : Int;
+	/**
+		Tells if the allocations are textures (or buffers).
+	**/
 	var tex : Bool;
+	/**
+		The memory size in bytes.
+	**/
 	var size : Float;
+	/**
+		The allocations, by call stack.
+	**/
 	var stacks : Array<StackStats>;
 }
 
+/**
+	An allocated texture or buffer.
+**/
 typedef TextureStat = {
+	/**
+		The name of the texture or buffer.
+	**/
 	var name: String;
+	/**
+		The memory size in bytes.
+	**/
 	var size: Float;
 }
 
+/**
+	Tracks the GPU memory used by the textures and buffers, frees the unused textures when the memory is low, and provides the shared index buffers.
+	Accessed with `h3d.Engine.mem`.
+**/
 class MemoryManager {
 
 	static inline var SIZE = 65532;
@@ -34,7 +80,13 @@ class MemoryManager {
 	var quadIndexes16 : Indexes;
 	var triIndexes32 : Indexes;
 	var quadIndexes32 : Indexes;
+	/**
+		The memory used by the buffers, in bytes.
+	**/
 	public var bufferMemory(default, null) : Float = 0;
+	/**
+		The memory used by the textures, in bytes.
+	**/
 	public var texMemory(default, null) : Float = 0;
 
 	/**
@@ -49,16 +101,25 @@ class MemoryManager {
 
 	var lastAutoDispose = 0;
 
+	/**
+		Creates the manager for the driver.
+	**/
 	public function new(driver) {
 		this.driver = driver;
 	}
 
+	/**
+		Initializes the manager and allocates the shared index buffers.
+	**/
 	public function init() {
 		textures = new Array();
 		buffers = new Array();
 		initIndexes();
 	}
 
+	/**
+		Enables (or disables) the recording of the code position of each allocation, for `allocStats`.
+	**/
 	public static function enableTrackAlloc(?b : Bool) {
 		@:privateAccess hxd.impl.AllocPos.ENABLED = b != null ? b : true;
 	}
@@ -91,6 +152,9 @@ class MemoryManager {
 		if( !cleanTextures(false) ) cleanTextures(true);
 	}
 
+	/**
+		Returns an index buffer listing `0, 1, 2...`, to draw `vertices` vertices as a triangle list (16 bits indexes up to 65532 vertices, 32 bits above).
+	**/
 	public function getTriIndexes( vertices : Int ) {
 		if( vertices <= SIZE )
 			return triIndexes16;
@@ -108,6 +172,9 @@ class MemoryManager {
 		return triIndexes32;
 	}
 
+	/**
+		Returns an index buffer drawing each group of 4 vertices as a quad (2 triangles), for `vertices` vertices.
+	**/
 	public function getQuadIndexes( vertices : Int ) {
 		var nquads = ((vertices + 3) >> 2) * 6;
 		if( nquads <= SIZE )
@@ -183,6 +250,9 @@ class MemoryManager {
 		return true;
 	}
 
+	/**
+		Disposes the least recently used texture that can be reallocated (one with a `realloc` function), if it was unused for `autoDisposeKeepTime` seconds or if `force` is set. Returns `true` if a texture was disposed.
+	**/
 	public function cleanTextures( force = true ) {
 		textures.sort(sortByLRU);
 		var cleanupFrames = Math.ceil(autoDisposeKeepTime * hxd.Timer.fps());
@@ -202,6 +272,9 @@ class MemoryManager {
 		return t1.lastFrame - t2.lastFrame;
 	}
 
+	/**
+		Called at the start of each frame: disposes unused textures when the free GPU memory is under `autoDisposeGpuFreeMB`.
+	**/
 	public function beginFrame() {
 		if( autoDisposeGpuFreeMB > 0 && hxd.Timer.frameCount > lastAutoDispose + 60 ) {
 			var stats = driver.getMemoryUsage();
@@ -252,17 +325,26 @@ class MemoryManager {
 		texMemory += memSize(t);
 	}
 
+	/**
+		Called when an allocation fails even after freeing memory. Throws an error by default.
+	**/
 	public dynamic function errorOutOfMemory() {
 		throw "Failed to alloc GPU Memory (full)";
 	}
 
 	// ------------------------------------- DISPOSE ------------------------------------------
 
+	/**
+		Called when the GPU context is lost: releases the resources and allocates the shared index buffers again.
+	**/
 	public function onContextLost() {
 		dispose();
 		initIndexes();
 	}
 
+	/**
+		Releases the shared index buffers and all the textures and buffers.
+	**/
 	public function dispose() {
 		if( triIndexes16 != null ) triIndexes16.dispose();
 		if( quadIndexes16 != null ) quadIndexes16.dispose();
@@ -284,6 +366,9 @@ class MemoryManager {
 
 	// ------------------------------------- STATS ------------------------------------------
 
+	/**
+		Returns the number and memory size of the buffers and textures (in megabytes if `megas` is set), with the memory reported by the driver.
+	**/
 	public function stats( megas = false ) {
 		var total = bufferMemory + texMemory;
 		var use = driver.getMemoryUsage();
@@ -294,7 +379,7 @@ class MemoryManager {
 			totalMemory : fmt(use == null ? bufferMemory + texMemory : use.allocated),
 			textureCount : textures.length,
 			textureMemory : fmt(texMemory),
-			otherMemory : use == null ? 0 : fmt(use.allocated - total) /* remaining memory that we don't know about */,
+			otherMemory : use == null ? 0 : fmt(use.allocated - total),
 			maxMemory : use == null ? 0 : fmt(use.total),
 		};
 	}

@@ -1,10 +1,16 @@
 package h3d.impl;
 import h3d.impl.Driver;
 
+/**
+	A driver that draws nothing, for headless applications and tests.
+**/
 class NullDriver extends Driver {
 
 	var cur : hxsl.RuntimeShader;
 
+	/**
+		Creates the driver.
+	**/
 	public function new() {
 	}
 

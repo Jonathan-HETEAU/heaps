@@ -3,11 +3,17 @@ import h3d.impl.Driver;
 
 #if (hlsdl && heaps_vulkan)
 
+/**
+	An experimental Vulkan driver (HashLink with SDL and `-D heaps_vulkan`).
+**/
 class VulkanDriver extends Driver {
 
 	var ctx : sdl.Vulkan.VKContext;
 	var cur : hxsl.RuntimeShader;
 
+	/**
+		Creates the driver.
+	**/
 	public function new() {
 		ctx = @:privateAccess hxd.Window.getInstance().window.vkctx;
 		if( !ctx.beginFrame() ) throw "assert";

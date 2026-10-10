@@ -33,27 +33,57 @@ private class CompiledShader {
 	public var layouts : Map<Int, Layout>;
 	public var vertexBytes : haxe.io.Bytes;
 	public var semanticNames : Array<String>;
+	/**
+		Creates an empty compiled shader.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	A stage of the DirectX 11 pipeline.
+**/
 enum PipelineKind {
 	Vertex;
 	Pixel;
 }
 
+/**
+	The resources bound to a stage of the DirectX 11 pipeline.
+**/
 class PipelineState {
+	/**
+		The stage.
+	**/
 	public var kind : PipelineKind;
+	/**
+		The bound sampler states.
+	**/
 	public var samplers = new hl.NativeArray<SamplerState>(64);
+	/**
+		The settings of the bound samplers, to avoid redundant changes.
+	**/
 	public var samplerBits = new Array<Int>();
+	/**
+		The bound textures.
+	**/
 	public var resources = new hl.NativeArray<ShaderResourceView>(64);
+	/**
+		The bound constant buffers.
+	**/
 	public var buffers = new hl.NativeArray<dx.Resource>(16);
+	/**
+		Creates the state of a stage.
+	**/
 	public function new(kind) {
 		this.kind = kind;
 		for(i in 0...64 ) samplerBits[i] = -1;
 	}
 }
 
+/**
+	The DirectX 11 driver (HashLink with the `hldx` library).
+**/
 class DirectXDriver extends h3d.impl.Driver {
 
 	static inline var NTARGETS = 8;
@@ -121,15 +151,27 @@ class DirectXDriver extends h3d.impl.Driver {
 	var updateResCount : Int;
 	var onContextLost : Void -> Void;
 
+	/**
+		The format of the back buffer.
+	**/
 	public var backBufferFormat : dx.Format = R8G8B8A8_UNORM;
+	/**
+		The format of the default depth buffer.
+	**/
 	public var depthStencilFormat : dx.Format = D24_UNORM_S8_UINT;
 
+	/**
+		Creates the driver for the first window.
+	**/
 	public function new() {
 		window = @:privateAccess dx.Window.windows[0];
 		Driver.setErrorHandler(onDXError);
 		reset();
 	}
 
+	/**
+		Returns the flags used to create the device (the debug layer in debug builds). Can be replaced to change them.
+	**/
 	public dynamic function getDriverFlags() : dx.Driver.DriverInitFlags {
 		var options : dx.Driver.DriverInitFlags = None;
 		#if debug

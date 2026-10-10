@@ -1,20 +1,41 @@
 package h3d.impl;
 
+/**
+	A 2D graph of the frame rate and of the CPU and GPU frame times, for profiling. Call `update` every frame.
+**/
 class FpsGraph {
 	var parent : h2d.Object;
 
+	/**
+		Displays the GPU frame time (measured with GPU queries).
+	**/
 	public var showGpu : Bool = true;
+	/**
+		Displays the CPU frame time.
+	**/
 	public var showCpu : Bool = true;
 
 	// Graph config
+	/**
+		The width of the graph, in pixels.
+	**/
 	public var width(default, set) : Float = 400.;
+	/**
+		The height of the graph, in pixels.
+	**/
 	public var height(default, set) : Float = 180.;
+	/**
+		The number of frames displayed.
+	**/
 	public var maxFrameCount(default, set) : Int = 200;
 	/**
 		maxFps will be set automatically to *2 or /2.
 		Default value is chosen for 30FPS(45), 60FPS(90), 144FPS(180)
 	**/
 	public var maxFps(default, set) : Float = 90.;
+	/**
+		The frame time at the top of the graph, in milliseconds.
+	**/
 	public var maxDtMs(default, set) : Float = 1000 / 20;
 	var xscale : Float;
 	var yscaleFps : Float;
@@ -46,6 +67,9 @@ class FpsGraph {
 	var gpuDtMs : Float;
 	var gpuFpsData : FrameData;
 
+	/**
+		Creates the graph in the parent object.
+	**/
 	public function new( parent : h2d.Object ) {
 		this.parent = parent;
 		xscale = width / maxFrameCount;
@@ -69,10 +93,16 @@ class FpsGraph {
 		gpuFpsData = new FrameData(maxFrameCount);
 	}
 
+	/**
+		Moves the graph.
+	**/
 	public inline function setPosition( x : Float, y : Float ) {
 		root.setPosition(x, y);
 	}
 
+	/**
+		Adds the current frame to the graph and redraws it.
+	**/
 	public function update( dt : Float ) {
 		// var fps = dt == 0.0 ? Math.NaN : Math.round(1.0 / dt);
 		var fps = h3d.Engine.getCurrent().fps;
@@ -94,6 +124,9 @@ class FpsGraph {
 		draw();
 	}
 
+	/**
+		Removes the graph and releases its queries.
+	**/
 	public function dispose() {
 		if( root != null )
 			root.remove();

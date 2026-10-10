@@ -16,9 +16,15 @@ import haxe.MainLoop;
 
 private typedef Driver = Dx12;
 
+/**
+	A file caching the pipeline state configurations used by each shader, to create the pipelines in advance at the next run (see `DX12Driver.ENABLE_PSO_CONFIG_CACHE`).
+**/
 class PSOConfigCache {
 	static inline var MAX_SIGN_SIZE = 1024;
 	static inline var MAX_PIPELINES_PER_SHADER = 4096;
+	/**
+		The version of the file format.
+	**/
 	public static var VERSION = 1;
 
 	var file : String;
@@ -33,12 +39,18 @@ class PSOConfigCache {
 	var mutex = new sys.thread.Mutex();
 	#end
 
+	/**
+		Creates the cache for the file (saved to `outputFile` if set).
+	**/
 	public function new(file : String, ?outputFile : String ) {
 		this.file = file;
 		this.outputFile = outputFile ?? file;
 		magic = 'PCFG-$VERSION';
 	}
 
+	/**
+		Loads the cache files.
+	**/
 	public function load() {
 		configs = [];
 		loadFailed = false;
@@ -88,6 +100,9 @@ class PSOConfigCache {
 		}
 	}
 
+	/**
+		Creates the pipelines of the compiled shader recorded in the cache.
+	**/
 	public function resolveConfig( c : CompiledShader ) {
 		#if heaps_mt_hxsl_cache
 		mutex.acquire();
@@ -124,6 +139,9 @@ class PSOConfigCache {
 		}
 	}
 
+	/**
+		Records a new pipeline configuration of the shader.
+	**/
 	public function addConfig<T>(shader : hxsl.RuntimeShader, p : PipelineCache.CachedPipeline<T>) {
 		if( p.size > 64 )
 			throw "assert";
@@ -152,6 +170,9 @@ class PSOConfigCache {
 		isDirty = true;
 	}
 
+	/**
+		Saves the cache file if it changed.
+	**/
 	public function save() {
 		if( configs == null || !canSave || !isDirty )
 			return;
@@ -194,22 +215,34 @@ class PSOConfigCache {
 	}
 }
 
+/**
+	A pool of scratch descriptor heaps, reused every frame.
+**/
 class ScratchHeapArray {
 	var heaps : Array<ScratchHeap>;
 	var type : DescriptorHeapType;
 	var size : Int;
 	var cursor : Int;
 
+	/**
+		Creates a pool of heaps of the given type and size.
+	**/
 	public function new(type,size) {
 		this.type = type;
 		this.size = size;
 		heaps = [];
 	}
 
+	/**
+		Makes all the heaps available again.
+	**/
 	public function reset() {
 		cursor = 0;
 	}
 
+	/**
+		Grows the heap size to at least `minSize`: the current heaps are added to `toRelease`.
+	**/
 	public function checkSize( minSize : Int, toRelease : Array<Resource> ) {
 		if( minSize <= size )
 			return;
@@ -220,6 +253,9 @@ class ScratchHeapArray {
 		cursor = 0;
 	}
 
+	/**
+		Returns the next available heap, cleared, creating it if needed.
+	**/
 	public function next() {
 		var h = heaps[cursor++];
 		if( h == null ) {
@@ -230,6 +266,9 @@ class ScratchHeapArray {
 		return h;
 	}
 
+	/**
+		Returns the memory size of the heaps, in bytes.
+	**/
 	public function getSize() {
 		var size : Float = 0;
 		for( h in heaps )
@@ -239,22 +278,52 @@ class ScratchHeapArray {
 
 }
 
+/**
+	A part of an upload buffer, allocated by `BufferAllocator`.
+**/
 @:struct class BufferAllocation {
+	/**
+		The buffer resource.
+	**/
 	public var resource : GpuResource = null;
+	/**
+		The CPU address of the allocated part, to write the data.
+	**/
 	public var cpuAddress : hl.Bytes = null;
+	/**
+		The offset of the allocated part in the resource, in bytes.
+	**/
 	public var offset : Int = 0;
+	/**
+		The size of the allocated part, in bytes.
+	**/
 	public var byteSize : Int = 0;
+	/**
+		Creates an empty allocation.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	An upload buffer from which `BufferAllocator` allocates parts linearly.
+**/
 class BufferAllocatorPage {
+	/**
+		The size of the buffer, in bytes.
+	**/
 	public var capacity(default, null) : Int;
+	/**
+		The number of frames the page has not been used.
+	**/
 	public var unusedFrame(default, null) : Int = 0;
 	var offset : Int = 0;
 	var resource : GpuResource;
 	var cpuAddress : hl.Bytes;
 
+	/**
+		Creates and maps the buffer.
+	**/
 	public function new( heap : HeapProperties, flags : haxe.EnumFlags<HeapFlag>, desc : ResourceDesc ) {
 		this.capacity = desc.width.low;
 		resource = DX12Driver.allocCheck(() -> Driver.createCommittedResource(heap, flags, desc, GENERIC_READ, null));
@@ -262,6 +331,9 @@ class BufferAllocatorPage {
 		cpuAddress = resource.map(0, null);
 	}
 
+	/**
+		Allocates `size` bytes with the alignment into `allocation`. Returns `false` if the page is full.
+	**/
 	public function tryAlloc( size, alignment = 256, allocation : BufferAllocation ) : Bool {
 		var offsetAligned = offset & ~(alignment - 1);
 		if( offsetAligned != offset ) offsetAligned += alignment;
@@ -276,6 +348,9 @@ class BufferAllocatorPage {
 		return true;
 	}
 
+	/**
+		Frees all the allocations of the page.
+	**/
 	public function reset() {
 		if ( offset == 0 )
 			unusedFrame++;
@@ -285,6 +360,9 @@ class BufferAllocatorPage {
 		}
 	}
 
+	/**
+		Releases the buffer.
+	**/
 	public function dispose() {
 		resource.release();
 		resource = null;
@@ -292,6 +370,9 @@ class BufferAllocatorPage {
 	}
 }
 
+/**
+	Allocates the temporary upload memory of a frame (such as shader constants) from pages of upload buffers, released when unused for a long time.
+**/
 class BufferAllocator {
 	inline static var MAX_KEEP_FRAME = 3600;
 	var pages : Array<BufferAllocatorPage>;
@@ -300,6 +381,9 @@ class BufferAllocator {
 	var desc : ResourceDesc;
 	var flags : haxe.EnumFlags<HeapFlag>;
 
+	/**
+		Creates the allocator with a first page of `size` bytes.
+	**/
 	public function new( size : Int ) {
 		heap = new HeapProperties();
 		heap.type = UPLOAD;
@@ -315,6 +399,9 @@ class BufferAllocator {
 		pages = [new BufferAllocatorPage(heap, flags, desc)];
 	}
 
+	/**
+		Frees all the allocations, and releases the pages unused for a long time (or all the extra pages if `forceDispose` is set).
+	**/
 	public function reset( forceDispose = false ) {
 		for ( p in pages )
 			p.reset();
@@ -332,11 +419,17 @@ class BufferAllocator {
 		}
 	}
 
+	/**
+		Releases all the pages.
+	**/
 	public function dispose() {
 		for ( p in pages )
 			p.dispose();
 	}
 
+	/**
+		Allocates `size` bytes with the alignment into `allocation`, adding a bigger page if needed.
+	**/
 	public function alloc( size : Int, alignment = 256, allocation : BufferAllocation ) {
 		var sz = size & ~(alignment - 1);
 		if( sz != size ) sz += alignment;
@@ -354,6 +447,9 @@ class BufferAllocator {
 		return allocation;
 	}
 
+	/**
+		Returns the total size of the pages, in bytes.
+	**/
 	public function getSize() {
 		var size : Float = 0;
 		for( p in pages )
@@ -363,35 +459,116 @@ class BufferAllocator {
 
 }
 
+/**
+	The resources of a frame in flight: back buffer, command lists, scratch heaps, queries and resources to release once the GPU has finished the frame.
+**/
 class DxFrame {
+	/**
+		The back buffer of the frame.
+	**/
 	public var backBuffer : ResourceData;
+	/**
+		The render target view of the back buffer.
+	**/
 	public var backBufferView : Address;
+	/**
+		The default depth buffer.
+	**/
 	public var depthBuffer : GpuResource;
+	/**
+		The allocator of the command list.
+	**/
 	public var allocator : CommandAllocator;
+	/**
+		The command list of the frame.
+	**/
 	public var commandList : CommandList;
+	/**
+		The allocator of the copy command list.
+	**/
 	public var copyAllocator : CommandAllocator;
+	/**
+		The command list of the copies.
+	**/
 	public var copyCommandList : CommandList;
+	/**
+		The buffer used to read data back from the GPU.
+	**/
 	public var copyBuffer : GpuResource;
+	/**
+		The current position in `copyBuffer`.
+	**/
 	public var copyBufferCursor : Int = 0;
+	/**
+		The fence value signaled when the GPU has finished the frame.
+	**/
 	public var fenceValue : Int64;
+	/**
+		The resources to release once the GPU has finished the frame.
+	**/
 	public var toRelease : Array<Resource> = [];
 	#if (hldx >= version("2.0.0"))
+	/**
+		The placed textures to free once the GPU has finished the frame.
+	**/
 	public var placedToFree : Array<TextureData> = [];
 	#end
+	/**
+		The bindless texture handles to release once the GPU has finished the frame.
+	**/
 	public var texHandlesToRelease : Array<h3d.mat.TextureHandle> = [];
+	/**
+		The bindless buffer handles to release once the GPU has finished the frame.
+	**/
 	public var bufHandlesToRelease : Array<h3d.BufferHandle> = [];
+	/**
+		The current heap of the shader resource views.
+	**/
 	public var srvHeap : ScratchHeap;
+	/**
+		The current heap of the samplers.
+	**/
 	public var samplerHeap : ScratchHeap;
+	/**
+		The pool of shader resource view heaps.
+	**/
 	public var srvHeapCache : ScratchHeapArray;
+	/**
+		The pool of sampler heaps.
+	**/
 	public var samplerHeapCache : ScratchHeapArray;
+	/**
+		The query heaps.
+	**/
 	public var queryHeaps : Array<QueryHeap> = [];
+	/**
+		The queries waiting for their result.
+	**/
 	public var queriesPending : Array<Query> = [];
+	/**
+		The index of the current query heap.
+	**/
 	public var queryCurrentHeap : Int;
+	/**
+		The next free position in the current query heap.
+	**/
 	public var queryHeapOffset : Int;
+	/**
+		The buffer receiving the query results.
+	**/
 	public var queryBuffer : GpuResource;
+	/**
+		The allocator of the temporary upload memory of the frame.
+	**/
 	public var bufferAllocator : BufferAllocator;
+	/**
+		Creates an empty frame.
+	**/
 	public function new() {
 	}
+	/**
+		Returns the GPU memory used by the frame resources, in bytes.
+	**/
 	public function getSize() {
 		var size : Float = 0;
 		// both srvHeap and samplerHeap are from cache
@@ -403,82 +580,280 @@ class DxFrame {
 	}
 }
 
+/**
+	The root signature layout of a shader stage: the root parameter index of each kind of resource.
+**/
 class ShaderRegisters {
+	/**
+		The root parameter of the globals.
+	**/
 	public var globals : Int;
+	/**
+		The root parameter of the parameters.
+	**/
 	public var params : Int;
+	/**
+		The first root parameter of the buffers.
+	**/
 	public var buffers : Int;
+	/**
+		The number of constant buffers.
+	**/
 	public var cbvCount : Int;
+	/**
+		The number of storage buffers.
+	**/
 	public var storageCount : Int;
+	/**
+		The root parameter of the textures.
+	**/
 	public var textures : Int;
+	/**
+		The root parameter of the samplers.
+	**/
 	public var samplers : Int;
+	/**
+		The number of textures.
+	**/
 	public var texturesCount : Int;
+	/**
+		The type of each texture.
+	**/
 	public var texturesTypes : Array<hxsl.Ast.Type>;
+	/**
+		The kind of each buffer.
+	**/
 	public var bufferTypes : Array<hxsl.Ast.BufferKind>;
+	/**
+		The stride of each buffer.
+	**/
 	public var bufferStrides : Array<Int>;
+	/**
+		The descriptors of the textures, in the current heap.
+	**/
 	public var srv : Address;
+	/**
+		The descriptors of the samplers, in the current heap.
+	**/
 	public var samplersView : Address;
+	/**
+		The heap generation of the descriptors, to know if they must be written again.
+	**/
 	public var lastHeapCount : Int;
+	/**
+		The textures of the last draw, to avoid writing the same descriptors again.
+	**/
 	public var lastTextures : Array<Texture> = [];
+	/**
+		The sampler settings of the last draw.
+	**/
 	public var lastTexturesBits : Array<Int>= [];
+	/**
+		Creates the layout.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	A shader compiled for DirectX 12: its root signature, input layout and pipeline states.
+**/
 class CompiledShader {
+	/**
+		The layout of the vertex stage (or of the compute shader).
+	**/
 	public var vertexRegisters : ShaderRegisters;
+	/**
+		The layout of the fragment stage.
+	**/
 	public var fragmentRegisters : ShaderRegisters;
+	/**
+		The format of the vertex inputs.
+	**/
 	public var format : hxd.BufferFormat;
+	/**
+		The pipeline state description, completed with the render states of each draw.
+	**/
 	public var pipeline : GraphicsPipelineStateDesc;
+	/**
+		The pipeline states created for each combination of render states.
+	**/
 	public var pipelines : PipelineCache<GraphicsPipelineState> = new PipelineCache();
+	/**
+		The root signature.
+	**/
 	public var rootSignature : RootSignature;
+	/**
+		The input layout.
+	**/
 	public var inputLayout : hl.CArray<InputElementDesc>;
+	/**
+		The number of vertex inputs.
+	**/
 	public var inputCount : Int;
+	/**
+		The linked shader.
+	**/
 	public var shader : hxsl.RuntimeShader;
+	/**
+		Tells if it is a compute shader.
+	**/
 	public var isCompute : Bool;
+	/**
+		The pipeline state of a compute shader.
+	**/
 	public var computePipeline : ComputePipelineState;
+	/**
+		Tells if the pipelines were created from the `PSOConfigCache`.
+	**/
 	public var usedPSOConfig : Bool;
 	#if heaps_mt_hxsl_cache
+	/**
+		Protects the creation of the pipelines (with `-D heaps_mt_hxsl_cache`).
+	**/
 	public var pipelineMutex = new sys.thread.Mutex();
 	#end
+	/**
+		Creates an empty compiled shader.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	Native structures reused by the driver to avoid allocations.
+**/
 @:struct class TempObjects {
 
+	/**
+		A reusable array of render target descriptors.
+	**/
 	public var renderTargets : hl.BytesAccess<Address>;
+	/**
+		A reusable depth stencil descriptor.
+	**/
 	public var depthStencils : hl.BytesAccess<Address>;
+	/**
+		Reusable bytes receiving the copyable footprints of a texture.
+	**/
 	public var copyableInfosBytes : hl.Bytes;
+	/**
+		A reusable array of vertex buffer views.
+	**/
 	public var vertexViews : hl.CArray<VertexBufferView>;
+	/**
+		A reusable array of the two shader visible descriptor heaps.
+	**/
 	public var descriptors2 : hl.NativeArray<DescriptorHeap>;
+	/**
+		The pending resource transitions.
+	**/
 	public var barriers : hl.CArray<ResourceBarrier>;
+	/**
+		The resources of the pending transitions.
+	**/
 	public var resourcesToTransition : hl.NativeArray<ResourceData>;
+	/**
+		The capacity of `barriers`.
+	**/
 	public var maxBarriers : Int;
+	/**
+		The number of pending resource transitions.
+	**/
 	public var barrierCount : Int;
+	/**
+		Tells if an unordered access barrier is needed before the next draw.
+	**/
 	public var needUAVBarrier : Bool = false;
+	/**
+		A reusable `HeapProperties` structure.
+	**/
 	@:packed public var heap(default,null) : HeapProperties;
+	/**
+		A reusable `ResourceBarrier` structure.
+	**/
 	@:packed public var barrier(default,null) : ResourceBarrier;
+	/**
+		A reusable `ClearColor` structure.
+	**/
 	@:packed public var clearColor(default,null) : ClearColor;
+	/**
+		A reusable `ClearValue` structure.
+	**/
 	@:packed public var clearValue(default,null) : ClearValue;
+	/**
+		A reusable `Viewport` structure.
+	**/
 	@:packed public var viewport(default,null) : Viewport;
+	/**
+		A reusable `Rect` structure.
+	**/
 	@:packed public var rect(default,null) : Rect;
+	/**
+		A reusable `BufferSRV` structure.
+	**/
 	@:packed public var bufferSRV(default,null) : BufferSRV;
+	/**
+		A reusable `Tex2DSRV` structure.
+	**/
 	@:packed public var texViewDesc(default,null) : Tex2DSRV;
+	/**
+		A reusable `SamplerDesc` structure.
+	**/
 	@:packed public var samplerDesc(default,null) : SamplerDesc;
+	/**
+		A reusable `ConstantBufferViewDesc` structure.
+	**/
 	@:packed public var vertexGlobalDesc(default,null) : ConstantBufferViewDesc;
+	/**
+		A reusable `ConstantBufferViewDesc` structure.
+	**/
 	@:packed public var fragmentGlobalDesc(default,null) : ConstantBufferViewDesc;
+	/**
+		A reusable `ConstantBufferViewDesc` structure.
+	**/
 	@:packed public var cbvDesc(default,null) : ConstantBufferViewDesc;
+	/**
+		A reusable `RenderTargetViewDesc` structure.
+	**/
 	@:packed public var rtvDesc(default,null) : RenderTargetViewDesc;
+	/**
+		A reusable `UAVBufferViewDesc` structure.
+	**/
 	@:packed public var uavDesc(default,null) : UAVBufferViewDesc;
+	/**
+		A reusable `UAVTextureViewDesc` structure.
+	**/
 	@:packed public var wtexDesc(default,null) : UAVTextureViewDesc;
+	/**
+		A reusable `SubResourceData` structure.
+	**/
 	@:packed public var subResourceData(default, null) : SubResourceData;
+	/**
+		A reusable `BufferAllocation` structure.
+	**/
 	@:packed public var bufferAllocation(default,null) : BufferAllocation;
+	/**
+		A reusable `TextureCopyLocation` structure.
+	**/
 	@:packed public var srcTextureLocation(default, null) : TextureCopyLocation;
+	/**
+		A reusable `TextureCopyLocation` structure.
+	**/
 	@:packed public var dstTextureLocation(default, null) : TextureCopyLocation;
+	/**
+		A reusable `DepthStencilViewDesc` structure.
+	**/
 	@:packed public var dstStencilViewDesc(default,null) : DepthStencilViewDesc;
 
+	/**
+		The current render pass settings.
+	**/
 	public var pass : h3d.mat.Pass;
 
+	/**
+		Allocates the structures.
+	**/
 	public function new() {
 		renderTargets = new hl.Bytes(8 * 8);
 		depthStencils = new hl.Bytes(8);
@@ -505,15 +880,30 @@ class CompiledShader {
 
 }
 
+/**
+	A descriptor heap.
+**/
 class BaseHeap {
+	/**
+		The size of a descriptor, in bytes.
+	**/
 	public var stride(default,null) : Int;
+	/**
+		The number of descriptors.
+	**/
 	public var size(default,null) : Int;
+	/**
+		The CPU address of the first descriptor.
+	**/
 	public var address(default,null) : Address;
 	var type : DescriptorHeapType;
 	var heap : DescriptorHeap;
 	var cpuToGpu : Int64;
 	var shaderVisible : Bool;
 
+	/**
+		Creates a heap of descriptors of the given type.
+	**/
 	public function new(type,size=8,shaderVisible=true) {
 		this.type = type;
 		this.shaderVisible = shaderVisible && (type == CBV_SRV_UAV || type == SAMPLER);
@@ -521,6 +911,9 @@ class BaseHeap {
 		allocHeap(size);
 	}
 
+	/**
+		Returns the memory size of the heap, in bytes.
+	**/
 	public function getSize() {
 		return size * stride;
 	}
@@ -537,18 +930,30 @@ class BaseHeap {
 		cpuToGpu = desc.flags == SHADER_VISIBLE ? ( heap.getHandle(true).value - address.value ) : 0;
 	}
 
+	/**
+		Called when the heap is reallocated bigger, with the previous heap to release.
+	**/
 	public dynamic function onFree( prev : DescriptorHeap, prevSize : Int  ) {
 		throw "Too many buffers";
 	}
 
+	/**
+		Converts a CPU descriptor address to the GPU address (for a shader visible heap).
+	**/
 	public inline function toGPU( address : Address ) : Address {
 		return new Address(address.value + cpuToGpu);
 	}
 
+	/**
+		Returns the index of the descriptor at the CPU address.
+	**/
 	public inline function getIndex( cpuAddress : Address ) : Int {
 		return Std.int((cpuAddress.value - address.value).low / stride);
 	}
 
+	/**
+		Returns the CPU address of the descriptor at the index.
+	**/
 	public inline function getCpuAddressAt( index : Int ) : Address {
 		return address.offset(index * stride);
 	}
@@ -558,8 +963,14 @@ class BaseHeap {
 	}
 }
 
+/**
+	A descriptor heap allocated linearly and cleared every frame, grown when full.
+**/
 class ScratchHeap extends BaseHeap {
 	var cursor : Int;
+	/**
+		The number of free descriptors.
+	**/
 	public var available(get,never) : Int;
 
 	override function allocHeap( size : Int ) {
@@ -569,6 +980,9 @@ class ScratchHeap extends BaseHeap {
 		super.allocHeap(size);
 	}
 
+	/**
+		Allocates `count` consecutive descriptors and returns the address of the first one.
+	**/
 	public function alloc( count : Int ) {
 		if( cursor + count > size ) {
 			var prevCursor = cursor;
@@ -586,13 +1000,22 @@ class ScratchHeap extends BaseHeap {
 		return size - cursor;
 	}
 
+	/**
+		Frees all the descriptors.
+	**/
 	public function clear() {
 		cursor = 0;
 	}
 }
 
+/**
+	A descriptor heap whose descriptors are allocated and freed individually (not shader visible).
+**/
 class BlockHeap extends BaseHeap {
 	var freeList : Array<Int>;
+	/**
+		The number of free descriptors.
+	**/
 	public var available(get,never) : Int;
 
 	override public function new(type,size,shaderVisible) {
@@ -611,6 +1034,9 @@ class BlockHeap extends BaseHeap {
 		onFree(prev, prevSize);
 	}
 
+	/**
+		Allocates a descriptor and returns its index, growing the heap if needed.
+	**/
 	public function allocIndex() : Int {
 		var idx = freeList.pop();
 		if ( idx == null ) {
@@ -620,6 +1046,9 @@ class BlockHeap extends BaseHeap {
 		return idx;
 	}
 
+	/**
+		Frees the descriptor of the index.
+	**/
 	public function disposeIndex( index : Int ) {
 		freeList.push(index);
 	}
@@ -628,32 +1057,89 @@ class BlockHeap extends BaseHeap {
 		return freeList.length;
 	}
 
+	/**
+		Tells if no descriptor is allocated.
+	**/
 	public inline function isEmpty() {
 		return available == size;
 	}
 }
 
+/**
+	A GPU resource and its state, for the transitions.
+**/
 class ResourceData {
+	/**
+		The resource.
+	**/
 	public var res : GpuResource;
+	/**
+		The current state of the resource.
+	**/
 	public var state : ResourceState;
+	/**
+		The state of the pending transition.
+	**/
 	public var targetState : ResourceState;
+	/**
+		Creates the data.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The DirectX 12 data of a buffer: its views and descriptors.
+**/
 class BufferData extends ResourceData {
+	/**
+		The vertex buffer view.
+	**/
 	public var view : dx.Dx12.VertexBufferView;
+	/**
+		The index buffer view.
+	**/
 	public var iview : dx.Dx12.IndexBufferView;
+	/**
+		The bindless handle of the buffer, if allocated.
+	**/
 	public var handle : h3d.BufferHandle = null;
+	/**
+		The index of the constant buffer view descriptor, or `-1`.
+	**/
 	public var cViewIndex : Int = -1;
+	/**
+		The index of the first shader resource view descriptor, or `-1`.
+	**/
 	public var sViewIndex : Int = -1;
+	/**
+		The stride of the first shader resource view.
+	**/
 	public var sViewStride : Int = -1;
+	/**
+		The other shader resource view descriptors, by stride.
+	**/
 	public var sViewsMap : Map<Int, Int>;
+	/**
+		The index of the first unordered access view descriptor, or `-1`.
+	**/
 	public var uViewIndex : Int = -1;
+	/**
+		The stride of the first unordered access view.
+	**/
 	public var uViewStride : Int = -1;
+	/**
+		The other unordered access view descriptors, by stride.
+	**/
 	public var uViewsMap : Map<Int, Int>;
+	/**
+		The size of the buffer, in bytes.
+	**/
 	public var size : Int;
 
+	/**
+		Returns the index of the shader resource view descriptor for the stride, or `-1`.
+	**/
 	inline public function getSRV(stride:Int) {
 		if( sViewStride == stride )
 			return sViewIndex;
@@ -664,6 +1150,9 @@ class BufferData extends ResourceData {
 		return -1;
 	}
 
+	/**
+		Sets the index of the shader resource view descriptor for the stride.
+	**/
 	public function setSRV(stride:Int, idx:Int) {
 		if( sViewIndex < 0 ) {
 			sViewIndex = idx;
@@ -675,6 +1164,9 @@ class BufferData extends ResourceData {
 		sViewsMap.set(stride, idx);
 	}
 
+	/**
+		Returns the index of the unordered access view descriptor for the stride, or `-1`.
+	**/
 	inline public function getUAV(stride:Int) {
 		if( uViewStride == stride )
 			return uViewIndex;
@@ -685,6 +1177,9 @@ class BufferData extends ResourceData {
 		return -1;
 	}
 
+	/**
+		Sets the index of the unordered access view descriptor for the stride.
+	**/
 	public function setUAV(stride:Int, idx:Int) {
 		if( uViewIndex < 0 ) {
 			uViewIndex = idx;
@@ -696,6 +1191,9 @@ class BufferData extends ResourceData {
 		uViewsMap.set(stride, idx);
 	}
 
+	/**
+		Frees the descriptors of the buffer.
+	**/
 	public function disposeViews(heap : BlockHeap) {
 		if ( cViewIndex != -1 ) {
 			heap.disposeIndex(cViewIndex);
@@ -724,19 +1222,40 @@ class BufferData extends ResourceData {
 	}
 }
 
+/**
+	The DirectX 12 data of a texture: its format, clear color, views and placement in a heap.
+**/
 class TextureData extends ResourceData {
+	/**
+		The format of the texture.
+	**/
 	public var format : DxgiFormat;
+	/**
+		The optimized clear color of the texture.
+	**/
 	public var color : h3d.Vector4;
 	var clearColorChanges : Int;
 	var cpuViewBits : Int = -1;
 	var cpuViewIndex : Int = -1;
 	var cpuViewsMap : Map<Int, Int>;
 	#if (hldx >= version("2.0.0"))
+	/**
+		The heap page containing the texture, for a placed texture.
+	**/
 	public var page : TextureHeapPage;
+	/**
+		The position of the texture in its heap page.
+	**/
 	public var pagePos : Int;
+	/**
+		The size of the texture in its heap page.
+	**/
 	public var pageSize : Int;
 	#end
 
+	/**
+		Returns the index of the view descriptor for the view settings, or `-1`.
+	**/
 	inline public function getView(bits: Int) {
 		if( cpuViewBits == bits )
 			return cpuViewIndex;
@@ -747,6 +1266,9 @@ class TextureData extends ResourceData {
 		return -1;
 	}
 
+	/**
+		Sets the index of the view descriptor for the view settings.
+	**/
 	public function setView(bits: Int, idx: Int) {
 		if( cpuViewIndex < 0 ) {
 			cpuViewIndex = idx;
@@ -758,6 +1280,9 @@ class TextureData extends ResourceData {
 		cpuViewsMap.set(bits, idx);
 	}
 
+	/**
+		Changes the optimized clear color. Returns `true` if the texture must be recreated (limited to 10 changes).
+	**/
 	public function setClearColor( c : h3d.Vector4 ) {
 		var color = color;
 		if( clearColorChanges > 10 || (color.r == c.r && color.g == c.g && color.b == c.b && color.a == c.a) )
@@ -767,6 +1292,9 @@ class TextureData extends ResourceData {
 		return true;
 	}
 
+	/**
+		Frees the view descriptors of the texture.
+	**/
 	public function disposeViews(heap: BlockHeap) {
 		if(cpuViewIndex >= 0) {
 			heap.disposeIndex(cpuViewIndex);
@@ -782,19 +1310,37 @@ class TextureData extends ResourceData {
 }
 
 #if (hldx >= version("2.0.0"))
+/**
+	A heap in which small textures are placed.
+**/
 class TextureHeapPage {
+	/**
+		The heap.
+	**/
 	public var heap(default,null) : Heap;
+	/**
+		The size of the heap, in bytes.
+	**/
 	public var size(default,null) : Int;
+	/**
+		The number of bytes allocated.
+	**/
 	public var used(default,null) : Int = 0;
 	// sorted list of [pos,len] free ranges
 	var freeList : Array<Int>;
 
+	/**
+		Creates the page for the heap.
+	**/
 	public function new( heap, size ) {
 		this.heap = heap;
 		this.size = size;
 		freeList = [0, size];
 	}
 
+	/**
+		Allocates `size` bytes with the alignment, and returns the position, or `-1` if there is no room.
+	**/
 	public function alloc( size : Int, align : Int ) {
 		var i = 0;
 		while( i < freeList.length ) {
@@ -823,6 +1369,9 @@ class TextureHeapPage {
 		return -1;
 	}
 
+	/**
+		Frees an allocation.
+	**/
 	public function free( pos : Int, size : Int ) {
 		used -= size;
 		var i = 0;
@@ -854,11 +1403,20 @@ class TextureHeapAllocator {
 	static inline var SMALL_ALIGN = 4096;
 	static inline var DEFAULT_ALIGN = 65536;
 
+	/**
+		The size of the heap pages, in bytes.
+	**/
 	public var pageSize(default,null) : Int;
+	/**
+		The heap pages.
+	**/
 	public var pages(default,null) : Array<TextureHeapPage> = [];
 	var heapDesc : HeapDesc;
 	var allocInfo : ResourceAllocationInfo;
 
+	/**
+		Creates the allocator, with heap pages of the given size.
+	**/
 	public function new( pageSize ) {
 		this.pageSize = pageSize;
 		heapDesc = new HeapDesc();
@@ -888,6 +1446,9 @@ class TextureHeapAllocator {
 		return allocInfo.sizeInBytes.low;
 	}
 
+	/**
+		Places the texture in a heap page (creating a page if needed) and returns the resource.
+	**/
 	public function alloc( td : TextureData, desc : ResourceDesc, size : Int ) : GpuResource {
 		var align = desc.alignment.low;
 		var page = null, pos = -1;
@@ -919,6 +1480,9 @@ class TextureHeapAllocator {
 		return res;
 	}
 
+	/**
+		Frees the place of the texture.
+	**/
 	public function free( td : TextureData ) {
 		if( td.page == null ) return;
 		freeBlock(td.page, td.pagePos, td.pageSize);
@@ -934,6 +1498,9 @@ class TextureHeapAllocator {
 		}
 	}
 
+	/**
+		Returns the number of pages and the used and total memory.
+	**/
 	public function getStats() {
 		var used = 0.;
 		for( p in pages ) used += p.used;
@@ -942,29 +1509,83 @@ class TextureHeapAllocator {
 }
 #end
 
+/**
+	The DirectX 12 data of a query.
+**/
 class QueryData {
+	/**
+		The index of the query heap.
+	**/
 	public var heap : Int;
+	/**
+		The index of the query in its heap.
+	**/
 	public var offset : Int;
+	/**
+		The result of the query.
+	**/
 	public var result : Float;
+	/**
+		Creates the data.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	A pending asynchronous read of a buffer (`Driver.readBufferBytesAsync`).
+**/
 class AsyncReadbackRequest {
+	/**
+		The buffer read.
+	**/
 	public var b : Buffer;
+	/**
+		The first vertex read.
+	**/
 	public var startVertex : Int;
+	/**
+		The number of vertices read.
+	**/
 	public var vertexCount : Int;
+	/**
+		The bytes receiving the data.
+	**/
 	public var buf : haxe.io.Bytes;
+	/**
+		The position in `buf`.
+	**/
 	public var bufPos : Int;
+	/**
+		Called when the data is read.
+	**/
 	public var callback : Void -> Void;
+	/**
+		The position of the data in the readback buffer.
+	**/
 	public var tmpBufOffset : Int;
+    /**
+    	The size of the data in the readback buffer.
+    **/
     public var tmpBufSize : Int;
+	/**
+		The transition of the buffer.
+	**/
 	public var barrier : ResourceBarrier;
+	/**
+		The fence value signaled when the copy is done.
+	**/
 	public var fenceValue : Int64;
+	/**
+		Creates a request.
+	**/
 	public function new() {
 	}
 }
 
+/**
+	The DirectX 12 driver (HashLink with `-lib hldx -D dx12`). It supports compute shaders, bindless resources, mesh instancing with indirect draws and upscaling.
+**/
 class DX12Driver extends h3d.impl.Driver {
 
 	var pipelineBuilder = new PipelineCache.PipelineBuilder();
@@ -1058,22 +1679,73 @@ class DX12Driver extends h3d.impl.Driver {
 	var nativeQueue : CommandQueue;
 	var swapChain : SwapChain;
 
-	public static var COPY_BUFFER_SIZE = 256 * 1024 * 1024; // 256 Mo per frame
+	/**
+		The size of the buffer used for the readbacks of each frame, in bytes (256 MB).
+	**/
+	public static var COPY_BUFFER_SIZE = 256 * 1024 * 1024;
+	/**
+		The size of the heaps in which small textures are placed, in bytes, or `0` to disable placing.
+	**/
 	public static var TEXTURE_HEAP_SIZE = 16 * 1024 * 1024;
+	/**
+		The format of the default depth buffer.
+	**/
 	public static var DEFAULT_DEPTH_FORMAT : h3d.mat.Data.TextureFormat = Depth24Stencil8;
+	/**
+		The value the depth buffers are cleared with.
+	**/
 	public static var DEFAULT_DEPTH_VALUE = 1.0;
+	/**
+		The initial number of render target and depth stencil view descriptors.
+	**/
 	public static var INITIAL_RT_COUNT = 1024;
+	/**
+		The initial number of bindless shader resource descriptors.
+	**/
 	public static var INITIAL_BINDLESS_SRV_COUNT = 1024;
+	/**
+		The initial number of shader resource descriptors per frame.
+	**/
 	public static var INITIAL_SRV_COUNT = 1024;
+	/**
+		The initial number of bindless sampler descriptors.
+	**/
 	public static var INITIAL_BINDLESS_SAMPLER_COUNT = 1024;
+	/**
+		The initial number of sampler descriptors per frame.
+	**/
 	public static var INITIAL_SAMPLER_COUNT = 1024;
+	/**
+		The initial size of the upload memory of each frame, in bytes.
+	**/
 	public static var INITIAL_BUFFER_ALLOCATOR_SIZE = 2 * 1024 * 1024;
+	/**
+		The number of frames in flight (back buffers).
+	**/
 	public static var BUFFER_COUNT = #if console 3 #else 2 #end;
+	/**
+		The name of the GPU to use, or `null` for the default one.
+	**/
 	public static var DEVICE_NAME = null;
-	public static var DEBUG = false; // requires dxil.dll when set to true
+	/**
+		Enables the debug layer (requires `dxil.dll`). Must be set before the driver is created.
+	**/
+	public static var DEBUG = false;
+	/**
+		The identifiers of the debug layer messages to ignore.
+	**/
 	public static var SUPPRESSED_MESSAGE_IDS : Array<Int> = [];
+	/**
+		Enables the `PSOConfigCache`, to create the pipeline states in advance.
+	**/
 	public static var ENABLE_PSO_CONFIG_CACHE = false;
+	/**
+		The path of the pipeline configuration cache file.
+	**/
 	public static var PSO_CONFIG_CACHE_PATH = "psoconfig.dx12";
+	/**
+		The path where the pipeline configuration cache is saved.
+	**/
 	public static var PSO_CONFIG_CACHE_OUTPUT_PATH = "psoconfig.dx12";
 
 	@:allow(h3d.impl) static function allocCheck<T>( f : Void -> T ) {
@@ -1087,6 +1759,9 @@ class DX12Driver extends h3d.impl.Driver {
 		return ret;
 	}
 
+	/**
+		Creates the driver for the current window.
+	**/
 	public function new() {
 		window = @:privateAccess dx.Window.windows[0];
 		var backends : Array<UpscalingBackend> = [];
@@ -1529,6 +2204,9 @@ class DX12Driver extends h3d.impl.Driver {
 		return desc;
 	}
 
+	/**
+		Simulates a device error, to test the recovery.
+	**/
 	public function forceDeviceError() {
 		hasDeviceError = true;
 	}
@@ -4115,6 +4793,9 @@ class DX12Driver extends h3d.impl.Driver {
 	}
 
 	#if (hl_ver >= version("1.16.0"))
+	/**
+		Sets the function called with the dump files when the GPU crashes (name, content, and `true` for the last file).
+	**/
 	public static function setGpuCrashHandler( cb : (String, haxe.io.Bytes, Bool) -> Void ) {
 		var wrapper = function( name : hl.Bytes, bytes : hl.Bytes, size : Int, lastFile : Bool ) {
 			try {

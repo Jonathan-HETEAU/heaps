@@ -1,12 +1,21 @@
 package h3d.impl;
 
+/**
+	A ring buffer of the values of the last frames.
+**/
 class FrameDataImpl {
 	var arr : Array<Float>;
 	var max : Int;
 	var head : Int;
 	var tail : Int;
 	var full : Bool;
+	/**
+		The number of stored values.
+	**/
 	public var length(get, null) : Int;
+	/**
+		Creates a buffer keeping the last `max` values.
+	**/
 	public function new( max : Int ) {
 		this.max = max;
 		arr = [];
@@ -18,6 +27,9 @@ class FrameDataImpl {
 	function get_length() : Int {
 		return full ? max : ( head >= tail ? head - tail : max + head - tail );
 	}
+	/**
+		Adds a value, replacing the oldest one when the buffer is full.
+	**/
 	public function push( v : Float ) {
 		arr[head] = v;
 		head = incIndex(head);
@@ -32,6 +44,9 @@ class FrameDataImpl {
 			index = 0;
 		return index;
 	}
+	/**
+		Returns the value at the index, from the oldest one.
+	**/
 	public inline function get( index : Int ) : Float {
 		var i = tail + index;
 		if( i >= max )
@@ -40,6 +55,9 @@ class FrameDataImpl {
 	}
 
 	var medianValues : Array<Float> = [];
+	/**
+		Meant to return the median of the stored values. The values are currently not sorted before the middle one is picked.
+	**/
 	public function getMedian() : Float {
 		function fillMedianValues() {
 			if(medianValues.length != arr.length){
@@ -64,10 +82,19 @@ class FrameDataImpl {
 	}
 }
 
+/**
+	A ring buffer of the values of the last frames, with array access.
+**/
 @:forward abstract FrameData(FrameDataImpl) {
+	/**
+		Creates a buffer keeping the last `max` values.
+	**/
 	public function new( max : Int ) {
 		this = new FrameDataImpl(max);
 	}
+	/**
+		Returns the value at the index, from the oldest one.
+	**/
 	@:arrayAccess public inline function get( index : Int ) : Float {
 		return this.get(index);
 	}

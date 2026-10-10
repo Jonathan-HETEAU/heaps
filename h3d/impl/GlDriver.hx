@@ -79,13 +79,22 @@ private class CompiledProgram {
 #if (hlsdl||usegl)
 @:build(h3d.impl.MacroHelper.replaceGL())
 #end
+/**
+	The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink.
+**/
 class GlDriver extends Driver {
 
 	#if js
 	var canvas : js.html.CanvasElement;
 	var mrtExt : { function drawBuffersWEBGL( colors : Array<Int> ) : Void; };
 	static var UID = 0;
+	/**
+		The WebGL context.
+	**/
 	public var gl : GL;
+	/**
+		If set, WebGL 2 is used when the browser supports it. Must be set before the engine is created.
+	**/
 	public static var ALLOW_WEBGL2 = true;
 	#end
 
@@ -137,6 +146,9 @@ class GlDriver extends Driver {
 	var hasDepthClamp = #if js false #else true #end;
 	static inline var DEPTH_CLAMP = #if js 0x864F #else GL.DEPTH_CLAMP #end;
 
+	/**
+		Tells if the `GL_ARB_indirect_parameters` extension is available, to read the number of instanced draw commands from a buffer.
+	**/
 	public static var hasMultiIndirectCount = false;
 
 	var drawMode : Int;
@@ -150,6 +162,9 @@ class GlDriver extends Driver {
 	**/
 	public static var outOfMemoryCheck = #if js false #else true #end;
 
+	/**
+		Creates the driver. On JS, `antiAlias` enables the antialiasing of the canvas.
+	**/
 	public function new(antiAlias=0) {
 		#if js
 		canvas = @:privateAccess hxd.Window.getInstance().canvas;

@@ -1,5 +1,8 @@
 package h3d.impl;
 
+/**
+	The draw commands of an instanced draw call (`h3d.Engine.renderInstanced`): either a single command, or a GPU buffer of indirect draw commands.
+**/
 @:allow(h3d.impl.Driver)
 class InstanceBuffer {
 
@@ -23,13 +26,28 @@ class InstanceBuffer {
 
 	var indexCount : Int;
 	var startIndex : Int;
+	/**
+		The total number of triangles drawn.
+	**/
 	public var triCount(default,null) : Int = 0;
+	/**
+		The number of draw commands.
+	**/
 	public var commandCount(default, null) : Int;
+	/**
+		The number of commands the buffer was allocated for.
+	**/
 	public var maxCommandCount(default, null) : Int;
 
+	/**
+		Creates an empty instance buffer.
+	**/
 	public function new() {
 	}
 
+	/**
+		Sets a single command drawing `commandCount` instances of `indexCount` indexes, without a GPU buffer.
+	**/
 	public function setCommand( commandCount : Int, indexCount : Int, startIndex=0 ) {
 		this.commandCount = commandCount;
 		this.indexCount = indexCount;
@@ -47,6 +65,9 @@ class InstanceBuffer {
 		}
 	}
 
+	/**
+		Uploads draw commands (see `ELEMENT_SIZE`) to the allocated buffer. The triangle count is computed from the commands if not given.
+	**/
 	public function uploadBytes(commandCount : Int, bytes : haxe.io.Bytes, triCount = -1) {
 		this.triCount = triCount;
 		if ( triCount < 0 )
@@ -57,6 +78,9 @@ class InstanceBuffer {
 		driver.uploadInstanceBufferBytes(this, 0, commandCount, bytes, 0);
 	}
 
+	/**
+		Allocates the buffer of draw commands from the bytes (see `ELEMENT_SIZE`). The triangle count is computed from the commands if not given.
+	**/
 	public function allocFromBytes(commandCount : Int, bytes : haxe.io.Bytes, triCount = -1 ) {
 		dispose();
 		this.triCount = triCount;
@@ -68,6 +92,9 @@ class InstanceBuffer {
 		driver.allocInstanceBuffer(this, bytes);
 	}
 
+	/**
+		Releases the buffer of draw commands.
+	**/
 	public function dispose() {
 		if( data != null ) driver.disposeInstanceBuffer(this);
 	}
