@@ -5,7 +5,7 @@
 | Type | Kind | Summary |
 |---|---|---|
 | [`ArrayCopy`](ArrayCopy.md) | class | Copies a layer of a texture array to a texture. |
-| [`Blur`](Blur.md) | class |  |
+| [`Blur`](Blur.md) | class | A separable blur: a horizontal then a vertical pass, gaussian by default. |
 | [`Border`](Border.md) | class | Draws a solid frame of `size` pixels along the edges of a `width` x `height` target (used for instance to avoid sampling outside of shadow maps). |
 | [`CapsuleShadowMap`](CapsuleShadowMap.md) | class | The shadow map of a `h3d.scene.pbr.CapsuleLight`: a cube shadow map rendered from the light center. |
 | [`CascadeCamera`](CascadeCamera.md) | typedef | The shadow camera of a cascade. |
@@ -23,7 +23,7 @@
 | [`Merge`](Merge.md) | class | Interpolates between two textures (or two layers) into an output texture. |
 | [`MergeShader`](MergeShader.md) | class | Interpolates between two textures. |
 | [`MipMaps`](MipMaps.md) | class | Generates the mip levels of a texture with shaders (each level averages 2x2 pixels of the previous one). |
-| [`Outline`](Outline.md) | class |  |
+| [`Outline`](Outline.md) | class | Draws an outline around the opaque pixels of a texture (based on its alpha). |
 | [`Output`](Output.md) | class | A render pass of a renderer: draws a list of object passes (`PassList`) to the current render target, linking each object shaders with the output shader of the pass (which writes the given values, such as `output.colo... |
 | [`OutputShader`](OutputShader.md) | class | Links the shaders of a pass with an output shader writing the given values to the render targets. |
 | [`PassList`](PassList.md) | class | A linked list of `PassObject` to draw, with a list of discarded passes which can be restored. |

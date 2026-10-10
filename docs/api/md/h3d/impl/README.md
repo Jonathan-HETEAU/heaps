@@ -19,7 +19,7 @@
 | [`FrameGenSettings`](FrameGenSettings.md) | class | The state and capabilities of the frame generation. |
 | [`FrameGenUIMode`](FrameGenUIMode.md) | enum | How the UI is handled by the frame generation, so that it is not interpolated: `BackBuffer` (the whole back buffer is interpolated), `HudLess` (a copy of the frame without UI is marked with `Upscaling.markFrameGenHudl... |
 | [`GPUBuffer`](GPUBuffer.md) | typedef | The native GPU buffer of the current driver. |
-| [`GlDriver`](GlDriver.md) | class |  |
+| [`GlDriver`](GlDriver.md) | class | The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink. |
 | [`InstanceBuffer`](InstanceBuffer.md) | class | The draw commands of an instanced draw call (`h3d.Engine.renderInstanced`): either a single command, or a GPU buffer of indirect draw commands. |
 | [`LatencyMarker`](LatencyMarker.md) | enum | The points of the frame reported to the low latency technology. |
 | [`LowLatencyMode`](LowLatencyMode.md) | enum | The low latency mode (such as NVIDIA Reflex). |

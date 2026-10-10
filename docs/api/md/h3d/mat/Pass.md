@@ -2,6 +2,12 @@
 
 **class** · package [`h3d.mat`](README.md) · source [`h3d/mat/Pass.hx`](../../../../../h3d/mat/Pass.hx)
 
+A render pass of a material: the render states (culling, depth, blending, stencil, color mask) and the list of shaders
+used to draw an object in the renderer pass named `name`.
+
+A material usually has a main pass and optional extra passes (such as `"shadow"`). Extra passes can share the shaders
+of a parent pass: shaders added to the parent are then used by both.
+
 ## Constructor
 
 ### new

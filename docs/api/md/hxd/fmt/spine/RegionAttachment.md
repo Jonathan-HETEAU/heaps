@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.spine.Attachment`](Attachment.md)
 
+A rectangular image attachment.
+
 ## Constructor
 
 ### new
@@ -20,11 +22,15 @@ function new():Void
 var width:Float
 ```
 
+The width of the image.
+
 ### height
 
 ```haxe
 var height:Float
 ```
+
+The height of the image.
 
 ## Inherited members
 

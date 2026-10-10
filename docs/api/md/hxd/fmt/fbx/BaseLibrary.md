@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.fmt.fbx.HMDOut`](HMDOut.md)
 
+Loads a FBX file (version 7) and builds its hierarchy, geometries, skins and animations. `HMDOut` converts it to the HMD format.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Subclasses: [`hxd.fmt.fbx.HMDOut`](HMDOut.md)
 function new(fileName:String):Void
 ```
 
+Creates the library for the file.
+
 ## Variables
 
 ### fileName
@@ -19,6 +23,8 @@ function new(fileName:String):Void
 ```haxe
 var fileName:String
 ```
+
+The path of the FBX file.
 
 ### version
 
@@ -74,6 +80,8 @@ Consider unskinned joints to be simple objects
 var allowVertexColor:Bool
 ```
 
+If set, the vertex colors are imported.
+
 ### normalizeScaleOrient
 
 ```haxe
@@ -114,11 +122,15 @@ Use the legacy system to import skinned mesh of FBX file
 function loadFile(data:Bytes):Void
 ```
 
+Parses the FBX file and loads it.
+
 ### load
 
 ```haxe
 function load(root:FbxNode):Void
 ```
+
+Loads the parsed FBX data. Throws if the FBX version is not 7.
 
 ### leftHandConvert
 
@@ -126,11 +138,15 @@ function load(root:FbxNode):Void
 function leftHandConvert():Void
 ```
 
+Converts the data from right handed to left handed coordinates, by flipping the X axis.
+
 ### getGeometry
 
 ```haxe
 function getGeometry(?name:String = ""):Geometry
 ```
+
+Returns the geometry of the given name.
 
 ### getParent
 
@@ -138,11 +154,15 @@ function getGeometry(?name:String = ""):Geometry
 function getParent(node:FbxNode, nodeName:String, ?opt:Bool):Null<FbxNode>
 ```
 
+Returns the parent of the node with the given node type. Throws if there are several, or none unless `opt` is set.
+
 ### getChild
 
 ```haxe
 function getChild(node:FbxNode, nodeName:String, ?opt:Bool):Null<FbxNode>
 ```
+
+Returns the child of the node with the given node type. Throws if there are several, or none unless `opt` is set.
 
 ### getSpecChild
 
@@ -150,11 +170,15 @@ function getChild(node:FbxNode, nodeName:String, ?opt:Bool):Null<FbxNode>
 function getSpecChild(node:FbxNode, name:String):Null<FbxNode>
 ```
 
+Returns the child connected to the node with the given property name, or `null`.
+
 ### getChilds
 
 ```haxe
 function getChilds(node:FbxNode, ?nodeName:String):Array<Null<FbxNode>>
 ```
+
+Returns the children of the node (of the given node type if set).
 
 ### getParents
 
@@ -162,17 +186,23 @@ function getChilds(node:FbxNode, ?nodeName:String):Array<Null<FbxNode>>
 function getParents(node:FbxNode, ?nodeName:String):Array<Null<FbxNode>>
 ```
 
+Returns the parents of the node (of the given node type if set).
+
 ### getRoot
 
 ```haxe
 function getRoot():FbxNode
 ```
 
+Returns the root of the FBX data.
+
 ### mergeModels
 
 ```haxe
 function mergeModels(modelNames:Array<String>):Void
 ```
+
+Merges the geometries of the given models into the first one.
 
 ### getAnimationNames
 
@@ -187,3 +217,5 @@ Returns an array of names with all animations present in FBX file.
 ```haxe
 function loadAnimation(?animName:String, ?root:Null<FbxNode>, ?lib:BaseLibrary):h3d.anim.Animation
 ```
+
+Loads the animation of the given name (the first one by default), from this library, another FBX data (`root`), or another library (`lib`) applied to this skeleton.

@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.spine.Attachment`](Attachment.md)
 
+A mesh attachment deformed by the bones.
+
 ## Constructor
 
 ### new
@@ -20,11 +22,15 @@ function new():Void
 var vertices:Array<SkinnedVertice>
 ```
 
+The vertices.
+
 ### triangles
 
 ```haxe
 var triangles:Array<Int>
 ```
+
+The vertex indexes of the triangles.
 
 ## Inherited members
 

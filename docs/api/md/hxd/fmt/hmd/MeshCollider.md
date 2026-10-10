@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 
+A collider using a mesh.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 ```haxe
 function new():Void
 ```
+
+Creates the collider.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var vertexCount:Int
 ```
 
+The number of vertices.
+
 ### vertexPosition
 
 ```haxe
 var vertexPosition:DataPosition
 ```
+
+The position of the vertices in the data.
 
 ### indexCount
 
@@ -32,11 +40,15 @@ var vertexPosition:DataPosition
 var indexCount:Int
 ```
 
+The number of indexes.
+
 ### indexPosition
 
 ```haxe
 var indexPosition:DataPosition
 ```
+
+The position of the indexes in the data.
 
 ## Inherited members
 

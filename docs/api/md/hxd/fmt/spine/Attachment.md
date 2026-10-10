@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.fmt.spine.RegionAttachment`](RegionAttachment.md), [`hxd.fmt.spine.SkinnedMeshAttachment`](SkinnedMeshAttachment.md)
 
+An image attached to a slot of a skin.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Subclasses: [`hxd.fmt.spine.RegionAttachment`](RegionAttachment.md), [`hxd.fmt.s
 ```haxe
 function new():Void
 ```
+
+Creates an attachment.
 
 ## Variables
 
@@ -20,14 +24,20 @@ function new():Void
 var skin:Skin
 ```
 
+The skin of the attachment.
+
 ### slot
 
 ```haxe
 var slot:Slot
 ```
 
+The slot of the attachment.
+
 ### color
 
 ```haxe
 var color:h3d.Vector4
 ```
+
+The color of the attachment.

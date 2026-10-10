@@ -2,6 +2,8 @@
 
 **class** · package [`hxd.poly2tri`](README.md) · source [`hxd/poly2tri/Utils.hx`](../../../../../hxd/poly2tri/Utils.hx)
 
+Geometric tests of the triangulation.
+
 ## Static methods
 
 ### insideIncircle
@@ -38,3 +40,5 @@ static function insideIncircle(pa:Point, pb:Point, pc:Point, pd:Point):Bool
 ```haxe
 static function inScanArea(pa:Point, pb:Point, pc:Point, pd:Point):Bool
 ```
+
+Tells if the point `pd` is in the area where it can be flipped with the edge `pa`-`pb`/`pa`-`pc`.

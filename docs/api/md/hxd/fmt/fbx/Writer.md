@@ -2,6 +2,8 @@
 
 **class** · package [`hxd.fmt.fbx`](README.md) · source [`hxd/fmt/fbx/Writer.hx`](../../../../../../hxd/fmt/fbx/Writer.hx)
 
+Exports 3D objects to a binary FBX file.
+
 ## Constructor
 
 ### new
@@ -9,6 +11,8 @@
 ```haxe
 function new(out:Output):Void
 ```
+
+Creates a writer for the output.
 
 ## Static methods
 
@@ -18,6 +22,8 @@ function new(out:Output):Void
 static function getPrimitiveInfos(prim:h3d.prim.Primitive, ?format:hxd.BufferFormat, ?lodIdx:Int = 0):{ ?vertexFormat:Null<hxd.BufferFormat>, ?vertexBuffer:Null<Array<Float>>, ?lib:Null<hxd.fmt.hmd.Library>, ?indexesBuffer:Null<Array<Int>> }
 ```
 
+Returns the vertex format, vertices and indexes of a primitive (of a level of detail for a HMD model).
+
 ## Methods
 
 ### write
@@ -26,8 +32,12 @@ static function getPrimitiveInfos(prim:h3d.prim.Primitive, ?format:hxd.BufferFor
 function write(objects:Array<h3d.scene.Object>, ?params:Dynamic):Void
 ```
 
+Writes the objects as FBX.
+
 ### export
 
 ```haxe
 function export(toExport:Array<h3d.scene.Object>, destinationPath:String, callb:() -> Void, ?params:Null<ExportParams>):Void
 ```
+
+Exports the visible and supported objects to the file, with the given axis conventions, then calls `callb`.

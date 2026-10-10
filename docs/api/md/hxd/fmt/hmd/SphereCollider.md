@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 
+A sphere collider.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 ```haxe
 function new():Void
 ```
+
+Creates the collider.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var position:h3d.Vector
 ```
 
+The center of the sphere.
+
 ### radius
 
 ```haxe
 var radius:Float
 ```
+
+The radius of the sphere.
 
 ## Inherited members
 

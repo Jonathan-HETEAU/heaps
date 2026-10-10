@@ -2,6 +2,8 @@
 
 **enum abstract** · package [`hxd.fmt.hmd`](README.md) · module `hxd.fmt.hmd.Data` · source [`hxd/fmt/hmd/Data.hx`](../../../../../../hxd/fmt/hmd/Data.hx)
 
+The type of a collider stored in the file.
+
 Underlying type: `Int`
 
 Implicit casts from: `Int`

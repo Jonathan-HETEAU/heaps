@@ -4,6 +4,8 @@
 
 Implements: [`hxd.fs.FileSystem`](../../fs/FileSystem.md)
 
+A file system reading the resources from one or more `.pak` archives. The files of the archives loaded last replace the ones of the same path.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Implements: [`hxd.fs.FileSystem`](../../fs/FileSystem.md)
 ```haxe
 function new():Void
 ```
+
+Creates an empty file system.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var totalReadBytes:Int
 ```
 
+The number of bytes read, for statistics.
+
 ### totalReadCount
 
 ```haxe
 var totalReadCount:Int
 ```
+
+The number of reads, for statistics.
 
 ## Methods
 
@@ -33,6 +41,8 @@ var totalReadCount:Int
 ```haxe
 function loadPak(file:String):Void
 ```
+
+Adds the archive of the given path.
 
 ### addPak
 
@@ -53,11 +63,15 @@ Use with multi-threaded environment at your own risk.
 function dispose():Void
 ```
 
+Closes the archives.
+
 ### getRoot
 
 ```haxe
 function getRoot():hxd.fs.FileEntry
 ```
+
+Returns the root directory.
 
 ### get
 
@@ -65,11 +79,15 @@ function getRoot():hxd.fs.FileEntry
 function get(path:String):hxd.fs.FileEntry
 ```
 
+Returns the file entry at the path. Throws `hxd.res.NotFound` if it does not exist.
+
 ### exists
 
 ```haxe
 function exists(path:String):Bool
 ```
+
+Tells if a file or directory exists at the path.
 
 ### dir
 
@@ -77,8 +95,12 @@ function exists(path:String):Bool
 function dir(path:String):Array<hxd.fs.FileEntry>
 ```
 
+Returns the entries of the directory.
+
 ### delete
 
 ```haxe
 function delete(path:String):Bool
 ```
+
+Not supported.

@@ -2,6 +2,8 @@
 
 **class** · package [`hxd.fmt.bfnt`](README.md) · source [`hxd/fmt/bfnt/Writer.hx`](../../../../../../hxd/fmt/bfnt/Writer.hx)
 
+Writes the BFNT format: the compact binary bitmap font format of Heaps.
+
 ## Constructor
 
 ### new
@@ -10,6 +12,8 @@
 function new(out:Output):Void
 ```
 
+Creates a writer for the output.
+
 ## Methods
 
 ### write
@@ -17,3 +21,5 @@ function new(out:Output):Void
 ```haxe
 function write(font:h2d.Font):Void
 ```
+
+Writes the font.

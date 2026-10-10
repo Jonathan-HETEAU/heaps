@@ -2,7 +2,7 @@
 
 > Généré par `tools/docgen/deps.py` (analyse statique, sans compilateur Haxe). Ne pas éditer à la main.
 
-- Modules (fichiers `.hx`) : **554** — lignes : **148549** — packages : **44**
+- Modules (fichiers `.hx`) : **554** — lignes : **151052** — packages : **44**
 - Dépendances module→module : **2779**
 - Cycles de modules (SCC > 1) : **18**
 
@@ -32,23 +32,23 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 | [`h3d.shader`](modules/h3d.shader.md) | 68 | 3949 | 124 | h3d, h3d.mat, hxd.impl, hxsl | 15 |
 | [`h3d.shader.pbr`](modules/h3d.shader.pbr.md) | 20 | 2689 | 44 | h3d, h3d.shader, hxsl | 4 |
 | [`hxd`](modules/hxd.md) | 33 | 10383 | 837 | h2d, h3d, h3d.scene, hxd.fmt.pak, hxd.fs, hxd.impl, hxd.res, hxsl | 33 |
-| [`hxd.clipper`](modules/hxd.clipper.md) | 7 | 4068 | 1 | h2d.col, hxd | 1 |
-| [`hxd.earcut`](modules/hxd.earcut.md) | 1 | 598 | 1 | hxd | 2 |
-| [`hxd.fmt.bfnt`](modules/hxd.fmt.bfnt.md) | 3 | 409 | 0 | h2d | 2 |
-| [`hxd.fmt.blend`](modules/hxd.fmt.blend.md) | 1 | 337 | 0 | — | 0 |
-| [`hxd.fmt.fbx`](modules/hxd.fmt.fbx.md) | 7 | 5554 | 12 | h3d, h3d.anim, h3d.col, h3d.prim, h3d.scene, hxd, hxd.fmt.hmd, hxd.impl, hxd.tools | 2 |
-| [`hxd.fmt.grd`](modules/hxd.fmt.grd.md) | 2 | 228 | 0 | — | 1 |
-| [`hxd.fmt.hbson`](modules/hxd.fmt.hbson.md) | 2 | 182 | 0 | — | 1 |
-| [`hxd.fmt.hdr`](modules/hxd.fmt.hdr.md) | 1 | 94 | 0 | hxd | 1 |
-| [`hxd.fmt.hmd`](modules/hxd.fmt.hmd.md) | 5 | 2467 | 0 | h2d, h3d, h3d.anim, h3d.col, h3d.mat, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.fmt.fbx, hxd.impl, hxd.res, hxd.tools | 5 |
-| [`hxd.fmt.kframes`](modules/hxd.fmt.kframes.md) | 1 | 55 | 0 | — | 1 |
-| [`hxd.fmt.pak`](modules/hxd.fmt.pak.md) | 6 | 832 | 1 | h2d, h3d, hxd, hxd.fs, hxd.impl, hxd.net, hxd.res, hxd.snd | 2 |
-| [`hxd.fmt.spine`](modules/hxd.fmt.spine.md) | 3 | 482 | 0 | h2d, h3d, hxd | 0 |
-| [`hxd.fmt.tiff`](modules/hxd.fmt.tiff.md) | 3 | 308 | 0 | hxd, hxd.fmt.pak | 0 |
+| [`hxd.clipper`](modules/hxd.clipper.md) | 7 | 4191 | 42 | h2d.col, hxd | 1 |
+| [`hxd.earcut`](modules/hxd.earcut.md) | 1 | 643 | 16 | hxd | 2 |
+| [`hxd.fmt.bfnt`](modules/hxd.fmt.bfnt.md) | 3 | 436 | 9 | h2d | 2 |
+| [`hxd.fmt.blend`](modules/hxd.fmt.blend.md) | 1 | 466 | 44 | — | 0 |
+| [`hxd.fmt.fbx`](modules/hxd.fmt.fbx.md) | 7 | 5874 | 120 | h3d, h3d.anim, h3d.col, h3d.prim, h3d.scene, hxd, hxd.fmt.hmd, hxd.impl, hxd.tools | 2 |
+| [`hxd.fmt.grd`](modules/hxd.fmt.grd.md) | 2 | 311 | 28 | — | 1 |
+| [`hxd.fmt.hbson`](modules/hxd.fmt.hbson.md) | 2 | 200 | 6 | — | 1 |
+| [`hxd.fmt.hdr`](modules/hxd.fmt.hdr.md) | 1 | 100 | 2 | hxd | 1 |
+| [`hxd.fmt.hmd`](modules/hxd.fmt.hmd.md) | 5 | 3040 | 192 | h2d, h3d, h3d.anim, h3d.col, h3d.mat, h3d.prim, h3d.scene, h3d.shader, hxd, hxd.fmt.fbx, hxd.impl, hxd.res, hxd.tools | 5 |
+| [`hxd.fmt.kframes`](modules/hxd.fmt.kframes.md) | 1 | 138 | 28 | — | 1 |
+| [`hxd.fmt.pak`](modules/hxd.fmt.pak.md) | 6 | 1010 | 60 | h2d, h3d, hxd, hxd.fs, hxd.impl, hxd.net, hxd.res, hxd.snd | 2 |
+| [`hxd.fmt.spine`](modules/hxd.fmt.spine.md) | 3 | 902 | 140 | h2d, h3d, hxd | 0 |
+| [`hxd.fmt.tiff`](modules/hxd.fmt.tiff.md) | 3 | 403 | 51 | hxd, hxd.fmt.pak | 0 |
 | [`hxd.fs`](modules/hxd.fs.md) | 15 | 3214 | 182 | h2d, h3d, h3d.anim, h3d.prim, hxd, hxd.fmt.bfnt, hxd.fmt.fbx, hxd.fmt.hbson, hxd.fmt.hmd, hxd.impl, hxd.res | 8 |
 | [`hxd.impl`](modules/hxd.impl.md) | 15 | 1501 | 100 | h3d, hxd | 19 |
 | [`hxd.net`](modules/hxd.net.md) | 3 | 634 | 36 | — | 1 |
-| [`hxd.poly2tri`](modules/hxd.poly2tri.md) | 13 | 1708 | 17 | hxd | 1 |
+| [`hxd.poly2tri`](modules/hxd.poly2tri.md) | 13 | 2111 | 138 | hxd | 1 |
 | [`hxd.res`](modules/hxd.res.md) | 24 | 4717 | 205 | h2d, h3d, h3d.impl, h3d.mat, hxd, hxd.fmt.bfnt, hxd.fmt.grd, hxd.fmt.hdr, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.snd | 15 |
 | [`hxd.snd`](modules/hxd.snd.md) | 14 | 2479 | 162 | h3d, hxd, hxd.impl, hxd.res, hxd.snd.openal, hxd.snd.webaudio | 5 |
 | [`hxd.snd.effect`](modules/hxd.snd.effect.md) | 5 | 511 | 159 | h3d, hxd, hxd.snd | 2 |

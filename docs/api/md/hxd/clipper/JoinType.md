@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd.clipper`](README.md) · source [`hxd/clipper/JoinType.hx`](../../../../../hxd/clipper/JoinType.hx)
 
+How the corners are joined by `ClipperOffset`: square, round or mitered.
+
 ## Constructors
 
 ### Square

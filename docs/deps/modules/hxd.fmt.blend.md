@@ -4,5 +4,5 @@
 
 ## hxd.fmt.blend.Data
 
-- Fichier : `hxd/fmt/blend/Data.hx` — 337 lignes — 0 blocs doc
+- Fichier : `hxd/fmt/blend/Data.hx` — 466 lignes — 44 blocs doc
 - Types : `class Blend`, `class Block`, `class Dna`, `class DnaStruct`, `class Handle`

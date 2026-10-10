@@ -16528,8 +16528,8 @@
   "hxd.clipper.ClipType": {
    "file": "hxd/clipper/ClipType.hx",
    "package": "hxd.clipper",
-   "lines": 9,
-   "doc_blocks": 0,
+   "lines": 12,
+   "doc_blocks": 1,
    "types": [
     "enum ClipType"
    ],
@@ -16542,8 +16542,8 @@
   "hxd.clipper.Clipper": {
    "file": "hxd/clipper/Clipper.hx",
    "package": "hxd.clipper",
-   "lines": 4011,
-   "doc_blocks": 1,
+   "lines": 4101,
+   "doc_blocks": 31,
    "types": [
     "enum EdgeSide",
     "enum Direction",
@@ -16622,8 +16622,8 @@
   "hxd.clipper.EndType": {
    "file": "hxd/clipper/EndType.hx",
    "package": "hxd.clipper",
-   "lines": 10,
-   "doc_blocks": 0,
+   "lines": 13,
+   "doc_blocks": 1,
    "types": [
     "enum EndType"
    ],
@@ -16636,8 +16636,8 @@
   "hxd.clipper.JoinType": {
    "file": "hxd/clipper/JoinType.hx",
    "package": "hxd.clipper",
-   "lines": 8,
-   "doc_blocks": 0,
+   "lines": 11,
+   "doc_blocks": 1,
    "types": [
     "enum JoinType"
    ],
@@ -16650,8 +16650,8 @@
   "hxd.clipper.PolyFillType": {
    "file": "hxd/clipper/PolyFillType.hx",
    "package": "hxd.clipper",
-   "lines": 9,
-   "doc_blocks": 0,
+   "lines": 12,
+   "doc_blocks": 1,
    "types": [
     "enum PolyFillType"
    ],
@@ -16664,8 +16664,8 @@
   "hxd.clipper.PolyType": {
    "file": "hxd/clipper/PolyType.hx",
    "package": "hxd.clipper",
-   "lines": 7,
-   "doc_blocks": 0,
+   "lines": 10,
+   "doc_blocks": 1,
    "types": [
     "enum PolyType"
    ],
@@ -16678,8 +16678,8 @@
   "hxd.clipper.Rect": {
    "file": "hxd/clipper/Rect.hx",
    "package": "hxd.clipper",
-   "lines": 14,
-   "doc_blocks": 0,
+   "lines": 32,
+   "doc_blocks": 6,
    "types": [
     "class Rect"
    ],
@@ -16692,8 +16692,8 @@
   "hxd.earcut.Earcut": {
    "file": "hxd/earcut/Earcut.hx",
    "package": "hxd.earcut",
-   "lines": 598,
-   "doc_blocks": 1,
+   "lines": 643,
+   "doc_blocks": 16,
    "types": [
     "class EarNode",
     "class Earcut"
@@ -16712,8 +16712,8 @@
   "hxd.fmt.bfnt.FontParser": {
    "file": "hxd/fmt/bfnt/FontParser.hx",
    "package": "hxd.fmt.bfnt",
-   "lines": 273,
-   "doc_blocks": 0,
+   "lines": 279,
+   "doc_blocks": 2,
    "types": [
     "class FontParser"
    ],
@@ -16737,8 +16737,8 @@
   "hxd.fmt.bfnt.Reader": {
    "file": "hxd/fmt/bfnt/Reader.hx",
    "package": "hxd.fmt.bfnt",
-   "lines": 51,
-   "doc_blocks": 0,
+   "lines": 63,
+   "doc_blocks": 4,
    "types": [
     "class Reader"
    ],
@@ -16758,8 +16758,8 @@
   "hxd.fmt.bfnt.Writer": {
    "file": "hxd/fmt/bfnt/Writer.hx",
    "package": "hxd.fmt.bfnt",
-   "lines": 85,
-   "doc_blocks": 0,
+   "lines": 94,
+   "doc_blocks": 3,
    "types": [
     "class Writer"
    ],
@@ -16776,8 +16776,8 @@
   "hxd.fmt.blend.Data": {
    "file": "hxd/fmt/blend/Data.hx",
    "package": "hxd.fmt.blend",
-   "lines": 337,
-   "doc_blocks": 0,
+   "lines": 466,
+   "doc_blocks": 44,
    "types": [
     "class Blend",
     "class Block",
@@ -16792,8 +16792,8 @@
   "hxd.fmt.fbx.BaseLibrary": {
    "file": "hxd/fmt/fbx/BaseLibrary.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 1695,
-   "doc_blocks": 11,
+   "lines": 1811,
+   "doc_blocks": 51,
    "types": [
     "class TmpObject",
     "class AnimCurve",
@@ -16849,8 +16849,8 @@
   "hxd.fmt.fbx.Data": {
    "file": "hxd/fmt/fbx/Data.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 169,
-   "doc_blocks": 0,
+   "lines": 223,
+   "doc_blocks": 18,
    "types": [
     "enum FbxProp",
     "typedef FbxNode",
@@ -16871,8 +16871,8 @@
   "hxd.fmt.fbx.Filter": {
    "file": "hxd/fmt/fbx/Filter.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 65,
-   "doc_blocks": 0,
+   "lines": 77,
+   "doc_blocks": 4,
    "types": [
     "class Filter"
    ],
@@ -16888,8 +16888,8 @@
   "hxd.fmt.fbx.Geometry": {
    "file": "hxd/fmt/fbx/Geometry.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 302,
-   "doc_blocks": 1,
+   "lines": 341,
+   "doc_blocks": 14,
    "types": [
     "class Geometry"
    ],
@@ -16923,8 +16923,8 @@
   "hxd.fmt.fbx.HMDOut": {
    "file": "hxd/fmt/fbx/HMDOut.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 1838,
-   "doc_blocks": 0,
+   "lines": 1913,
+   "doc_blocks": 25,
    "types": [
     "typedef CollideParams",
     "typedef ShapeColliderParams",
@@ -17014,8 +17014,8 @@
   "hxd.fmt.fbx.Parser": {
    "file": "hxd/fmt/fbx/Parser.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 528,
-   "doc_blocks": 0,
+   "lines": 534,
+   "doc_blocks": 2,
    "types": [
     "enum Token",
     "class Parser"
@@ -17035,8 +17035,8 @@
   "hxd.fmt.fbx.Writer": {
    "file": "hxd/fmt/fbx/Writer.hx",
    "package": "hxd.fmt.fbx",
-   "lines": 957,
-   "doc_blocks": 0,
+   "lines": 975,
+   "doc_blocks": 6,
    "types": [
     "typedef ExportParams",
     "class Writer"
@@ -17098,8 +17098,8 @@
   "hxd.fmt.grd.Data": {
    "file": "hxd/fmt/grd/Data.hx",
    "package": "hxd.fmt.grd",
-   "lines": 53,
-   "doc_blocks": 0,
+   "lines": 128,
+   "doc_blocks": 25,
    "types": [
     "class Gradient",
     "class ColorStop",
@@ -17125,8 +17125,8 @@
   "hxd.fmt.grd.Reader": {
    "file": "hxd/fmt/grd/Reader.hx",
    "package": "hxd.fmt.grd",
-   "lines": 175,
-   "doc_blocks": 0,
+   "lines": 183,
+   "doc_blocks": 3,
    "types": [
     "class Reader"
    ],
@@ -17144,8 +17144,8 @@
   "hxd.fmt.hbson.Reader": {
    "file": "hxd/fmt/hbson/Reader.hx",
    "package": "hxd.fmt.hbson",
-   "lines": 78,
-   "doc_blocks": 0,
+   "lines": 87,
+   "doc_blocks": 3,
    "types": [
     "class Reader"
    ],
@@ -17156,8 +17156,8 @@
   "hxd.fmt.hbson.Writer": {
    "file": "hxd/fmt/hbson/Writer.hx",
    "package": "hxd.fmt.hbson",
-   "lines": 104,
-   "doc_blocks": 0,
+   "lines": 113,
+   "doc_blocks": 3,
    "types": [
     "class Writer"
    ],
@@ -17170,8 +17170,8 @@
   "hxd.fmt.hdr.Reader": {
    "file": "hxd/fmt/hdr/Reader.hx",
    "package": "hxd.fmt.hdr",
-   "lines": 94,
-   "doc_blocks": 0,
+   "lines": 100,
+   "doc_blocks": 2,
    "types": [
     "class Reader"
    ],
@@ -17188,8 +17188,8 @@
   "hxd.fmt.hmd.Data": {
    "file": "hxd/fmt/hmd/Data.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 602,
-   "doc_blocks": 0,
+   "lines": 1100,
+   "doc_blocks": 167,
    "types": [
     "typedef GeometryDataFormat",
     "typedef GeometryFormat",
@@ -17314,8 +17314,8 @@
   "hxd.fmt.hmd.Dump": {
    "file": "hxd/fmt/hmd/Dump.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 279,
-   "doc_blocks": 0,
+   "lines": 294,
+   "doc_blocks": 5,
    "types": [
     "class Dump"
    ],
@@ -17346,8 +17346,8 @@
   "hxd.fmt.hmd.Library": {
    "file": "hxd/fmt/hmd/Library.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 920,
-   "doc_blocks": 0,
+   "lines": 959,
+   "doc_blocks": 13,
    "types": [
     "class FormatMap",
     "class ContextShared",
@@ -17466,8 +17466,8 @@
   "hxd.fmt.hmd.Reader": {
    "file": "hxd/fmt/hmd/Reader.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 359,
-   "doc_blocks": 0,
+   "lines": 371,
+   "doc_blocks": 4,
    "types": [
     "class Reader"
    ],
@@ -17501,8 +17501,8 @@
   "hxd.fmt.hmd.Writer": {
    "file": "hxd/fmt/hmd/Writer.hx",
    "package": "hxd.fmt.hmd",
-   "lines": 307,
-   "doc_blocks": 0,
+   "lines": 316,
+   "doc_blocks": 3,
    "types": [
     "class Writer"
    ],
@@ -17530,8 +17530,8 @@
   "hxd.fmt.kframes.Data": {
    "file": "hxd/fmt/kframes/Data.hx",
    "package": "hxd.fmt.kframes",
-   "lines": 55,
-   "doc_blocks": 0,
+   "lines": 138,
+   "doc_blocks": 28,
    "types": [
     "abstract KFSize",
     "enum_abstract KFAnimProp",
@@ -17549,8 +17549,8 @@
   "hxd.fmt.pak.Build": {
    "file": "hxd/fmt/pak/Build.hx",
    "package": "hxd.fmt.pak",
-   "lines": 321,
-   "doc_blocks": 0,
+   "lines": 376,
+   "doc_blocks": 18,
    "types": [
     "class Build"
    ],
@@ -17593,8 +17593,8 @@
   "hxd.fmt.pak.Data": {
    "file": "hxd/fmt/pak/Data.hx",
    "package": "hxd.fmt.pak",
-   "lines": 21,
-   "doc_blocks": 0,
+   "lines": 63,
+   "doc_blocks": 14,
    "types": [
     "class File",
     "class Data"
@@ -17611,8 +17611,8 @@
   "hxd.fmt.pak.FileSystem": {
    "file": "hxd/fmt/pak/FileSystem.hx",
    "package": "hxd.fmt.pak",
-   "lines": 278,
-   "doc_blocks": 1,
+   "lines": 332,
+   "doc_blocks": 19,
    "types": [
     "typedef FileSeekMode",
     "enum FileSeekMode",
@@ -17674,8 +17674,8 @@
   "hxd.fmt.pak.Loader": {
    "file": "hxd/fmt/pak/Loader.hx",
    "package": "hxd.fmt.pak",
-   "lines": 87,
-   "doc_blocks": 0,
+   "lines": 93,
+   "doc_blocks": 2,
    "types": [
     "class Loader"
    ],
@@ -17721,8 +17721,8 @@
   "hxd.fmt.pak.Reader": {
    "file": "hxd/fmt/pak/Reader.hx",
    "package": "hxd.fmt.pak",
-   "lines": 44,
-   "doc_blocks": 0,
+   "lines": 53,
+   "doc_blocks": 3,
    "types": [
     "class Reader"
    ],
@@ -17744,8 +17744,8 @@
   "hxd.fmt.pak.Writer": {
    "file": "hxd/fmt/pak/Writer.hx",
    "package": "hxd.fmt.pak",
-   "lines": 81,
-   "doc_blocks": 0,
+   "lines": 93,
+   "doc_blocks": 4,
    "types": [
     "class Writer"
    ],
@@ -17766,8 +17766,8 @@
   "hxd.fmt.spine.Data": {
    "file": "hxd/fmt/spine/Data.hx",
    "package": "hxd.fmt.spine",
-   "lines": 109,
-   "doc_blocks": 0,
+   "lines": 304,
+   "doc_blocks": 65,
    "types": [
     "class Bone",
     "class Slot",
@@ -17812,8 +17812,8 @@
   "hxd.fmt.spine.JsonData": {
    "file": "hxd/fmt/spine/JsonData.hx",
    "package": "hxd.fmt.spine",
-   "lines": 90,
-   "doc_blocks": 0,
+   "lines": 285,
+   "doc_blocks": 65,
    "types": [
     "typedef JCurve",
     "typedef JBoneAnimation",
@@ -17836,8 +17836,8 @@
   "hxd.fmt.spine.Library": {
    "file": "hxd/fmt/spine/Library.hx",
    "package": "hxd.fmt.spine",
-   "lines": 283,
-   "doc_blocks": 0,
+   "lines": 313,
+   "doc_blocks": 10,
    "types": [
     "class Library"
    ],
@@ -17863,8 +17863,8 @@
   "hxd.fmt.tiff.Data": {
    "file": "hxd/fmt/tiff/Data.hx",
    "package": "hxd.fmt.tiff",
-   "lines": 89,
-   "doc_blocks": 0,
+   "lines": 160,
+   "doc_blocks": 43,
    "types": [
     "enum_abstract TifTag",
     "enum_abstract TifType",
@@ -17882,8 +17882,8 @@
   "hxd.fmt.tiff.Reader": {
    "file": "hxd/fmt/tiff/Reader.hx",
    "package": "hxd.fmt.tiff",
-   "lines": 113,
-   "doc_blocks": 0,
+   "lines": 125,
+   "doc_blocks": 4,
    "types": [
     "class Reader"
    ],
@@ -17906,8 +17906,8 @@
   "hxd.fmt.tiff.Writer": {
    "file": "hxd/fmt/tiff/Writer.hx",
    "package": "hxd.fmt.tiff",
-   "lines": 106,
-   "doc_blocks": 0,
+   "lines": 118,
+   "doc_blocks": 4,
    "types": [
     "class Writer"
    ],
@@ -18927,8 +18927,8 @@
   "hxd.poly2tri.AdvancingFront": {
    "file": "hxd/poly2tri/AdvancingFront.hx",
    "package": "hxd.poly2tri",
-   "lines": 86,
-   "doc_blocks": 0,
+   "lines": 107,
+   "doc_blocks": 7,
    "types": [
     "class AdvancingFront"
    ],
@@ -18951,8 +18951,8 @@
   "hxd.poly2tri.Basin": {
    "file": "hxd/poly2tri/Basin.hx",
    "package": "hxd.poly2tri",
-   "lines": 26,
-   "doc_blocks": 0,
+   "lines": 50,
+   "doc_blocks": 8,
    "types": [
     "class Basin"
    ],
@@ -18969,8 +18969,8 @@
   "hxd.poly2tri.Constants": {
    "file": "hxd/poly2tri/Constants.hx",
    "package": "hxd.poly2tri",
-   "lines": 23,
-   "doc_blocks": 0,
+   "lines": 43,
+   "doc_blocks": 8,
    "types": [
     "typedef Unit",
     "typedef Unit",
@@ -18993,8 +18993,8 @@
   "hxd.poly2tri.Edge": {
    "file": "hxd/poly2tri/Edge.hx",
    "package": "hxd.poly2tri",
-   "lines": 47,
-   "doc_blocks": 0,
+   "lines": 62,
+   "doc_blocks": 5,
    "types": [
     "class Edge"
    ],
@@ -19015,8 +19015,8 @@
   "hxd.poly2tri.EdgeEvent": {
    "file": "hxd/poly2tri/EdgeEvent.hx",
    "package": "hxd.poly2tri",
-   "lines": 13,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 4,
    "types": [
     "class EdgeEvent"
    ],
@@ -19033,8 +19033,8 @@
   "hxd.poly2tri.Node": {
    "file": "hxd/poly2tri/Node.hx",
    "package": "hxd.poly2tri",
-   "lines": 57,
-   "doc_blocks": 1,
+   "lines": 79,
+   "doc_blocks": 9,
    "types": [
     "class Node"
    ],
@@ -19060,8 +19060,8 @@
   "hxd.poly2tri.Orientation": {
    "file": "hxd/poly2tri/Orientation.hx",
    "package": "hxd.poly2tri",
-   "lines": 23,
-   "doc_blocks": 0,
+   "lines": 38,
+   "doc_blocks": 5,
    "types": [
     "class Orientation"
    ],
@@ -19082,8 +19082,8 @@
   "hxd.poly2tri.Point": {
    "file": "hxd/poly2tri/Point.hx",
    "package": "hxd.poly2tri",
-   "lines": 76,
-   "doc_blocks": 0,
+   "lines": 117,
+   "doc_blocks": 14,
    "types": [
     "class Point"
    ],
@@ -19109,8 +19109,8 @@
   "hxd.poly2tri.Sweep": {
    "file": "hxd/poly2tri/Sweep.hx",
    "package": "hxd.poly2tri",
-   "lines": 657,
-   "doc_blocks": 6,
+   "lines": 723,
+   "doc_blocks": 22,
    "types": [
     "class Sweep"
    ],
@@ -19148,8 +19148,8 @@
   "hxd.poly2tri.SweepContext": {
    "file": "hxd/poly2tri/SweepContext.hx",
    "package": "hxd.poly2tri",
-   "lines": 153,
-   "doc_blocks": 0,
+   "lines": 207,
+   "doc_blocks": 18,
    "types": [
     "class SweepContext"
    ],
@@ -19191,8 +19191,8 @@
   "hxd.poly2tri.Triangle": {
    "file": "hxd/poly2tri/Triangle.hx",
    "package": "hxd.poly2tri",
-   "lines": 387,
-   "doc_blocks": 9,
+   "lines": 474,
+   "doc_blocks": 29,
    "types": [
     "class Triangle"
    ],
@@ -19217,8 +19217,8 @@
   "hxd.poly2tri.Utils": {
    "file": "hxd/poly2tri/Utils.hx",
    "package": "hxd.poly2tri",
-   "lines": 90,
-   "doc_blocks": 1,
+   "lines": 96,
+   "doc_blocks": 2,
    "types": [
     "class Utils"
    ],
@@ -19238,8 +19238,8 @@
   "hxd.poly2tri.VisiblePolygon": {
    "file": "hxd/poly2tri/VisiblePolygon.hx",
    "package": "hxd.poly2tri",
-   "lines": 70,
-   "doc_blocks": 0,
+   "lines": 90,
+   "doc_blocks": 7,
    "types": [
     "class VisiblePolygon"
    ],

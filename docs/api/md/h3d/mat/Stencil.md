@@ -2,6 +2,16 @@
 
 **class** · package [`h3d.mat`](README.md) · source [`h3d/mat/Stencil.hx`](../../../../../h3d/mat/Stencil.hx)
 
+The stencil buffer settings of a `Pass` (see `Pass.stencil`): the test performed against the stencil buffer and the
+operations applied to it, separately for front and back faces.
+
+```haxe
+// write 1 in the stencil where the mask object is drawn
+mask.material.mainPass.stencil = new h3d.mat.Stencil();
+mask.material.mainPass.stencil.setFunc(Always, 1);
+mask.material.mainPass.stencil.setOp(Keep, Keep, Replace);
+```
+
 ## Constructor
 
 ### new

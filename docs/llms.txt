@@ -196,7 +196,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.impl.FrameGenSettings](api/md/h3d/impl/FrameGenSettings.md): The state and capabilities of the frame generation.
 - [h3d.impl.FrameGenUIMode](api/md/h3d/impl/FrameGenUIMode.md): How the UI is handled by the frame generation, so that it is not interpolated: `BackBuffer` (the whole back buffer is interpolated), `HudLess` (a copy of the frame without UI is marked with `Upscaling.markFrameGenHudl...
 - [h3d.impl.GPUBuffer](api/md/h3d/impl/GPUBuffer.md): The native GPU buffer of the current driver.
-- [h3d.impl.GlDriver](api/md/h3d/impl/GlDriver.md)
+- [h3d.impl.GlDriver](api/md/h3d/impl/GlDriver.md): The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink.
 - [h3d.impl.InstanceBuffer](api/md/h3d/impl/InstanceBuffer.md): The draw commands of an instanced draw call (`h3d.Engine.renderInstanced`): either a single command, or a GPU buffer of indirect draw commands.
 - [h3d.impl.LatencyMarker](api/md/h3d/impl/LatencyMarker.md): The points of the frame reported to the low latency technology.
 - [h3d.impl.LowLatencyMode](api/md/h3d/impl/LowLatencyMode.md): The low latency mode (such as NVIDIA Reflex).
@@ -246,7 +246,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.mat.MaterialSetup](api/md/h3d/mat/MaterialSetup.md): Defines the rendering setup: which renderer, light system and material class are used by the scenes and models.
 - [h3d.mat.MipMap](api/md/h3d/mat/MipMap.md): How the mip levels of a texture are sampled (see `Texture.mipMap`).
 - [h3d.mat.Operation](api/md/h3d/mat/Operation.md): How the source and destination colors (multiplied by their blend factors) are combined (see `Pass.blendOp`).
-- [h3d.mat.Pass](api/md/h3d/mat/Pass.md)
+- [h3d.mat.Pass](api/md/h3d/mat/Pass.md): A render pass of a material: the render states (culling, depth, blending, stencil, color mask) and the list of shaders used to draw an object in the renderer pass named `name`.
 - [h3d.mat.PbrBlend](api/md/h3d/mat/PbrBlend.md): The blend mode of a `PbrMaterial` (see `h3d.mat.BlendMode`).
 - [h3d.mat.PbrCullingMode](api/md/h3d/mat/PbrCullingMode.md): The face culling of a `PbrMaterial` (see `h3d.mat.Data.Face`).
 - [h3d.mat.PbrDepthTest](api/md/h3d/mat/PbrDepthTest.md): The depth test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
@@ -257,9 +257,9 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.mat.PbrProps](api/md/h3d/mat/PbrProps.md): The properties of a `PbrMaterial`, stored as `props` and edited in Hide.
 - [h3d.mat.PbrStencilCompare](api/md/h3d/mat/PbrStencilCompare.md): A stencil test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
 - [h3d.mat.PbrStencilOp](api/md/h3d/mat/PbrStencilOp.md): A stencil operation of a `PbrMaterial` (see `h3d.mat.Data.StencilOp`).
-- [h3d.mat.Stencil](api/md/h3d/mat/Stencil.md)
+- [h3d.mat.Stencil](api/md/h3d/mat/Stencil.md): The stencil buffer settings of a `Pass` (see `Pass.stencil`): the test performed against the stencil buffer and the operations applied to it, separately for front and back faces.
 - [h3d.mat.StencilOp](api/md/h3d/mat/StencilOp.md): An operation applied to the stencil buffer value (see `Stencil`).
-- [h3d.mat.Texture](api/md/h3d/mat/Texture.md)
+- [h3d.mat.Texture](api/md/h3d/mat/Texture.md): A GPU texture: an image sampled by shaders, or a render target.
 - [h3d.mat.Texture3D](api/md/h3d/mat/Texture3D.md): A 3D (volume) texture of `width` x `height` x `depth` pixels.
 - [h3d.mat.TextureArray](api/md/h3d/mat/TextureArray.md): A texture array: several 2D textures (layers) of the same size and format, sampled with a layer index in shaders.
 - [h3d.mat.TextureChannels](api/md/h3d/mat/TextureChannels.md): A texture whose channels (red, green, blue, alpha) are filled separately from different images, for instance to pack the roughness, metalness and occlusion maps in a single texture.
@@ -289,7 +289,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.parts.Value](api/md/h3d/parts/Value.md): A value of a particle property, evaluated at a time `t` (the fraction of the particle life, or of the emitter loop, from `0` to `1`).
 - [h3d.parts.ValueXYZ](api/md/h3d/parts/ValueXYZ.md): A 3D vector whose components are `Value`s.
 - [h3d.pass.ArrayCopy](api/md/h3d/pass/ArrayCopy.md): Copies a layer of a texture array to a texture.
-- [h3d.pass.Blur](api/md/h3d/pass/Blur.md)
+- [h3d.pass.Blur](api/md/h3d/pass/Blur.md): A separable blur: a horizontal then a vertical pass, gaussian by default.
 - [h3d.pass.Border](api/md/h3d/pass/Border.md): Draws a solid frame of `size` pixels along the edges of a `width` x `height` target (used for instance to avoid sampling outside of shadow maps).
 - [h3d.pass.CapsuleShadowMap](api/md/h3d/pass/CapsuleShadowMap.md): The shadow map of a `h3d.scene.pbr.CapsuleLight`: a cube shadow map rendered from the light center.
 - [h3d.pass.CascadeCamera](api/md/h3d/pass/CascadeCamera.md): The shadow camera of a cascade.
@@ -307,7 +307,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.pass.Merge](api/md/h3d/pass/Merge.md): Interpolates between two textures (or two layers) into an output texture.
 - [h3d.pass.MergeShader](api/md/h3d/pass/MergeShader.md): Interpolates between two textures.
 - [h3d.pass.MipMaps](api/md/h3d/pass/MipMaps.md): Generates the mip levels of a texture with shaders (each level averages 2x2 pixels of the previous one).
-- [h3d.pass.Outline](api/md/h3d/pass/Outline.md)
+- [h3d.pass.Outline](api/md/h3d/pass/Outline.md): Draws an outline around the opaque pixels of a texture (based on its alpha).
 - [h3d.pass.Output](api/md/h3d/pass/Output.md): A render pass of a renderer: draws a list of object passes (`PassList`) to the current render target, linking each object shaders with the output shader of the pass (which writes the given values, such as `output.colo...
 - [h3d.pass.OutputShader](api/md/h3d/pass/OutputShader.md): Links the shaders of a pass with an output shader writing the given values to the render targets.
 - [h3d.pass.PassList](api/md/h3d/pass/PassList.md): A linked list of `PassObject` to draw, with a list of discarded passes which can be restored.
@@ -604,132 +604,132 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [hxd.Timer](api/md/hxd/Timer.md): The Timer class acts as a global time measurement that can be accessed from various parts of the engine.
 - [hxd.WaitEvent](api/md/hxd/WaitEvent.md): A list of callbacks updated every frame, to run code after a delay or until a condition is met.
 - [hxd.Window](api/md/hxd/Window.md): The application window, which receives the input events and resize notifications.
-- [hxd.clipper.ClipType](api/md/hxd/clipper/ClipType.md)
-- [hxd.clipper.Clipper](api/md/hxd/clipper/Clipper.md)
-- [hxd.clipper.ClipperOffset](api/md/hxd/clipper/ClipperOffset.md)
-- [hxd.clipper.EndType](api/md/hxd/clipper/EndType.md)
-- [hxd.clipper.JoinType](api/md/hxd/clipper/JoinType.md)
-- [hxd.clipper.NodeType](api/md/hxd/clipper/NodeType.md)
-- [hxd.clipper.PolyFillType](api/md/hxd/clipper/PolyFillType.md)
-- [hxd.clipper.PolyType](api/md/hxd/clipper/PolyType.md)
-- [hxd.clipper.Rect](api/md/hxd/clipper/Rect.md)
-- [hxd.clipper.ResultKind](api/md/hxd/clipper/ResultKind.md)
-- [hxd.earcut.EarNode](api/md/hxd/earcut/EarNode.md)
+- [hxd.clipper.ClipType](api/md/hxd/clipper/ClipType.md): The boolean operation of `Clipper.execute`, between the subject and the clip polygons.
+- [hxd.clipper.Clipper](api/md/hxd/clipper/Clipper.md): Polygon clipping (Angus Johnson's Clipper library 5.1.6): intersection, union, difference and xor of polygons with integer coordinates.
+- [hxd.clipper.ClipperOffset](api/md/hxd/clipper/ClipperOffset.md): Offsets (grows or shrinks) polygons and paths.
+- [hxd.clipper.EndType](api/md/hxd/clipper/EndType.md): How the ends of the paths are handled by `ClipperOffset`: closed polygons, closed lines, or open paths with butt, square or round ends.
+- [hxd.clipper.JoinType](api/md/hxd/clipper/JoinType.md): How the corners are joined by `ClipperOffset`: square, round or mitered.
+- [hxd.clipper.NodeType](api/md/hxd/clipper/NodeType.md): The kind of polygon tree nodes to output: any, open or closed paths.
+- [hxd.clipper.PolyFillType](api/md/hxd/clipper/PolyFillType.md): The filling rule deciding which regions are inside the polygons, from their winding numbers.
+- [hxd.clipper.PolyType](api/md/hxd/clipper/PolyType.md): The role of a polygon added to `Clipper`: subject or clip.
+- [hxd.clipper.Rect](api/md/hxd/clipper/Rect.md): An integer rectangle.
+- [hxd.clipper.ResultKind](api/md/hxd/clipper/ResultKind.md): The polygons kept in the result: all of them, only the outer polygons, or only the holes.
+- [hxd.earcut.EarNode](api/md/hxd/earcut/EarNode.md): A vertex of the polygon being triangulated by `Earcut`.
 - [hxd.earcut.Earcut](api/md/hxd/earcut/Earcut.md): Ported from https://github.com/mapbox/earcut by @ncannasse
-- [hxd.fmt.bfnt.FontParser](api/md/hxd/fmt/bfnt/FontParser.md)
-- [hxd.fmt.bfnt.Reader](api/md/hxd/fmt/bfnt/Reader.md)
-- [hxd.fmt.bfnt.Writer](api/md/hxd/fmt/bfnt/Writer.md)
-- [hxd.fmt.blend.Blend](api/md/hxd/fmt/blend/Blend.md)
-- [hxd.fmt.blend.Block](api/md/hxd/fmt/blend/Block.md)
-- [hxd.fmt.blend.Dna](api/md/hxd/fmt/blend/Dna.md)
-- [hxd.fmt.blend.DnaStruct](api/md/hxd/fmt/blend/DnaStruct.md)
-- [hxd.fmt.blend.Handle](api/md/hxd/fmt/blend/Handle.md)
-- [hxd.fmt.fbx.BaseLibrary](api/md/hxd/fmt/fbx/BaseLibrary.md)
-- [hxd.fmt.fbx.CollideParams](api/md/hxd/fmt/fbx/CollideParams.md)
-- [hxd.fmt.fbx.DefaultMatrixes](api/md/hxd/fmt/fbx/DefaultMatrixes.md)
-- [hxd.fmt.fbx.ExportParams](api/md/hxd/fmt/fbx/ExportParams.md)
-- [hxd.fmt.fbx.FbxNode](api/md/hxd/fmt/fbx/FbxNode.md)
-- [hxd.fmt.fbx.FbxProp](api/md/hxd/fmt/fbx/FbxProp.md)
-- [hxd.fmt.fbx.FbxTools](api/md/hxd/fmt/fbx/FbxTools.md)
-- [hxd.fmt.fbx.Filter](api/md/hxd/fmt/fbx/Filter.md)
-- [hxd.fmt.fbx.Geometry](api/md/hxd/fmt/fbx/Geometry.md)
-- [hxd.fmt.fbx.HMDOut](api/md/hxd/fmt/fbx/HMDOut.md)
-- [hxd.fmt.fbx.Parser](api/md/hxd/fmt/fbx/Parser.md)
-- [hxd.fmt.fbx.ShapeColliderParams](api/md/hxd/fmt/fbx/ShapeColliderParams.md)
-- [hxd.fmt.fbx.ShapeColliderType](api/md/hxd/fmt/fbx/ShapeColliderType.md)
-- [hxd.fmt.fbx.TmpObject](api/md/hxd/fmt/fbx/TmpObject.md)
-- [hxd.fmt.fbx.Writer](api/md/hxd/fmt/fbx/Writer.md)
-- [hxd.fmt.grd.Color](api/md/hxd/fmt/grd/Color.md)
-- [hxd.fmt.grd.ColorStop](api/md/hxd/fmt/grd/ColorStop.md)
-- [hxd.fmt.grd.ColorStopType](api/md/hxd/fmt/grd/ColorStopType.md)
-- [hxd.fmt.grd.Data](api/md/hxd/fmt/grd/Data.md)
-- [hxd.fmt.grd.Gradient](api/md/hxd/fmt/grd/Gradient.md)
-- [hxd.fmt.grd.GradientStop](api/md/hxd/fmt/grd/GradientStop.md)
-- [hxd.fmt.grd.Reader](api/md/hxd/fmt/grd/Reader.md)
-- [hxd.fmt.grd.TransparencyStop](api/md/hxd/fmt/grd/TransparencyStop.md)
-- [hxd.fmt.hbson.Reader](api/md/hxd/fmt/hbson/Reader.md)
-- [hxd.fmt.hbson.Writer](api/md/hxd/fmt/hbson/Writer.md)
-- [hxd.fmt.hdr.Reader](api/md/hxd/fmt/hdr/Reader.md)
-- [hxd.fmt.hmd.Animation](api/md/hxd/fmt/hmd/Animation.md)
-- [hxd.fmt.hmd.AnimationEvent](api/md/hxd/fmt/hmd/AnimationEvent.md)
-- [hxd.fmt.hmd.AnimationFlag](api/md/hxd/fmt/hmd/AnimationFlag.md)
-- [hxd.fmt.hmd.AnimationObject](api/md/hxd/fmt/hmd/AnimationObject.md)
-- [hxd.fmt.hmd.BlendShape](api/md/hxd/fmt/hmd/BlendShape.md)
-- [hxd.fmt.hmd.BoxCollider](api/md/hxd/fmt/hmd/BoxCollider.md)
-- [hxd.fmt.hmd.CapsuleCollider](api/md/hxd/fmt/hmd/CapsuleCollider.md)
-- [hxd.fmt.hmd.Collider](api/md/hxd/fmt/hmd/Collider.md)
-- [hxd.fmt.hmd.ColliderType](api/md/hxd/fmt/hmd/ColliderType.md)
-- [hxd.fmt.hmd.ConvexHullParams](api/md/hxd/fmt/hmd/ConvexHullParams.md)
-- [hxd.fmt.hmd.ConvexHullsCollider](api/md/hxd/fmt/hmd/ConvexHullsCollider.md)
-- [hxd.fmt.hmd.CylinderCollider](api/md/hxd/fmt/hmd/CylinderCollider.md)
-- [hxd.fmt.hmd.Data](api/md/hxd/fmt/hmd/Data.md)
-- [hxd.fmt.hmd.DataPosition](api/md/hxd/fmt/hmd/DataPosition.md)
-- [hxd.fmt.hmd.Dump](api/md/hxd/fmt/hmd/Dump.md)
-- [hxd.fmt.hmd.EmptyCollider](api/md/hxd/fmt/hmd/EmptyCollider.md)
-- [hxd.fmt.hmd.Geometry](api/md/hxd/fmt/hmd/Geometry.md)
-- [hxd.fmt.hmd.GeometryBuffer](api/md/hxd/fmt/hmd/GeometryBuffer.md)
-- [hxd.fmt.hmd.GeometryDataFormat](api/md/hxd/fmt/hmd/GeometryDataFormat.md)
-- [hxd.fmt.hmd.GeometryFormat](api/md/hxd/fmt/hmd/GeometryFormat.md)
-- [hxd.fmt.hmd.GroupCollider](api/md/hxd/fmt/hmd/GroupCollider.md)
-- [hxd.fmt.hmd.Index](api/md/hxd/fmt/hmd/Index.md)
-- [hxd.fmt.hmd.Library](api/md/hxd/fmt/hmd/Library.md)
-- [hxd.fmt.hmd.Material](api/md/hxd/fmt/hmd/Material.md)
-- [hxd.fmt.hmd.MeshCollider](api/md/hxd/fmt/hmd/MeshCollider.md)
-- [hxd.fmt.hmd.Model](api/md/hxd/fmt/hmd/Model.md)
-- [hxd.fmt.hmd.Position](api/md/hxd/fmt/hmd/Position.md)
-- [hxd.fmt.hmd.Properties](api/md/hxd/fmt/hmd/Properties.md)
-- [hxd.fmt.hmd.Property](api/md/hxd/fmt/hmd/Property.md)
-- [hxd.fmt.hmd.Reader](api/md/hxd/fmt/hmd/Reader.md)
-- [hxd.fmt.hmd.ResolveResult](api/md/hxd/fmt/hmd/ResolveResult.md)
-- [hxd.fmt.hmd.Skin](api/md/hxd/fmt/hmd/Skin.md)
-- [hxd.fmt.hmd.SkinJoint](api/md/hxd/fmt/hmd/SkinJoint.md)
-- [hxd.fmt.hmd.SkinSplit](api/md/hxd/fmt/hmd/SkinSplit.md)
-- [hxd.fmt.hmd.SphereCollider](api/md/hxd/fmt/hmd/SphereCollider.md)
-- [hxd.fmt.hmd.Writer](api/md/hxd/fmt/hmd/Writer.md)
-- [hxd.fmt.kframes.KFAnimProp](api/md/hxd/fmt/kframes/KFAnimProp.md)
-- [hxd.fmt.kframes.KFAnimValue](api/md/hxd/fmt/kframes/KFAnimValue.md)
-- [hxd.fmt.kframes.KFAnimation](api/md/hxd/fmt/kframes/KFAnimation.md)
-- [hxd.fmt.kframes.KFFeature](api/md/hxd/fmt/kframes/KFFeature.md)
-- [hxd.fmt.kframes.KFSize](api/md/hxd/fmt/kframes/KFSize.md)
-- [hxd.fmt.kframes.KeyframesFile](api/md/hxd/fmt/kframes/KeyframesFile.md)
-- [hxd.fmt.pak.Data](api/md/hxd/fmt/pak/Data.md)
-- [hxd.fmt.pak.File](api/md/hxd/fmt/pak/File.md)
-- [hxd.fmt.pak.FileInput](api/md/hxd/fmt/pak/FileInput.md)
-- [hxd.fmt.pak.FileSeek](api/md/hxd/fmt/pak/FileSeek.md)
-- [hxd.fmt.pak.FileSeekMode](api/md/hxd/fmt/pak/FileSeekMode.md)
-- [hxd.fmt.pak.FileSystem](api/md/hxd/fmt/pak/FileSystem.md)
-- [hxd.fmt.pak.Loader](api/md/hxd/fmt/pak/Loader.md)
-- [hxd.fmt.pak.Reader](api/md/hxd/fmt/pak/Reader.md)
-- [hxd.fmt.pak.Writer](api/md/hxd/fmt/pak/Writer.md)
-- [hxd.fmt.spine.Animation](api/md/hxd/fmt/spine/Animation.md)
-- [hxd.fmt.spine.AnimationCurve](api/md/hxd/fmt/spine/AnimationCurve.md)
-- [hxd.fmt.spine.Attachment](api/md/hxd/fmt/spine/Attachment.md)
-- [hxd.fmt.spine.Bone](api/md/hxd/fmt/spine/Bone.md)
-- [hxd.fmt.spine.BoneCurve](api/md/hxd/fmt/spine/BoneCurve.md)
-- [hxd.fmt.spine.JAnimation](api/md/hxd/fmt/spine/JAnimation.md)
-- [hxd.fmt.spine.JAttachment](api/md/hxd/fmt/spine/JAttachment.md)
-- [hxd.fmt.spine.JBone](api/md/hxd/fmt/spine/JBone.md)
-- [hxd.fmt.spine.JBoneAnimation](api/md/hxd/fmt/spine/JBoneAnimation.md)
-- [hxd.fmt.spine.JCurve](api/md/hxd/fmt/spine/JCurve.md)
-- [hxd.fmt.spine.JRegionAttach](api/md/hxd/fmt/spine/JRegionAttach.md)
-- [hxd.fmt.spine.JSkeleton](api/md/hxd/fmt/spine/JSkeleton.md)
-- [hxd.fmt.spine.JSkin](api/md/hxd/fmt/spine/JSkin.md)
-- [hxd.fmt.spine.JSkinMeshAttach](api/md/hxd/fmt/spine/JSkinMeshAttach.md)
-- [hxd.fmt.spine.JSlot](api/md/hxd/fmt/spine/JSlot.md)
-- [hxd.fmt.spine.JsonData](api/md/hxd/fmt/spine/JsonData.md)
-- [hxd.fmt.spine.Library](api/md/hxd/fmt/spine/Library.md)
-- [hxd.fmt.spine.RegionAttachment](api/md/hxd/fmt/spine/RegionAttachment.md)
-- [hxd.fmt.spine.Skin](api/md/hxd/fmt/spine/Skin.md)
-- [hxd.fmt.spine.SkinnedMeshAttachment](api/md/hxd/fmt/spine/SkinnedMeshAttachment.md)
-- [hxd.fmt.spine.SkinnedVertice](api/md/hxd/fmt/spine/SkinnedVertice.md)
-- [hxd.fmt.spine.Slot](api/md/hxd/fmt/spine/Slot.md)
-- [hxd.fmt.tiff.Reader](api/md/hxd/fmt/tiff/Reader.md)
-- [hxd.fmt.tiff.TifFile](api/md/hxd/fmt/tiff/TifFile.md)
-- [hxd.fmt.tiff.TifTag](api/md/hxd/fmt/tiff/TifTag.md)
-- [hxd.fmt.tiff.TifType](api/md/hxd/fmt/tiff/TifType.md)
-- [hxd.fmt.tiff.TifValue](api/md/hxd/fmt/tiff/TifValue.md)
-- [hxd.fmt.tiff.Utils](api/md/hxd/fmt/tiff/Utils.md)
-- [hxd.fmt.tiff.Writer](api/md/hxd/fmt/tiff/Writer.md)
+- [hxd.fmt.bfnt.FontParser](api/md/hxd/fmt/bfnt/FontParser.md): Parses the bitmap font description formats: BFNT, BMFont (text, XML or binary), Littera, FontBuilder (Divo), and Hiero.
+- [hxd.fmt.bfnt.Reader](api/md/hxd/fmt/bfnt/Reader.md): Reads the BFNT format: the compact binary bitmap font format of Heaps.
+- [hxd.fmt.bfnt.Writer](api/md/hxd/fmt/bfnt/Writer.md): Writes the BFNT format: the compact binary bitmap font format of Heaps.
+- [hxd.fmt.blend.Blend](api/md/hxd/fmt/blend/Blend.md): Reads the data structures of a Blender file (`.blend`, uncompressed), using its embedded DNA description.
+- [hxd.fmt.blend.Block](api/md/hxd/fmt/blend/Block.md): A data block of a Blender file.
+- [hxd.fmt.blend.Dna](api/md/hxd/fmt/blend/Dna.md): The description of the data structures of a Blender file.
+- [hxd.fmt.blend.DnaStruct](api/md/hxd/fmt/blend/DnaStruct.md): The description of a structure.
+- [hxd.fmt.blend.Handle](api/md/hxd/fmt/blend/Handle.md): A handle on a structure in a block, to read its fields.
+- [hxd.fmt.fbx.BaseLibrary](api/md/hxd/fmt/fbx/BaseLibrary.md): Loads a FBX file (version 7) and builds its hierarchy, geometries, skins and animations.
+- [hxd.fmt.fbx.CollideParams](api/md/hxd/fmt/fbx/CollideParams.md): How the collider of a model is generated (see `hxd.fmt.hmd.Collider.resolveColliderType`).
+- [hxd.fmt.fbx.DefaultMatrixes](api/md/hxd/fmt/fbx/DefaultMatrixes.md): The default transform of a FBX model: translation, scale, rotation and pre-rotation.
+- [hxd.fmt.fbx.ExportParams](api/md/hxd/fmt/fbx/ExportParams.md): The axis conventions of an exported FBX file.
+- [hxd.fmt.fbx.FbxNode](api/md/hxd/fmt/fbx/FbxNode.md): A node of a FBX file: its name, properties and children.
+- [hxd.fmt.fbx.FbxProp](api/md/hxd/fmt/fbx/FbxProp.md): A property value of a FBX node.
+- [hxd.fmt.fbx.FbxTools](api/md/hxd/fmt/fbx/FbxTools.md): Helpers to read FBX nodes.
+- [hxd.fmt.fbx.Filter](api/md/hxd/fmt/fbx/Filter.md): Removes nodes from FBX data, with their connections.
+- [hxd.fmt.fbx.Geometry](api/md/hxd/fmt/fbx/Geometry.md): Reads the data of a FBX geometry node.
+- [hxd.fmt.fbx.HMDOut](api/md/hxd/fmt/fbx/HMDOut.md): Converts a FBX file to the HMD format of Heaps (see `hxd.fs.Convert`): optimized geometries, skins, animations, levels of detail and colliders.
+- [hxd.fmt.fbx.Parser](api/md/hxd/fmt/fbx/Parser.md): Parses FBX files, in text or binary format.
+- [hxd.fmt.fbx.ShapeColliderParams](api/md/hxd/fmt/fbx/ShapeColliderParams.md): A shape of a custom collider.
+- [hxd.fmt.fbx.ShapeColliderType](api/md/hxd/fmt/fbx/ShapeColliderType.md): The type of a collider shape.
+- [hxd.fmt.fbx.TmpObject](api/md/hxd/fmt/fbx/TmpObject.md): A node of the hierarchy built while converting a FBX file.
+- [hxd.fmt.fbx.Writer](api/md/hxd/fmt/fbx/Writer.md): Exports 3D objects to a binary FBX file.
+- [hxd.fmt.grd.Color](api/md/hxd/fmt/grd/Color.md): A color of a gradient: RGB (`0` to `255`) or HSB (hue in degrees, saturation and brightness in percent).
+- [hxd.fmt.grd.ColorStop](api/md/hxd/fmt/grd/ColorStop.md): A color stop of a gradient.
+- [hxd.fmt.grd.ColorStopType](api/md/hxd/fmt/grd/ColorStopType.md): The source of the color of a stop: a user color, or the background or foreground color of Photoshop.
+- [hxd.fmt.grd.Data](api/md/hxd/fmt/grd/Data.md): The gradients of a Photoshop gradients file (`.grd`), by name.
+- [hxd.fmt.grd.Gradient](api/md/hxd/fmt/grd/Gradient.md): A gradient of a Photoshop gradients file.
+- [hxd.fmt.grd.GradientStop](api/md/hxd/fmt/grd/GradientStop.md): A color stop with its opacity.
+- [hxd.fmt.grd.Reader](api/md/hxd/fmt/grd/Reader.md): Reads a Photoshop gradients file (`.grd`, version 5).
+- [hxd.fmt.grd.TransparencyStop](api/md/hxd/fmt/grd/TransparencyStop.md): An opacity stop of a gradient.
+- [hxd.fmt.hbson.Reader](api/md/hxd/fmt/hbson/Reader.md): Reads the HBSON format: a binary encoding of JSON values (see `hxd.fs.Convert.ConvertBinJSON`).
+- [hxd.fmt.hbson.Writer](api/md/hxd/fmt/hbson/Writer.md): Writes the HBSON format: a binary encoding of JSON values, with short strings stored once.
+- [hxd.fmt.hdr.Reader](api/md/hxd/fmt/hdr/Reader.md): Decodes Radiance HDR images (`.hdr`).
+- [hxd.fmt.hmd.Animation](api/md/hxd/fmt/hmd/Animation.md): An animation stored in the file.
+- [hxd.fmt.hmd.AnimationEvent](api/md/hxd/fmt/hmd/AnimationEvent.md): An event of an animation.
+- [hxd.fmt.hmd.AnimationFlag](api/md/hxd/fmt/hmd/AnimationFlag.md): The animated components of an animated object.
+- [hxd.fmt.hmd.AnimationObject](api/md/hxd/fmt/hmd/AnimationObject.md): An object animated by an animation.
+- [hxd.fmt.hmd.BlendShape](api/md/hxd/fmt/hmd/BlendShape.md): A blend shape (morph target) of a geometry.
+- [hxd.fmt.hmd.BoxCollider](api/md/hxd/fmt/hmd/BoxCollider.md): A box collider.
+- [hxd.fmt.hmd.CapsuleCollider](api/md/hxd/fmt/hmd/CapsuleCollider.md): A capsule collider.
+- [hxd.fmt.hmd.Collider](api/md/hxd/fmt/hmd/Collider.md): A collider stored in the file.
+- [hxd.fmt.hmd.ColliderType](api/md/hxd/fmt/hmd/ColliderType.md): The type of a collider stored in the file.
+- [hxd.fmt.hmd.ConvexHullParams](api/md/hxd/fmt/hmd/ConvexHullParams.md): The parameters of the convex hulls generation.
+- [hxd.fmt.hmd.ConvexHullsCollider](api/md/hxd/fmt/hmd/ConvexHullsCollider.md): A collider made of convex hulls.
+- [hxd.fmt.hmd.CylinderCollider](api/md/hxd/fmt/hmd/CylinderCollider.md): A cylinder collider.
+- [hxd.fmt.hmd.Data](api/md/hxd/fmt/hmd/Data.md): The content of a HMD file (the binary model format of Heaps, converted from FBX): the description of the models, geometries, materials, animations and colliders, and the binary data of the vertices and frames.
+- [hxd.fmt.hmd.DataPosition](api/md/hxd/fmt/hmd/DataPosition.md): A position in the binary data of the file, in bytes.
+- [hxd.fmt.hmd.Dump](api/md/hxd/fmt/hmd/Dump.md): Converts a HMD file into a readable text description, for debugging.
+- [hxd.fmt.hmd.EmptyCollider](api/md/hxd/fmt/hmd/EmptyCollider.md): A collider without shape.
+- [hxd.fmt.hmd.Geometry](api/md/hxd/fmt/hmd/Geometry.md): The vertex and index data of a mesh, split by material.
+- [hxd.fmt.hmd.GeometryBuffer](api/md/hxd/fmt/hmd/GeometryBuffer.md): The vertices and indexes of a geometry, decoded in a given format.
+- [hxd.fmt.hmd.GeometryDataFormat](api/md/hxd/fmt/hmd/GeometryDataFormat.md): The type of a vertex input.
+- [hxd.fmt.hmd.GeometryFormat](api/md/hxd/fmt/hmd/GeometryFormat.md): A vertex input.
+- [hxd.fmt.hmd.GroupCollider](api/md/hxd/fmt/hmd/GroupCollider.md): A collider made of several colliders.
+- [hxd.fmt.hmd.Index](api/md/hxd/fmt/hmd/Index.md): An index in an array of the data.
+- [hxd.fmt.hmd.Library](api/md/hxd/fmt/hmd/Library.md): Creates the objects, primitives, materials, skins and animations of a HMD model resource (see `hxd.res.Model.toHmd`).
+- [hxd.fmt.hmd.Material](api/md/hxd/fmt/hmd/Material.md): A material stored in the file.
+- [hxd.fmt.hmd.MeshCollider](api/md/hxd/fmt/hmd/MeshCollider.md): A collider using a mesh.
+- [hxd.fmt.hmd.Model](api/md/hxd/fmt/hmd/Model.md): A node of the hierarchy of the file: an object, a mesh or a skinned mesh.
+- [hxd.fmt.hmd.Position](api/md/hxd/fmt/hmd/Position.md): A transform stored in the file: position, rotation (quaternion without its W component, which is recomputed) and scale.
+- [hxd.fmt.hmd.Properties](api/md/hxd/fmt/hmd/Properties.md): A list of properties, or `null`.
+- [hxd.fmt.hmd.Property](api/md/hxd/fmt/hmd/Property.md): Optional properties of the elements of the file.
+- [hxd.fmt.hmd.Reader](api/md/hxd/fmt/hmd/Reader.md): Reads a HMD file.
+- [hxd.fmt.hmd.ResolveResult](api/md/hxd/fmt/hmd/ResolveResult.md): How the collider of a model is built (see `Collider.resolveColliderType`).
+- [hxd.fmt.hmd.Skin](api/md/hxd/fmt/hmd/Skin.md): The skeleton of a skinned model.
+- [hxd.fmt.hmd.SkinJoint](api/md/hxd/fmt/hmd/SkinJoint.md): A joint of a skin.
+- [hxd.fmt.hmd.SkinSplit](api/md/hxd/fmt/hmd/SkinSplit.md): A part of a skin drawn separately, to limit the number of joints per draw call.
+- [hxd.fmt.hmd.SphereCollider](api/md/hxd/fmt/hmd/SphereCollider.md): A sphere collider.
+- [hxd.fmt.hmd.Writer](api/md/hxd/fmt/hmd/Writer.md): Writes a HMD file.
+- [hxd.fmt.kframes.KFAnimProp](api/md/hxd/fmt/kframes/KFAnimProp.md): The properties animated by a keyframes animation.
+- [hxd.fmt.kframes.KFAnimValue](api/md/hxd/fmt/kframes/KFAnimValue.md): A key of a keyframes animation.
+- [hxd.fmt.kframes.KFAnimation](api/md/hxd/fmt/kframes/KFAnimation.md): The animation of a property of a feature.
+- [hxd.fmt.kframes.KFFeature](api/md/hxd/fmt/kframes/KFFeature.md): A feature (layer) of a keyframes file.
+- [hxd.fmt.kframes.KFSize](api/md/hxd/fmt/kframes/KFSize.md): A 2D size or point of a keyframes file.
+- [hxd.fmt.kframes.KeyframesFile](api/md/hxd/fmt/kframes/KeyframesFile.md): The content of a keyframes file: After Effects animations exported with the Keyframes tool (https://github.com/HeapsIO/Keyframes), played by `h2d.KeyFrames`.
+- [hxd.fmt.pak.Data](api/md/hxd/fmt/pak/Data.md): The header of a `.pak` archive.
+- [hxd.fmt.pak.File](api/md/hxd/fmt/pak/File.md): A file or directory of a `.pak` archive.
+- [hxd.fmt.pak.FileInput](api/md/hxd/fmt/pak/FileInput.md): An input reading a `.pak` file from memory, on the platforms without file system.
+- [hxd.fmt.pak.FileSeek](api/md/hxd/fmt/pak/FileSeek.md): Seeks in files bigger than 2 GB, when supported.
+- [hxd.fmt.pak.FileSeekMode](api/md/hxd/fmt/pak/FileSeekMode.md): The origin of a seek in a file.
+- [hxd.fmt.pak.FileSystem](api/md/hxd/fmt/pak/FileSystem.md): A file system reading the resources from one or more `.pak` archives.
+- [hxd.fmt.pak.Loader](api/md/hxd/fmt/pak/Loader.md): A 2D progress bar loading the `res.pak`, `res1.pak`...
+- [hxd.fmt.pak.Reader](api/md/hxd/fmt/pak/Reader.md): Reads the header of a `.pak` archive.
+- [hxd.fmt.pak.Writer](api/md/hxd/fmt/pak/Writer.md): Writes a `.pak` archive.
+- [hxd.fmt.spine.Animation](api/md/hxd/fmt/spine/Animation.md): A Spine animation.
+- [hxd.fmt.spine.AnimationCurve](api/md/hxd/fmt/spine/AnimationCurve.md): The base class of the animation curves.
+- [hxd.fmt.spine.Attachment](api/md/hxd/fmt/spine/Attachment.md): An image attached to a slot of a skin.
+- [hxd.fmt.spine.Bone](api/md/hxd/fmt/spine/Bone.md): A bone of a Spine skeleton.
+- [hxd.fmt.spine.BoneCurve](api/md/hxd/fmt/spine/BoneCurve.md): The animation of a bone.
+- [hxd.fmt.spine.JAnimation](api/md/hxd/fmt/spine/JAnimation.md): An animation, in the Spine JSON format.
+- [hxd.fmt.spine.JAttachment](api/md/hxd/fmt/spine/JAttachment.md): An attachment, in the Spine JSON format.
+- [hxd.fmt.spine.JBone](api/md/hxd/fmt/spine/JBone.md): A bone, in the Spine JSON format.
+- [hxd.fmt.spine.JBoneAnimation](api/md/hxd/fmt/spine/JBoneAnimation.md): The keys of a bone animation, in the Spine JSON format.
+- [hxd.fmt.spine.JCurve](api/md/hxd/fmt/spine/JCurve.md): The interpolation of a key: `"stepped"`, `"linear"`, or the 4 factors of a bezier curve.
+- [hxd.fmt.spine.JRegionAttach](api/md/hxd/fmt/spine/JRegionAttach.md): A region attachment, in the Spine JSON format.
+- [hxd.fmt.spine.JSkeleton](api/md/hxd/fmt/spine/JSkeleton.md): The skeleton information, in the Spine JSON format.
+- [hxd.fmt.spine.JSkin](api/md/hxd/fmt/spine/JSkin.md): The attachments of a skin, by slot name and attachment name, in the Spine JSON format.
+- [hxd.fmt.spine.JSkinMeshAttach](api/md/hxd/fmt/spine/JSkinMeshAttach.md): A skinned mesh attachment, in the Spine JSON format.
+- [hxd.fmt.spine.JSlot](api/md/hxd/fmt/spine/JSlot.md): A slot, in the Spine JSON format.
+- [hxd.fmt.spine.JsonData](api/md/hxd/fmt/spine/JsonData.md): The content of a Spine JSON file.
+- [hxd.fmt.spine.Library](api/md/hxd/fmt/spine/Library.md): Loads a Spine skeleton from its JSON export: bones, slots, skins and animations.
+- [hxd.fmt.spine.RegionAttachment](api/md/hxd/fmt/spine/RegionAttachment.md): A rectangular image attachment.
+- [hxd.fmt.spine.Skin](api/md/hxd/fmt/spine/Skin.md): A set of attachments of a Spine skeleton.
+- [hxd.fmt.spine.SkinnedMeshAttachment](api/md/hxd/fmt/spine/SkinnedMeshAttachment.md): A mesh attachment deformed by the bones.
+- [hxd.fmt.spine.SkinnedVertice](api/md/hxd/fmt/spine/SkinnedVertice.md): A vertex of a skinned mesh attachment, influenced by up to 3 bones.
+- [hxd.fmt.spine.Slot](api/md/hxd/fmt/spine/Slot.md): A slot of a Spine skeleton: an attachment point of a bone, drawn in order.
+- [hxd.fmt.tiff.Reader](api/md/hxd/fmt/tiff/Reader.md): Reads TIFF files (such as height maps).
+- [hxd.fmt.tiff.TifFile](api/md/hxd/fmt/tiff/TifFile.md): The content of a TIFF file: its tags and its strips of data.
+- [hxd.fmt.tiff.TifTag](api/md/hxd/fmt/tiff/TifTag.md): The TIFF tags read and written.
+- [hxd.fmt.tiff.TifType](api/md/hxd/fmt/tiff/TifType.md): The types of the TIFF tag values.
+- [hxd.fmt.tiff.TifValue](api/md/hxd/fmt/tiff/TifValue.md): A TIFF tag value.
+- [hxd.fmt.tiff.Utils](api/md/hxd/fmt/tiff/Utils.md): Helpers to read the tags of a TIFF file.
+- [hxd.fmt.tiff.Writer](api/md/hxd/fmt/tiff/Writer.md): Writes TIFF files.
 - [hxd.fs.AsyncRead](api/md/hxd/fs/AsyncRead.md): A pending asynchronous read, returned by `FileEntry.readBytesAsync`.
 - [hxd.fs.AsyncReadState](api/md/hxd/fs/AsyncReadState.md): The state of an `AsyncRead`.
 - [hxd.fs.AsyncReader](api/md/hxd/fs/AsyncReader.md): Reads file data asynchronously : a single IO thread is shared by all file systems, reading the pending requests by priority order.
@@ -793,20 +793,20 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [hxd.net.Socket](api/md/hxd/net/Socket.md): An asynchronous TCP socket, on HashLink (with libuv) and Node.js.
 - [hxd.net.SocketClient](api/md/hxd/net/SocketClient.md): A hxbit network client communicating through a `Socket`.
 - [hxd.net.SocketHost](api/md/hxd/net/SocketHost.md): A hxbit network host using TCP sockets, as a client (`connect`) or as a server (`wait`).
-- [hxd.poly2tri.AdvancingFront](api/md/hxd/poly2tri/AdvancingFront.md)
-- [hxd.poly2tri.Basin](api/md/hxd/poly2tri/Basin.md)
-- [hxd.poly2tri.Constants](api/md/hxd/poly2tri/Constants.md)
-- [hxd.poly2tri.Edge](api/md/hxd/poly2tri/Edge.md)
-- [hxd.poly2tri.EdgeEvent](api/md/hxd/poly2tri/EdgeEvent.md)
-- [hxd.poly2tri.Node](api/md/hxd/poly2tri/Node.md)
-- [hxd.poly2tri.Orientation](api/md/hxd/poly2tri/Orientation.md)
-- [hxd.poly2tri.Point](api/md/hxd/poly2tri/Point.md)
-- [hxd.poly2tri.Sweep](api/md/hxd/poly2tri/Sweep.md)
-- [hxd.poly2tri.SweepContext](api/md/hxd/poly2tri/SweepContext.md)
-- [hxd.poly2tri.Triangle](api/md/hxd/poly2tri/Triangle.md)
-- [hxd.poly2tri.Unit](api/md/hxd/poly2tri/Unit.md)
-- [hxd.poly2tri.Utils](api/md/hxd/poly2tri/Utils.md)
-- [hxd.poly2tri.VisiblePolygon](api/md/hxd/poly2tri/VisiblePolygon.md)
+- [hxd.poly2tri.AdvancingFront](api/md/hxd/poly2tri/AdvancingFront.md): The advancing front of the sweep line triangulation: a linked list of nodes along the upper boundary of the triangulated area.
+- [hxd.poly2tri.Basin](api/md/hxd/poly2tri/Basin.md): A basin of the advancing front: a concave part that is filled with triangles.
+- [hxd.poly2tri.Constants](api/md/hxd/poly2tri/Constants.md): The constants of the triangulation.
+- [hxd.poly2tri.Edge](api/md/hxd/poly2tri/Edge.md): A constrained edge of the polygon to triangulate, oriented so that `q` is the upper point.
+- [hxd.poly2tri.EdgeEvent](api/md/hxd/poly2tri/EdgeEvent.md): The constrained edge being inserted by the sweep.
+- [hxd.poly2tri.Node](api/md/hxd/poly2tri/Node.md): A node of the advancing front.
+- [hxd.poly2tri.Orientation](api/md/hxd/poly2tri/Orientation.md): The orientation of three points.
+- [hxd.poly2tri.Point](api/md/hxd/poly2tri/Point.md): A point of the polygon to triangulate.
+- [hxd.poly2tri.Sweep](api/md/hxd/poly2tri/Sweep.md): The sweep line algorithm of the constrained Delaunay triangulation (poly2tri).
+- [hxd.poly2tri.SweepContext](api/md/hxd/poly2tri/SweepContext.md): The state of a triangulation: the points, the constrained edges, the advancing front and the resulting triangles.
+- [hxd.poly2tri.Triangle](api/md/hxd/poly2tri/Triangle.md): A triangle of the triangulation, with its neighbors and edge flags.
+- [hxd.poly2tri.Unit](api/md/hxd/poly2tri/Unit.md): The type of the point coordinates (`Int` with `-D fastPoly2tri`, `Float` otherwise).
+- [hxd.poly2tri.Utils](api/md/hxd/poly2tri/Utils.md): Geometric tests of the triangulation.
+- [hxd.poly2tri.VisiblePolygon](api/md/hxd/poly2tri/VisiblePolygon.md): Triangulates polygons with holes (constrained Delaunay triangulation with poly2tri).
 - [hxd.res.AnimGraph](api/md/hxd/res/AnimGraph.md): An animation graph resource.
 - [hxd.res.Any](api/md/hxd/res/Any.md): A resource of unknown type, as returned by `hxd.res.Loader.load`: use one of its `toXXX` methods to load it as a specific type.
 - [hxd.res.Atlas](api/md/hxd/res/Atlas.md): A texture atlas in the libGDX/Spine `.atlas` text format, giving named tiles in one or more images.

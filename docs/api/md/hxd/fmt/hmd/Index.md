@@ -4,4 +4,6 @@
 
 Type parameters: `<T>`
 
+An index in an array of the data.
+
 Alias for: `Int`

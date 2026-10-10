@@ -4,6 +4,8 @@
 
 Extends: `haxe.io.BytesInput`
 
+An input reading a `.pak` file from memory, on the platforms without file system.
+
 ## Constructor
 
 ### new
@@ -20,8 +22,12 @@ function new(b:Bytes, ?pos:Int, ?len:Int):Void
 function seek(pos:Int, seekMode:FileSeekMode):Void
 ```
 
+Moves the read position.
+
 ### tell
 
 ```haxe
 function tell():Int
 ```
+
+Returns the read position.

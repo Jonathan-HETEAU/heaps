@@ -4,6 +4,18 @@
 
 Subclasses: [`h3d.mat.Texture3D`](Texture3D.md), [`h3d.mat.TextureArray`](TextureArray.md), [`h3d.mat.TextureChannels`](TextureChannels.md)
 
+A GPU texture: an image sampled by shaders, or a render target.
+
+Textures are usually created from resources (`hxd.res.Image.toTexture`), from pixels (`fromPixels`), from a color
+(`fromColor`), or as render targets with the `Target` flag. The GPU memory is managed by `h3d.impl.MemoryManager`:
+textures not used for a while can be disposed when memory is low, and are reallocated with `realloc` if set.
+
+```haxe
+var tex = hxd.Res.grass.toTexture();
+tex.wrap = Repeat;
+var target = new h3d.mat.Texture(512, 512, [Target]);
+```
+
 ## Constructor
 
 ### new

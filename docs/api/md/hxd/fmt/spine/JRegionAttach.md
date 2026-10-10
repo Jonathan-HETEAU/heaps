@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd.fmt.spine`](README.md) · module `hxd.fmt.spine.JsonData` · source [`hxd/fmt/spine/JsonData.hx`](../../../../../../hxd/fmt/spine/JsonData.hx)
 
+A region attachment, in the Spine JSON format.
+
 ## Fields
 
 ### y
@@ -10,17 +12,23 @@
 var ?y:Null<Float>
 ```
 
+The Y position.
+
 ### x
 
 ```haxe
 var ?x:Null<Float>
 ```
 
+The X position.
+
 ### width
 
 ```haxe
 var width:Float
 ```
+
+The width of the image.
 
 ### type
 
@@ -34,11 +42,15 @@ var ?type:Null<String>
 var ?scaleY:Null<Float>
 ```
 
+The Y scale.
+
 ### scaleX
 
 ```haxe
 var ?scaleX:Null<Float>
 ```
+
+The X scale.
 
 ### rotation
 
@@ -46,11 +58,15 @@ var ?scaleX:Null<Float>
 var ?rotation:Null<Float>
 ```
 
+The rotation, in degrees.
+
 ### height
 
 ```haxe
 var height:Float
 ```
+
+The height of the image.
 
 ### color
 

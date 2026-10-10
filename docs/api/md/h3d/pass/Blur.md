@@ -4,6 +4,13 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+A separable blur: a horizontal then a vertical pass, gaussian by default. Works with 2D and cube textures.
+
+```haxe
+var blur = new h3d.pass.Blur(5);
+blur.apply(ctx, texture); // blurs texture in place
+```
+
 ## Constructor
 
 ### new

@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd.fmt.pak`](README.md) · module `hxd.fmt.pak.FileSystem` · source [`hxd/fmt/pak/FileSystem.hx`](../../../../../../hxd/fmt/pak/FileSystem.hx)
 
+The origin of a seek in a file.
+
 ## Constructors
 
 ### SeekBegin _(js only)_

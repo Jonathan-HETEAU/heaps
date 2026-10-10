@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd.fmt.fbx`](README.md) · module `hxd.fmt.fbx.Data` · source [`hxd/fmt/fbx/Data.hx`](../../../../../../hxd/fmt/fbx/Data.hx)
 
+A property value of a FBX node.
+
 ## Constructors
 
 ### PInt

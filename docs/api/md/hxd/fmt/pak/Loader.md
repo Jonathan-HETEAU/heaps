@@ -4,6 +4,8 @@
 
 Extends: [`h2d.Object`](../../../h2d/Object.md)
 
+A 2D progress bar loading the `res.pak`, `res1.pak`... archives (with HTTP on JS), then calling `onDone`.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h2d.Object`](../../../h2d/Object.md)
 ```haxe
 function new(s2d:h2d.Scene, onDone:() -> Void):Void
 ```
+
+Starts loading the archives into the current resource loader, displaying the progress in the scene.
 
 ## Inherited members
 

@@ -2,6 +2,8 @@
 
 **enum** · package [`hxd.fmt.hmd`](README.md) · module `hxd.fmt.hmd.Data` · source [`hxd/fmt/hmd/Data.hx`](../../../../../../hxd/fmt/hmd/Data.hx)
 
+The animated components of an animated object.
+
 ## Constructors
 
 ### HasPosition

@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd.fmt.spine`](README.md) · source [`hxd/fmt/spine/JsonData.hx`](../../../../../../hxd/fmt/spine/JsonData.hx)
 
+The content of a Spine JSON file.
+
 ## Fields
 
 ### slots
@@ -10,11 +12,15 @@
 var slots:Array<JSlot>
 ```
 
+The slots.
+
 ### skins
 
 ```haxe
 var skins:DynamicAccess<JSkin>
 ```
+
+The skins, by name.
 
 ### skeleton
 
@@ -22,11 +28,15 @@ var skins:DynamicAccess<JSkin>
 var skeleton:JSkeleton
 ```
 
+The skeleton information.
+
 ### ik
 
 ```haxe
 var ik:Dynamic
 ```
+
+The inverse kinematics constraints.
 
 ### bones
 
@@ -34,8 +44,12 @@ var ik:Dynamic
 var bones:Array<JBone>
 ```
 
+The bones.
+
 ### animations
 
 ```haxe
 var animations:DynamicAccess<JAnimation>
 ```
+
+The animations, by name.

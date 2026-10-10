@@ -4,6 +4,8 @@
 
 Extends: `haxe.ds.StringMap`
 
+The gradients of a Photoshop gradients file (`.grd`), by name.
+
 ## Constructor
 
 ### new

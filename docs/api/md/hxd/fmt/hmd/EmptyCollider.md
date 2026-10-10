@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 
+A collider without shape.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 ```haxe
 function new():Void
 ```
+
+Creates the collider.
 
 ## Inherited members
 

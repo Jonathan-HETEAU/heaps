@@ -4,6 +4,8 @@
 
 Extends: [`h3d.impl.Driver`](Driver.md)
 
+The OpenGL driver: WebGL (1 or 2) on JS, OpenGL with SDL on HashLink.
+
 ## Constructor
 
 ### new

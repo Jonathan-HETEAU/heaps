@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.spine.AnimationCurve`](AnimationCurve.md)
 
+The animation of a bone.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxd.fmt.spine.AnimationCurve`](AnimationCurve.md)
 ```haxe
 function new(bone:Bone):Void
 ```
+
+Creates the curve of the bone.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new(bone:Bone):Void
 var bone:Bone
 ```
 
+The animated bone.
+
 ### translate
 
 ```haxe
 var translate:Vector<Float>
 ```
+
+The translation keys.
 
 ### scale
 
@@ -32,8 +40,12 @@ var translate:Vector<Float>
 var scale:Vector<Float>
 ```
 
+The scale keys.
+
 ### rotate
 
 ```haxe
 var rotate:Vector<Float>
 ```
+
+The rotation keys.

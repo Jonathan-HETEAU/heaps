@@ -4,6 +4,8 @@
 
 Subclasses: [`hxd.fmt.spine.BoneCurve`](BoneCurve.md)
 
+The base class of the animation curves.
+
 ## Constructor
 
 ### new
@@ -11,3 +13,5 @@ Subclasses: [`hxd.fmt.spine.BoneCurve`](BoneCurve.md)
 ```haxe
 function new():Void
 ```
+
+Creates a curve.

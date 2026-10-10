@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxd.fmt.fbx`](README.md) · module `hxd.fmt.fbx.HMDOut` · source [`hxd/fmt/fbx/HMDOut.hx`](../../../../../../hxd/fmt/fbx/HMDOut.hx)
 
+A shape of a custom collider.
+
 ## Fields
 
 ### type

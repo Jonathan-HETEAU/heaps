@@ -4,6 +4,8 @@
 
 Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 
+A collider made of several colliders.
+
 ## Constructor
 
 ### new
@@ -12,6 +14,8 @@ Extends: [`hxd.fmt.hmd.Collider`](Collider.md)
 function new():Void
 ```
 
+Creates the collider.
+
 ## Variables
 
 ### colliders
@@ -19,6 +23,8 @@ function new():Void
 ```haxe
 var colliders:Array<Collider>
 ```
+
+The colliders.
 
 ## Inherited members
 

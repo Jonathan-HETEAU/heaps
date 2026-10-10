@@ -4,6 +4,8 @@
 
 Type parameters: `<T>`
 
+Optional properties of the elements of the file.
+
 ## Constructors
 
 ### CameraFOVY

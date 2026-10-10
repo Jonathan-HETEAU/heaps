@@ -4,6 +4,8 @@
 
 Extends: [`h3d.pass.ScreenFx`](ScreenFx.md)
 
+Draws an outline around the opaque pixels of a texture (based on its alpha).
+
 ## Constructor
 
 ### new
