@@ -1,10 +1,16 @@
 package hxd.snd;
 import format.wav.Data;
 
+/**
+	The decoder of WAV (PCM) data.
+**/
 class WavData extends hxd.snd.Data {
 
 	var rawData : haxe.io.Bytes;
 
+	/**
+		Reads the WAV data.
+	**/
 	public function new(bytes) {
 		if( bytes != null )
 			init(new format.wav.Reader(new haxe.io.BytesInput(bytes)).read());

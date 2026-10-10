@@ -15,9 +15,18 @@ class Context {
 	static var suspended : Bool;
 	static var bufferPool : Array<BufferPool>;
 	static var gainPool : Array<GainNode>;
+	/**
+		The node the sources are connected to.
+	**/
 	public static var destination : AudioNode;
+	/**
+		The node applying the master volume.
+	**/
 	public static var masterGain : GainNode;
 
+	/**
+		Returns the audio context, created on the first call. Throws if Web Audio is not available.
+	**/
 	public static function get() : AudioContext {
 		if ( ctx == null ) {
 			try {
@@ -47,11 +56,17 @@ class Context {
 		return ctx;
 	}
 
+	/**
+		Returns a gain node from the pool.
+	**/
 	public static inline function getGain():GainNode
 	{
 		return gainPool.length != 0 ? gainPool.pop() : ctx.createGain();
 	}
 
+	/**
+		Puts a gain node back in the pool.
+	**/
 	public static inline function putGain(gain:GainNode) {
 		gainPool.push(gain);
 		gain.gain.value = 1;

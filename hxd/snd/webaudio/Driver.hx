@@ -5,14 +5,29 @@ import hxd.snd.webaudio.AudioTypes;
 import hxd.snd.Driver.DriverFeature;
 import js.html.audio.*;
 
+/**
+	The Web Audio sound driver, used on JS (unless `-D useal` is set).
+**/
 class Driver implements hxd.snd.Driver {
 
+	/**
+		The audio context.
+	**/
 	public var ctx : AudioContext;
+	/**
+		The node applying the master volume.
+	**/
 	public var masterGain(get, never) : GainNode;
+	/**
+		The node the sources are connected to.
+	**/
 	public var destination(get, set) : AudioNode;
 
 	var playbackPool : Array<BufferPlayback>;
 
+	/**
+		Creates the driver.
+	**/
 	public function new()
 	{
 		playbackPool = [];
@@ -42,26 +57,41 @@ class Driver implements hxd.snd.Driver {
 		return Context.getGain();
 	}
 
+	/**
+		Puts a gain node back in the pool.
+	**/
 	public inline function putGain(gain:GainNode) {
 		Context.putGain(gain);
 	}
 
+	/**
+		Tells if the driver supports the feature.
+	**/
 	public function hasFeature (d : DriverFeature) : Bool {
 		switch (d) {
 			case MasterVolume: return true;
 		}
 	}
 
+	/**
+		Sets the global volume.
+	**/
 	public function setMasterVolume (value : Float) : Void {
 		masterGain.gain.value = value;
 	}
 
+	/**
+		Sets the position, orientation and velocity of the listener.
+	**/
 	public function setListenerParams (position : h3d.Vector, direction : h3d.Vector, up : h3d.Vector, ?velocity : h3d.Vector) : Void {
 		ctx.listener.setPosition(-position.x, position.y, position.z);
 		ctx.listener.setOrientation(-direction.x, direction.y, direction.z, -up.x, up.y, up.z);
 		// TODO: Velocity
 	}
 
+	/**
+		Creates a source.
+	**/
 	public function createSource () : SourceHandle {
 		var s = new SourceHandle();
 		s.driver = this;
@@ -70,6 +100,9 @@ class Driver implements hxd.snd.Driver {
 		return s;
 	}
 
+	/**
+		Starts playing the buffers queued on the source.
+	**/
 	public function playSource (source : SourceHandle) : Void {
 		if ( !source.playing ) {
 			source.playing = true;
@@ -83,15 +116,24 @@ class Driver implements hxd.snd.Driver {
 		}
 	}
 
+	/**
+		Stops the source.
+	**/
 	public function stopSource (source : SourceHandle) : Void {
 		source.playing = false;
 		source.sampleOffset = 0;
 	}
 
+	/**
+		Sets the volume of the source.
+	**/
 	public function setSourceVolume (source : SourceHandle, value : Float) : Void {
 		source.gain.gain.value = value;
 	}
 
+	/**
+		Releases the source.
+	**/
 	public function destroySource (source : SourceHandle) : Void {
 		stopSource(source);
 		source.gain.disconnect();
@@ -106,12 +148,18 @@ class Driver implements hxd.snd.Driver {
 		source.buffers = [];
 	}
 
+	/**
+		Creates a buffer.
+	**/
 	public function createBuffer () : BufferHandle {
 		var b = new BufferHandle();
 		b.samples = 0;
 		return b;
 	}
 
+	/**
+		Fills the buffer with `size` bytes of samples.
+	**/
 	public function setBufferData (buffer : BufferHandle, data : haxe.io.Bytes, size : Int, format : Data.SampleFormat, channelCount : Int, samplingRate : Int) : Void {
 		var sampleCount = Std.int(size / hxd.snd.Data.formatBytes(format) / channelCount);
 		buffer.samples = sampleCount;
@@ -181,11 +229,17 @@ class Driver implements hxd.snd.Driver {
 				}
 		}
 	}
+	/**
+		Releases the buffer.
+	**/
 	public function destroyBuffer (buffer : BufferHandle) : Void {
 		if ( buffer.inst != null ) putBuffer(buffer.inst);
 		buffer.inst = null;
 	}
 
+	/**
+		Queues the buffer on the source, starting at the sample `sampleStart`. `endOfStream` tells if it is the last buffer of the sound.
+	**/
 	public function queueBuffer (source : SourceHandle, buffer : BufferHandle, sampleStart : Int, endOfStream : Bool) : Void {
 		var buf = playbackPool.length != 0 ? playbackPool.pop() : new BufferPlayback();
 		if (buffer.inst == null) return;
@@ -201,6 +255,9 @@ class Driver implements hxd.snd.Driver {
 			}
 		}
 	}
+	/**
+		Removes the buffer from the queue of the source.
+	**/
 	public function unqueueBuffer (source : SourceHandle, buffer : BufferHandle) : Void {
 		var i = 0;
 		while ( i < source.buffers.length ) {
@@ -216,11 +273,17 @@ class Driver implements hxd.snd.Driver {
 		if (buffer.isEnd || !source.playing) source.sampleOffset = 0;
 		else source.sampleOffset += buffer.samples;
 	}
+	/**
+		Returns the number of queued buffers that were played.
+	**/
 	public function getProcessedBuffers (source : SourceHandle) : Int {
 		var cnt = 0;
 		for (b in source.buffers) if ( b.consumed ) cnt++;
 		return cnt;
 	}
+	/**
+		Returns the number of samples played by the source in its current buffer.
+	**/
 	public function getPlayedSampleCount (source : SourceHandle) : Int {
 		var consumed:Int = 0;
 		var buf : BufferPlayback = null;
@@ -239,11 +302,20 @@ class Driver implements hxd.snd.Driver {
 		return source.sampleOffset + consumed;
 	}
 
+	/**
+		Called on each update of the manager.
+	**/
 	public function update () : Void { }
+	/**
+		Releases the driver.
+	**/
 	public function dispose () : Void {
 		// TODO
 	}
 
+	/**
+		Returns the driver of the given effect type, or a driver doing nothing if the effect is not supported.
+	**/
 	public function getEffectDriver(type : String) : hxd.snd.Driver.EffectDriver<Dynamic> {
 		return switch(type) {
 			case "pitch"          : new PitchDriver();

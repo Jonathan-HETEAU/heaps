@@ -1,24 +1,60 @@
 package hxd.snd;
 
+/**
+	The format of the audio samples.
+**/
 enum SampleFormat {
+	/**
+		Unsigned 8 bits.
+	**/
 	UI8;
+	/**
+		Signed 16 bits.
+	**/
 	I16;
+	/**
+		32 bits float.
+	**/
 	F32;
 }
 
+/**
+	Decoded audio data: the base class of the decoders of each file format.
+**/
 class Data {
 
+	/**
+		The number of samples (per channel).
+	**/
 	public var samples(default, null) : Int;
+	/**
+		The number of samples per second.
+	**/
 	public var samplingRate(default, null) : Int;
+	/**
+		The format of the samples.
+	**/
 	public var sampleFormat(default, null) : SampleFormat;
+	/**
+		The number of channels (1 for mono, 2 for stereo).
+	**/
 	public var channels(default, null) : Int;
 
+	/**
+		The duration, in seconds.
+	**/
 	public var duration(get, never) : Float;
 
+	/**
+		Tells if the data is still loading: the number of samples might not be known yet.
+	**/
 	public function isLoading() {
 		return false;
 	}
 
+	/**
+		Decodes `sampleCount` samples from `sampleStart` into `out` at `outPos`. The samples after the end are filled with silence.
+	**/
 	public function decode( out : haxe.io.Bytes, outPos : Int, sampleStart : Int, sampleCount : Int ) : Void {
 		var bpp = getBytesPerSample();
 		if( sampleStart < 0 || sampleCount < 0 || outPos < 0 || outPos + sampleCount * bpp > out.length ) {
@@ -42,6 +78,9 @@ class Data {
 		decodeBuffer(out, outPos, sampleStart, sampleCount);
 	}
 
+	/**
+		Returns the data converted to the given rate, format and number of channels (or this data if it already matches).
+	**/
 	public function resample( rate : Int, format : SampleFormat, channels : Int ) : Data {
 		if( sampleFormat == format && samplingRate == rate && this.channels == channels )
 			return this;
@@ -63,6 +102,9 @@ class Data {
 		return data;
 	}
 
+	/**
+		Converts `samples` samples of `input` (in the format of this data) to the given rate, format and number of channels, into `out`.
+	**/
 	@:noDebug
 	public function resampleBuffer( out : haxe.io.Bytes, outPos : Int, input : haxe.io.Bytes, inPos : Int, rate : Int, format : SampleFormat, channels : Int, samples : Int ) {
 		var bpp = getBytesPerSample();
@@ -158,10 +200,16 @@ class Data {
 		throw "Not implemented";
 	}
 
+	/**
+		Returns the size of a sample in bytes, for all channels.
+	**/
 	public function getBytesPerSample() {
 		return channels * formatBytes(sampleFormat);
 	}
 
+	/**
+		Returns the size of a sample of one channel in bytes.
+	**/
 	public static inline function formatBytes(format:SampleFormat) {
 		return switch( format ) {
 		case UI8: 1;

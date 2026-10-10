@@ -3,6 +3,9 @@ package hxd.snd.openal;
 import hxd.snd.openal.AudioTypes;
 import hxd.snd.effect.*;
 
+/**
+	Implements `hxd.snd.effect.Reverb` with an OpenAL EFX reverb on an auxiliary send.
+**/
 @:access(hxd.snd.effect.LowPass)
 @:access(hxd.snd.openal.LowPassDriver)
 class ReverbDriver extends hxd.snd.Driver.EffectDriver<Reverb> {
@@ -12,6 +15,9 @@ class ReverbDriver extends hxd.snd.Driver.EffectDriver<Reverb> {
 	var dryFilter : LowPass;
 	var dryGain   : Float;
 
+	/**
+		Creates the effect driver.
+	**/
 	public function new(driver) {
 		super();
 		this.driver = driver;

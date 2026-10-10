@@ -1,10 +1,16 @@
 package hxd.snd;
 
+/**
+	The data of a sound that is not loaded yet: decoding it throws until `load` completes.
+**/
 class LoadingData extends Data {
 
 	var snd : hxd.res.Sound;
 	var waitCount = 0;
 
+	/**
+		Creates the data for the sound.
+	**/
 	public function new(snd) {
 		this.snd = snd;
 	}

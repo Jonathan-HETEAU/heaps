@@ -58,6 +58,9 @@ private class ALChannel {
 		nativeChannels.push(this);
 	}
 
+	/**
+		Stops the channel.
+	**/
 	public function stop() {
 		if ( src != null ) {
 			nativeChannels.remove(this);
@@ -102,6 +105,10 @@ private class ALChannel {
 }
 
 #end
+/**
+	A channel playing generated samples: subclass it and override `onSample` to fill the buffers with stereo float samples.
+	Supported on JS and with OpenAL on HashLink.
+**/
 class NativeChannel {
 
 	#if js
@@ -119,8 +126,14 @@ class NativeChannel {
 	#elseif hlopenal
 	var channel : ALChannel;
 	#end
+	/**
+		The number of samples of each buffer.
+	**/
 	public var bufferSamples(default, null) : Int;
 
+	/**
+		Creates the channel and starts playing.
+	**/
 	public function new( bufferSamples : Int ) {
 		this.bufferSamples = bufferSamples;
 		#if js
@@ -197,6 +210,9 @@ class NativeChannel {
 	function onSample( out : haxe.io.Float32Array ) {
 	}
 
+	/**
+		Stops the channel.
+	**/
 	public function stop() {
 		#if js
 		if ( front != null ) {

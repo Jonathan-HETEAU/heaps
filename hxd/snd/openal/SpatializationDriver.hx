@@ -4,9 +4,15 @@ import hxd.snd.Driver;
 import hxd.snd.openal.AudioTypes;
 import hxd.snd.effect.Spatialization;
 
+/**
+	Implements `hxd.snd.effect.Spatialization` with the OpenAL source position.
+**/
 class SpatializationDriver extends EffectDriver<Spatialization> {
 	var driver : Driver;
 
+	/**
+		Creates the effect driver.
+	**/
 	public function new(driver) {
 		super();
 		this.driver = driver;

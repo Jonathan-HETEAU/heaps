@@ -1,28 +1,76 @@
 package hxd.snd.effect;
 
-// I3DL reverb
 
+/**
+	An I3DL2 environmental reverb. Volumes are in millibels (mB): `0` is the full volume, `-10000` is silent.
+	Only supported by the OpenAL driver.
+**/
 class Reverb extends hxd.snd.Effect {
-	public var wetDryMix         : Float; // [0.0, 100.0] %
-	public var room              : Float; // [-10000 0] mb
-	public var roomHF            : Float; // [-10000, 0] mb
-	public var roomRolloffFactor : Float; // [0.0, 10.0]
-	public var decayTime         : Float; // [0.1, 20.0] s
-	public var decayHFRatio      : Float; // [0.1, 2.0]
-	public var reflections       : Float; // [-10000, 1000] mb
-	public var reflectionsDelay  : Float; // [0.0, 0.3] s
-	public var reverb            : Float; // [-10000, 2000] mb
-	public var reverbDelay       : Float; // [0.0, 0.1] s
-	public var diffusion         : Float; // [0.0, 100.0] %
-	public var density           : Float; // [0.0, 100.0] %
-	public var hfReference       : Float; // [20.0, 20000.0]
+	/**
+		The amount of reverberated sound mixed with the original sound, from `0` to `100` %.
+	**/
+	public var wetDryMix         : Float;
+	/**
+		The volume of the room effect, from `-10000` to `0` mB.
+	**/
+	public var room              : Float;
+	/**
+		The attenuation of the high frequencies of the room effect, from `-10000` to `0` mB.
+	**/
+	public var roomHF            : Float;
+	/**
+		The attenuation of the reverb with the distance, from `0` to `10`.
+	**/
+	public var roomRolloffFactor : Float;
+	/**
+		The decay time of the reverb, from `0.1` to `20` seconds.
+	**/
+	public var decayTime         : Float;
+	/**
+		The ratio of the high frequencies decay time to `decayTime`, from `0.1` to `2`.
+	**/
+	public var decayHFRatio      : Float;
+	/**
+		The volume of the early reflections, from `-10000` to `1000` mB.
+	**/
+	public var reflections       : Float;
+	/**
+		The delay of the early reflections, from `0` to `0.3` seconds.
+	**/
+	public var reflectionsDelay  : Float;
+	/**
+		The volume of the late reverberation, from `-10000` to `2000` mB.
+	**/
+	public var reverb            : Float;
+	/**
+		The delay of the late reverberation after the early reflections, from `0` to `0.1` seconds.
+	**/
+	public var reverbDelay       : Float;
+	/**
+		The echo density of the late reverberation, from `0` to `100` %.
+	**/
+	public var diffusion         : Float;
+	/**
+		The modal density of the late reverberation, from `0` to `100` %.
+	**/
+	public var density           : Float;
+	/**
+		The reference frequency of the high frequencies, from `20` to `20000` Hz.
+	**/
+	public var hfReference       : Float;
 
+	/**
+		Creates a reverb with the given preset (`ReverbPreset.DEFAULT` by default).
+	**/
 	public function new(?preset : ReverbPreset) {
 		super("reverb");
 		wetDryMix = 100.0;
 		loadPreset(preset != null ? preset : ReverbPreset.DEFAULT);
 	}
 
+	/**
+		Sets the parameters from the preset (except `wetDryMix`).
+	**/
 	public function loadPreset(preset : ReverbPreset) {
 		room              = preset.room;
 		roomHF            = preset.roomHF;

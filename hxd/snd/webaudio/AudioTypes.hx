@@ -2,27 +2,78 @@ package hxd.snd.webaudio;
 #if (js && !useal)
 import js.html.audio.*;
 
+/**
+	A Web Audio sound buffer.
+**/
 class BufferHandle {
+	/**
+		The audio buffer.
+	**/
 	public var inst : AudioBuffer;
+	/**
+		Tells if the buffer contains the end of the sound.
+	**/
 	public var isEnd : Bool;
+	/**
+		The number of samples.
+	**/
 	public var samples : Int;
+	/**
+		Creates an empty handle.
+	**/
 	public function new() { }
 }
 
+/**
+	A Web Audio sound source: the chain of nodes (effects and gain) the buffers are played through.
+**/
 @:allow(hxd.snd.webaudio.Driver)
 class SourceHandle {
+	/**
+		The number of samples of the buffers already removed from the queue.
+	**/
 	public var sampleOffset   : Int;
+	/**
+		Tells if the source is playing.
+	**/
 	public var playing        : Bool;
 
+	/**
+		The driver of the source.
+	**/
 	public var driver : Driver;
+	/**
+		The node of the low pass effect, if used.
+	**/
 	public var lowPass : BiquadFilterNode;
+	/**
+		The node of the spatialization effect, if used.
+	**/
 	public var panner : PannerNode;
+	/**
+		The node applying the volume.
+	**/
 	public var gain : GainNode;
+	/**
+		The first node of the chain, where the buffers are connected.
+	**/
 	public var destination : AudioNode;
+	/**
+		The queued buffers.
+	**/
 	public var buffers : Array<BufferPlayback>;
+	/**
+		The playback rate set by the pitch effect.
+	**/
 	public var pitch : Float;
+	/**
+		Tells if no buffer was played yet: the first one is faded in to avoid a click.
+	**/
 	public var firstPlay : Bool;
 
+	/**
+		Creates a source.
+	**/
 	public function new() {
 		buffers = [];
 		sampleOffset = 0;
@@ -30,6 +81,9 @@ class SourceHandle {
 		firstPlay = true;
 	}
 
+	/**
+		Rebuilds the chain of nodes after an effect node was added or removed, and restarts the playing buffers.
+	**/
 	public function updateDestination() {
 		destination = gain;
 		if ( lowPass != null ) {
@@ -48,6 +102,9 @@ class SourceHandle {
 		}
 	}
 
+	/**
+		Applies the new `pitch` to the queued buffers, rescheduling them.
+	**/
 	public function applyPitch() {
 		// BUG: Because pitch is k-rate parameter, it applies it once per 128 sample block, which throws timings off and creates audio skips.
 		// Noticeable mainly with low pitch values, so it's not particularly usable to reduce pitch gradually.
@@ -58,16 +115,43 @@ class SourceHandle {
 	}
 }
 
+/**
+	A buffer queued on a Web Audio source, with its scheduled play times.
+**/
 class BufferPlayback {
 
+	/**
+		The buffer.
+	**/
 	public var buffer : BufferHandle;
+	/**
+		The node playing the buffer.
+	**/
 	public var node : AudioBufferSourceNode;
-	public var offset : Float; // Buffer offset. Modified when applying effects.
-	public var dirty : Bool; // Playback was started - node no longer usable.
-	public var consumed : Bool; // Node was played completely (ended event fired)
+	/**
+		The start offset in the buffer, in seconds.
+	**/
+	public var offset : Float;
+	/**
+		Tells if the playback was started: the node can't be started again.
+	**/
+	public var dirty : Bool;
+	/**
+		Tells if the buffer was played completely.
+	**/
+	public var consumed : Bool;
+	/**
+		The context time when the playback starts.
+	**/
 	public var starts : Float;
+	/**
+		The context time when the playback ends.
+	**/
 	public var ends : Float;
 
+	/**
+		The number of samples played.
+	**/
 	public var currentSample(get, never):Int;
 
 	static inline var FADE_SAMPLES = 10; // Click prevent at the start.
@@ -75,6 +159,9 @@ class BufferPlayback {
 	var lastSamples:Int;
 	var lastTime:Float;
 
+	/**
+		Creates an empty playback.
+	**/
 	public function new()
 	{
 
@@ -88,6 +175,9 @@ class BufferPlayback {
 		return lastSamples;
 	}
 
+	/**
+		Sets the buffer to play, starting at `grainOffset` seconds.
+	**/
 	public function set(buf : BufferHandle, grainOffset : Float) {
 		buffer = buf;
 		offset = Math.isNaN(grainOffset) ? 0 : grainOffset;
@@ -97,6 +187,9 @@ class BufferPlayback {
 		ends = 0;
 	}
 
+	/**
+		Schedules the playback at the context time `time`, and returns its end time.
+	**/
 	public function start( ctx : AudioContext, source : SourceHandle, time : Float) {
 		dirty = true;
 		consumed = false;
@@ -130,6 +223,9 @@ class BufferPlayback {
 		return ends = time + (buffer.inst.duration - offset) / source.pitch;
 	}
 
+	/**
+		Updates the playback after a pitch change, and returns its end time.
+	**/
 	public function readjust( time : Float, source : SourceHandle ) {
 		if (consumed || node == null) return ends;
 		var ctx = source.driver.ctx;
@@ -146,6 +242,9 @@ class BufferPlayback {
 		return ends = starts + (buffer.inst.duration - offset) / source.pitch;
 	}
 
+	/**
+		Restarts the playback with a new node, at the current position.
+	**/
 	public function restart( source : SourceHandle ) {
 		if ( consumed || node == null ) return;
 		var ctx = hxd.snd.webaudio.Context.get();
@@ -157,6 +256,9 @@ class BufferPlayback {
 		}
 	}
 
+	/**
+		Stops the playback.
+	**/
 	public function stop( immediate : Bool = true ) {
 		if ( node != null ) {
 			node.removeEventListener("ended", onBufferConsumed);
@@ -173,6 +275,9 @@ class BufferPlayback {
 		consumed = true;
 	}
 
+	/**
+		Releases the buffer and node.
+	**/
 	public function clear()
 	{
 		buffer = null;

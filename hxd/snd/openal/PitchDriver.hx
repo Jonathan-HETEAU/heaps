@@ -4,6 +4,9 @@ import hxd.snd.Driver;
 import hxd.snd.openal.AudioTypes;
 import hxd.snd.effect.Pitch;
 
+/**
+	Implements `hxd.snd.effect.Pitch` with the OpenAL source pitch.
+**/
 class PitchDriver extends EffectDriver<Pitch> {
 
 	override function apply(e : Pitch, source : SourceHandle) : Void {

@@ -3,10 +3,16 @@ package hxd.snd.openal;
 import hxd.snd.openal.AudioTypes;
 import hxd.snd.effect.LowPass;
 
+/**
+	Implements `hxd.snd.effect.LowPass` with an OpenAL EFX filter.
+**/
 class LowPassDriver extends hxd.snd.Driver.EffectDriver<LowPass> {
 	var driver : Driver;
 	var inst   : openal.EFX.Filter;
 
+	/**
+		Creates the effect driver.
+	**/
 	public function new(driver) {
 		super();
 		this.driver = driver;

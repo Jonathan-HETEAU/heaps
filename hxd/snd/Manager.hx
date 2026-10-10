@@ -3,67 +3,169 @@ package hxd.snd;
 import hxd.snd.Driver;
 import haxe.MainLoop;
 
+/**
+	A hardware source of the sound driver, playing a channel.
+**/
 @:access(hxd.snd.Manager)
 class Source {
 	static var ID = 0;
 
+	/**
+		The identifier of the source.
+	**/
 	public var id (default, null) : Int;
+	/**
+		The driver handle of the source.
+	**/
 	public var handle  : SourceHandle;
+	/**
+		The channel played by the source, or `null` if it is free.
+	**/
 	public var channel : Channel;
+	/**
+		The buffers queued on the source.
+	**/
 	public var buffers : Array<Buffer>;
 
+	/**
+		The volume set on the source.
+	**/
 	public var volume  = -1.0;
+	/**
+		Tells if the source is playing.
+	**/
 	public var playing = false;
+	/**
+		The sample position in the sound where the source started playing.
+	**/
 	public var start   = 0;
 
+	/**
+		The sound being streamed.
+	**/
 	public var streamSound : hxd.res.Sound;
+	/**
+		The bytes used to decode the streamed sound.
+	**/
 	public var streamBuffer : haxe.io.Bytes;
+	/**
+		The sample position of the streamed part being decoded, which can be decoded over several frames.
+	**/
 	public var streamStart : Int;
+	/**
+		The sample position up to which the streamed part is decoded.
+	**/
 	public var streamPos : Int;
 
+	/**
+		Creates a source with the driver.
+	**/
 	public function new(driver : Driver) {
 		id      = ID++;
 		handle  = driver.createSource();
 		buffers = [];
 	}
 
+	/**
+		Releases the source.
+	**/
 	public function dispose() {
 		Manager.get().driver.destroySource(handle);
 	}
 }
 
+/**
+	A driver buffer containing the samples of a sound, or a part of a streamed sound.
+**/
 @:access(hxd.snd.Manager)
 class Buffer {
+	/**
+		The driver handle of the buffer.
+	**/
 	public var handle   : BufferHandle;
+	/**
+		The sound of the samples.
+	**/
 	public var sound    : hxd.res.Sound;
+	/**
+		Tells if the buffer contains the end of the sound.
+	**/
 	public var isEnd    : Bool;
+	/**
+		Tells if the buffer is a part of a streamed sound.
+	**/
 	public var isStream : Bool;
+	/**
+		The number of sources using the buffer.
+	**/
 	public var refs     : Int;
+	/**
+		The time when the buffer was last released.
+	**/
 	public var lastStop : Float;
 
+	/**
+		The position of the first sample of the buffer in the sound.
+	**/
 	public var start      : Int;
+	/**
+		The position after the last sample of the buffer in the sound.
+	**/
 	public var end        : Int = 0;
+	/**
+		The number of samples.
+	**/
 	public var samples    : Int;
+	/**
+		The sample rate.
+	**/
 	public var sampleRate : Int;
 
+	/**
+		Creates a buffer with the driver.
+	**/
 	public function new(driver : Driver) {
 		handle = driver.createBuffer();
 		refs = 0;
 		lastStop = haxe.Timer.stamp();
 	}
 
+	/**
+		Releases the buffer.
+	**/
 	public function dispose() {
 		Manager.get().driver.destroyBuffer(handle);
 	}
 }
 
+/**
+	Plays the sounds: it assigns the channels to the hardware sources of the driver (Web Audio on JS, OpenAL otherwise), streams the long sounds and applies the effects.
+	It is updated automatically by the main loop. Use `Manager.get()` to get the instance.
+**/
 class Manager {
-	// Automatically set the channel to streaming mode if its duration exceed this value.
+	/**
+		The sounds longer than this duration (in seconds) are streamed instead of decoded at once.
+	**/
 	public static var STREAM_DURATION            = 5.;
+	/**
+		The number of samples of each buffer of a streamed sound.
+	**/
 	public static var STREAM_BUFFER_SAMPLE_COUNT = 44100;
+	/**
+		The number of buffers queued on a source playing a streamed sound.
+	**/
 	public static var BUFFER_QUEUE_LENGTH        = 2;
+	/**
+		The number of hardware sources: the maximum number of channels played at the same time. Must be set before the manager is created.
+	**/
 	public static var MAX_SOURCES                = 16;
+	/**
+		The number of decoded sounds kept in cache before the unused ones are released.
+	**/
 	public static var SOUND_BUFFER_CACHE_SIZE    = 256;
+	/**
+		The volume under which a channel is virtualized.
+	**/
 	public static var VIRTUAL_VOLUME_THRESHOLD   = 1e-5;
 
 	/**
@@ -73,10 +175,25 @@ class Manager {
 
 	static var instance : Manager;
 
+	/**
+		The global volume, from `0` to `1`.
+	**/
 	public var masterVolume	: Float;
+	/**
+		The default sound group.
+	**/
 	public var masterSoundGroup   (default, null) : SoundGroup;
+	/**
+		The default channel group.
+	**/
 	public var masterChannelGroup (default, null) : ChannelGroup;
+	/**
+		The listener of the spatialized sounds.
+	**/
 	public var listener : Listener;
+	/**
+		A time offset (in seconds) applied to the channel timestamps on the next update, to compensate a pause of the application.
+	**/
 	public var timeOffset : Float = 0.;
 
 	var updateEvent   : MainEvent;
@@ -96,6 +213,9 @@ class Manager {
 	var effectGC          : Array<Effect>;
 	var hasMasterVolume   : Bool;
 
+	/**
+		If set, all the channels are virtualized: nothing is played, but the positions still advance.
+	**/
 	public var suspended : Bool = false;
 
 	private function new() {
@@ -144,6 +264,9 @@ class Manager {
 		return resampleBytes;
 	}
 
+	/**
+		Returns the sound manager, created on the first call.
+	**/
 	public static function get() : Manager {
 		if( instance == null ) {
 			instance = new Manager();
@@ -153,11 +276,17 @@ class Manager {
 		return instance;
 	}
 
+	/**
+		Stops all the channels.
+	**/
 	public function stopAll() {
 		while( channels != null )
 			channels.stop();
 	}
 
+	/**
+		Stops all the channels that don't loop.
+	**/
 	public function stopAllNotLooping() {
 		var c = channels;
 		while( c != null ) {
@@ -167,6 +296,9 @@ class Manager {
 		}
 	}
 
+	/**
+		Stops all the channels of the sound group of the given name.
+	**/
 	public function stopByName( name : String ) {
 		var c = channels;
 		while( c != null ) {
@@ -190,6 +322,9 @@ class Manager {
 		return new hxd.impl.ArrayIterator(result);
 	}
 
+	/**
+		Releases the decoded sounds that are not playing.
+	**/
 	public function cleanCache() {
 		var i = 0;
 		while (i < soundBufferKeys.length) {
@@ -205,6 +340,9 @@ class Manager {
 		}
 	}
 
+	/**
+		Stops all the channels and releases the driver.
+	**/
 	public function dispose() {
 		stopAll();
 
@@ -226,6 +364,9 @@ class Manager {
 		instance = null;
 	}
 
+	/**
+		Plays the sound and returns its channel. It starts playing on the next update.
+	**/
 	public function play(sound : hxd.res.Sound, ?channelGroup : ChannelGroup, ?soundGroup : SoundGroup) {
 		if (soundGroup   == null) soundGroup   = masterSoundGroup;
 		if (channelGroup == null) channelGroup = masterChannelGroup;
@@ -281,6 +422,9 @@ class Manager {
 		}
 	}
 
+	/**
+		Updates the channels and the sources. Called automatically every frame.
+	**/
 	public function update() {
 		if( timeOffset != 0 ) {
 			var c = channels;

@@ -7,10 +7,16 @@ import hxd.snd.effect.Spatialization;
 import hxd.snd.Driver.EffectDriver;
 import hxd.snd.webaudio.AudioTypes;
 
+/**
+	Implements `hxd.snd.effect.Spatialization` with a Web Audio panner node.
+**/
 class SpatializationDriver extends EffectDriver<Spatialization> {
 
 	var pool : Array<PannerNode>;
 
+	/**
+		Creates the effect driver.
+	**/
 	public function new() {
 		pool = [];
 		super();

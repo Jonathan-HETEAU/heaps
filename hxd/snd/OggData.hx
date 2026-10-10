@@ -4,12 +4,18 @@ package hxd.snd;
 
 private typedef OggFile = hl.Abstract<"fmt_ogg">;
 
+/**
+	The decoder of Ogg Vorbis data, with the native HashLink decoder.
+**/
 class OggData extends Data {
 
 	var bytes : haxe.io.Bytes;
 	var reader : OggFile;
 	var currentSample : Int;
 
+	/**
+		Opens the Ogg data.
+	**/
 	public function new( bytes : haxe.io.Bytes ) {
 		this.bytes = bytes;
 		reader = ogg_open(bytes, bytes.length);
@@ -110,6 +116,9 @@ private class BytesOutput extends haxe.io.Output {
 
 }
 
+/**
+	The decoder of Ogg Vorbis data, with the `stb_ogg_sound` library.
+**/
 class OggData extends Data {
 
 	var reader : stb.format.vorbis.Reader;
@@ -119,6 +128,9 @@ class OggData extends Data {
 	var decoded : haxe.io.Bytes;
 	static inline var CACHED_SAMPLES = 44100 * 3; // 3s of cached sound
 
+	/**
+		Opens the Ogg data.
+	**/
 	public function new( bytes : haxe.io.Bytes ) {
 		if( bytes != null ) {
 			reader = stb.format.vorbis.Reader.openFromBytes(bytes);
@@ -185,8 +197,14 @@ class OggData extends Data {
 
 #else
 
+/**
+	Ogg Vorbis is not supported without the `stb_ogg_sound` library: decoding throws an error.
+**/
 class OggData extends Data {
 
+	/**
+		Creates the data.
+	**/
 	public function new( bytes : haxe.io.Bytes ) {
 	}
 

@@ -5,6 +5,9 @@ import hxd.snd.Driver;
 import hxd.snd.webaudio.AudioTypes;
 import hxd.snd.effect.Pitch;
 
+/**
+	Implements `hxd.snd.effect.Pitch` with the playback rate of the Web Audio buffers.
+**/
 class PitchDriver extends EffectDriver<Pitch> {
 
 	override function apply(e : Pitch, source : SourceHandle) : Void {

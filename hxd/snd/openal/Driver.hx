@@ -11,9 +11,21 @@ import openal.EFX;
 import hxd.snd.openal.Emulator;
 #end
 
+/**
+	The OpenAL sound driver, used on HashLink (with the `hlopenal` library) and on JS with `-D useal` (through an emulator over Web Audio).
+**/
 class Driver implements hxd.snd.Driver {
+	/**
+		The OpenAL device.
+	**/
 	public var device   (default, null) : Device;
+	/**
+		The OpenAL context.
+	**/
 	public var context  (default, null) : Context;
+	/**
+		The number of auxiliary sends per source supported by the device (used by the reverb).
+	**/
 	public var maxAuxiliarySends(default, null) : Int;
 
 	var tmpBytes : haxe.io.Bytes;
@@ -21,6 +33,9 @@ class Driver implements hxd.snd.Driver {
 	var canReopenDevice : Bool;
 	var currentSpecifier : String;
 
+	/**
+		Creates the driver.
+	**/
 	public function new() {
 		tmpBytes = haxe.io.Bytes.alloc(4 * 3 * 2);
 		device   = ALC.openDevice(null);
@@ -45,21 +60,33 @@ class Driver implements hxd.snd.Driver {
 			throw "could not init openAL Driver";
 	}
 
+	/**
+		Tells if the driver supports the feature.
+	**/
 	public function hasFeature( f : DriverFeature ) {
 		return switch( f ) {
 		case MasterVolume: #if (hl || js) true #else false #end ;
 		}
 	}
 
+	/**
+		Returns temporary bytes of at least the given size.
+	**/
 	public function getTmpBytes(size) {
 		if (tmpBytes.length < size) tmpBytes = haxe.io.Bytes.alloc(size);
 		return tmpBytes;
 	}
 
+	/**
+		Sets the global volume.
+	**/
 	public function setMasterVolume(value : Float) : Void {
 		AL.listenerf(AL.GAIN, value);
 	}
 
+	/**
+		Sets the position, orientation and velocity of the listener.
+	**/
 	public function setListenerParams(position : h3d.Vector, direction : h3d.Vector, up : h3d.Vector, ?velocity : h3d.Vector) : Void {
 		AL.listener3f(AL.POSITION, -position.x, position.y, position.z);
 
@@ -79,6 +106,9 @@ class Driver implements hxd.snd.Driver {
 			AL.listener3f(AL.VELOCITY, -velocity.x, velocity.y, velocity.z);
 	}
 
+	/**
+		Creates a source.
+	**/
 	public function createSource() : SourceHandle {
 		var source = new SourceHandle();
 		var bytes = getTmpBytes(4);
@@ -91,6 +121,9 @@ class Driver implements hxd.snd.Driver {
 		return source;
 	}
 
+	/**
+		Releases the source.
+	**/
 	public function destroySource(source : SourceHandle) : Void {
 		AL.sourcei(source.inst, EFX.DIRECT_FILTER, EFX.FILTER_NULL);
 
@@ -99,21 +132,33 @@ class Driver implements hxd.snd.Driver {
 		AL.deleteSources(1, bytes);
 	}
 
+	/**
+		Starts playing the buffers queued on the source.
+	**/
 	public function playSource(source : SourceHandle) : Void {
 		AL.sourcePlay(source.inst);
 		source.sampleOffset = 0;
 		source.playing = true;
 	}
 
+	/**
+		Stops the source.
+	**/
 	public function stopSource(source : SourceHandle) : Void {
 		AL.sourceStop(source.inst);
 		source.playing = false;
 	}
 
+	/**
+		Sets the volume of the source.
+	**/
 	public function setSourceVolume(source : SourceHandle, value : Float) : Void {
 		AL.sourcef(source.inst, AL.GAIN, value);
 	}
 
+	/**
+		Creates a buffer.
+	**/
 	public function createBuffer() : BufferHandle {
 		var buffer = new BufferHandle();
 		var bytes = getTmpBytes(4);
@@ -122,12 +167,18 @@ class Driver implements hxd.snd.Driver {
 		return buffer;
 	}
 
+	/**
+		Releases the buffer.
+	**/
 	public function destroyBuffer(buffer : BufferHandle) : Void {
 		var bytes = getTmpBytes(4);
 		bytes.setInt32(0, buffer.inst.toInt());
 		AL.deleteBuffers(1, bytes);
 	}
 
+	/**
+		Fills the buffer with `size` bytes of samples.
+	**/
 	public function setBufferData(buffer : BufferHandle, data : haxe.io.Bytes, size : Int, format : Data.SampleFormat, channelCount : Int, samplingRate : Int) : Void {
 		var alFormat = switch (format) {
 			case UI8 : channelCount == 1 ? AL.FORMAT_MONO8  : AL.FORMAT_STEREO8;
@@ -141,6 +192,9 @@ class Driver implements hxd.snd.Driver {
 		AL.bufferData(buffer.inst, alFormat, data, size, samplingRate);
 	}
 
+	/**
+		Returns the number of samples played by the source in its current buffer.
+	**/
 	public function getPlayedSampleCount(source : SourceHandle) : Int {
 		var v = source.sampleOffset + AL.getSourcei(source.inst, AL.SAMPLE_OFFSET);
 		if (v < 0)
@@ -148,10 +202,16 @@ class Driver implements hxd.snd.Driver {
 		return v;
 	}
 
+	/**
+		Returns the number of queued buffers that were played.
+	**/
 	public function getProcessedBuffers(source : SourceHandle) : Int {
 		return AL.getSourcei(source.inst, AL.BUFFERS_PROCESSED);
 	}
 
+	/**
+		Queues the buffer on the source, starting at the sample `sampleStart`. `endOfStream` tells if it is the last buffer of the sound.
+	**/
 	public function queueBuffer(source : SourceHandle, buffer : BufferHandle, sampleStart : Int, endOfStream : Bool) : Void {
 		var bytes = getTmpBytes(4);
 		bytes.setInt32(0, buffer.inst.toInt());
@@ -173,6 +233,9 @@ class Driver implements hxd.snd.Driver {
 		buffer.isEnd = endOfStream;
 	}
 
+	/**
+		Removes the buffer from the queue of the source.
+	**/
 	public function unqueueBuffer(source : SourceHandle, buffer : BufferHandle) : Void {
 		var bytes = getTmpBytes(4);
 		bytes.setInt32(0, buffer.inst.toInt());
@@ -186,6 +249,9 @@ class Driver implements hxd.snd.Driver {
 		else source.sampleOffset += samples;
 	}
 
+	/**
+		Called on each update of the manager.
+	**/
 	public function update() : Void {
 		if( !canReopenDevice )
 			return;
@@ -204,12 +270,18 @@ class Driver implements hxd.snd.Driver {
 		#end
 	}
 
+	/**
+		Releases the driver.
+	**/
 	public function dispose() : Void {
 		ALC.makeContextCurrent(null);
 		ALC.destroyContext(context);
 		ALC.closeDevice(device);
 	}
 
+	/**
+		Returns the driver of the given effect type, or a driver doing nothing if the effect is not supported.
+	**/
 	public function getEffectDriver(type : String) : hxd.snd.Driver.EffectDriver<Dynamic> {
 		return switch(type) {
 			#if hlopenal

@@ -1,5 +1,9 @@
 package hxd.snd;
 
+/**
+	A sound being played, returned by `hxd.res.Sound.play` or `Manager.play`.
+	When there are more channels than hardware sources, or a channel is not audible, it becomes virtual: its position still advances, but it is not played.
+**/
 @:allow(hxd.snd.Manager)
 class Channel extends ChannelBase {
 	static var ID = 0;
@@ -9,14 +13,38 @@ class Channel extends ChannelBase {
 	var source : Manager.Source;
 	var id : Int;
 
+	/**
+		The sound being played.
+	**/
 	public var sound(default, null) : hxd.res.Sound;
+	/**
+		The duration of the sound, in seconds.
+	**/
 	public var duration(default, null) : Float;
+	/**
+		The sound group of the channel.
+	**/
 	public var soundGroup(default, null) : SoundGroup;
+	/**
+		The channel group of the channel.
+	**/
 	public var channelGroup(default, null) : ChannelGroup;
 
+	/**
+		The play position, in seconds.
+	**/
 	public var position(default, set) = 0.0;
+	/**
+		Pauses the channel.
+	**/
 	public var pause(default, set) = false;
+	/**
+		If set, the sound loops instead of stopping at its end.
+	**/
 	public var loop = false;
+	/**
+		If set, the channel is virtualized when its volume is inaudible.
+	**/
 	public var allowVirtual = true;
 
 	var audibleVolume = 1.0;
@@ -69,6 +97,9 @@ class Channel extends ChannelBase {
 		}
 	}
 
+	/**
+		Updates the volume of the channel, including the fades and effects.
+	**/
 	public function calcAudibleVolume( now : Float ) {
 		updateCurrentVolume(now);
 		audibleVolume = currentVolume;
@@ -87,10 +118,16 @@ class Channel extends ChannelBase {
 		queue.push(sound);
 	}
 
+	/**
+		Stops the channel.
+	**/
 	public function stop() {
 		if (manager != null) @:privateAccess manager.releaseChannel(this);
 	}
 
+	/**
+		Tells if the channel was stopped.
+	**/
 	public function isReleased() {
 		return manager == null;
 	}

@@ -6,6 +6,9 @@ private typedef Mp3File = hl.Abstract<"fmt_mp3">;
 
 #end
 
+/**
+	The decoder of MP3 data: with the native decoder on HashLink, with the browser decoder on JS (asynchronously).
+**/
 class Mp3Data extends Data {
 
 	#if js
@@ -23,6 +26,9 @@ class Mp3Data extends Data {
 	var currentSample : Int;
 	#end
 
+	/**
+		Reads the MP3 header and prepares the decoding.
+	**/
 	public function new( bytes : haxe.io.Bytes ) {
 		var mp = new format.mp3.Reader(new haxe.io.BytesInput(bytes)).read();
 		samples = mp.sampleCount;

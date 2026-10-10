@@ -8,10 +8,16 @@ import hxd.snd.effect.LowPass;
 import hxd.snd.Driver.EffectDriver;
 import hxd.snd.webaudio.AudioTypes;
 
+/**
+	Implements `hxd.snd.effect.LowPass` with a Web Audio biquad filter.
+**/
 class LowPassDriver extends EffectDriver<LowPass> {
 
 	var pool : Array<BiquadFilterNode>;
 
+	/**
+		Creates the effect driver.
+	**/
 	public function new() {
 		pool = [];
 		super();
