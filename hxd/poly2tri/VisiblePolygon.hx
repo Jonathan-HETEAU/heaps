@@ -1,5 +1,8 @@
 package hxd.poly2tri;
 
+/**
+	Triangulates polygons with holes (constrained Delaunay triangulation with poly2tri). Add the outline and the holes with `addPolyline`, then call `performTriangulationOnce`.
+**/
 class VisiblePolygon
 {
 
@@ -7,17 +10,26 @@ class VisiblePolygon
 	var sweep:Sweep;
 	var triangulated:Bool;
 
+	/**
+		Creates an empty triangulation.
+	**/
 	public function new()
 	{
 		reset();
 	}
 
 
+	/**
+		Adds a closed polyline: the outline, or a hole.
+	**/
 	public function addPolyline(polyline:Array<Point>)
 	{
 		sweepContext.addPolyline(polyline);
 	}
 
+	/**
+		Removes the polylines and the result.
+	**/
 	public function reset()
 	{
 		sweepContext = new SweepContext();
@@ -25,6 +37,9 @@ class VisiblePolygon
 		triangulated = false;
 	}
 
+	/**
+		Triangulates the polylines, if not done yet.
+	**/
 	public function performTriangulationOnce()
 	{
 		if (this.triangulated) return;
@@ -32,7 +47,9 @@ class VisiblePolygon
 		sweep.triangulate();
 	}
 
-	//returns vertices in a 3D engine-friendly, XYZ format
+	/**
+		Returns the vertices (X, Y and a `0` Z for each point) and the triangle indexes, or `null` before the triangulation.
+	**/
 	public function getVerticesAndTriangles()
 	{
 		if (!this.triangulated) return null;
@@ -61,6 +78,9 @@ class VisiblePolygon
 		return { vertices: vertices, triangles:tris };
 	}
 
+	/**
+		Returns the number of triangles.
+	**/
 	public function getNumTriangles()
 	{
 		return sweepContext.triangles.length;

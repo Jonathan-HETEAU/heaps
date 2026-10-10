@@ -1,5 +1,8 @@
 package hxd.poly2tri;
 
+/**
+	Geometric tests of the triangulation.
+**/
 class Utils
 {
 	/**
@@ -59,6 +62,9 @@ class Utils
 		return det > 0;
 	}
 
+	/**
+		Tells if the point `pd` is in the area where it can be flipped with the edge `pa`-`pb`/`pa`-`pc`.
+	**/
 	static public function inScanArea(pa:Point, pb:Point, pc:Point, pd:Point):Bool
 	{
 		var pdx = pd.x;

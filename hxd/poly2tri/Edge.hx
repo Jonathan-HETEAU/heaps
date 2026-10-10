@@ -1,10 +1,22 @@
 package hxd.poly2tri;
 
+/**
+	A constrained edge of the polygon to triangulate, oriented so that `q` is the upper point.
+**/
 class Edge
 {
+	/**
+		The lower point.
+	**/
 	public var p:Point;
+	/**
+		The upper point.
+	**/
 	public var q:Point;
 
+	/**
+		Creates the edge between two points, and registers it on its upper point. Throws if they are equal.
+	**/
 	public function new(p1:Point, p2:Point)
 	{
 		if (p1==null || p2==null) throw "Edge::new p1 or p2 is null";
@@ -39,6 +51,9 @@ class Edge
 
 
 
+	/**
+		Returns a description of the edge.
+	**/
 	public function toString()
 	{
 		return "Edge(" + this.p + ", " + this.q + ")";

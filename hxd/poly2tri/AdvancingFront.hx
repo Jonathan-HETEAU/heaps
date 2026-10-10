@@ -1,17 +1,35 @@
 package hxd.poly2tri;
 
+/**
+	The advancing front of the sweep line triangulation: a linked list of nodes along the upper boundary of the triangulated area.
+**/
 class AdvancingFront
 {
+	/**
+		The first node.
+	**/
 	public var head:Node;
+	/**
+		The last node.
+	**/
 	public var tail:Node;
+	/**
+		The node where the last search ended, to start the next one.
+	**/
 	public var search_node:Node;
 
+	/**
+		Creates the front from its first and last nodes.
+	**/
 	public function new(head:Node, tail:Node)
 	{
 		this.search_node = this.head = head;
 		this.tail = tail;
 	}
 
+	/**
+		Returns the node of the front at or before the X coordinate.
+	**/
 	public function locateNode(x:Constants.Unit):Node
 	{
 		var node:Node = this.search_node;
@@ -42,6 +60,9 @@ class AdvancingFront
 		return null;
 	}
 
+	/**
+		Returns the node of the front at the point, or `null`.
+	**/
 	public function locatePoint(point:Point):Node
 	{
 		var px = point.x;

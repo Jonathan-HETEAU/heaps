@@ -1,14 +1,23 @@
 package hxd.poly2tri;
 
+/**
+	The sweep line algorithm of the constrained Delaunay triangulation (poly2tri). Use `VisiblePolygon` for a simple interface.
+**/
 class Sweep
 {
 	var context:SweepContext;
 
+	/**
+		Creates the sweep for the context.
+	**/
 	public function new(context)
 	{
 		this.context = context;
 	}
 
+	/**
+		Triangulates the polygons of the context.
+	**/
 	public function triangulate()
 	{
 		context.initTriangulation();
@@ -17,6 +26,9 @@ class Sweep
 		finalizationPolygon();            // Clean up
 	}
 
+	/**
+		Adds the points to the triangulation in order, inserting the constrained edges.
+	**/
 	public function sweepPoints()
 	{
 		for (i in 1...context.points.length)
@@ -32,6 +44,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Removes the triangles outside of the polygon.
+	**/
 	public function finalizationPolygon()
 	{
 		// Get an Internal triangle to start with
@@ -73,6 +88,9 @@ class Sweep
 	}
 
 
+	/**
+		Inserts a constrained edge, starting from the front node.
+	**/
 	public function edgeEventByEdge(edge:Edge, node:Node)
 	{
 		this.context.edge_event.constrained_edge = edge;
@@ -88,6 +106,9 @@ class Sweep
 		this.edgeEventByPoints(edge.p, edge.q, node.triangle, edge.q);
 	}
 
+	/**
+		Inserts the constrained edge between two points, flipping the crossed triangles.
+	**/
 	public function edgeEventByPoints(ep:Point, eq:Point, triangle:Triangle, point:Point)
 	{
 		if (triangle.isEdgeSide(ep, eq)) return;
@@ -119,6 +140,9 @@ class Sweep
 
 
 
+	/**
+		Creates the triangle between a new point and the front node, and returns the new front node.
+	**/
 	public function newFrontTriangle(point:Point, node:Node) :Node
 	{
 		var triangle = new Triangle(point, node.point, node.next.point);
@@ -352,6 +376,9 @@ class Sweep
 	}
 
 
+	/**
+		Tells if the basin is too shallow to be filled.
+	**/
 	public inline function isShallow(node:Node):Bool
 	{
 		var height = ( (this.context.basin.left_highest)
@@ -363,6 +390,9 @@ class Sweep
 		return (this.context.basin.width > height);
 	}
 
+	/**
+		Fills the front above a constrained edge.
+	**/
 	public function fillEdgeEvent(edge:Edge, node:Node)
 	{
 		if (this.context.edge_event.right)
@@ -375,6 +405,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills the front to the right, above the constrained edge.
+	**/
 	public function fillRightAboveEdgeEvent(edge:Edge, node:Node)
 	{
 		while (node.next.point.x < edge.p.x)
@@ -391,6 +424,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills the front to the right, below the constrained edge.
+	**/
 	public function fillRightBelowEdgeEvent(edge:Edge, node:Node)
 	{
 		if (node.point.x >= edge.p.x) return;
@@ -406,6 +442,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills a concave part of the front to the right of the constrained edge.
+	**/
 	public function fillRightConcaveEdgeEvent(edge:Edge, node:Node)
 	{
 		this.fill(node.next);
@@ -428,6 +467,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills a convex part of the front to the right of the constrained edge.
+	**/
 	public function fillRightConvexEdgeEvent(edge:Edge, node:Node)
 	{
 		// Next concave or convex?
@@ -452,6 +494,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills the front to the left, above the constrained edge.
+	**/
 	public function fillLeftAboveEdgeEvent(edge:Edge, node:Node)
 	{
 		while (node.prev.point.x > edge.p.x)
@@ -468,6 +513,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills the front to the left, below the constrained edge.
+	**/
 	public function fillLeftBelowEdgeEvent(edge:Edge, node:Node)
 	{
 		if (node.point.x > edge.p.x)
@@ -487,6 +535,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills a convex part of the front to the left of the constrained edge.
+	**/
 	public function fillLeftConvexEdgeEvent(edge:Edge, node:Node)
 	{
 		// Next concave or convex?
@@ -511,6 +562,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Fills a concave part of the front to the left of the constrained edge.
+	**/
 	public function fillLeftConcaveEdgeEvent(edge:Edge, node:Node)
 	{
 		this.fill(node.prev);
@@ -535,6 +589,9 @@ class Sweep
 
 
 
+	/**
+		Flips the triangles crossed by the constrained edge until it is part of the triangulation.
+	**/
 	public function flipEdgeEvent(ep:Point, eq:Point, t:Triangle, p:Point)
 	{
 		var ot:Triangle = t.neighborAcross(p);
@@ -584,6 +641,9 @@ class Sweep
 
 
 
+	/**
+		Returns the triangle to continue flipping with, after a flip.
+	**/
 	public function nextFlipTriangle(o:Int, t:Triangle, ot:Triangle, p:Point, op:Point):Triangle {
 		var edge_index:Int;
 		if (o == Orientation.CCW)
@@ -605,6 +665,9 @@ class Sweep
 		return ot;
 	}
 
+	/**
+		Returns the next point to flip with, depending on its side of the constrained edge.
+	**/
 	static public function nextFlipPoint(ep:Point, eq:Point, ot:Triangle, op:Point):Point
 	{
 		var o2d:Int = Orientation.orient2d(eq, op, ep);
@@ -624,6 +687,9 @@ class Sweep
 		}
 	}
 
+	/**
+		Scans for the next point to flip with, when the opposite point can't be used directly.
+	**/
 	public function flipScanEdgeEvent(ep:Point, eq:Point, flip_triangle:Triangle, t:Triangle, p:Point)
 	{
 		var ot:Triangle = t.neighborAcross(p);

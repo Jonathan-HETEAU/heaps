@@ -140,6 +140,9 @@ private class PolyTree extends PolyNode {
 			addRec(pn, polygons);
 	}
 
+	/**
+		Clears the tree.
+	**/
 	public function clear() {
 		allPolys = [];
 		childs = [];
@@ -821,24 +824,42 @@ private class ClipperBase
 
 
 
+/**
+	The kind of polygon tree nodes to output: any, open or closed paths.
+**/
 enum NodeType {
 	Any;
 	Open;
 	Closed;
 }
 
+/**
+	The polygons kept in the result: all of them, only the outer polygons, or only the holes.
+**/
 enum ResultKind {
 	All;
 	NoHoles;
 	HolesOnly;
 }
 
+/**
+	Polygon clipping (Angus Johnson's Clipper library 5.1.6): intersection, union, difference and xor of polygons with integer coordinates. Add the subject and clip polygons with `addPolygon`, then call `execute`. Used by `h2d.col.IPolygon`.
+**/
 @:noDebug
 @:allow(hxd.clipper)
 class Clipper extends ClipperBase {
 
+	/**
+		If set, the result polygons are strictly simple (no touching vertices).
+	**/
 	public var strictlySimple : Bool;
+	/**
+		If set, the orientation of the result polygons is reversed.
+	**/
 	public var reverseSolution : Bool;
+	/**
+		The polygons kept in the result.
+	**/
 	public var resultKind : ResultKind;
 
 	var m_PolyOuts : Array<OutRec>;
@@ -854,6 +875,9 @@ class Clipper extends ClipperBase {
 	var m_GhostJoins : Array<Join>;
 	var m_UsingPolyTree : Bool;
 
+	/**
+		Creates a clipper.
+	**/
 	public function new()
 	{
 		super();
@@ -930,6 +954,9 @@ class Clipper extends ClipperBase {
 	}
 	//------------------------------------------------------------------------------
 
+	/**
+		Computes the boolean operation between the subject and clip polygons, with the filling rules, and returns the result polygons.
+	**/
 	public function execute(clipType:ClipType, ?subjFillType, ?clipFillType)
 	{
 		if( subjFillType == null ) subjFillType = PolyFillType.EvenOdd;
@@ -954,6 +981,9 @@ class Clipper extends ClipperBase {
 	}
 	//------------------------------------------------------------------------------
 
+	/**
+		Computes the boolean operation into a tree of the result polygons and their holes.
+	**/
 	public function ExecuteTree(clipType:ClipType, polytree:PolyTree, ?subjFillType, ?clipFillType ) {
 		if( subjFillType == null ) subjFillType = PolyFillType.EvenOdd;
 		if( clipFillType == null ) clipFillType = PolyFillType.EvenOdd;
@@ -2608,6 +2638,9 @@ class Clipper extends ClipperBase {
 		for( p in polys ) p.reverse();
 	}
 
+	/**
+		Tells if the polygon has a positive (counter clockwise) orientation.
+	**/
 	public static inline function Orientation(poly : IPolygon )
 	{
 		return polArea(poly) >= 0;
@@ -3021,6 +3054,9 @@ class Clipper extends ClipperBase {
 	}
 
 	//----------------------------------------------------------------------
+	/**
+		Returns `1` if the point is inside the polygon, `0` if it is outside, and `-1` if it is on its boundary.
+	**/
 	public function PointInPolygon(pt : IPoint, pol : IPolygon)
     {
         //returns 0 if false, +1 if true, -1 if pt ON polygon boundary
@@ -3336,6 +3372,9 @@ class Clipper extends ClipperBase {
 
 	//------------------------------------------------------------------------------
 
+	/**
+		Returns the signed area of the polygon.
+	**/
 	public static function polArea(poly:IPolygon) {
 		var cnt = poly.length;
         if (cnt < 3) return 0.;
@@ -3365,6 +3404,9 @@ class Clipper extends ClipperBase {
 	// Convert self-intersecting polygons into simple polygons
 	//------------------------------------------------------------------------------
 
+	/**
+		Removes the self intersections of the polygon, and returns the resulting simple polygons.
+	**/
 	public static function SimplifyPolygon(poly : IPolygon, ?fillType)
       {
 		  if(fillType == null) fillType = PolyFillType.EvenOdd;
@@ -3375,6 +3417,9 @@ class Clipper extends ClipperBase {
       }
       //------------------------------------------------------------------------------
 
+      /**
+      	Removes the self intersections of the polygons, and returns the resulting simple polygons.
+      **/
       public static function SimplifyPolygons(polys : IPolygons, ?fillType)
       {
 		  if(fillType == null) fillType = PolyFillType.EvenOdd;
@@ -3446,6 +3491,9 @@ class Clipper extends ClipperBase {
       }
       //------------------------------------------------------------------------------
 
+      /**
+      	Removes the vertices closer than `distance` to their neighbors, and the collinear vertices.
+      **/
       public function CleanPolygon(path : IPolygon, distance = 1.415)
       {
         //distance = proximity in units/pixels below which vertices will be stripped.
@@ -3505,6 +3553,9 @@ class Clipper extends ClipperBase {
 
       //------------------------------------------------------------------------------
 
+      /**
+      	Removes the vertices closer than `distance` to their neighbors, and the collinear vertices, from the polygons.
+      **/
       public function CleanPolygons(polys : IPolygons, distance = 1.415)
       {
         var result = new IPolygons();
@@ -3548,6 +3599,9 @@ class Clipper extends ClipperBase {
 
       //------------------------------------------------------------------------------
 
+      /**
+      	Returns the Minkowski sum of the pattern swept along the polygon.
+      **/
       public function MinkowskiSum(pattern : IPolygon, pol : IPolygon, ?kind : ResultKind)
       {
         var paths = Minkowski(pattern, pol, true);
@@ -3568,6 +3622,9 @@ class Clipper extends ClipperBase {
       }
       //------------------------------------------------------------------------------
 
+      /**
+      	Returns the Minkowski sums of the pattern swept along the polygons.
+      **/
       public static function MinkowskiSums(pattern : IPolygon, pols : IPolygons, ?kind : ResultKind)
       {
         var c = new Clipper();
@@ -3583,6 +3640,9 @@ class Clipper extends ClipperBase {
       }
       //------------------------------------------------------------------------------
 
+      /**
+      	Returns the Minkowski difference of the polygons.
+      **/
       public static function MinkowskiDiff(pattern : IPolygon, pol : IPolygon, ?kind : ResultKind)
       {
         var c = new Clipper();
@@ -3596,6 +3656,9 @@ class Clipper extends ClipperBase {
       //------------------------------------------------------------------------------
 
 
+      /**
+      	Returns the polygons of the tree.
+      **/
       public function PolyTreeToPaths(polytree : PolyTree)
       {
         var result = new IPolygons();
@@ -3625,6 +3688,9 @@ class Clipper extends ClipperBase {
 }
 
 
+/**
+	Offsets (grows or shrinks) polygons and paths. Add them with `addPolygon`, then call `execute`.
+**/
 @:allow(hxd.clipper)
 class ClipperOffset
 {
@@ -3642,13 +3708,25 @@ class ClipperOffset
 	private var m_lowest : IPoint;
 	private var m_polyNodes : PolyNode;
 
+	/**
+		The maximum distance between a round join and its approximation.
+	**/
 	public var ArcTolerance : Float;
+	/**
+		The maximum distance of a mitered corner, as a multiple of the offset, before it is squared.
+	**/
 	public var MiterLimit : Float;
+	/**
+		The polygons kept in the result.
+	**/
 	public var resultKind : ResultKind;
 
 	private var def_arc_tolerance = 0.25;
 	private var two_pi = Math.PI * 2;
 
+	/**
+		Creates an offsetter.
+	**/
 	public function new (miterLimit = 2.0, arcTolerance = 0.25) {
 		MiterLimit = miterLimit;
 		ArcTolerance = arcTolerance;
@@ -3659,6 +3737,9 @@ class ClipperOffset
 	}
     //------------------------------------------------------------------------------
 
+    /**
+    	Removes the polygons.
+    **/
     public function clear() {
 		m_polyNodes = new PolyNode();
 		m_lowest = new IPoint( -1, 0);
@@ -3666,6 +3747,9 @@ class ClipperOffset
 
     //------------------------------------------------------------------------------
 
+    /**
+    	Adds a polygon with the join and end types.
+    **/
     public function addPolygon(pol : IPolygon, joinType : JoinType, endType : EndType) {
 		var highI = pol.length - 1;
 		if (highI < 0) return;
@@ -3703,6 +3787,9 @@ class ClipperOffset
     }
     //------------------------------------------------------------------------------
 
+    /**
+    	Adds polygons with the join and end types.
+    **/
     public function addPolygons(pols : IPolygons, joinType : JoinType, endType : EndType)
     {
 		for( p in pols)
@@ -3906,6 +3993,9 @@ class ClipperOffset
     }
     //------------------------------------------------------------------------------
 
+    /**
+    	Returns the polygons offset by `delta` (negative to shrink).
+    **/
     public function execute(delta : Float) {
 		fixOrientations();
 		doOffset(delta);

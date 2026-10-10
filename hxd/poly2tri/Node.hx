@@ -1,15 +1,36 @@
 package hxd.poly2tri;
 
+/**
+	A node of the advancing front.
+**/
 class Node
 {
 
 
+	/**
+		The point of the node.
+	**/
 	public var point:Point;
+	/**
+		The triangle below the front edge starting at this node.
+	**/
 	public var triangle:Triangle;
+	/**
+		The previous node.
+	**/
 	public var prev:Node;
+	/**
+		The next node.
+	**/
 	public var next:Node;
+	/**
+		The X coordinate of the point, used to search the front.
+	**/
 	public var value:Float;
 
+	/**
+		Creates a node for the point and triangle.
+	**/
 	public function new(point:Point = null, triangle:Triangle = null)
 	{
 
@@ -19,10 +40,8 @@ class Node
 	}
 
 	/**
-	 *
-	 * @param node - middle node
-	 * @return the angle between 3 front nodes
-	 */
+		Returns the angle between the previous and next nodes, seen from this node.
+	**/
 	public function getHoleAngle():Float
 	{
 		/* Complex plane
@@ -43,6 +62,9 @@ class Node
 		);
 	}
 
+	/**
+		Returns the angle used to detect a basin to the right of the node.
+	**/
 	public function getBasinAngle():Float
 	{
 		return Math.atan2(

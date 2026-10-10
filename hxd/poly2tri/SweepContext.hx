@@ -1,20 +1,50 @@
 package hxd.poly2tri;
 
+/**
+	The state of a triangulation: the points, the constrained edges, the advancing front and the resulting triangles.
+**/
 class SweepContext
 {
+	/**
+		The resulting triangles.
+	**/
 	public var triangles:Array<Triangle>;
+	/**
+		The points, sorted before the triangulation.
+	**/
 	public var points:Array<Point>;
+	/**
+		The constrained edges.
+	**/
 	public var edge_list:Array<Edge>;
 
+	/**
+		The advancing front.
+	**/
 	public var front:AdvancingFront;
+	/**
+		The artificial point at the bottom left of the initial triangle.
+	**/
 	public var head:Point;
+	/**
+		The artificial point at the bottom right of the initial triangle.
+	**/
 	public var tail:Point;
 
+	/**
+		The basin being filled.
+	**/
 	public var basin:Basin;
+	/**
+		The constrained edge being inserted.
+	**/
 	public var edge_event:EdgeEvent;
 
 
 
+	/**
+		Creates an empty context.
+	**/
 	public function new()
 	{
 		triangles = new Array();
@@ -36,6 +66,9 @@ class SweepContext
 	}
 
 
+	/**
+		Adds a closed polyline: its points and its edges.
+	**/
 	public function addPolyline(polyline:Array<Point>)
 	{
 		initEdges(polyline);
@@ -56,12 +89,18 @@ class SweepContext
 	}
 
 
+	/**
+		Adds a triangle to the map of the triangles.
+	**/
 	public function addToMap(triangle:Triangle)
 	{
 		//map.set( triangle.toString(), triangle );
 	}
 
 
+	/**
+		Sorts the points and creates the artificial points enclosing them.
+	**/
 	public function initTriangulation()
 	{
 		//OPT
@@ -96,11 +135,17 @@ class SweepContext
 
 	}
 
+	/**
+		Returns the front node at the X coordinate of the point.
+	**/
 	public function locateNode(point:Point):Node
 	{
 		return this.front.locateNode(point.x);
 	}
 
+	/**
+		Creates the initial triangle and advancing front.
+	**/
 	public function createAdvancingFront()
 	{
 		// Initial triangle
@@ -119,11 +164,17 @@ class SweepContext
 
 	}
 
+	/**
+		Removes a node from the front.
+	**/
 	public function removeNode(node:Node)
 	{
 		// do nothing
 	}
 
+	/**
+		Updates the triangles of the front nodes after the triangle was created.
+	**/
 	public function mapTriangleToNodes(triangle:Triangle)
 	{
 		for (n in 0...3)
@@ -136,6 +187,9 @@ class SweepContext
 		}
 	}
 
+	/**
+		Collects the triangles inside the polygon, starting from the triangle.
+	**/
 	public function meshClean(t:Triangle)
 	{
 		var tmp = [t];

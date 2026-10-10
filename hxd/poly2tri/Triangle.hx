@@ -1,23 +1,44 @@
 package hxd.poly2tri;
 
+/**
+	A triangle of the triangulation, with its neighbors and edge flags.
+**/
 class Triangle
 {
+	/**
+		The 3 points, in counter clockwise order.
+	**/
 	public var points:Array<Point>;
 
 	// Neighbor list
+	/**
+		The neighbor triangle across each point.
+	**/
 	public var neighbors:Array<Triangle>;
 
 	// Has this triangle been marked as an interior triangle?
+	/**
+		The identifier of the triangle.
+	**/
 	public var id:Int = -1;
 
 	// Flags to determine if an edge is a Constrained edge
+	/**
+		Tells if the edge across each point is constrained.
+	**/
 	public var constrained_edge:Array<Bool>;
 
 	// Flags to determine if an edge is a Delauney edge
+	/**
+		Tells if the edge across each point was checked by the Delaunay legalization.
+	**/
 	public var delaunay_edge:Array<Bool>;
 
 
 
+	/**
+		Creates a triangle. If `fixOrientation` is set, the points are reordered counter clockwise; otherwise, if `checkOrientation` is set, it throws if they are not counter clockwise.
+	**/
 	public function new(p1:Point, p2:Point, p3:Point, fixOrientation = false, checkOrientation = true)
 	{
 		if (fixOrientation)
@@ -54,6 +75,9 @@ class Triangle
 		return point.equals(points[0]) || point.equals(points[1]) || point.equals(points[2]);
 	}
 
+	/**
+		Tells if the two points are vertices of the triangle.
+	**/
 	public function containsEdgePoints(p1:Point, p2:Point):Bool
 	{
 		// In a triangle to check if contains and edge is enough to check if it contains the two vertices.
@@ -87,6 +111,9 @@ class Triangle
 	}
 
 
+	/**
+		Links the triangles if they share an edge.
+	**/
 	public function markNeighborTriangle(that:Triangle)
 	{
 		// exhaustive search to update neighbor pointers
@@ -113,6 +140,9 @@ class Triangle
 
 
 	// Optimized?
+	/**
+		Returns the index of the point plus `offset`, modulo 3. Throws if the point is not a vertex.
+	**/
 	public function getPointIndexOffset(p:Point, offset:Int = 0):Int
 	{
 		var no:Int = offset;
@@ -147,36 +177,72 @@ class Triangle
 	inline static private var CW_OFFSET = 1;
 	inline static private var CCW_OFFSET = -1;
 
+	/**
+		Returns the point clockwise to the given point.
+	**/
 	public inline function pointCW (p:Point):Point
 	{
 		return this.points[getPointIndexOffset(p, CCW_OFFSET)];
 	}
 
+	/**
+		Returns the point counter clockwise to the given point.
+	**/
 	public inline function pointCCW(p:Point):Point
 	{
 		return this.points[getPointIndexOffset(p, CW_OFFSET)];
 	}
 
+	/**
+		Returns the neighbor clockwise to the given point.
+	**/
 	public inline function neighborCW(p:Point):Triangle
 	{
 	 	return this.neighbors[getPointIndexOffset(p, CW_OFFSET)];
 	}
 
+	/**
+		Returns the neighbor counter clockwise to the given point.
+	**/
 	public inline function neighborCCW(p:Point):Triangle
 	{
 		return this.neighbors[getPointIndexOffset(p, CCW_OFFSET)];
 	}
 
+	/**
+		Tells if the edge clockwise to the point is constrained.
+	**/
 	public inline function getConstrainedEdgeCW(p:Point):Bool              { return this.constrained_edge[getPointIndexOffset(p, CW_OFFSET)]; }
+	/**
+		Sets if the edge clockwise to the point is constrained.
+	**/
 	public inline function setConstrainedEdgeCW(p:Point, ce:Bool):Bool  { return this.constrained_edge[getPointIndexOffset(p, CW_OFFSET)] = ce; }
 
+	/**
+		Tells if the edge counter clockwise to the point is constrained.
+	**/
 	public inline function getConstrainedEdgeCCW(p:Point):Bool             { return this.constrained_edge[getPointIndexOffset(p, CCW_OFFSET)]; }
+	/**
+		Sets if the edge counter clockwise to the point is constrained.
+	**/
 	public inline function setConstrainedEdgeCCW(p:Point, ce:Bool):Bool { return this.constrained_edge[getPointIndexOffset(p, CCW_OFFSET)] = ce; }
 
+	/**
+		Tells if the edge clockwise to the point is a Delaunay edge.
+	**/
 	public inline function getDelaunayEdgeCW(p:Point):Bool                 { return this.delaunay_edge[getPointIndexOffset(p, CW_OFFSET)]; }
+	/**
+		Sets if the edge clockwise to the point is a Delaunay edge.
+	**/
 	public inline function setDelaunayEdgeCW(p:Point, e:Bool):Bool      { return this.delaunay_edge[getPointIndexOffset(p, CW_OFFSET)] = e; }
 
+	/**
+		Tells if the edge counter clockwise to the point is a Delaunay edge.
+	**/
 	public inline function getDelaunayEdgeCCW(p:Point):Bool                { return this.delaunay_edge[getPointIndexOffset(p, CCW_OFFSET)]; }
+	/**
+		Sets if the edge counter clockwise to the point is a Delaunay edge.
+	**/
 	public inline function setDelaunayEdgeCCW(p:Point, e:Bool):Bool     { return this.delaunay_edge[getPointIndexOffset(p, CCW_OFFSET)] = e; }
 
 
@@ -185,6 +251,9 @@ class Triangle
 	 */
 	public inline function neighborAcross(p:Point):Triangle { return this.neighbors[getPointIndexOffset(p, 0)]; }
 
+	/**
+		Returns the point of the neighbor `t` opposite to the edge shared with this triangle, across the point `p`.
+	**/
 	public inline function oppositePoint(t:Triangle, p:Point):Point
 	{
 		return this.pointCW(t.pointCW(p));
@@ -233,6 +302,9 @@ class Triangle
 	}
 
 
+	/**
+		Returns the index of the edge between the two points, or `-1`.
+	**/
 	public function edgeIndex(p1:Point, p2:Point):Int
 	{
 		if (p1.equals(this.points[0]))
@@ -254,11 +326,17 @@ class Triangle
 	}
 
 
+	/**
+		Marks the edge as constrained.
+	**/
 	public inline function markConstrainedEdgeByEdge(edge:Edge)
 	{
 		this.markConstrainedEdgeByPoints(edge.p, edge.q);
 	}
 
+	/**
+		Marks the edge between the two points as constrained.
+	**/
 	public function markConstrainedEdgeByPoints(p:Point, q:Point)
 	{
 		if ((q.equals(this.points[0]) && p.equals(this.points[1])) || (q.equals(this.points[1]) && p.equals(this.points[0]))) {
@@ -365,6 +443,9 @@ class Triangle
 		t.markNeighborTriangle(ot);
 	}
 
+	/**
+		Removes the links to the neighbors.
+	**/
 	public function clearNeigbors()
 	{
 		this.neighbors[0] = null;
@@ -372,6 +453,9 @@ class Triangle
 		this.neighbors[2] = null;
 	}
 
+	/**
+		Clears the Delaunay edge flags.
+	**/
 	public function clearDelunayEdges()
 	{
 		this.delaunay_edge[0] = false;
@@ -380,6 +464,9 @@ class Triangle
 	}
 
 
+	/**
+		Returns a description of the triangle.
+	**/
 	public function toString():String
 	{
 		return "Triangle(" + this.points[0] + ", " + this.points[1] + ", " + this.points[2] + ")";

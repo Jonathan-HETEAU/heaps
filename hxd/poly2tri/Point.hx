@@ -1,24 +1,50 @@
 package hxd.poly2tri;
 
+/**
+	A point of the polygon to triangulate.
+**/
 class Point
 {
+	/**
+		The unique identifier of the point.
+	**/
 	public var id:Int;
 
 	#if fastPoly2tri
+	/**
+		The X coordinate.
+	**/
 	public var x:Int;
+	/**
+		The Y coordinate.
+	**/
 	public var y:Int;
 	#else
+	/**
+		The X coordinate.
+	**/
 	public var x:Float;
+	/**
+		The Y coordinate.
+	**/
 	public var y:Float;
 	#end
 
-	/// The edges this point constitutes an upper ending point
 	#if haxe3
+	/**
+		The constrained edges whose upper point is this one.
+	**/
 	public var edge_list(get, null):Array<Edge>;
 	#else
+	/**
+		The constrained edges whose upper point is this one.
+	**/
 	public var edge_list(get_edge_list, null):Array<Edge>;
 	#end
 
+	/**
+		Creates a point.
+	**/
 	public function new(x,y)
 	{
 		this.x = x;
@@ -38,6 +64,9 @@ class Point
 
 
 
+	/**
+		Tells if the points have the same coordinates.
+	**/
 	public inline function equals(that:Point):Bool
 	{
 		#if fastPoly2Tri
@@ -47,11 +76,17 @@ class Point
 		#end
 	}
 
+	/**
+		Sorts the points by Y, then X.
+	**/
 	public static function sortPoints(points:Array<Point>)
 	{
 		points.sort( cmpPoints );
 	}
 
+	/**
+		Compares two points by Y, then X.
+	**/
 	public static function cmpPoints(l:Point,r:Point)
 	{
 		var ret = l.y - r.y;
@@ -61,11 +96,17 @@ class Point
 		return 0;
 	}
 
+	/**
+		Returns a description of the point.
+	**/
 	public function toString()
 	{
 		return "Point(" + x + ", " + y + ")";
 	}
 
+	/**
+		The identifier of the next point.
+	**/
 	public static var C_ID = 0;
 
 

@@ -1,16 +1,52 @@
 package hxd.earcut;
 
+/**
+	A vertex of the polygon being triangulated by `Earcut`.
+**/
 class EarNode {
+	/**
+		The next vertex of the polygon.
+	**/
 	public var next : EarNode;
+	/**
+		The previous vertex of the polygon.
+	**/
 	public var prev : EarNode;
+	/**
+		The next vertex in Z-order.
+	**/
 	public var nextZ : EarNode;
+	/**
+		The previous vertex in Z-order.
+	**/
 	public var prevZ : EarNode;
+	/**
+		The next allocated node, for reuse.
+	**/
 	public var allocNext : EarNode;
+	/**
+		The X coordinate.
+	**/
 	public var x : Float;
+	/**
+		The Y coordinate.
+	**/
 	public var y : Float;
+	/**
+		The index of the vertex in the input points.
+	**/
 	public var i : Int;
+	/**
+		The Z-order curve value, to speed up the search.
+	**/
 	public var z : Int;
+	/**
+		Tells if the vertex is a Steiner point.
+	**/
 	public var steiner : Bool;
+	/**
+		Creates a node.
+	**/
 	public function new() {
 	}
 }
@@ -28,9 +64,15 @@ class Earcut {
 	var size : Float;
 	var hasSize : Bool;
 
+	/**
+		Creates a triangulator.
+	**/
 	public function new() {
 	}
 
+	/**
+		Triangulates the polygon and returns the indexes of the triangles. `holes` gives the index of the first point of each hole in `points` (the outline is before the first hole).
+	**/
 	@:generic public function triangulate < T: { x:Float, y:Float } > ( points : Array<T>, ?holes : Array<Int> ) : Array<Int> {
 
 		var hasHoles = holes != null && holes.length > 0;
@@ -45,6 +87,9 @@ class Earcut {
 		return triangulateNode(root, points.length > 80);
 	}
 
+	/**
+		Triangulates the linked list of vertices, using a Z-order curve index if `useZOrder` is set (for big polygons).
+	**/
 	public function triangulateNode( root : EarNode, useZOrder ) {
 		triangles = [];
 		root = filterPoints(root);
