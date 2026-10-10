@@ -4,6 +4,8 @@
 
 Implemented by: [`h3d.pass.SSR`](../pass/SSR.md)
 
+A rendering effect added to a renderer (see `h3d.scene.Renderer.effects`): it is called at the start of the frame and around each rendering step.
+
 ## Variables
 
 ### enabled
@@ -11,6 +13,8 @@ Implemented by: [`h3d.pass.SSR`](../pass/SSR.md)
 ```haxe
 var enabled:Bool
 ```
+
+Tells if the effect is rendered.
 
 ## Methods
 
@@ -20,11 +24,15 @@ var enabled:Bool
 function start(r:h3d.scene.Renderer):Void
 ```
 
+Called at the start of the frame.
+
 ### begin
 
 ```haxe
 function begin(r:h3d.scene.Renderer, step:Step):Void
 ```
+
+Called before a rendering step.
 
 ### end
 
@@ -32,11 +40,15 @@ function begin(r:h3d.scene.Renderer, step:Step):Void
 function end(r:h3d.scene.Renderer, step:Step):Void
 ```
 
+Called after a rendering step.
+
 ### dispose
 
 ```haxe
 function dispose():Void
 ```
+
+Releases the effect.
 
 ### modulate
 
@@ -44,8 +56,12 @@ function dispose():Void
 function modulate(t:Float):RendererFX
 ```
 
+Returns the effect with its intensity scaled by `t`, for the volumes that blend effects.
+
 ### transition
 
 ```haxe
 function transition(r1:RendererFX, r2:RendererFX):RFXTransition
 ```
+
+Returns a transition between two effects of this type.

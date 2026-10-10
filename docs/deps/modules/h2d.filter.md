@@ -79,7 +79,7 @@
 
 ## h2d.filter.InnerGlow
 
-- Fichier : `h2d/filter/InnerGlow.hx` — 83 lignes — 2 blocs doc
+- Fichier : `h2d/filter/InnerGlow.hx` — 92 lignes — 5 blocs doc
 - Types : `class GlowShader`, `class GlowBlendShader`, `class InnerGlow`
 - Héritage : `GlowShader` extends `h3d.shader.ScreenShader`, `GlowBlendShader` extends `h3d.shader.ScreenShader`, `InnerGlow` extends `Blur`
 - Dépend de : `h2d.BlendMode`, `h2d.RenderContext`, `h2d.Tile`, `h2d.filter.Blur` (extends/use), `h3d.pass.Copy`, `h3d.pass.ScreenFx`, `h3d.shader.ScreenShader` (extends/use)

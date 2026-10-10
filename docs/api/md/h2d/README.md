@@ -45,7 +45,7 @@ Sub-packages: [`h2d.col`](col/README.md), [`h2d.filter`](filter/README.md), [`h2
 | [`LevelSpec`](LevelSpec.md) | typedef | [CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder. |
 | [`LevelTileset`](LevelTileset.md) | class | [CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder. |
 | [`LineHeightMode`](LineHeightMode.md) | enum | The `HtmlText` line height calculation rules. |
-| [`LoadingScene`](LoadingScene.md) | class |  |
+| [`LoadingScene`](LoadingScene.md) | class | A scene that can be rendered during a long synchronous loading: each call to `render` processes the window events and presents the frame, at most once every `presentCooldown` seconds. |
 | [`Mask`](Mask.md) | class | Restricts rendering area within the `[width, height]` rectangle. |
 | [`Object`](Object.md) | class | A base 2D class that all scene tree elements inherit from. |
 | [`ObjectFollower`](ObjectFollower.md) | class | Follows the 3D object position in current 3D camera, synchronizing the follower position to projected 2D position of the followed object. |
@@ -58,7 +58,7 @@ Sub-packages: [`h2d.col`](col/README.md), [`h2d.filter`](filter/README.md), [`h2
 | [`ScaleMode`](ScaleMode.md) | enum | Scaling mode of the 2D Scene. |
 | [`ScaleModeAlign`](ScaleModeAlign.md) | enum | Viewport alignment when scaling mode supports it. |
 | [`Scene`](Scene.md) | class | The root class for a 2D scene. |
-| [`Scene3D`](Scene3D.md) | class |  |
+| [`Scene3D`](Scene3D.md) | class | A flow displaying its own 3D scene (and 2D scene above it), rendered into a texture of the size of the flow. |
 | [`Slider`](Slider.md) | class | A simple interactive horizontal numerical slider. |
 | [`SpriteBatch`](SpriteBatch.md) | class | An active batched tile renderer. |
 | [`Text`](Text.md) | class | A basic text renderer with multiline support. |

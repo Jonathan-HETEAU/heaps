@@ -30,6 +30,8 @@ Creates a new Text instance.
 static dynamic function resolveSubFont(fnt:Font, text:Text):Font
 ```
 
+Returns the font used by the text when its font is a group of fonts (`FontGroup`). Returns the first sub font by default: it can be replaced to select another one, such as the one of the current language.
+
 ## Variables
 
 ### font

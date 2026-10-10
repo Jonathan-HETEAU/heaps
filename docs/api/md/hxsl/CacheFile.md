@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.Cache`](Cache.md)
 
+A shader cache saving the linked shaders and their compiled code to a file (`FILENAME`), to load them at startup instead of compiling them.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.Cache`](Cache.md)
 ```haxe
 function new(allowCompile:Bool, ?recompileRT:Bool = false, ?showProgress:Bool = false):Void
 ```
+
+Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise an error is thrown.
 
 ## Static variables
 
@@ -20,6 +24,8 @@ function new(allowCompile:Bool, ?recompileRT:Bool = false, ?showProgress:Bool = 
 static var FILENAME:String
 ```
 
+The path of the cache file. The compiled code is saved next to it, with a platform suffix.
+
 ## Variables
 
 ### allowSave
@@ -27,6 +33,8 @@ static var FILENAME:String
 ```haxe
 var allowSave:Bool
 ```
+
+If set, the new shaders are added to the cache file.
 
 ## Methods
 

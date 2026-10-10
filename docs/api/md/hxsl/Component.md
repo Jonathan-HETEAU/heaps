@@ -2,6 +2,8 @@
 
 **enum** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+A vector component, for swizzling.
+
 ## Constructors
 
 ### X

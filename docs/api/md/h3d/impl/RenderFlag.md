@@ -2,6 +2,8 @@
 
 **enum** · package [`h3d.impl`](README.md) · module `h3d.impl.Driver` · source [`h3d/impl/Driver.hx`](../../../../../h3d/impl/Driver.hx)
 
+Driver settings changed with `Driver.setRenderFlag`.
+
 ## Constructors
 
 ### CameraHandness

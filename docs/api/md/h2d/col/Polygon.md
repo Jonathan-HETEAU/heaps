@@ -37,6 +37,8 @@ The amount of vertices in the polygon.
 static function makeCircle(x:Float, y:Float, radius:Float, ?npoints:Int = 0):Polygon
 ```
 
+Creates a polygon approximating a circle. If `npoints` is `0`, it is computed from the radius.
+
 ## Methods
 
 ### fastTriangulate
@@ -203,6 +205,9 @@ function distanceSq(pt:Point, ?outside:Bool):Float
 ```haxe
 function rayIntersection(r:Ray, bestMatch:Bool, ?oriented:Bool = false):Float
 ```
+
+Returns the distance from the ray origin to an intersection with the edges of the polygon, or `-1` if none.
+If `bestMatch` is set, the closest intersection is returned, otherwise the first one found. If `oriented` is set, only the intersections in the direction of the ray are considered.
 
 ### selfIntersecting
 

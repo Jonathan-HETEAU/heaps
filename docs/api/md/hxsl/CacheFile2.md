@@ -14,6 +14,8 @@ Similar to CacheFile, but save only platform-independent RuntimeShader data (sha
 function new(file:String, allowSave:Bool, ?outFile:String):Void
 ```
 
+Creates the cache for the file (saved to `outFile` if set).
+
 ## Static variables
 
 ### VERSION
@@ -21,6 +23,8 @@ function new(file:String, allowSave:Bool, ?outFile:String):Void
 ```haxe
 static var VERSION:Int
 ```
+
+The version of the file format.
 
 ## Variables
 
@@ -30,6 +34,8 @@ static var VERSION:Int
 var allowSave:Bool
 ```
 
+If set, the cache file is saved when new shaders are linked (see `saveIfModified`).
+
 ## Methods
 
 ### saveIfModified
@@ -38,11 +44,15 @@ var allowSave:Bool
 function saveIfModified():Void
 ```
 
+Saves the cache file if new shaders were added.
+
 ### dump
 
 ```haxe
 function dump(path:String, ?withCode:Bool = false):Void
 ```
+
+Writes a description of the cached shaders to a file, for debugging.
 
 ## Inherited members
 

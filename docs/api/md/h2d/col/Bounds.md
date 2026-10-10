@@ -132,11 +132,15 @@ Tests if this Bounds instance intersects with given `b` Bounds.
 override inline function collideBounds(b:Bounds):Bool
 ```
 
+Tells if the bounds intersect `b`.
+
 ### collideCircle
 
 ```haxe
 override inline function collideCircle(c:Circle):Bool
 ```
+
+Tells if the bounds intersect the circle.
 
 ### contains
 
@@ -151,6 +155,8 @@ Tests if the Point `p` is inside the bounding box.
 ```haxe
 function rayIntersection(r:Ray):Float
 ```
+
+Returns the distance along the ray to its first intersection with the bounds, or `-1` if the ray misses them.
 
 ### distanceSq
 

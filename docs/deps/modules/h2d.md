@@ -32,7 +32,7 @@
 
 ## h2d.CdbLevel
 
-- Fichier : `h2d/CdbLevel.hx` — 529 lignes — 21 blocs doc — contient du `#if`
+- Fichier : `h2d/CdbLevel.hx` — 703 lignes — 79 blocs doc — contient du `#if`
 - Types : `typedef TileSpec`, `typedef LayerSpec`, `typedef LevelSpec`, `class LevelTileset`, `class LevelObject`, `class LevelGroup`, `class LevelObjectInstance`, `enum LevelLayerData`, `class LevelLayer`, `class CdbLevel`
 - Héritage : `CdbLevel` extends `Layers`
 - Dépend de : `h2d.Layers` (extends/use), `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `h2d.TileGroup`, `h2d.col.Bounds`, `hxd.res.Image`, `hxd.res.Loader`
@@ -67,7 +67,7 @@
 
 ## h2d.Flow
 
-- Fichier : `h2d/Flow.hx` — 1905 lignes — 83 blocs doc — contient du `#if`
+- Fichier : `h2d/Flow.hx` — 1920 lignes — 88 blocs doc — contient du `#if`
 - Types : `enum FlowAlign`, `enum FlowLayout`, `enum FlowOverflow`, `class FlowProperties`, `class Flow`
 - Héritage : `Flow` extends `Object`
 - Dépend de : `h2d.Graphics`, `h2d.Interactive`, `h2d.Mask`, `h2d.Object` (extends/use), `h2d.RenderContext`, `h2d.ScaleGrid`, `h2d.Tile`, `h2d.col.Bounds`, `h2d.col.Point`, `hxd.Math`, `hxd.Pad`
@@ -106,7 +106,7 @@
 
 ## h2d.KeyFrames
 
-- Fichier : `h2d/KeyFrames.hx` — 336 lignes — 14 blocs doc
+- Fichier : `h2d/KeyFrames.hx` — 357 lignes — 21 blocs doc
 - Types : `typedef KeyframesLayer`, `class KeyFrames`
 - Héritage : `KeyFrames` extends `Mask`
 - Dépend de : `h2d.Bitmap`, `h2d.Mask` (extends/use), `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `hxd.Math`, `hxd.fmt.kframes.Data` (import/use), `hxd.res.Loader`
@@ -121,7 +121,7 @@
 
 ## h2d.LoadingScene
 
-- Fichier : `h2d/LoadingScene.hx` — 45 lignes — 0 blocs doc — contient du `#if`
+- Fichier : `h2d/LoadingScene.hx` — 51 lignes — 2 blocs doc — contient du `#if`
 - Types : `class LoadingScene`
 - Héritage : `LoadingScene` extends `h2d.Scene`
 - Dépend de : `h2d.Scene` (extends/use), `h3d.Engine`, `h3d.mat.Texture`, `h3d.pass.Copy`, `hxd.Window.js`
@@ -136,7 +136,7 @@
 
 ## h2d.Object
 
-- Fichier : `h2d/Object.hx` — 1133 lignes — 59 blocs doc — contient du `#if`
+- Fichier : `h2d/Object.hx` — 1136 lignes — 60 blocs doc — contient du `#if`
 - Types : `class Object`
 - Dépend de : `h2d.BlendMode`, `h2d.Drawable`, `h2d.RenderContext`, `h2d.Scene`, `h2d.Tile`, `h2d.col.Bounds`, `h2d.col.Point`, `h2d.col.Polynomial`, `h2d.filter.Filter`, `h3d.mat.Texture`, `hxd.Math` (import/use), `hxd.impl.ArrayIterator`, `hxsl.Output`
 - Utilisé par : `h2d.Anim`, `h2d.Bitmap`, `h2d.Camera`, `h2d.CdbLevel`, `h2d.Console`, `h2d.Drawable`, `h2d.Dropdown`, `h2d.Flow`, `h2d.HtmlText`, `h2d.Interactive`, `h2d.KeyFrames`, `h2d.Layers`, `h2d.Mask`, `h2d.ObjectFollower`, `h2d.Particles`, `h2d.RenderContext`, `h2d.Scene`, `h2d.Sprite`, `h2d.Text`, `h2d.TextInput`, `h2d.TileGroup`, `h2d.Video`, `h2d.ZGroup`, `h2d.domkit.BaseComponents`, `h2d.domkit.Style`, `h2d.filter.AbstractMask`, `h2d.filter.Blur`, `h2d.filter.Filter`, `h2d.filter.Group`, `h2d.filter.Outline`, `h3d.impl.FpsGraph`, `h3d.impl.SceneProf`, `hxd.fmt.pak.Loader`
@@ -157,7 +157,7 @@
 
 ## h2d.RenderContext
 
-- Fichier : `h2d/RenderContext.hx` — 825 lignes — 39 blocs doc — contient du `#if`
+- Fichier : `h2d/RenderContext.hx` — 828 lignes — 40 blocs doc — contient du `#if`
 - Types : `typedef ViewportStackEntry`, `typedef CameraStackEntry`, `typedef TargetStackEntry`, `typedef RenderZoneStack`, `typedef FilterStack`, `class RenderContext`
 - Héritage : `RenderContext` extends `h3d.impl.RenderContext`
 - Dépend de : `h2d.BlendMode`, `h2d.Camera`, `h2d.Drawable`, `h2d.Object`, `h2d.Scene`, `h2d.Tile`, `h2d.col.Bounds`, `h2d.col.Point`, `h3d.Buffer`, `h3d.impl.RenderContext` (extends/use), `h3d.impl.SceneProf`, `h3d.mat.Pass`, `h3d.mat.Texture`, `h3d.pass.OutputShader`, `h3d.shader.Base2d`, `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.Math`, `hxsl.Channel`, `hxsl.RuntimeShader`, `hxsl.ShaderList`
@@ -173,7 +173,7 @@
 
 ## h2d.Scene
 
-- Fichier : `h2d/Scene.hx` — 937 lignes — 52 blocs doc — contient du `#if`
+- Fichier : `h2d/Scene.hx` — 940 lignes — 53 blocs doc — contient du `#if`
 - Types : `enum ScaleModeAlign`, `enum ScaleMode`, `class Scene`
 - Héritage : `Scene` extends `Layers`, `Scene` implements `h3d.IDrawable`, `Scene` implements `hxd.SceneEvents.InteractiveScene`
 - Dépend de : `h2d.Bitmap`, `h2d.Camera`, `h2d.Interactive`, `h2d.Layers` (extends/use), `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `h2d.col.Bounds`, `h2d.col.Point`, `h3d.Engine`, `h3d.IDrawable` (implements/use), `h3d.impl.RenderContext`, `h3d.impl.SceneProf`, `h3d.mat.Texture`, `hxd.Math` (import/use), `hxd.Pad`, `hxd.SceneEvents` (implements/use), `hxd.Window.js`, `hxsl.Output`
@@ -181,7 +181,7 @@
 
 ## h2d.Scene3D
 
-- Fichier : `h2d/Scene3D.hx` — 135 lignes — 0 blocs doc
+- Fichier : `h2d/Scene3D.hx` — 156 lignes — 7 blocs doc
 - Types : `class Scene3D`
 - Héritage : `Scene3D` extends `h2d.Flow`
 - Dépend de : `h2d.Flow` (extends/use), `h2d.RenderContext`, `h2d.Scene`, `h2d.Tile`, `h3d.mat.Texture`, `h3d.scene.Mesh`, `h3d.scene.Scene`, `h3d.scene.pbr.Renderer`, `hxd.SceneEvents`, `hxd.Timer`
@@ -209,7 +209,7 @@
 
 ## h2d.Text
 
-- Fichier : `h2d/Text.hx` — 577 lignes — 26 blocs doc
+- Fichier : `h2d/Text.hx` — 580 lignes — 27 blocs doc
 - Types : `enum Align`, `class Text`
 - Héritage : `Text` extends `Drawable`
 - Dépend de : `h2d.Drawable` (extends/use), `h2d.Font`, `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `h2d.TileGroup`, `h2d.col.Bounds`, `h3d.shader.SignedDistanceField`, `hxd.Math`
@@ -217,7 +217,7 @@
 
 ## h2d.TextInput
 
-- Fichier : `h2d/TextInput.hx` — 954 lignes — 35 blocs doc
+- Fichier : `h2d/TextInput.hx` — 969 lignes — 40 blocs doc
 - Types : `typedef TextHistoryElement`, `class TextInput`
 - Héritage : `TextInput` extends `Text`
 - Dépend de : `h2d.Font`, `h2d.Interactive`, `h2d.Object`, `h2d.RenderContext`, `h2d.Text` (extends/use), `h2d.Tile`, `h2d.col.Bounds`, `h2d.col.Point`, `hxd.Key` (import/use), `hxd.Math`, `hxd.Pad`, `hxd.System.js`
@@ -232,7 +232,7 @@
 
 ## h2d.TileGroup
 
-- Fichier : `h2d/TileGroup.hx` — 719 lignes — 32 blocs doc — contient du `#if`
+- Fichier : `h2d/TileGroup.hx` — 728 lignes — 35 blocs doc — contient du `#if`
 - Types : `class TileLayerContent`, `class TileGroup`
 - Héritage : `TileLayerContent` extends `h3d.prim.Primitive`, `TileGroup` extends `Drawable`
 - Dépend de : `h2d.Drawable` (extends/use), `h2d.Object`, `h2d.RenderContext` (import/use), `h2d.Tile`, `h2d.col.Bounds`, `h2d.impl.BatchDrawState` (import/use), `h3d.Buffer`, `h3d.Engine`, `h3d.Vector4`, `h3d.impl.SceneProf`, `h3d.prim.Primitive` (extends/use), `hxd.BufferFormat`, `hxd.FloatBuffer`, `hxd.Math`, `hxd.impl.Allocator`
@@ -240,7 +240,7 @@
 
 ## h2d.Video
 
-- Fichier : `h2d/Video.hx` — 456 lignes — 12 blocs doc — contient du `#if`
+- Fichier : `h2d/Video.hx` — 507 lignes — 29 blocs doc — contient du `#if`
 - Types : `enum FrameState`, `typedef Frame`, `class FrameCache`, `class Video`
 - Héritage : `Video` extends `Drawable`
 - Dépend de : `h2d.Drawable` (extends/use), `h2d.Object`, `h2d.RenderContext`, `h2d.Tile`, `h2d.col.Bounds`, `h3d.impl.GlDriver`, `h3d.mat.Texture`, `hxd.Pixels`, `hxd.res.Resource`

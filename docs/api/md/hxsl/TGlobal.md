@@ -2,6 +2,8 @@
 
 **enum** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+The built-in functions and values of the shader language.
+
 ## Constructors
 
 ### Radians

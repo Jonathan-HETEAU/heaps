@@ -2,6 +2,8 @@
 
 **class** · package [`hxsl`](README.md) · module `hxsl.Cache` · source [`hxsl/Cache.hx`](../../../../hxsl/Cache.hx)
 
+The parameters forced to be stored per instance in a batch shader, by shader name.
+
 ## Constructor
 
 ### new
@@ -10,6 +12,8 @@
 function new(forcedPerInstance:Array<{ shader:String, params:Array<String> }>):Void
 ```
 
+Creates the parameters.
+
 ## Methods
 
 ### getSignature
@@ -17,3 +21,5 @@ function new(forcedPerInstance:Array<{ shader:String, params:Array<String> }>):V
 ```haxe
 function getSignature():String
 ```
+
+Returns a string identifying the parameters.

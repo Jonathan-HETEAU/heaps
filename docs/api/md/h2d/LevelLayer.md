@@ -12,6 +12,8 @@
 function new(level:CdbLevel):Void
 ```
 
+Creates a layer of the level.
+
 ## Variables
 
 ### level
@@ -112,3 +114,5 @@ In case of objects, if several objects overlaps, the greatest property value ove
 ```haxe
 function buildStringProperty(name:String):Array<String>
 ```
+
+Returns the value of the given per-tile string property for each cell of the layer (`null` where unset), like `buildIntProperty`.

@@ -4,6 +4,8 @@
 
 Extends: [`h3d.impl.Driver`](Driver.md)
 
+The DirectX 11 driver (HashLink with the `hldx` library).
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.impl.Driver`](Driver.md)
 ```haxe
 function new():Void
 ```
+
+Creates the driver for the first window.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new():Void
 var backBufferFormat:dx.Format
 ```
 
+The format of the back buffer.
+
 ### depthStencilFormat
 
 ```haxe
 var depthStencilFormat:dx.Format
 ```
+
+The format of the default depth buffer.
 
 ## Methods
 
@@ -33,6 +41,8 @@ var depthStencilFormat:dx.Format
 ```haxe
 dynamic function getDriverFlags():dx.DriverInitFlags
 ```
+
+Returns the flags used to create the device (the debug layer in debug builds). Can be replaced to change them.
 
 ### dispose
 

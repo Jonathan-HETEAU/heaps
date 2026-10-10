@@ -258,6 +258,8 @@ Render the scene on the screen.
 dynamic function mark(name:String):Void
 ```
 
+Called at each step of the scene rendering (`"s2d sync"`, `"s2d draw"`, `"vsync"`), for profiling.
+
 ### captureBitmap
 
 ```haxe

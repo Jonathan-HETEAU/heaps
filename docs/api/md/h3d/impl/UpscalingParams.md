@@ -2,6 +2,8 @@
 
 **class** · package [`h3d.impl`](README.md) · module `h3d.impl.Upscaling` · source [`h3d/impl/Upscaling.hx`](../../../../../h3d/impl/Upscaling.hx)
 
+The camera and frame parameters of the upscaler and the frame generation.
+
 ## Constructor
 
 ### new
@@ -9,6 +11,8 @@
 ```haxe
 function new():Void
 ```
+
+Creates the parameters.
 
 ## Variables
 
@@ -18,11 +22,15 @@ function new():Void
 var cameraViewToClip:h3d.Matrix
 ```
 
+The projection matrix.
+
 ### clipToCameraView
 
 ```haxe
 var clipToCameraView:h3d.Matrix
 ```
+
+The inverse projection matrix.
 
 ### clipToPrevClip
 
@@ -30,11 +38,15 @@ var clipToCameraView:h3d.Matrix
 var clipToPrevClip:h3d.Matrix
 ```
 
+The matrix from the clip space of the frame to the clip space of the previous frame.
+
 ### prevClipToClip
 
 ```haxe
 var prevClipToClip:h3d.Matrix
 ```
+
+The matrix from the clip space of the previous frame to the clip space of the frame.
 
 ### jitterOffsetX
 
@@ -42,11 +54,15 @@ var prevClipToClip:h3d.Matrix
 var jitterOffsetX:Float
 ```
 
+The X subpixel jitter of the projection, in pixels.
+
 ### jitterOffsetY
 
 ```haxe
 var jitterOffsetY:Float
 ```
+
+The Y subpixel jitter of the projection, in pixels.
 
 ### mvecScaleX
 
@@ -54,11 +70,15 @@ var jitterOffsetY:Float
 var mvecScaleX:Float
 ```
 
+The X scale converting the motion vectors to pixels.
+
 ### mvecScaleY
 
 ```haxe
 var mvecScaleY:Float
 ```
+
+The Y scale converting the motion vectors to pixels.
 
 ### cameraPos
 
@@ -66,11 +86,15 @@ var mvecScaleY:Float
 var cameraPos:h3d.Vector
 ```
 
+The camera position.
+
 ### cameraUp
 
 ```haxe
 var cameraUp:h3d.Vector
 ```
+
+The camera up direction.
 
 ### cameraRight
 
@@ -78,11 +102,15 @@ var cameraUp:h3d.Vector
 var cameraRight:h3d.Vector
 ```
 
+The camera right direction.
+
 ### cameraFwd
 
 ```haxe
 var cameraFwd:h3d.Vector
 ```
+
+The camera forward direction.
 
 ### cameraNear
 
@@ -90,11 +118,15 @@ var cameraFwd:h3d.Vector
 var cameraNear:Float
 ```
 
+The camera near plane distance.
+
 ### cameraFar
 
 ```haxe
 var cameraFar:Float
 ```
+
+The camera far plane distance.
 
 ### cameraFOV
 
@@ -102,11 +134,15 @@ var cameraFar:Float
 var cameraFOV:Float
 ```
 
+The camera vertical field of view, in radians.
+
 ### cameraAspectRatio
 
 ```haxe
 var cameraAspectRatio:Float
 ```
+
+The camera aspect ratio.
 
 ### motionVectorsInvalidValue
 
@@ -114,11 +150,15 @@ var cameraAspectRatio:Float
 var motionVectorsInvalidValue:Float
 ```
 
+The value of the motion vectors where they are invalid.
+
 ### depthInverted
 
 ```haxe
 var depthInverted:Bool
 ```
+
+Tells if the depth is inverted (`1` near, `0` far).
 
 ### cameraMotionIncluded
 
@@ -126,11 +166,15 @@ var depthInverted:Bool
 var cameraMotionIncluded:Bool
 ```
 
+Tells if the motion vectors include the camera motion.
+
 ### reset
 
 ```haxe
 var reset:Bool
 ```
+
+Resets the history of the upscaler (after a camera cut).
 
 ### orthographicProjection
 
@@ -138,11 +182,15 @@ var reset:Bool
 var orthographicProjection:Bool
 ```
 
+Tells if the projection is orthographic.
+
 ### motionVectorsDilated
 
 ```haxe
 var motionVectorsDilated:Bool
 ```
+
+Tells if the motion vectors are dilated.
 
 ### motionVectorsJittered
 
@@ -150,14 +198,20 @@ var motionVectorsDilated:Bool
 var motionVectorsJittered:Bool
 ```
 
+Tells if the motion vectors include the jitter.
+
 ### colorBufferHDR
 
 ```haxe
 var colorBufferHDR:Bool
 ```
 
+Tells if the color is in HDR.
+
 ### autoExposure
 
 ```haxe
 var autoExposure:Bool
 ```
+
+Lets the upscaler compute the exposure.

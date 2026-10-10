@@ -12,11 +12,15 @@
 var width:Int
 ```
 
+The width of the level, in tiles.
+
 ### tileProps
 
 ```haxe
 var tileProps:Array<Dynamic>
 ```
+
+The per-tile properties.
 
 ### props
 
@@ -24,14 +28,20 @@ var tileProps:Array<Dynamic>
 var props:cdb.LevelProps
 ```
 
+The properties of the level.
+
 ### layers
 
 ```haxe
 var layers:Array<LayerSpec>
 ```
 
+The layers of the level.
+
 ### height
 
 ```haxe
 var height:Int
 ```
+
+The height of the level, in tiles.

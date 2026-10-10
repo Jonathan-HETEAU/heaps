@@ -36,6 +36,8 @@ The list of the edges of the cell.
 var closeMe:Bool
 ```
 
+Set when the cell touches the bounding box and must be closed.
+
 ## Methods
 
 ### getCircle

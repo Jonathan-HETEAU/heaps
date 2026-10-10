@@ -12,6 +12,8 @@
 function new():Void
 ```
 
+Creates an instance.
+
 ## Variables
 
 ### x
@@ -20,11 +22,15 @@ function new():Void
 var x:Int
 ```
 
+The X position of the object in the level, in pixels.
+
 ### y
 
 ```haxe
 var y:Int
 ```
+
+The Y position of the object in the level, in pixels.
 
 ### rot
 
@@ -32,14 +38,20 @@ var y:Int
 var rot:Int
 ```
 
+The rotation of the object, in quarter turns.
+
 ### flip
 
 ```haxe
 var flip:Bool
 ```
 
+Tells if the object is flipped horizontally.
+
 ### obj
 
 ```haxe
 var obj:LevelObject
 ```
+
+The object of the tileset.

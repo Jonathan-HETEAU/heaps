@@ -4,6 +4,8 @@
 
 Extends: [`h2d.Scene`](Scene.md) → [`h2d.Layers`](Layers.md) → [`h2d.Object`](Object.md)
 
+A scene that can be rendered during a long synchronous loading: each call to `render` processes the window events and presents the frame, at most once every `presentCooldown` seconds.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h2d.Scene`](Scene.md) → [`h2d.Layers`](Layers.md) → [`h2d.Object`
 ```haxe
 function new(presentCooldown:Float):Void
 ```
+
+Creates the scene, rendered at most once every `presentCooldown` seconds.
 
 ## Methods
 

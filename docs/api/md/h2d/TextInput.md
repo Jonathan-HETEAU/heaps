@@ -28,11 +28,15 @@ Create a new TextInput instance.
 static dynamic function showSoftwareKeyboard(target:TextInput):Void
 ```
 
+Called when a text input gets the focus, if `useSoftwareKeyboard` is set. Replace it to display the virtual keyboard of the platform.
+
 ### hideSoftwareKeyboard
 
 ```haxe
 static dynamic function hideSoftwareKeyboard(target:TextInput):Void
 ```
+
+Called when a text input loses the focus. Replace it to hide the virtual keyboard of the platform.
 
 ## Variables
 
@@ -135,6 +139,8 @@ When disabled, showSoftwareKeyboard will not be called.
 dynamic function onSoftwareKeyboardEnd(isSubmit:Bool):Void
 ```
 
+To be called by the platform integration when the virtual keyboard is closed, with `isSubmit` set if the text was validated.
+
 ### getTextPos
 
 ```haxe
@@ -187,6 +193,8 @@ This allows to continue uninterrupted input experience while the input component
 function clearUndo():Void
 ```
 
+Clears the undo and redo history.
+
 ### getTextLength
 
 ```haxe
@@ -216,6 +224,8 @@ Sets focus on this `TextInput`.
 ```haxe
 function blur():Void
 ```
+
+Removes the focus from the text input.
 
 ### hasFocus
 

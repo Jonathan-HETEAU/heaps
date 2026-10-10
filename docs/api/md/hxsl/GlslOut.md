@@ -4,6 +4,8 @@
 
 Subclasses: [`hxsl.NXGlslOut`](NXGlslOut.md)
 
+Generates GLSL code (desktop GL or GLES/WebGL) from a flattened shader stage.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Subclasses: [`hxsl.NXGlslOut`](NXGlslOut.md)
 ```haxe
 function new():Void
 ```
+
+Creates a generator.
 
 ## Static methods
 
@@ -20,10 +24,7 @@ function new():Void
 static function compile(s:ShaderData):String
 ```
 
-In Heaps and DirectX, vertex output Z position is in [0,1] range
-Whereas in OpenGL it's [-1, 1].
-Given we have either [X, Y, 0, N] for zNear or [X, Y, F, F] for zFar,
-this shader operation will map [0, 1] range to [-1, 1] for correct clipping.
+Returns the GLSL code of the shader stage, for WebGL on JS.
 
 ## Variables
 
@@ -33,17 +34,23 @@ this shader operation will map [0, 1] range to [-1, 1] for correct clipping.
 var varNames:Map<Int, String>
 ```
 
+The name of each variable in the generated code, by identifier.
+
 ### glES
 
 ```haxe
 var glES:Null<Float>
 ```
 
+The GLES version to target (WebGL), or `null` for desktop GL.
+
 ### version
 
 ```haxe
 var version:Null<Int>
 ```
+
+The GLSL version to target.
 
 ## Methods
 
@@ -52,3 +59,5 @@ var version:Null<Int>
 ```haxe
 function run(s:ShaderData):String
 ```
+
+Returns the GLSL code of the shader stage.

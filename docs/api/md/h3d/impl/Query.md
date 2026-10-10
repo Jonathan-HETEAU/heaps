@@ -2,6 +2,8 @@
 
 **typedef** · package [`h3d.impl`](README.md) · module `h3d.impl.Driver` · source [`h3d/impl/Driver.hx`](../../../../../h3d/impl/Driver.hx)
 
+The native query of the current driver.
+
 ## On js, hl/directx
 
 

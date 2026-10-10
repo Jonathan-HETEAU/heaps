@@ -4,6 +4,8 @@
 
 Extends: [`h2d.Flow`](Flow.md) → [`h2d.Object`](Object.md)
 
+A flow displaying its own 3D scene (and 2D scene above it), rendered into a texture of the size of the flow.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h2d.Flow`](Flow.md) → [`h2d.Object`](Object.md)
 ```haxe
 function new(?events:hxd.SceneEvents, ?parent:Object):Void
 ```
+
+Creates the flow with new scenes, added to `events` if set.
 
 ## Variables
 
@@ -20,11 +24,15 @@ function new(?events:hxd.SceneEvents, ?parent:Object):Void
 var s2d:Scene
 ```
 
+The 2D scene drawn over the 3D scene.
+
 ### s3d
 
 ```haxe
 var s3d:h3d.scene.Scene
 ```
+
+The 3D scene.
 
 ### deleteOnRemove
 
@@ -32,17 +40,23 @@ var s3d:h3d.scene.Scene
 var deleteOnRemove:Bool
 ```
 
+If set, the scenes and the texture are disposed when the flow is removed.
+
 ### backgroundColor
 
 ```haxe
 var backgroundColor:Null<Int>
 ```
 
+The background color in `0xRRGGBB` format, or `null` for a transparent background.
+
 ### events
 
 ```haxe
 var events(default, set):hxd.SceneEvents
 ```
+
+The event dispatcher the scenes are added to, to receive input events.
 
 ## Methods
 

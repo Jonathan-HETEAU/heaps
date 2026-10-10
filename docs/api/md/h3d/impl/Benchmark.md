@@ -4,6 +4,8 @@
 
 Extends: [`h2d.Graphics`](../../h2d/Graphics.md) → [`h2d.Drawable`](../../h2d/Drawable.md) → [`h2d.Object`](../../h2d/Object.md)
 
+A 2D bar displaying the GPU time of each section of the frame (with GPU timestamp queries), with the draw calls. Call `begin` at the start of the frame, `measure` at the start of each section, and `end` at the end of the frame.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h2d.Graphics`](../../h2d/Graphics.md) → [`h2d.Drawable`](../../h2d/
 ```haxe
 function new(?parent:h2d.Object):Void
 ```
+
+Creates the bar.
 
 ## Static methods
 
@@ -20,6 +24,8 @@ function new(?parent:h2d.Object):Void
 static function takeControl(app:hxd.App, ?s3d:h3d.scene.Scene):Void
 ```
 
+Freezes the application to inspect the scene: replaces the main loop by rendering only, with an orbit camera controller, and disables the culling to show the culled objects.
+
 ## Variables
 
 ### estimateWait
@@ -28,11 +34,15 @@ static function takeControl(app:hxd.App, ?s3d:h3d.scene.Scene):Void
 var estimateWait:Bool
 ```
 
+If set, the time waiting for the next frame (vsync) is estimated and displayed.
+
 ### enable
 
 ```haxe
 var enable(default, set):Bool
 ```
+
+Enables the measures and the display.
 
 ### width
 
@@ -40,11 +50,15 @@ var enable(default, set):Bool
 var width:Null<Int>
 ```
 
+The width of the bar, or `null` for the width of the scene.
+
 ### height
 
 ```haxe
 var height:Int
 ```
+
+The height of the bar, in pixels.
 
 ### textColor
 
@@ -52,11 +66,15 @@ var height:Int
 var textColor:Int
 ```
 
+The color of the labels.
+
 ### colors
 
 ```haxe
 var colors:Array<Int>
 ```
+
+The colors of the sections.
 
 ### font
 
@@ -64,11 +82,15 @@ var colors:Array<Int>
 var font:h2d.Font
 ```
 
+The font of the labels.
+
 ### recalTime
 
 ```haxe
 var recalTime:Float
 ```
+
+The frame time change (in nanoseconds) above which the smoothed frame time is reset.
 
 ### smoothTime
 
@@ -76,17 +98,23 @@ var recalTime:Float
 var smoothTime:Float
 ```
 
+The smoothing factor of the frame time, from `0` (none) to `1`.
+
 ### measureCpu
 
 ```haxe
 var measureCpu:Bool
 ```
 
+If set, the CPU time is measured instead of the GPU time.
+
 ### displayTriangleCount
 
 ```haxe
 var displayTriangleCount:Bool
 ```
+
+Displays the number of triangles drawn.
 
 ### measureCpuThread _(hl/sdl, hl/directx only)_
 
@@ -108,11 +136,15 @@ override function clear():Void
 function begin(?withVisual:Bool = true):Void
 ```
 
+Starts measuring a frame. The display is updated if `withVisual` is set.
+
 ### syncVisual
 
 ```haxe
 function syncVisual():Void
 ```
+
+Updates the display with the last measures.
 
 ### end
 
@@ -120,17 +152,23 @@ function syncVisual():Void
 function end():Void
 ```
 
+Ends the measure of the frame.
+
 ### measure
 
 ```haxe
 function measure(name:String):Void
 ```
 
+Starts the section of the given name.
+
 ### getCurrentId
 
 ```haxe
 function getCurrentId():String
 ```
+
+Returns the name of the current section, or `null`.
 
 ## Inherited members
 

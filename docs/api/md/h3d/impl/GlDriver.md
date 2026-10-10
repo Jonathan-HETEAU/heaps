@@ -12,6 +12,8 @@ Extends: [`h3d.impl.Driver`](Driver.md)
 function new(?antiAlias:Int = 0):Void
 ```
 
+Creates the driver. On JS, `antiAlias` enables the antialiasing of the canvas.
+
 ## Static variables
 
 ### ALLOW_WEBGL2 _(js only)_
@@ -20,11 +22,15 @@ function new(?antiAlias:Int = 0):Void
 static var ALLOW_WEBGL2:Bool
 ```
 
+If set, WebGL 2 is used when the browser supports it. Must be set before the engine is created.
+
 ### hasMultiIndirectCount
 
 ```haxe
 static var hasMultiIndirectCount:Bool
 ```
+
+Tells if the `GL_ARB_indirect_parameters` extension is available, to read the number of instanced draw commands from a buffer.
 
 ### outOfMemoryCheck
 
@@ -42,6 +48,8 @@ Default true, except in WebGL (false)
 ```haxe
 var gl:h3d.impl._GlDriver.GL
 ```
+
+The WebGL context.
 
 ## Methods
 

@@ -12,6 +12,8 @@
 function new(tset:LevelTileset, x:Int, y:Int, w:Int, h:Int):Void
 ```
 
+Creates an object of the tileset at the given position and size, in tiles.
+
 ## Variables
 
 ### tileset
@@ -20,11 +22,15 @@ function new(tset:LevelTileset, x:Int, y:Int, w:Int, h:Int):Void
 var tileset:LevelTileset
 ```
 
+The tileset of the object.
+
 ### id
 
 ```haxe
 var id:Int
 ```
+
+The id of the top left tile of the object.
 
 ### x
 
@@ -32,11 +38,15 @@ var id:Int
 var x:Int
 ```
 
+The X position of the object in the tileset, in tiles.
+
 ### y
 
 ```haxe
 var y:Int
 ```
+
+The Y position of the object in the tileset, in tiles.
 
 ### width
 
@@ -44,11 +54,15 @@ var y:Int
 var width:Int
 ```
 
+The width of the object, in tiles.
+
 ### height
 
 ```haxe
 var height:Int
 ```
+
+The height of the object, in tiles.
 
 ### props
 
@@ -56,8 +70,12 @@ var height:Int
 var props:Dynamic
 ```
 
+The properties of the object.
+
 ### tile
 
 ```haxe
 var tile:Tile
 ```
+
+The tile of the whole object.

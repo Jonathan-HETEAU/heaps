@@ -4,6 +4,8 @@
 
 Extends: [`hxsl.GlslOut`](GlslOut.md)
 
+Generates GLSL code for the Nintendo Switch, with the globals and parameters in uniform blocks.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`hxsl.GlslOut`](GlslOut.md)
 ```haxe
 function new():Void
 ```
+
+Creates a generator.
 
 ## Inherited members
 

@@ -12,8 +12,12 @@
 var name:String
 ```
 
+The name of the layer.
+
 ### data
 
 ```haxe
 var data:cdb.TileLayer
 ```
+
+The tiles of the layer.

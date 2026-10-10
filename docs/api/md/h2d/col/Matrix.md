@@ -28,11 +28,15 @@ Create a new identity Matrix.
 var a:Float
 ```
 
+The X component of the transformed X axis (scale and rotation).
+
 ### b
 
 ```haxe
 var b:Float
 ```
+
+The Y component of the transformed X axis (skew and rotation).
 
 ### c
 
@@ -40,11 +44,15 @@ var b:Float
 var c:Float
 ```
 
+The X component of the transformed Y axis (skew and rotation).
+
 ### d
 
 ```haxe
 var d:Float
 ```
+
+The Y component of the transformed Y axis (scale and rotation).
 
 ### x
 
@@ -52,11 +60,15 @@ var d:Float
 var x:Float
 ```
 
+The X translation.
+
 ### y
 
 ```haxe
 var y:Float
 ```
+
+The Y translation.
 
 ## Methods
 

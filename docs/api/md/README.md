@@ -6,14 +6,14 @@
 
 | Package | Types | Documented types |
 |---|---:|---:|
-| [`h2d`](h2d/README.md) | 62 | 60 |
-| [`h2d.col`](h2d/col/README.md) | 29 | 28 |
+| [`h2d`](h2d/README.md) | 62 | 62 |
+| [`h2d.col`](h2d/col/README.md) | 29 | 29 |
 | [`h2d.filter`](h2d/filter/README.md) | 16 | 16 |
 | [`h2d.impl`](h2d/impl/README.md) | 4 | 4 |
 | [`h3d`](h3d/README.md) | 17 | 17 |
 | [`h3d.anim`](h3d/anim/README.md) | 20 | 20 |
 | [`h3d.col`](h3d/col/README.md) | 24 | 24 |
-| [`h3d.impl`](h3d/impl/README.md) | 51 | 0 |
+| [`h3d.impl`](h3d/impl/README.md) | 51 | 50 |
 | [`h3d.mat`](h3d/mat/README.md) | 35 | 32 |
 | [`h3d.mat.noise`](h3d/mat/noise/README.md) | 2 | 2 |
 | [`h3d.parts`](h3d/parts/README.md) | 19 | 19 |
@@ -48,4 +48,4 @@
 | [`hxd.snd.openal`](hxd/snd/openal/README.md) | 9 | 9 |
 | [`hxd.snd.webaudio`](hxd/snd/webaudio/README.md) | 8 | 8 |
 | [`hxd.tools`](hxd/tools/README.md) | 13 | 13 |
-| [`hxsl`](hxsl/README.md) | 88 | 3 |
+| [`hxsl`](hxsl/README.md) | 88 | 88 |

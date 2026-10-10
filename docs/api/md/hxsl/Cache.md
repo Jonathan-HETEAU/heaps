@@ -4,6 +4,8 @@
 
 Subclasses: [`hxsl.CacheFile`](CacheFile.md), [`hxsl.CacheFile2`](CacheFile2.md)
 
+Links lists of shaders into `RuntimeShader`s and caches the results.
+
 ## Static methods
 
 ### get
@@ -12,17 +14,23 @@ Subclasses: [`hxsl.CacheFile`](CacheFile.md), [`hxsl.CacheFile2`](CacheFile2.md)
 static function get():Cache
 ```
 
+Returns the cache, created on the first call.
+
 ### set
 
 ```haxe
 static function set(c:Cache):Void
 ```
 
+Sets the cache (such as a `CacheFile` loading precompiled shaders).
+
 ### clear
 
 ```haxe
 static function clear():Void
 ```
+
+Removes the cache: a new one is created on the next `get`.
 
 ## Methods
 
@@ -40,8 +48,12 @@ Creates a shader that generate the output requested.
 function link(shaders:ShaderList, mode:LinkMode):RuntimeShader
 ```
 
+Returns the shader linking the shaders of the list (with their current variants), created and cached on the first call.
+
 ### makeBatchShader
 
 ```haxe
 function makeBatchShader(rt:RuntimeShader, shaders:ShaderList, params:BatchInstanceParams):BatchShader
 ```
+
+Returns a shader reading the per instance parameters of the linked shader from a buffer, to draw many instances in one call (see `h3d.scene.MeshBatch`).

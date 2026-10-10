@@ -2,6 +2,8 @@
 
 **enum** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+The dimension of a texture.
+
 ## Constructors
 
 ### T1D

@@ -12,14 +12,20 @@
 var stride:Int
 ```
 
+The number of tiles per row in the tileset.
+
 ### size
 
 ```haxe
 var size:Int
 ```
 
+The size of a tile in pixels.
+
 ### file
 
 ```haxe
 var file:String
 ```
+
+The path of the tileset image.

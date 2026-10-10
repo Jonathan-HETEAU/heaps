@@ -45,7 +45,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h2d.LevelSpec](api/md/h2d/LevelSpec.md): [CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 - [h2d.LevelTileset](api/md/h2d/LevelTileset.md): [CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 - [h2d.LineHeightMode](api/md/h2d/LineHeightMode.md): The `HtmlText` line height calculation rules.
-- [h2d.LoadingScene](api/md/h2d/LoadingScene.md)
+- [h2d.LoadingScene](api/md/h2d/LoadingScene.md): A scene that can be rendered during a long synchronous loading: each call to `render` processes the window events and presents the frame, at most once every `presentCooldown` seconds.
 - [h2d.Mask](api/md/h2d/Mask.md): Restricts rendering area within the `[width, height]` rectangle.
 - [h2d.Object](api/md/h2d/Object.md): A base 2D class that all scene tree elements inherit from.
 - [h2d.ObjectFollower](api/md/h2d/ObjectFollower.md): Follows the 3D object position in current 3D camera, synchronizing the follower position to projected 2D position of the followed object.
@@ -58,7 +58,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h2d.ScaleMode](api/md/h2d/ScaleMode.md): Scaling mode of the 2D Scene.
 - [h2d.ScaleModeAlign](api/md/h2d/ScaleModeAlign.md): Viewport alignment when scaling mode supports it.
 - [h2d.Scene](api/md/h2d/Scene.md): The root class for a 2D scene.
-- [h2d.Scene3D](api/md/h2d/Scene3D.md)
+- [h2d.Scene3D](api/md/h2d/Scene3D.md): A flow displaying its own 3D scene (and 2D scene above it), rendered into a texture of the size of the flow.
 - [h2d.Slider](api/md/h2d/Slider.md): A simple interactive horizontal numerical slider.
 - [h2d.SpriteBatch](api/md/h2d/SpriteBatch.md): An active batched tile renderer.
 - [h2d.Text](api/md/h2d/Text.md): A basic text renderer with multiline support.
@@ -85,7 +85,7 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h2d.col.Matrix](api/md/h2d/col/Matrix.md): An affine 2D 2x3 matrix.
 - [h2d.col.OffsetKind](api/md/h2d/col/OffsetKind.md): The type of the edges when offsetting polygon with `IPolygon.offset`.
 - [h2d.col.PixelsCollider](api/md/h2d/col/PixelsCollider.md): An `hxd.Pixels`-based collider.
-- [h2d.col.Point](api/md/h2d/col/Point.md)
+- [h2d.col.Point](api/md/h2d/col/Point.md): A 2D point or vector, with operators: `+`, `-`, `*` (by a `Matrix` or a scale) and `*=`.
 - [h2d.col.PointImpl](api/md/h2d/col/PointImpl.md): A simple 2D position/vector container.
 - [h2d.col.Polygon](api/md/h2d/col/Polygon.md): An abstract around an Array of `Point`s that define a polygonal shape that can be collision-tested against.
 - [h2d.col.PolygonCollider](api/md/h2d/col/PolygonCollider.md): A `Collider` wrapper around `Polygons` to enable using those for hit-testing testing.
@@ -181,57 +181,57 @@ Each link points to a Markdown page with the full public API of a type: signatur
 - [h3d.col.Sphere](api/md/h3d/col/Sphere.md): A sphere collider, defined by its center and radius.
 - [h3d.col.TransformCollider](api/md/h3d/col/TransformCollider.md): A collider whose shape is transformed by a fixed matrix.
 - [h3d.col.TriPlane](api/md/h3d/col/TriPlane.md): A triangle collider, part of a `Polygon` (linked list of triangles).
-- [h3d.impl.AllocStats](api/md/h3d/impl/AllocStats.md)
-- [h3d.impl.Benchmark](api/md/h3d/impl/Benchmark.md)
-- [h3d.impl.CachedPipeline](api/md/h3d/impl/CachedPipeline.md)
-- [h3d.impl.DepthProps](api/md/h3d/impl/DepthProps.md)
-- [h3d.impl.DirectXDriver](api/md/h3d/impl/DirectXDriver.md)
-- [h3d.impl.Driver](api/md/h3d/impl/Driver.md)
-- [h3d.impl.DriverImpl](api/md/h3d/impl/DriverImpl.md)
-- [h3d.impl.Feature](api/md/h3d/impl/Feature.md)
-- [h3d.impl.FpsGraph](api/md/h3d/impl/FpsGraph.md)
-- [h3d.impl.FrameData](api/md/h3d/impl/FrameData.md)
-- [h3d.impl.FrameDataImpl](api/md/h3d/impl/FrameDataImpl.md)
-- [h3d.impl.FrameGenMode](api/md/h3d/impl/FrameGenMode.md)
-- [h3d.impl.FrameGenSettings](api/md/h3d/impl/FrameGenSettings.md)
-- [h3d.impl.FrameGenUIMode](api/md/h3d/impl/FrameGenUIMode.md)
-- [h3d.impl.GPUBuffer](api/md/h3d/impl/GPUBuffer.md)
+- [h3d.impl.AllocStats](api/md/h3d/impl/AllocStats.md): The allocations made from the same code position (see `MemoryManager.allocStats`).
+- [h3d.impl.Benchmark](api/md/h3d/impl/Benchmark.md): A 2D bar displaying the GPU time of each section of the frame (with GPU timestamp queries), with the draw calls.
+- [h3d.impl.CachedPipeline](api/md/h3d/impl/CachedPipeline.md): A pipeline state cached for a signature (render states, render target formats and vertex layout).
+- [h3d.impl.DepthProps](api/md/h3d/impl/DepthProps.md): The depth settings of a pipeline.
+- [h3d.impl.DirectXDriver](api/md/h3d/impl/DirectXDriver.md): The DirectX 11 driver (HashLink with the `hldx` library).
+- [h3d.impl.Driver](api/md/h3d/impl/Driver.md): The base class of the graphics drivers (OpenGL/WebGL, DirectX 11 and 12...): it allocates the GPU resources and executes the draw calls requested by `h3d.Engine`.
+- [h3d.impl.DriverImpl](api/md/h3d/impl/DriverImpl.md): The driver class of the current platform.
+- [h3d.impl.Feature](api/md/h3d/impl/Feature.md): The optional features of a driver, tested with `Driver.hasFeature`.
+- [h3d.impl.FpsGraph](api/md/h3d/impl/FpsGraph.md): A 2D graph of the frame rate and of the CPU and GPU frame times, for profiling.
+- [h3d.impl.FrameData](api/md/h3d/impl/FrameData.md): A ring buffer of the values of the last frames, with array access.
+- [h3d.impl.FrameDataImpl](api/md/h3d/impl/FrameDataImpl.md): A ring buffer of the values of the last frames.
+- [h3d.impl.FrameGenMode](api/md/h3d/impl/FrameGenMode.md): The frame generation mode.
+- [h3d.impl.FrameGenSettings](api/md/h3d/impl/FrameGenSettings.md): The state and capabilities of the frame generation.
+- [h3d.impl.FrameGenUIMode](api/md/h3d/impl/FrameGenUIMode.md): How the UI is handled by the frame generation, so that it is not interpolated: `BackBuffer` (the whole back buffer is interpolated), `HudLess` (a copy of the frame without UI is marked with `Upscaling.markFrameGenHudl...
+- [h3d.impl.GPUBuffer](api/md/h3d/impl/GPUBuffer.md): The native GPU buffer of the current driver.
 - [h3d.impl.GlDriver](api/md/h3d/impl/GlDriver.md)
-- [h3d.impl.InstanceBuffer](api/md/h3d/impl/InstanceBuffer.md)
-- [h3d.impl.LatencyMarker](api/md/h3d/impl/LatencyMarker.md)
-- [h3d.impl.LowLatencyMode](api/md/h3d/impl/LowLatencyMode.md)
-- [h3d.impl.MacroHelper](api/md/h3d/impl/MacroHelper.md)
-- [h3d.impl.MemoryManager](api/md/h3d/impl/MemoryManager.md)
-- [h3d.impl.NullDriver](api/md/h3d/impl/NullDriver.md)
-- [h3d.impl.PipelineBuilder](api/md/h3d/impl/PipelineBuilder.md)
-- [h3d.impl.PipelineCache](api/md/h3d/impl/PipelineCache.md)
-- [h3d.impl.PipelineKind](api/md/h3d/impl/PipelineKind.md)
-- [h3d.impl.PipelineState](api/md/h3d/impl/PipelineState.md)
-- [h3d.impl.Query](api/md/h3d/impl/Query.md)
-- [h3d.impl.QueryKind](api/md/h3d/impl/QueryKind.md)
-- [h3d.impl.RFXTransition](api/md/h3d/impl/RFXTransition.md)
-- [h3d.impl.RenderContext](api/md/h3d/impl/RenderContext.md)
-- [h3d.impl.RenderFlag](api/md/h3d/impl/RenderFlag.md)
-- [h3d.impl.RendererFX](api/md/h3d/impl/RendererFX.md)
-- [h3d.impl.ShaderCache](api/md/h3d/impl/ShaderCache.md)
-- [h3d.impl.ShaderCacheMode](api/md/h3d/impl/ShaderCacheMode.md)
-- [h3d.impl.StackStats](api/md/h3d/impl/StackStats.md)
-- [h3d.impl.Step](api/md/h3d/impl/Step.md)
-- [h3d.impl.Stutter](api/md/h3d/impl/Stutter.md)
-- [h3d.impl.StutterBenchmark](api/md/h3d/impl/StutterBenchmark.md)
-- [h3d.impl.StutterSeverity](api/md/h3d/impl/StutterSeverity.md)
-- [h3d.impl.Texture](api/md/h3d/impl/Texture.md)
-- [h3d.impl.TextureCache](api/md/h3d/impl/TextureCache.md)
-- [h3d.impl.TextureStat](api/md/h3d/impl/TextureStat.md)
-- [h3d.impl.Upscaling](api/md/h3d/impl/Upscaling.md)
-- [h3d.impl.UpscalingBackend](api/md/h3d/impl/UpscalingBackend.md)
-- [h3d.impl.UpscalingFeature](api/md/h3d/impl/UpscalingFeature.md)
-- [h3d.impl.UpscalingInputs](api/md/h3d/impl/UpscalingInputs.md)
-- [h3d.impl.UpscalingMode](api/md/h3d/impl/UpscalingMode.md)
-- [h3d.impl.UpscalingParams](api/md/h3d/impl/UpscalingParams.md)
-- [h3d.impl.UpscalingProvider](api/md/h3d/impl/UpscalingProvider.md)
-- [h3d.impl.UpscalingSettings](api/md/h3d/impl/UpscalingSettings.md)
-- [h3d.impl.VarBinding](api/md/h3d/impl/VarBinding.md)
+- [h3d.impl.InstanceBuffer](api/md/h3d/impl/InstanceBuffer.md): The draw commands of an instanced draw call (`h3d.Engine.renderInstanced`): either a single command, or a GPU buffer of indirect draw commands.
+- [h3d.impl.LatencyMarker](api/md/h3d/impl/LatencyMarker.md): The points of the frame reported to the low latency technology.
+- [h3d.impl.LowLatencyMode](api/md/h3d/impl/LowLatencyMode.md): The low latency mode (such as NVIDIA Reflex).
+- [h3d.impl.MacroHelper](api/md/h3d/impl/MacroHelper.md): Macros used by the drivers.
+- [h3d.impl.MemoryManager](api/md/h3d/impl/MemoryManager.md): Tracks the GPU memory used by the textures and buffers, frees the unused textures when the memory is low, and provides the shared index buffers.
+- [h3d.impl.NullDriver](api/md/h3d/impl/NullDriver.md): A driver that draws nothing, for headless applications and tests.
+- [h3d.impl.PipelineBuilder](api/md/h3d/impl/PipelineBuilder.md): Builds the signature of the current pipeline state (render states, render targets, vertex layout) as the driver state changes, to look up the cached pipelines.
+- [h3d.impl.PipelineCache](api/md/h3d/impl/PipelineCache.md): The pipeline states of a shader, by signature hash.
+- [h3d.impl.PipelineKind](api/md/h3d/impl/PipelineKind.md): A stage of the DirectX 11 pipeline.
+- [h3d.impl.PipelineState](api/md/h3d/impl/PipelineState.md): The resources bound to a stage of the DirectX 11 pipeline.
+- [h3d.impl.Query](api/md/h3d/impl/Query.md): The native query of the current driver.
+- [h3d.impl.QueryKind](api/md/h3d/impl/QueryKind.md): The kind of a GPU query.
+- [h3d.impl.RFXTransition](api/md/h3d/impl/RFXTransition.md): A transition between two effects, created by `RendererFX.transition`.
+- [h3d.impl.RenderContext](api/md/h3d/impl/RenderContext.md): The base class of the 2D and 3D render contexts (`h2d.RenderContext`, `h3d.scene.RenderContext`): time, globals, temporary textures, and the filling of the shader buffers.
+- [h3d.impl.RenderFlag](api/md/h3d/impl/RenderFlag.md): Driver settings changed with `Driver.setRenderFlag`.
+- [h3d.impl.RendererFX](api/md/h3d/impl/RendererFX.md): A rendering effect added to a renderer (see `h3d.scene.Renderer.effects`): it is called at the start of the frame and around each rendering step.
+- [h3d.impl.ShaderCache](api/md/h3d/impl/ShaderCache.md): A cache of the shaders compiled by the driver, by source code and configuration, saved to a file to avoid compiling them at the next run (see `Driver.setShaderCache`).
+- [h3d.impl.ShaderCacheMode](api/md/h3d/impl/ShaderCacheMode.md): How the shader binaries are stored in the cache file.
+- [h3d.impl.StackStats](api/md/h3d/impl/StackStats.md): The allocations made from the same call stack (see `MemoryManager.allocStats`).
+- [h3d.impl.Step](api/md/h3d/impl/Step.md): The steps of the rendering at which a `RendererFX` can render.
+- [h3d.impl.Stutter](api/md/h3d/impl/Stutter.md): A stutter: one or more consecutive frames much longer than usual.
+- [h3d.impl.StutterBenchmark](api/md/h3d/impl/StutterBenchmark.md): Detects the frames much longer than the median of the last 60 frames, and counts the stutters of the last minute.
+- [h3d.impl.StutterSeverity](api/md/h3d/impl/StutterSeverity.md): The severity of a stutter, by its impact: `Minor` under 20 ms, `Major` under 50 ms, `Severe` above.
+- [h3d.impl.Texture](api/md/h3d/impl/Texture.md): The native texture of the current driver.
+- [h3d.impl.TextureCache](api/md/h3d/impl/TextureCache.md): A cache of temporary render target textures, reused from one frame to the next in the order they are allocated.
+- [h3d.impl.TextureStat](api/md/h3d/impl/TextureStat.md): An allocated texture or buffer.
+- [h3d.impl.Upscaling](api/md/h3d/impl/Upscaling.md): Selects and drives the upscaling technologies of the driver: upscaling of a lower resolution rendering (DLSS, FSR), frame generation, and low latency.
+- [h3d.impl.UpscalingBackend](api/md/h3d/impl/UpscalingBackend.md): The base class of the implementations of an upscaling technology (DLSS, FSR) for a driver.
+- [h3d.impl.UpscalingFeature](api/md/h3d/impl/UpscalingFeature.md): The features of an upscaling backend.
+- [h3d.impl.UpscalingInputs](api/md/h3d/impl/UpscalingInputs.md): The textures used by the upscaler.
+- [h3d.impl.UpscalingMode](api/md/h3d/impl/UpscalingMode.md): The quality mode of the upscaler: the lower the quality, the smaller the render resolution.
+- [h3d.impl.UpscalingParams](api/md/h3d/impl/UpscalingParams.md): The camera and frame parameters of the upscaler and the frame generation.
+- [h3d.impl.UpscalingProvider](api/md/h3d/impl/UpscalingProvider.md): An upscaling technology.
+- [h3d.impl.UpscalingSettings](api/md/h3d/impl/UpscalingSettings.md): The render resolution to use for an upscaling mode.
+- [h3d.impl.VarBinding](api/md/h3d/impl/VarBinding.md): Implement this interface to use field initializers that reference other fields: they are moved to the constructor, in dependency order.
 - [h3d.mat.BaseMaterial](api/md/h3d/mat/BaseMaterial.md): Base class of the materials: a linked list of render passes (`Pass`), each with its own render states and shaders.
 - [h3d.mat.BigTexture](api/md/h3d/mat/BigTexture.md): A texture atlas packing many images in a single square texture, so that objects using different images can be drawn together (used by `h3d.scene.World`).
 - [h3d.mat.BigTextureElement](api/md/h3d/mat/BigTextureElement.md): An area of a `BigTexture` holding one image.
@@ -901,91 +901,91 @@ Each link points to a Markdown page with the full public API of a type: signatur
 
 ## hxsl
 
-- [hxsl.ARead](api/md/hxsl/ARead.md)
-- [hxsl.AllocGlobal](api/md/hxsl/AllocGlobal.md)
-- [hxsl.AllocParam](api/md/hxsl/AllocParam.md)
-- [hxsl.BVec](api/md/hxsl/BVec.md)
-- [hxsl.BatchInstanceParams](api/md/hxsl/BatchInstanceParams.md)
-- [hxsl.BatchShader](api/md/hxsl/BatchShader.md)
-- [hxsl.Binop](api/md/hxsl/Binop.md)
-- [hxsl.BlockType](api/md/hxsl/BlockType.md)
-- [hxsl.Buffer](api/md/hxsl/Buffer.md)
-- [hxsl.BufferHandle](api/md/hxsl/BufferHandle.md)
-- [hxsl.BufferKind](api/md/hxsl/BufferKind.md)
-- [hxsl.Cache](api/md/hxsl/Cache.md)
-- [hxsl.CacheFile](api/md/hxsl/CacheFile.md)
+- [hxsl.ARead](api/md/hxsl/ARead.md): How a flattened variable is read: at a fixed position, or at an offset computed at runtime (array access).
+- [hxsl.AllocGlobal](api/md/hxsl/AllocGlobal.md): A global used by a linked shader, and where its value is written.
+- [hxsl.AllocParam](api/md/hxsl/AllocParam.md): A parameter of a linked shader, and where its value is written.
+- [hxsl.BVec](api/md/hxsl/BVec.md): The runtime type of boolean vector parameters.
+- [hxsl.BatchInstanceParams](api/md/hxsl/BatchInstanceParams.md): The parameters forced to be stored per instance in a batch shader, by shader name.
+- [hxsl.BatchShader](api/md/hxsl/BatchShader.md): The base class of the shaders generated by `hxsl.Cache.makeBatchShader`, which read the per-instance parameters of a batch from a buffer.
+- [hxsl.Binop](api/md/hxsl/Binop.md): A binary operator.
+- [hxsl.BlockType](api/md/hxsl/BlockType.md): The uniform block a variable is declared in.
+- [hxsl.Buffer](api/md/hxsl/Buffer.md): The runtime type of buffer parameters.
+- [hxsl.BufferHandle](api/md/hxsl/BufferHandle.md): The runtime type of buffer handle parameters.
+- [hxsl.BufferKind](api/md/hxsl/BufferKind.md): The kind of a shader buffer.
+- [hxsl.Cache](api/md/hxsl/Cache.md): Links lists of shaders into `RuntimeShader`s and caches the results.
+- [hxsl.CacheFile](api/md/hxsl/CacheFile.md): A shader cache saving the linked shaders and their compiled code to a file (`FILENAME`), to load them at startup instead of compiling them.
 - [hxsl.CacheFile2](api/md/hxsl/CacheFile2.md): Similar to CacheFile, but save only platform-independent RuntimeShader data (shader list).
-- [hxsl.CacheFile2Loader](api/md/hxsl/CacheFile2Loader.md)
-- [hxsl.Channel](api/md/hxsl/Channel.md)
-- [hxsl.ChannelTexture](api/md/hxsl/ChannelTexture.md)
-- [hxsl.ChannelTools](api/md/hxsl/ChannelTools.md)
+- [hxsl.CacheFile2Loader](api/md/hxsl/CacheFile2Loader.md): Loads the shader lists of a `CacheFile2` and links them, possibly in a thread (with `-D heaps_mt_hxsl_cache`).
+- [hxsl.Channel](api/md/hxsl/Channel.md): The channel of a texture read by a `Channel` shader parameter.
+- [hxsl.ChannelTexture](api/md/hxsl/ChannelTexture.md): A texture with the channel to read, the value of a `Channel` global.
+- [hxsl.ChannelTools](api/md/hxsl/ChannelTools.md): Helpers on the textures of `Channel` parameters.
 - [hxsl.Checker](api/md/hxsl/Checker.md): Type Checker : will take an untyped Expr and turn it into a typed TExpr, resolving identifiers and ensuring type safety.
-- [hxsl.Clone](api/md/hxsl/Clone.md)
-- [hxsl.Component](api/md/hxsl/Component.md)
-- [hxsl.Const](api/md/hxsl/Const.md)
-- [hxsl.Dce](api/md/hxsl/Dce.md)
-- [hxsl.Debug](api/md/hxsl/Debug.md)
-- [hxsl.DynamicShader](api/md/hxsl/DynamicShader.md)
-- [hxsl.Error](api/md/hxsl/Error.md)
+- [hxsl.Clone](api/md/hxsl/Clone.md): Deep copies typed shaders, with new variable identifiers.
+- [hxsl.Component](api/md/hxsl/Component.md): A vector component, for swizzling.
+- [hxsl.Const](api/md/hxsl/Const.md): A constant value.
+- [hxsl.Dce](api/md/hxsl/Dce.md): Dead code elimination: removes the variables and expressions that don't contribute to the outputs of the shaders.
+- [hxsl.Debug](api/md/hxsl/Debug.md): Debug helpers of the shader compiler.
+- [hxsl.DynamicShader](api/md/hxsl/DynamicShader.md): A shader created at runtime from a `SharedShader` (such as a shader graph or a shader loaded from source), whose parameters are accessed by name or variable.
+- [hxsl.Error](api/md/hxsl/Error.md): A shader compilation error.
 - [hxsl.Eval](api/md/hxsl/Eval.md): Evaluator : will substitute some variables (usually constants) by their runtime value and will evaluate and reduce the expression, unroll loops, etc.
-- [hxsl.Expr](api/md/hxsl/Expr.md)
-- [hxsl.ExprDef](api/md/hxsl/ExprDef.md)
-- [hxsl.Flatten](api/md/hxsl/Flatten.md)
-- [hxsl.FunDecl](api/md/hxsl/FunDecl.md)
-- [hxsl.FunType](api/md/hxsl/FunType.md)
-- [hxsl.FunctionKind](api/md/hxsl/FunctionKind.md)
-- [hxsl.GlobalSlot](api/md/hxsl/GlobalSlot.md)
-- [hxsl.Globals](api/md/hxsl/Globals.md)
-- [hxsl.GlslOut](api/md/hxsl/GlslOut.md)
-- [hxsl.HlslOut](api/md/hxsl/HlslOut.md)
-- [hxsl.IVec](api/md/hxsl/IVec.md)
-- [hxsl.LinkMode](api/md/hxsl/LinkMode.md)
-- [hxsl.Linker](api/md/hxsl/Linker.md)
-- [hxsl.MacroParser](api/md/hxsl/MacroParser.md)
-- [hxsl.Matrix](api/md/hxsl/Matrix.md)
-- [hxsl.NXGlslOut](api/md/hxsl/NXGlslOut.md)
-- [hxsl.Output](api/md/hxsl/Output.md)
-- [hxsl.Position](api/md/hxsl/Position.md)
-- [hxsl.Prec](api/md/hxsl/Prec.md)
-- [hxsl.Printer](api/md/hxsl/Printer.md)
-- [hxsl.RuntimeShader](api/md/hxsl/RuntimeShader.md)
-- [hxsl.RuntimeShaderData](api/md/hxsl/RuntimeShaderData.md)
-- [hxsl.SamplerRef](api/md/hxsl/SamplerRef.md)
-- [hxsl.Samplers](api/md/hxsl/Samplers.md)
-- [hxsl.SearchMap](api/md/hxsl/SearchMap.md)
-- [hxsl.Serializer](api/md/hxsl/Serializer.md)
-- [hxsl.Shader](api/md/hxsl/Shader.md)
-- [hxsl.ShaderConst](api/md/hxsl/ShaderConst.md)
-- [hxsl.ShaderData](api/md/hxsl/ShaderData.md)
-- [hxsl.ShaderGlobal](api/md/hxsl/ShaderGlobal.md)
-- [hxsl.ShaderInstance](api/md/hxsl/ShaderInstance.md)
-- [hxsl.ShaderInstanceDesc](api/md/hxsl/ShaderInstanceDesc.md)
-- [hxsl.ShaderList](api/md/hxsl/ShaderList.md)
-- [hxsl.ShaderParamBuffer](api/md/hxsl/ShaderParamBuffer.md)
-- [hxsl.SharedShader](api/md/hxsl/SharedShader.md)
-- [hxsl.SizeDecl](api/md/hxsl/SizeDecl.md)
-- [hxsl.Splitter](api/md/hxsl/Splitter.md)
-- [hxsl.SyntaxArg](api/md/hxsl/SyntaxArg.md)
-- [hxsl.SyntaxArgAccess](api/md/hxsl/SyntaxArgAccess.md)
-- [hxsl.TExpr](api/md/hxsl/TExpr.md)
-- [hxsl.TExprDef](api/md/hxsl/TExprDef.md)
-- [hxsl.TFunction](api/md/hxsl/TFunction.md)
-- [hxsl.TGlobal](api/md/hxsl/TGlobal.md)
-- [hxsl.TVar](api/md/hxsl/TVar.md)
-- [hxsl.TexDimension](api/md/hxsl/TexDimension.md)
-- [hxsl.Texture](api/md/hxsl/Texture.md)
-- [hxsl.TextureArray](api/md/hxsl/TextureArray.md)
-- [hxsl.TextureChannel](api/md/hxsl/TextureChannel.md)
-- [hxsl.TextureHandle](api/md/hxsl/TextureHandle.md)
-- [hxsl.Tools](api/md/hxsl/Tools.md)
-- [hxsl.Tools2](api/md/hxsl/Tools2.md)
-- [hxsl.Tools3](api/md/hxsl/Tools3.md)
-- [hxsl.Tools4](api/md/hxsl/Tools4.md)
-- [hxsl.Type](api/md/hxsl/Type.md)
-- [hxsl.Unop](api/md/hxsl/Unop.md)
-- [hxsl.VarDecl](api/md/hxsl/VarDecl.md)
-- [hxsl.VarKind](api/md/hxsl/VarKind.md)
-- [hxsl.VarQualifier](api/md/hxsl/VarQualifier.md)
-- [hxsl.Vec](api/md/hxsl/Vec.md)
-- [hxsl.Vec4](api/md/hxsl/Vec4.md)
-- [hxsl.VecType](api/md/hxsl/VecType.md)
+- [hxsl.Expr](api/md/hxsl/Expr.md): An untyped shader expression, as parsed from the shader source.
+- [hxsl.ExprDef](api/md/hxsl/ExprDef.md): The untyped shader expressions, as parsed from the shader source.
+- [hxsl.Flatten](api/md/hxsl/Flatten.md): Packs the parameters and globals of a shader stage into arrays of `vec4` (and arrays of textures and buffers), as expected by the drivers.
+- [hxsl.FunDecl](api/md/hxsl/FunDecl.md): A function declaration in the shader source.
+- [hxsl.FunType](api/md/hxsl/FunType.md): The signature of a function.
+- [hxsl.FunctionKind](api/md/hxsl/FunctionKind.md): The kind of a shader function.
+- [hxsl.GlobalSlot](api/md/hxsl/GlobalSlot.md): A typed and fast access to a global shader variable.
+- [hxsl.Globals](api/md/hxsl/Globals.md): The values of the global shader variables (declared with `@global` in the shaders), by path.
+- [hxsl.GlslOut](api/md/hxsl/GlslOut.md): Generates GLSL code (desktop GL or GLES/WebGL) from a flattened shader stage.
+- [hxsl.HlslOut](api/md/hxsl/HlslOut.md): Generates HLSL code (DirectX 11 and 12) from a flattened shader stage.
+- [hxsl.IVec](api/md/hxsl/IVec.md): The runtime type of integer vector parameters.
+- [hxsl.LinkMode](api/md/hxsl/LinkMode.md): How shaders are linked together.
+- [hxsl.Linker](api/md/hxsl/Linker.md): Links the variants of a list of shaders into a single shader: the variables of the same name are merged, and the functions are ordered by their dependencies.
+- [hxsl.MacroParser](api/md/hxsl/MacroParser.md): Converts the Haxe expressions of a shader source (`SRC`) into the untyped shader AST.
+- [hxsl.Matrix](api/md/hxsl/Matrix.md): The runtime type of matrix parameters.
+- [hxsl.NXGlslOut](api/md/hxsl/NXGlslOut.md): Generates GLSL code for the Nintendo Switch, with the globals and parameters in uniform blocks.
+- [hxsl.Output](api/md/hxsl/Output.md): An output value of a link shader (see `Cache.getLinkShader`).
+- [hxsl.Position](api/md/hxsl/Position.md): A position in the shader source.
+- [hxsl.Prec](api/md/hxsl/Prec.md): The precision of a shader variable.
+- [hxsl.Printer](api/md/hxsl/Printer.md): Prints typed shaders as HxSL source code, for debugging.
+- [hxsl.RuntimeShader](api/md/hxsl/RuntimeShader.md): The result of linking a list of shaders (`Cache.link`): the code of each stage, ready to be compiled by the driver.
+- [hxsl.RuntimeShaderData](api/md/hxsl/RuntimeShaderData.md): The data of one stage (vertex, fragment or compute) of a linked shader: its code and the layout of its parameters.
+- [hxsl.SamplerRef](api/md/hxsl/SamplerRef.md): The samplers of a texture variable.
+- [hxsl.Samplers](api/md/hxsl/Samplers.md): Allocates the sampler registers of the textures, sharing the ones of the textures with the same `@sampler` name.
+- [hxsl.SearchMap](api/md/hxsl/SearchMap.md): A node of the tree caching the linked shaders, indexed by the shader instance identifiers.
+- [hxsl.Serializer](api/md/hxsl/Serializer.md): Encodes typed shaders to a compact base64 string, stored in the compiled shader classes.
+- [hxsl.Shader](api/md/hxsl/Shader.md): The base class of the shaders, written in HxSL in their `SRC` static variable.
+- [hxsl.ShaderConst](api/md/hxsl/ShaderConst.md): A constant variable of a shader, and its position in the variant key.
+- [hxsl.ShaderData](api/md/hxsl/ShaderData.md): A typed shader: its variables and functions.
+- [hxsl.ShaderGlobal](api/md/hxsl/ShaderGlobal.md): A global variable used by a shader.
+- [hxsl.ShaderInstance](api/md/hxsl/ShaderInstance.md): A variant of a shader for a combination of constant values, with the constants evaluated.
+- [hxsl.ShaderInstanceDesc](api/md/hxsl/ShaderInstanceDesc.md): A shader variant used by a linked shader.
+- [hxsl.ShaderList](api/md/hxsl/ShaderList.md): A linked list of shaders.
+- [hxsl.ShaderParamBuffer](api/md/hxsl/ShaderParamBuffer.md): The buffer receiving the values of the shader parameters.
+- [hxsl.SharedShader](api/md/hxsl/SharedShader.md): The compiled data of a shader class, shared by all its instances, with the cache of its variants.
+- [hxsl.SizeDecl](api/md/hxsl/SizeDecl.md): The size of an array: a constant, or a constant variable.
+- [hxsl.Splitter](api/md/hxsl/Splitter.md): Splits a linked shader into its stages (vertex and fragment, or compute), with the variables each one uses.
+- [hxsl.SyntaxArg](api/md/hxsl/SyntaxArg.md): An argument of a raw code expression (`TSyntax`).
+- [hxsl.SyntaxArgAccess](api/md/hxsl/SyntaxArgAccess.md): How a raw code (`TSyntax`) argument is accessed.
+- [hxsl.TExpr](api/md/hxsl/TExpr.md): A typed shader expression.
+- [hxsl.TExprDef](api/md/hxsl/TExprDef.md): The typed shader expressions, produced by `hxsl.Checker`.
+- [hxsl.TFunction](api/md/hxsl/TFunction.md): A typed shader function.
+- [hxsl.TGlobal](api/md/hxsl/TGlobal.md): The built-in functions and values of the shader language.
+- [hxsl.TVar](api/md/hxsl/TVar.md): A typed shader variable.
+- [hxsl.TexDimension](api/md/hxsl/TexDimension.md): The dimension of a texture.
+- [hxsl.Texture](api/md/hxsl/Texture.md): The runtime type of `Sampler2D` and `SamplerCube` parameters.
+- [hxsl.TextureArray](api/md/hxsl/TextureArray.md): The runtime type of texture array parameters.
+- [hxsl.TextureChannel](api/md/hxsl/TextureChannel.md): The runtime type of the texture of a `Channel` parameter.
+- [hxsl.TextureHandle](api/md/hxsl/TextureHandle.md): The runtime type of texture handle parameters (bindless textures).
+- [hxsl.Tools](api/md/hxsl/Tools.md): Helpers on the shader types, variables and expressions.
+- [hxsl.Tools2](api/md/hxsl/Tools2.md): Helpers on the shader built-in functions.
+- [hxsl.Tools3](api/md/hxsl/Tools3.md): Helpers on the shader data.
+- [hxsl.Tools4](api/md/hxsl/Tools4.md): Helpers on the shader expressions.
+- [hxsl.Type](api/md/hxsl/Type.md): A shader type.
+- [hxsl.Unop](api/md/hxsl/Unop.md): A unary operator.
+- [hxsl.VarDecl](api/md/hxsl/VarDecl.md): A variable declaration in the shader source.
+- [hxsl.VarKind](api/md/hxsl/VarKind.md): The kind of a shader variable.
+- [hxsl.VarQualifier](api/md/hxsl/VarQualifier.md): The qualifiers of a shader variable, set with metadata in the shader source (such as `@const` or `@range`).
+- [hxsl.Vec](api/md/hxsl/Vec.md): The runtime type of `Vec3` (and `Vec2`) shader parameters.
+- [hxsl.Vec4](api/md/hxsl/Vec4.md): The runtime type of `Vec4` shader parameters.
+- [hxsl.VecType](api/md/hxsl/VecType.md): The type of the components of a vector.

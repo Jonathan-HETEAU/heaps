@@ -155,11 +155,15 @@ When set, element will use the maximum size of non-autoSize elements as size con
 var autoSizeWidth:Null<Float>
 ```
 
+The horizontal part of `autoSize`: the share of the available width given to the element, or `null` to disable it.
+
 ### autoSizeHeight
 
 ```haxe
 var autoSizeHeight:Null<Float>
 ```
+
+The vertical part of `autoSize`: the share of the available height given to the element, or `null` to disable it.
 
 ## Methods
 

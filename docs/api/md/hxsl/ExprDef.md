@@ -2,6 +2,8 @@
 
 **enum** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+The untyped shader expressions, as parsed from the shader source.
+
 ## Constructors
 
 ### EConst

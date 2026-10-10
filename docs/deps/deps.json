@@ -136,8 +136,8 @@
   "h2d.CdbLevel": {
    "file": "h2d/CdbLevel.hx",
    "package": "h2d",
-   "lines": 529,
-   "doc_blocks": 21,
+   "lines": 703,
+   "doc_blocks": 79,
    "types": [
     "typedef TileSpec",
     "typedef LayerSpec",
@@ -387,8 +387,8 @@
   "h2d.Flow": {
    "file": "h2d/Flow.hx",
    "package": "h2d",
-   "lines": 1905,
-   "doc_blocks": 83,
+   "lines": 1920,
+   "doc_blocks": 88,
    "types": [
     "enum FlowAlign",
     "enum FlowLayout",
@@ -711,8 +711,8 @@
   "h2d.KeyFrames": {
    "file": "h2d/KeyFrames.hx",
    "package": "h2d",
-   "lines": 336,
-   "doc_blocks": 14,
+   "lines": 357,
+   "doc_blocks": 21,
    "types": [
     "typedef KeyframesLayer",
     "class KeyFrames"
@@ -793,8 +793,8 @@
   "h2d.LoadingScene": {
    "file": "h2d/LoadingScene.hx",
    "package": "h2d",
-   "lines": 45,
-   "doc_blocks": 0,
+   "lines": 51,
+   "doc_blocks": 2,
    "types": [
     "class LoadingScene"
    ],
@@ -864,8 +864,8 @@
   "h2d.Object": {
    "file": "h2d/Object.hx",
    "package": "h2d",
-   "lines": 1133,
-   "doc_blocks": 59,
+   "lines": 1136,
+   "doc_blocks": 60,
    "types": [
     "class Object"
    ],
@@ -1068,8 +1068,8 @@
   "h2d.RenderContext": {
    "file": "h2d/RenderContext.hx",
    "package": "h2d",
-   "lines": 825,
-   "doc_blocks": 39,
+   "lines": 828,
+   "doc_blocks": 40,
    "types": [
     "typedef ViewportStackEntry",
     "typedef CameraStackEntry",
@@ -1233,8 +1233,8 @@
   "h2d.Scene": {
    "file": "h2d/Scene.hx",
    "package": "h2d",
-   "lines": 937,
-   "doc_blocks": 52,
+   "lines": 940,
+   "doc_blocks": 53,
    "types": [
     "enum ScaleModeAlign",
     "enum ScaleMode",
@@ -1334,8 +1334,8 @@
   "h2d.Scene3D": {
    "file": "h2d/Scene3D.hx",
    "package": "h2d",
-   "lines": 135,
-   "doc_blocks": 0,
+   "lines": 156,
+   "doc_blocks": 7,
    "types": [
     "class Scene3D"
    ],
@@ -1485,8 +1485,8 @@
   "h2d.Text": {
    "file": "h2d/Text.hx",
    "package": "h2d",
-   "lines": 577,
-   "doc_blocks": 26,
+   "lines": 580,
+   "doc_blocks": 27,
    "types": [
     "enum Align",
     "class Text"
@@ -1542,8 +1542,8 @@
   "h2d.TextInput": {
    "file": "h2d/TextInput.hx",
    "package": "h2d",
-   "lines": 954,
-   "doc_blocks": 35,
+   "lines": 969,
+   "doc_blocks": 40,
    "types": [
     "typedef TextHistoryElement",
     "class TextInput"
@@ -1683,8 +1683,8 @@
   "h2d.TileGroup": {
    "file": "h2d/TileGroup.hx",
    "package": "h2d",
-   "lines": 719,
-   "doc_blocks": 32,
+   "lines": 728,
+   "doc_blocks": 35,
    "types": [
     "class TileLayerContent",
     "class TileGroup"
@@ -1762,8 +1762,8 @@
   "h2d.Video": {
    "file": "h2d/Video.hx",
    "package": "h2d",
-   "lines": 456,
-   "doc_blocks": 12,
+   "lines": 507,
+   "doc_blocks": 29,
    "types": [
     "enum FrameState",
     "typedef Frame",
@@ -1852,8 +1852,8 @@
   "h2d.col.Bounds": {
    "file": "h2d/col/Bounds.hx",
    "package": "h2d.col",
-   "lines": 425,
-   "doc_blocks": 39,
+   "lines": 434,
+   "doc_blocks": 42,
    "types": [
     "class Bounds"
    ],
@@ -1961,8 +1961,8 @@
   "h2d.col.Collider": {
    "file": "h2d/col/Collider.hx",
    "package": "h2d.col",
-   "lines": 15,
-   "doc_blocks": 2,
+   "lines": 21,
+   "doc_blocks": 4,
    "types": [
     "class Collider"
    ],
@@ -2170,8 +2170,8 @@
   "h2d.col.Matrix": {
    "file": "h2d/col/Matrix.hx",
    "package": "h2d.col",
-   "lines": 344,
-   "doc_blocks": 29,
+   "lines": 362,
+   "doc_blocks": 35,
    "types": [
     "class Matrix"
    ],
@@ -2192,8 +2192,8 @@
   "h2d.col.PixelsCollider": {
    "file": "h2d/col/PixelsCollider.hx",
    "package": "h2d.col",
-   "lines": 107,
-   "doc_blocks": 11,
+   "lines": 113,
+   "doc_blocks": 13,
    "types": [
     "class PixelsCollider"
    ],
@@ -2227,8 +2227,8 @@
   "h2d.col.Point": {
    "file": "h2d/col/Point.hx",
    "package": "h2d.col",
-   "lines": 253,
-   "doc_blocks": 28,
+   "lines": 277,
+   "doc_blocks": 36,
    "types": [
     "class PointImpl",
     "abstract Point"
@@ -2290,8 +2290,8 @@
   "h2d.col.Polygon": {
    "file": "h2d/col/Polygon.hx",
    "package": "h2d.col",
-   "lines": 518,
-   "doc_blocks": 26,
+   "lines": 525,
+   "doc_blocks": 28,
    "types": [
     "abstract Polygon"
    ],
@@ -2342,8 +2342,8 @@
   "h2d.col.PolygonCollider": {
    "file": "h2d/col/PolygonCollider.hx",
    "package": "h2d.col",
-   "lines": 41,
-   "doc_blocks": 5,
+   "lines": 47,
+   "doc_blocks": 7,
    "types": [
     "class PolygonCollider"
    ],
@@ -2462,8 +2462,8 @@
   "h2d.col.RoundRect": {
    "file": "h2d/col/RoundRect.hx",
    "package": "h2d.col",
-   "lines": 120,
-   "doc_blocks": 9,
+   "lines": 126,
+   "doc_blocks": 11,
    "types": [
     "class RoundRect"
    ],
@@ -2554,8 +2554,8 @@
   "h2d.col.Triangle": {
    "file": "h2d/col/Triangle.hx",
    "package": "h2d.col",
-   "lines": 95,
-   "doc_blocks": 10,
+   "lines": 101,
+   "doc_blocks": 12,
    "types": [
     "class Triangle"
    ],
@@ -2591,8 +2591,8 @@
   "h2d.col.Voronoi": {
    "file": "h2d/col/Voronoi.hx",
    "package": "h2d.col",
-   "lines": 1707,
-   "doc_blocks": 33,
+   "lines": 1710,
+   "doc_blocks": 34,
    "types": [
     "class RBNode",
     "class RBTree",
@@ -2636,8 +2636,8 @@
   "h2d.domkit.BaseComponents": {
    "file": "h2d/domkit/BaseComponents.hx",
    "package": "h2d.domkit",
-   "lines": 1260,
-   "doc_blocks": 0,
+   "lines": 1357,
+   "doc_blocks": 32,
    "types": [
     "typedef FlowBg",
     "class CustomParser",
@@ -2863,8 +2863,8 @@
   "h2d.domkit.InitComponents": {
    "file": "h2d/domkit/InitComponents.hx",
    "package": "h2d.domkit",
-   "lines": 23,
-   "doc_blocks": 0,
+   "lines": 32,
+   "doc_blocks": 3,
    "types": [
     "class InitComponents"
    ],
@@ -2881,8 +2881,8 @@
   "h2d.domkit.Object": {
    "file": "h2d/domkit/Object.hx",
    "package": "h2d.domkit",
-   "lines": 7,
-   "doc_blocks": 0,
+   "lines": 10,
+   "doc_blocks": 1,
    "types": [
     "interface Object"
    ],
@@ -2902,8 +2902,8 @@
   "h2d.domkit.Style": {
    "file": "h2d/domkit/Style.hx",
    "package": "h2d.domkit",
-   "lines": 753,
-   "doc_blocks": 1,
+   "lines": 811,
+   "doc_blocks": 20,
    "types": [
     "typedef SourceFile",
     "class Style"
@@ -3369,8 +3369,8 @@
   "h2d.filter.InnerGlow": {
    "file": "h2d/filter/InnerGlow.hx",
    "package": "h2d.filter",
-   "lines": 83,
-   "doc_blocks": 2,
+   "lines": 92,
+   "doc_blocks": 5,
    "types": [
     "class GlowShader",
     "class GlowBlendShader",
@@ -5762,8 +5762,8 @@
   "h3d.impl.Benchmark": {
    "file": "h3d/impl/Benchmark.hx",
    "package": "h3d.impl",
-   "lines": 463,
-   "doc_blocks": 0,
+   "lines": 520,
+   "doc_blocks": 19,
    "types": [
     "class QueryObject",
     "class StatsObject",
@@ -5841,8 +5841,8 @@
   "h3d.impl.DX12Driver": {
    "file": "h3d/impl/DX12Driver.hx",
    "package": "h3d.impl",
-   "lines": 4133,
-   "doc_blocks": 2,
+   "lines": 4814,
+   "doc_blocks": 229,
    "types": [
     "typedef Driver",
     "class PSOConfigCache",
@@ -5976,8 +5976,8 @@
   "h3d.impl.DirectXDriver": {
    "file": "h3d/impl/DirectXDriver.hx",
    "package": "h3d.impl",
-   "lines": 1587,
-   "doc_blocks": 0,
+   "lines": 1629,
+   "doc_blocks": 14,
    "types": [
     "class ShaderContext",
     "class CompiledShader",
@@ -6058,8 +6058,8 @@
   "h3d.impl.Driver": {
    "file": "h3d/impl/Driver.hx",
    "package": "h3d.impl",
-   "lines": 420,
-   "doc_blocks": 6,
+   "lines": 742,
+   "doc_blocks": 130,
    "types": [
     "typedef GPUBuffer",
     "typedef Texture",
@@ -6188,8 +6188,8 @@
   "h3d.impl.FpsGraph": {
    "file": "h3d/impl/FpsGraph.hx",
    "package": "h3d.impl",
-   "lines": 308,
-   "doc_blocks": 3,
+   "lines": 341,
+   "doc_blocks": 14,
    "types": [
     "class FpsGraph"
    ],
@@ -6228,8 +6228,8 @@
   "h3d.impl.FrameData": {
    "file": "h3d/impl/FrameData.hx",
    "package": "h3d.impl",
-   "lines": 74,
-   "doc_blocks": 0,
+   "lines": 101,
+   "doc_blocks": 9,
    "types": [
     "class FrameDataImpl",
     "abstract FrameData"
@@ -6244,8 +6244,8 @@
   "h3d.impl.GlDriver": {
    "file": "h3d/impl/GlDriver.hx",
    "package": "h3d.impl",
-   "lines": 2378,
-   "doc_blocks": 1,
+   "lines": 2393,
+   "doc_blocks": 6,
    "types": [
     "typedef GL",
     "typedef Uniform",
@@ -6343,8 +6343,8 @@
   "h3d.impl.InstanceBuffer": {
    "file": "h3d/impl/InstanceBuffer.hx",
    "package": "h3d.impl",
-   "lines": 75,
-   "doc_blocks": 1,
+   "lines": 102,
+   "doc_blocks": 10,
    "types": [
     "class InstanceBuffer"
    ],
@@ -6369,8 +6369,8 @@
   "h3d.impl.MacroHelper": {
    "file": "h3d/impl/MacroHelper.hx",
    "package": "h3d.impl",
-   "lines": 39,
-   "doc_blocks": 0,
+   "lines": 48,
+   "doc_blocks": 3,
    "types": [
     "class MacroHelper"
    ],
@@ -6383,8 +6383,8 @@
   "h3d.impl.MemoryManager": {
    "file": "h3d/impl/MemoryManager.hx",
    "package": "h3d.impl",
-   "lines": 355,
-   "doc_blocks": 4,
+   "lines": 440,
+   "doc_blocks": 32,
    "types": [
     "typedef StackStats",
     "typedef AllocStats",
@@ -6430,8 +6430,8 @@
   "h3d.impl.NullDriver": {
    "file": "h3d/impl/NullDriver.hx",
    "package": "h3d.impl",
-   "lines": 54,
-   "doc_blocks": 0,
+   "lines": 60,
+   "doc_blocks": 2,
    "types": [
     "class NullDriver"
    ],
@@ -6468,8 +6468,8 @@
   "h3d.impl.PipelineCache": {
    "file": "h3d/impl/PipelineCache.hx",
    "package": "h3d.impl",
-   "lines": 403,
-   "doc_blocks": 0,
+   "lines": 508,
+   "doc_blocks": 35,
    "types": [
     "abstract Bytes",
     "abstract Bytes",
@@ -6506,8 +6506,8 @@
   "h3d.impl.RenderContext": {
    "file": "h3d/impl/RenderContext.hx",
    "package": "h3d.impl",
-   "lines": 334,
-   "doc_blocks": 0,
+   "lines": 393,
+   "doc_blocks": 20,
    "types": [
     "class RenderContext"
    ],
@@ -6580,8 +6580,8 @@
   "h3d.impl.RenderGraph": {
    "file": "h3d/impl/RenderGraph.hx",
    "package": "h3d.impl",
-   "lines": 329,
-   "doc_blocks": 0,
+   "lines": 533,
+   "doc_blocks": 68,
    "types": [
     "class RenderGraph",
     "class Frame",
@@ -6645,8 +6645,8 @@
   "h3d.impl.RenderGraphDriver": {
    "file": "h3d/impl/RenderGraphDriver.hx",
    "package": "h3d.impl",
-   "lines": 255,
-   "doc_blocks": 0,
+   "lines": 264,
+   "doc_blocks": 3,
    "types": [
     "class RenderGraphDriver"
    ],
@@ -6710,8 +6710,8 @@
   "h3d.impl.RendererFX": {
    "file": "h3d/impl/RendererFX.hx",
    "package": "h3d.impl",
-   "lines": 34,
-   "doc_blocks": 0,
+   "lines": 105,
+   "doc_blocks": 24,
    "types": [
     "enum Step",
     "typedef RFXTransition",
@@ -6732,8 +6732,8 @@
   "h3d.impl.SceneProf": {
    "file": "h3d/impl/SceneProf.hx",
    "package": "h3d.impl",
-   "lines": 251,
-   "doc_blocks": 0,
+   "lines": 272,
+   "doc_blocks": 7,
    "types": [
     "class Frame",
     "class StackLink",
@@ -6760,8 +6760,8 @@
   "h3d.impl.ShaderCache": {
    "file": "h3d/impl/ShaderCache.hx",
    "package": "h3d.impl",
-   "lines": 264,
-   "doc_blocks": 0,
+   "lines": 312,
+   "doc_blocks": 16,
    "types": [
     "enum_abstract ShaderCacheMode",
     "class ShaderCache"
@@ -6776,8 +6776,8 @@
   "h3d.impl.StutterBenchmark": {
    "file": "h3d/impl/StutterBenchmark.hx",
    "package": "h3d.impl",
-   "lines": 112,
-   "doc_blocks": 0,
+   "lines": 148,
+   "doc_blocks": 12,
    "types": [
     "class Stutter",
     "enum StutterSeverity",
@@ -6794,8 +6794,8 @@
   "h3d.impl.TextureCache": {
    "file": "h3d/impl/TextureCache.hx",
    "package": "h3d.impl",
-   "lines": 127,
-   "doc_blocks": 0,
+   "lines": 160,
+   "doc_blocks": 11,
    "types": [
     "class TextureCache"
    ],
@@ -6827,8 +6827,8 @@
   "h3d.impl.Upscaling": {
    "file": "h3d/impl/Upscaling.hx",
    "package": "h3d.impl",
-   "lines": 1826,
-   "doc_blocks": 0,
+   "lines": 2250,
+   "doc_blocks": 141,
    "types": [
     "enum UpscalingFeature",
     "enum_abstract UpscalingProvider",
@@ -6896,8 +6896,8 @@
   "h3d.impl.VarBinding": {
    "file": "h3d/impl/VarBinding.hx",
    "package": "h3d.impl",
-   "lines": 183,
-   "doc_blocks": 0,
+   "lines": 219,
+   "doc_blocks": 12,
    "types": [
     "interface VarBinding",
     "class Init",
@@ -6910,8 +6910,8 @@
   "h3d.impl.VulkanDriver": {
    "file": "h3d/impl/VulkanDriver.hx",
    "package": "h3d.impl",
-   "lines": 87,
-   "doc_blocks": 0,
+   "lines": 93,
+   "doc_blocks": 2,
    "types": [
     "class VulkanDriver"
    ],
@@ -21184,8 +21184,8 @@
   "hxsl.Ast": {
    "file": "hxsl/Ast.hx",
    "package": "hxsl",
-   "lines": 776,
-   "doc_blocks": 1,
+   "lines": 1127,
+   "doc_blocks": 118,
    "types": [
     "enum BufferKind",
     "enum TexDimension",
@@ -21267,8 +21267,8 @@
   "hxsl.BatchShader": {
    "file": "hxsl/BatchShader.hx",
    "package": "hxsl",
-   "lines": 16,
-   "doc_blocks": 0,
+   "lines": 25,
+   "doc_blocks": 3,
    "types": [
     "class BatchShader"
    ],
@@ -21297,8 +21297,8 @@
   "hxsl.Cache": {
    "file": "hxsl/Cache.hx",
    "package": "hxsl",
-   "lines": 1018,
-   "doc_blocks": 1,
+   "lines": 1060,
+   "doc_blocks": 15,
    "types": [
     "class ParamVar",
     "class BatchInstanceParams",
@@ -21364,8 +21364,8 @@
   "hxsl.CacheFile": {
    "file": "hxsl/CacheFile.hx",
    "package": "hxsl",
-   "lines": 821,
-   "doc_blocks": 2,
+   "lines": 833,
+   "doc_blocks": 6,
    "types": [
     "class NullShader",
     "class CacheFile"
@@ -21438,8 +21438,8 @@
   "hxsl.CacheFile2": {
    "file": "hxsl/CacheFile2.hx",
    "package": "hxsl",
-   "lines": 726,
-   "doc_blocks": 1,
+   "lines": 768,
+   "doc_blocks": 15,
    "types": [
     "typedef DumpNode",
     "class ShaderListInfo",
@@ -21494,8 +21494,8 @@
   "hxsl.CacheFileBuilder": {
    "file": "hxsl/CacheFileBuilder.hx",
    "package": "hxsl",
-   "lines": 306,
-   "doc_blocks": 0,
+   "lines": 345,
+   "doc_blocks": 13,
    "types": [
     "enum CacheFilePlatform",
     "class CustomCacheFile",
@@ -21540,8 +21540,8 @@
   "hxsl.Channel": {
    "file": "hxsl/Channel.hx",
    "package": "hxsl",
-   "lines": 12,
-   "doc_blocks": 0,
+   "lines": 36,
+   "doc_blocks": 8,
    "types": [
     "enum Channel"
    ],
@@ -21561,8 +21561,8 @@
   "hxsl.ChannelTexture": {
    "file": "hxsl/ChannelTexture.hx",
    "package": "hxsl",
-   "lines": 4,
-   "doc_blocks": 0,
+   "lines": 7,
+   "doc_blocks": 1,
    "types": [
     "typedef ChannelTexture"
    ],
@@ -21582,8 +21582,8 @@
   "hxsl.Checker": {
    "file": "hxsl/Checker.hx",
    "package": "hxsl",
-   "lines": 1546,
-   "doc_blocks": 1,
+   "lines": 1561,
+   "doc_blocks": 6,
    "types": [
     "enum FieldAccess",
     "enum WithType",
@@ -21607,8 +21607,8 @@
   "hxsl.Clone": {
    "file": "hxsl/Clone.hx",
    "package": "hxsl",
-   "lines": 79,
-   "doc_blocks": 0,
+   "lines": 106,
+   "doc_blocks": 9,
    "types": [
     "class Clone"
    ],
@@ -21626,8 +21626,8 @@
   "hxsl.Dce": {
    "file": "hxsl/Dce.hx",
    "package": "hxsl",
-   "lines": 402,
-   "doc_blocks": 0,
+   "lines": 417,
+   "doc_blocks": 5,
    "types": [
     "class Exit",
     "class VarRel",
@@ -21656,8 +21656,8 @@
   "hxsl.Debug": {
    "file": "hxsl/Debug.hx",
    "package": "hxsl",
-   "lines": 35,
-   "doc_blocks": 0,
+   "lines": 53,
+   "doc_blocks": 6,
    "types": [
     "class Debug"
    ],
@@ -21676,8 +21676,8 @@
   "hxsl.DynamicShader": {
    "file": "hxsl/DynamicShader.hx",
    "package": "hxsl",
-   "lines": 238,
-   "doc_blocks": 0,
+   "lines": 268,
+   "doc_blocks": 10,
    "types": [
     "enum_abstract AccessKind",
     "class Access",
@@ -21724,8 +21724,8 @@
   "hxsl.Eval": {
    "file": "hxsl/Eval.hx",
    "package": "hxsl",
-   "lines": 625,
-   "doc_blocks": 1,
+   "lines": 646,
+   "doc_blocks": 8,
    "types": [
     "class Eval"
    ],
@@ -21749,8 +21749,8 @@
   "hxsl.Flatten": {
    "file": "hxsl/Flatten.hx",
    "package": "hxsl",
-   "lines": 611,
-   "doc_blocks": 0,
+   "lines": 629,
+   "doc_blocks": 6,
    "types": [
     "class Alloc",
     "enum ARead",
@@ -21770,8 +21770,8 @@
   "hxsl.Globals": {
    "file": "hxsl/Globals.hx",
    "package": "hxsl",
-   "lines": 88,
-   "doc_blocks": 0,
+   "lines": 133,
+   "doc_blocks": 15,
    "types": [
     "abstract GlobalSlot",
     "class Globals"
@@ -21810,8 +21810,8 @@
   "hxsl.GlslOut": {
    "file": "hxsl/GlslOut.hx",
    "package": "hxsl",
-   "lines": 929,
-   "doc_blocks": 1,
+   "lines": 950,
+   "doc_blocks": 9,
    "types": [
     "class GlslOut"
    ],
@@ -21837,8 +21837,8 @@
   "hxsl.HlslOut": {
    "file": "hxsl/HlslOut.hx",
    "package": "hxsl",
-   "lines": 1224,
-   "doc_blocks": 0,
+   "lines": 1269,
+   "doc_blocks": 15,
    "types": [
     "class Samplers",
     "typedef SamplerRef",
@@ -21865,8 +21865,8 @@
   "hxsl.Linker": {
    "file": "hxsl/Linker.hx",
    "package": "hxsl",
-   "lines": 677,
-   "doc_blocks": 0,
+   "lines": 689,
+   "doc_blocks": 4,
    "types": [
     "class AllocatedVar",
     "enum ShaderStage",
@@ -21899,8 +21899,8 @@
   "hxsl.MacroParser": {
    "file": "hxsl/MacroParser.hx",
    "package": "hxsl",
-   "lines": 345,
-   "doc_blocks": 0,
+   "lines": 359,
+   "doc_blocks": 5,
    "types": [
     "class MacroParser"
    ],
@@ -21918,8 +21918,8 @@
   "hxsl.Macros": {
    "file": "hxsl/Macros.hx",
    "package": "hxsl",
-   "lines": 727,
-   "doc_blocks": 0,
+   "lines": 739,
+   "doc_blocks": 4,
    "types": [
     "class Macros"
    ],
@@ -21977,8 +21977,8 @@
   "hxsl.NXGlslOut": {
    "file": "hxsl/NXGlslOut.hx",
    "package": "hxsl",
-   "lines": 118,
-   "doc_blocks": 0,
+   "lines": 127,
+   "doc_blocks": 3,
    "types": [
     "enum BlockType",
     "class NXGlslOut"
@@ -22012,8 +22012,8 @@
   "hxsl.Output": {
    "file": "hxsl/Output.hx",
    "package": "hxsl",
-   "lines": 13,
-   "doc_blocks": 0,
+   "lines": 40,
+   "doc_blocks": 9,
    "types": [
     "enum Output"
    ],
@@ -22045,8 +22045,8 @@
   "hxsl.Printer": {
    "file": "hxsl/Printer.hx",
    "package": "hxsl",
-   "lines": 427,
-   "doc_blocks": 0,
+   "lines": 457,
+   "doc_blocks": 10,
    "types": [
     "class Printer"
    ],
@@ -22074,8 +22074,8 @@
   "hxsl.RuntimeShader": {
    "file": "hxsl/RuntimeShader.hx",
    "package": "hxsl",
-   "lines": 160,
-   "doc_blocks": 1,
+   "lines": 337,
+   "doc_blocks": 60,
    "types": [
     "enum LinkMode",
     "class AllocParam",
@@ -22126,8 +22126,8 @@
   "hxsl.Serializer": {
    "file": "hxsl/Serializer.hx",
    "package": "hxsl",
-   "lines": 524,
-   "doc_blocks": 0,
+   "lines": 539,
+   "doc_blocks": 5,
    "types": [
     "class Serializer"
    ],
@@ -22146,8 +22146,8 @@
   "hxsl.Shader": {
    "file": "hxsl/Shader.hx",
    "package": "hxsl",
-   "lines": 122,
-   "doc_blocks": 1,
+   "lines": 159,
+   "doc_blocks": 13,
    "types": [
     "typedef ShaderParamBuffer",
     "class Shader"
@@ -22285,8 +22285,8 @@
   "hxsl.ShaderList": {
    "file": "hxsl/ShaderList.hx",
    "package": "hxsl",
-   "lines": 74,
-   "doc_blocks": 0,
+   "lines": 104,
+   "doc_blocks": 10,
    "types": [
     "class ShaderList",
     "class ShaderIterator"
@@ -22320,8 +22320,8 @@
   "hxsl.SharedShader": {
    "file": "hxsl/SharedShader.hx",
    "package": "hxsl",
-   "lines": 400,
-   "doc_blocks": 0,
+   "lines": 472,
+   "doc_blocks": 24,
    "types": [
     "class ShaderInstance",
     "class ShaderGlobal",
@@ -22377,8 +22377,8 @@
   "hxsl.Splitter": {
    "file": "hxsl/Splitter.hx",
    "package": "hxsl",
-   "lines": 380,
-   "doc_blocks": 0,
+   "lines": 389,
+   "doc_blocks": 3,
    "types": [
     "class VarProps",
     "class Splitter"
@@ -22400,8 +22400,8 @@
   "hxsl.Types": {
    "file": "hxsl/Types.hx",
    "package": "hxsl",
-   "lines": 19,
-   "doc_blocks": 0,
+   "lines": 58,
+   "doc_blocks": 13,
    "types": [
     "typedef Vec",
     "typedef Vec4",

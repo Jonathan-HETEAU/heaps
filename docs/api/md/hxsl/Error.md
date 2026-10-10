@@ -2,6 +2,8 @@
 
 **class** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+A shader compilation error.
+
 ## Constructor
 
 ### new
@@ -9,6 +11,8 @@
 ```haxe
 function new(msg:String, pos:Position):Void
 ```
+
+Creates an error.
 
 ## Static methods
 
@@ -18,6 +22,8 @@ function new(msg:String, pos:Position):Void
 static function t(msg:String, pos:Position):Dynamic
 ```
 
+Throws an error.
+
 ## Variables
 
 ### msg
@@ -26,11 +32,15 @@ static function t(msg:String, pos:Position):Dynamic
 var msg:String
 ```
 
+The error message.
+
 ### pos
 
 ```haxe
 var pos:Position
 ```
+
+The position of the error in the shader source.
 
 ## Methods
 
@@ -39,3 +49,5 @@ var pos:Position
 ```haxe
 function toString():String
 ```
+
+Returns the message and position of the error.

@@ -12,6 +12,8 @@
 function new():Void
 ```
 
+Creates an empty tileset.
+
 ## Variables
 
 ### stride
@@ -20,11 +22,15 @@ function new():Void
 var stride:Int
 ```
 
+The number of tiles per row in the tileset.
+
 ### size
 
 ```haxe
 var size:Int
 ```
+
+The size of a tile in pixels.
 
 ### res
 
@@ -32,11 +38,15 @@ var size:Int
 var res:hxd.res.Image
 ```
 
+The tileset image.
+
 ### tile
 
 ```haxe
 var tile:Tile
 ```
+
+The tile of the whole tileset image.
 
 ### tiles
 
@@ -44,11 +54,15 @@ var tile:Tile
 var tiles:Array<Tile>
 ```
 
+The tiles of the tileset, row by row.
+
 ### objects
 
 ```haxe
 var objects:Array<LevelObject>
 ```
+
+The objects defined in the tileset, indexed by the id of their top left tile.
 
 ### groups
 
@@ -56,17 +70,23 @@ var objects:Array<LevelObject>
 var groups:Map<String, LevelGroup>
 ```
 
+The named groups defined in the tileset.
+
 ### groupsById
 
 ```haxe
 var groupsById:Array<LevelGroup>
 ```
 
+The groups defined in the tileset, indexed by the id of their top left tile.
+
 ### tilesProps
 
 ```haxe
 var tilesProps(get, null):Array<Dynamic>
 ```
+
+The per-tile properties of the tileset.
 
 ## Methods
 
@@ -75,3 +95,5 @@ var tilesProps(get, null):Array<Dynamic>
 ```haxe
 function getTileBuilder():cdb.TileBuilder
 ```
+
+Returns the CastleDB tile builder of the tileset, used to draw ground borders.

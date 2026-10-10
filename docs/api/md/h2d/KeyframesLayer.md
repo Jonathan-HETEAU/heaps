@@ -12,11 +12,15 @@
 var tiles:Array<Tile>
 ```
 
+The tiles of the layer.
+
 ### spr
 
 ```haxe
 var spr:Object
 ```
+
+The object displaying the layer.
 
 ### name
 
@@ -24,14 +28,20 @@ var spr:Object
 var name:String
 ```
 
+The name of the layer.
+
 ### id
 
 ```haxe
 var id:Int
 ```
 
+The identifier of the layer.
+
 ### animations
 
 ```haxe
 var animations:Array<hxd.fmt.kframes.KFAnimation>
 ```
+
+The animations of the layer properties.

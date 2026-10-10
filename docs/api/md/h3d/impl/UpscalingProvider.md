@@ -2,6 +2,8 @@
 
 **enum abstract** · package [`h3d.impl`](README.md) · module `h3d.impl.Upscaling` · source [`h3d/impl/Upscaling.hx`](../../../../../h3d/impl/Upscaling.hx)
 
+An upscaling technology.
+
 Underlying type: `String`
 
 Implicit casts from: `String`

@@ -2,6 +2,8 @@
 
 **enum** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+The typed shader expressions, produced by `hxsl.Checker`.
+
 ## Constructors
 
 ### TConst
@@ -141,3 +143,5 @@ TField(e:TExpr, name:String)
 ```haxe
 TSyntax(target:String, code:String, args:Array<SyntaxArg>)
 ```
+
+Raw code inserted in the output of the given target (`"code"` inserts it for any target).

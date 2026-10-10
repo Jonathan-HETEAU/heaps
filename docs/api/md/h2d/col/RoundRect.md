@@ -89,11 +89,15 @@ Tests is given Point `p` is inside the capsule area.
 override function collideCircle(c:Circle):Bool
 ```
 
+Not implemented: throws an error.
+
 ### collideBounds
 
 ```haxe
 override function collideBounds(b:Bounds):Bool
 ```
+
+Not implemented: throws an error.
 
 ## Inherited members
 

@@ -265,6 +265,8 @@ Restores previous render zone settings.
 function getCurrentRenderZone(?bounds:h2d.col.Bounds):Null<h2d.col.Bounds>
 ```
 
+Returns the current render zone in `bounds` (or new bounds), or `null` if there is none.
+
 ### clipRenderZone
 
 ```haxe

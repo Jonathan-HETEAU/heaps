@@ -27,6 +27,8 @@ Create a new Flow instance.
 static var PADDING_IGNORE_PARENT:Int
 ```
 
+A special padding value for the properties of a child (`FlowProperties.paddingLeft` and others): the child ignores the padding of the flow on this side and extends to its border.
+
 ## Variables
 
 ### needReflow
@@ -507,6 +509,8 @@ override function addChildAt(s:Object, pos:Int):Void
 function scrollIntoView(elt:Object):Bool
 ```
 
+Scrolls the flow vertically so that the element is visible. Returns `false` if the flow is not scrollable (see `overflow`).
+
 ### removeChild
 
 ```haxe
@@ -524,6 +528,8 @@ override function removeChildren():Void
 ```haxe
 function makeBackground(tile:Null<Tile>):ScaleGrid
 ```
+
+Creates the background of the flow for the tile, a `ScaleGrid` using the borders of the flow. Can be overridden to use another kind of background.
 
 ### reflow
 

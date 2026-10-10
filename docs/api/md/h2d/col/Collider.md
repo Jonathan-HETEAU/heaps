@@ -22,8 +22,12 @@ Tests if Point `p` is inside the Collider.
 function collideCircle(c:Circle):Bool
 ```
 
+Tells if the collider intersects the circle.
+
 ### collideBounds
 
 ```haxe
 function collideBounds(b:Bounds):Bool
 ```
+
+Tells if the collider intersects the bounds.

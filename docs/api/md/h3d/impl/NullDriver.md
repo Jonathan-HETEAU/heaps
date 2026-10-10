@@ -4,6 +4,8 @@
 
 Extends: [`h3d.impl.Driver`](Driver.md)
 
+A driver that draws nothing, for headless applications and tests.
+
 ## Constructor
 
 ### new
@@ -11,6 +13,8 @@ Extends: [`h3d.impl.Driver`](Driver.md)
 ```haxe
 function new():Void
 ```
+
+Creates the driver.
 
 ## Methods
 

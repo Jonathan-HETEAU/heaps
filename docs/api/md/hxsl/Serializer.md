@@ -2,6 +2,8 @@
 
 **class** · package [`hxsl`](README.md) · source [`hxsl/Serializer.hx`](../../../../hxsl/Serializer.hx)
 
+Encodes typed shaders to a compact base64 string, stored in the compiled shader classes.
+
 ## Constructor
 
 ### new
@@ -9,6 +11,8 @@
 ```haxe
 function new():Void
 ```
+
+Creates a serializer.
 
 ## Static methods
 
@@ -18,6 +22,8 @@ function new():Void
 static function run(s:ShaderData):String
 ```
 
+Encodes the shader.
+
 ## Methods
 
 ### unserialize
@@ -26,8 +32,12 @@ static function run(s:ShaderData):String
 function unserialize(data:String):ShaderData
 ```
 
+Decodes a serialized shader.
+
 ### serialize
 
 ```haxe
 function serialize(s:ShaderData):String
 ```
+
+Encodes the shader.

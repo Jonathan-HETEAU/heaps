@@ -21,7 +21,7 @@
 | [`Matrix`](Matrix.md) | class | An affine 2D 2x3 matrix. |
 | [`OffsetKind`](OffsetKind.md) | enum | The type of the edges when offsetting polygon with `IPolygon.offset`. |
 | [`PixelsCollider`](PixelsCollider.md) | class | An `hxd.Pixels`-based collider. |
-| [`Point`](Point.md) | abstract |  |
+| [`Point`](Point.md) | abstract | A 2D point or vector, with operators: `+`, `-`, `*` (by a `Matrix` or a scale) and `*=`. |
 | [`PointImpl`](PointImpl.md) | class | A simple 2D position/vector container. |
 | [`Polygon`](Polygon.md) | abstract | An abstract around an Array of `Point`s that define a polygonal shape that can be collision-tested against. |
 | [`PolygonCollider`](PolygonCollider.md) | class | A `Collider` wrapper around `Polygons` to enable using those for hit-testing testing. |

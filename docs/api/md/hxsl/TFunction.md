@@ -2,6 +2,8 @@
 
 **typedef** · package [`hxsl`](README.md) · module `hxsl.Ast` · source [`hxsl/Ast.hx`](../../../../hxsl/Ast.hx)
 
+A typed shader function.
+
 ## Fields
 
 ### ret
@@ -10,11 +12,15 @@
 var ret:Type
 ```
 
+The return type.
+
 ### ref
 
 ```haxe
 var ref:TVar
 ```
+
+The variable referencing the function.
 
 ### kind
 
@@ -22,14 +28,20 @@ var ref:TVar
 var kind:FunctionKind
 ```
 
+The kind of the function.
+
 ### expr
 
 ```haxe
 var expr:TExpr
 ```
 
+The body of the function.
+
 ### args
 
 ```haxe
 var args:Array<TVar>
 ```
+
+The arguments of the function.
