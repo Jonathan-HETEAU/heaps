@@ -31,9 +31,21 @@ class Stutter {
 	The severity of a stutter, by its impact: `Minor` under 20 ms, `Major` under 50 ms, `Severe` above.
 **/
 enum StutterSeverity {
+	/**
+		Stutters with an impact under 20 ms.
+	**/
 	Minor;
+	/**
+		Stutters with an impact between 20 and 50 ms.
+	**/
 	Major;
+	/**
+		Stutters with an impact of 50 ms or more.
+	**/
 	Severe;
+	/**
+		All the stutters.
+	**/
 	All;
 }
 

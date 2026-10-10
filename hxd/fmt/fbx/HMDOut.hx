@@ -8,32 +8,77 @@ import hxd.BufferFormat;
 	How the collider of a model is generated (see `hxd.fmt.hmd.Collider.resolveColliderType`).
 **/
 typedef CollideParams = {
-	?useDefault : Bool,
-	?unit : Float,
-	?scale : Float,
-	?maxConvexHulls : Int,
-	?mesh : String,
-	?shapes : Array<ShapeColliderParams>
+	/**
+		Uses the default collide parameters of the converter (`generateCollides`): a `<name>_Collider` model if there is one, otherwise convex hulls.
+	**/
+	var ?useDefault : Bool;
+	/**
+		The size of a voxel when generating the convex hulls.
+	**/
+	var ?unit : Float;
+	/**
+		The scale applied to the generated convex hulls.
+	**/
+	var ?scale : Float;
+	/**
+		Generates at most this number of convex hulls (takes precedence over `mesh` and `shapes`).
+	**/
+	var ?maxConvexHulls : Int;
+	/**
+		The name of the model used as collision mesh (or the source of the convex hulls).
+	**/
+	var ?mesh : String;
+	/**
+		The shapes of a custom collider.
+	**/
+	var ?shapes : Array<ShapeColliderParams>;
 }
 
 /**
 	A shape of a custom collider.
 **/
 typedef ShapeColliderParams = {
-	type : ShapeColliderType,
-	position : { x : Float, y : Float, z : Float },
-	?halfExtent : { x : Float, y : Float, z : Float },
-	?rotation : { x : Float, y : Float, z : Float },
-	?radius : Float,
+	/**
+		The type of the shape.
+	**/
+	var type : ShapeColliderType;
+	/**
+		The position of the shape.
+	**/
+	var position : { x : Float, y : Float, z : Float };
+	/**
+		The half size of the shape (boxes, capsules and cylinders).
+	**/
+	var ?halfExtent : { x : Float, y : Float, z : Float };
+	/**
+		The rotation of the shape, in radians (boxes).
+	**/
+	var ?rotation : { x : Float, y : Float, z : Float };
+	/**
+		The radius of the shape (spheres, capsules and cylinders).
+	**/
+	var ?radius : Float;
 }
 
 /**
 	The type of a collider shape.
 **/
 enum abstract ShapeColliderType(String) to String {
+	/**
+		A sphere.
+	**/
 	var Sphere;
+	/**
+		A box.
+	**/
 	var Box;
+	/**
+		A capsule.
+	**/
 	var Capsule;
+	/**
+		A cylinder.
+	**/
 	var Cylinder;
 }
 

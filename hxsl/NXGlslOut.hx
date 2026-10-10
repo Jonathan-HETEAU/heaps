@@ -6,8 +6,17 @@ using hxsl.Ast;
 	The uniform block a variable is declared in.
 **/
 enum BlockType {
+	/**
+		Outside of the uniform blocks.
+	**/
 	Default;
+	/**
+		The block of the globals.
+	**/
 	Globals;
+	/**
+		The block of the parameters.
+	**/
 	Params;
 }
 

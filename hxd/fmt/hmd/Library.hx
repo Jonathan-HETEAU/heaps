@@ -457,6 +457,9 @@ class Library {
 		return s;
 	}
 
+	/**
+		Returns the parameter of the property `p` of the model named `objName`, or `def` if the model doesn't have it. Throws if the model is not found and `def` is `null`.
+	**/
 	public function getModelProperty<T>( objName : String, p : Property<T>, ?def : Null<T> ) : Null<T> {
 		for( m in header.models )
 			if( m.name == objName ) {
@@ -471,6 +474,9 @@ class Library {
 		return def;
 	}
 
+	/**
+		Returns the levels of detail of the model, by level minus one: the models named `LOD<level><modelName>`. Throws if two models have the same level.
+	**/
 	public function findLODs( modelName : String, lod0 : Model ) : Array<Model> {
 		if ( modelName == null )
 			return null;
@@ -488,6 +494,9 @@ class Library {
 		return lods;
 	}
 
+	/**
+		Remaps the materials of the levels of detail to the materials of `lod0`, setting the index counts of the unused materials to `0`. Throws if a level of detail uses a material that `lod0` doesn't.
+	**/
 	public function patchLodsMaterials( lod0 : Model, lods : Array<Model>) {
 		for (model in lods) {
 			for (m in model.materials) {
@@ -513,6 +522,9 @@ class Library {
 	}
 
 	#if !dataOnly
+	/**
+		Creates the objects of the models (meshes, skins and empty objects) and returns the root. `loadTexture` loads the textures of the materials (a pink texture by default).
+	**/
 	public function makeObject( ?loadTexture : String -> h3d.mat.Texture ) : h3d.scene.Object {
 		if( loadTexture == null )
 			loadTexture = function(_) return h3d.mat.Texture.fromColor(0xFF00FF);
@@ -569,6 +581,9 @@ class Library {
 	}
 	#end
 
+	/**
+		Returns the animation of the given name, or the first one when `name` is `null` (`null` if the file has no animation). The animations are cached. Throws if the animation is not found.
+	**/
 	public function loadAnimation( ?name : String ) : h3d.anim.Animation {
 
 		var a = cachedAnimations.get(name == null ? "" : name);
@@ -768,6 +783,9 @@ class Library {
 		return l;
 	}
 
+	/**
+		Loads the vertex weights and joints of the skin from the geometry, if not loaded yet. If `optimize` is set, the joint bounds contained in their parent's are removed.
+	**/
 	@:allow(h3d.anim.Skin)
 	public function loadSkin( geom : Geometry, skin : h3d.anim.Skin, optimize = true ) {
 		if( skin.vertexWeights != null )

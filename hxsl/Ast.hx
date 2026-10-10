@@ -16,8 +16,17 @@ enum BufferKind {
 		A read-write storage buffer.
 	**/
 	RW;
+	/**
+		A uniform buffer declaring only some fields of its format: the format of the buffer set at runtime is a compile time constant.
+	**/
 	Partial;
+	/**
+		A read-only storage buffer declaring only some fields of its format (see `Partial`).
+	**/
 	StoragePartial;
+	/**
+		A read-write storage buffer declaring only some fields of its format (see `Partial`).
+	**/
 	RWPartial;
 }
 
@@ -25,9 +34,21 @@ enum BufferKind {
 	The dimension of a texture.
 **/
 enum TexDimension {
+	/**
+		1D.
+	**/
 	T1D;
+	/**
+		2D.
+	**/
 	T2D;
+	/**
+		3D.
+	**/
 	T3D;
+	/**
+		Cube.
+	**/
 	TCube;
 }
 
@@ -35,26 +56,89 @@ enum TexDimension {
 	A shader type.
 **/
 enum Type {
+	/**
+		No value.
+	**/
 	TVoid;
+	/**
+		An integer.
+	**/
 	TInt;
+	/**
+		A boolean.
+	**/
 	TBool;
+	/**
+		A float.
+	**/
 	TFloat;
+	/**
+		A string (only in constant expressions).
+	**/
 	TString;
+	/**
+		A vector of `size` components.
+	**/
 	TVec( size : Int, t : VecType );
+	/**
+		A 3x3 matrix.
+	**/
 	TMat3;
+	/**
+		A 4x4 matrix.
+	**/
 	TMat4;
+	/**
+		A 3x4 matrix (an affine transform).
+	**/
 	TMat3x4;
+	/**
+		`size` bytes packed in an integer (`Bytes2`, `Bytes4`).
+	**/
 	TBytes( size : Int );
+	/**
+		A texture.
+	**/
 	TSampler( dim : TexDimension, isArray : Bool );
+	/**
+		A read-write texture, with its number of channels.
+	**/
 	TRWTexture( dim : TexDimension, isArray : Bool, channels : Int );
+	/**
+		A 2x2 matrix.
+	**/
 	TMat2;
+	/**
+		A structure.
+	**/
 	TStruct( vl : Array<TVar> );
+	/**
+		A function, with its signatures.
+	**/
 	TFun( variants : Array<FunType> );
+	/**
+		An array.
+	**/
 	TArray( t : Type, size : SizeDecl );
+	/**
+		A buffer.
+	**/
 	TBuffer( t : Type, size : SizeDecl, kind : BufferKind );
+	/**
+		One or more channels of a texture (see `hxsl.Channel`).
+	**/
 	TChannel( size : Int );
+	/**
+		A bindless texture handle.
+	**/
 	TTextureHandle;
+	/**
+		A bindless buffer handle.
+	**/
 	TBufferHandle;
+	/**
+		A Haxe enum, as an integer constant (see `VarQualifier.Enum`).
+	**/
 	TEnum( path : String );
 }
 
@@ -62,8 +146,17 @@ enum Type {
 	The type of the components of a vector.
 **/
 enum VecType {
+	/**
+		Integers.
+	**/
 	VInt;
+	/**
+		Floats.
+	**/
 	VFloat;
+	/**
+		Booleans.
+	**/
 	VBool;
 }
 
@@ -71,14 +164,29 @@ enum VecType {
 	The size of an array: a constant, or a constant variable.
 **/
 enum SizeDecl {
+	/**
+		A constant size.
+	**/
 	SConst( v : Int );
+	/**
+		The size given by a constant variable.
+	**/
 	SVar( v : TVar );
 }
 
 /**
 	The signature of a function.
 **/
-typedef FunType = { args : Array<{ name : String, type : Type }>, ret : Type };
+typedef FunType = {
+	/**
+		The arguments.
+	**/
+	var args : Array<{ name : String, type : Type }>;
+	/**
+		The return type.
+	**/
+	var ret : Type;
+};
 
 /**
 	A shader compilation error.
@@ -126,7 +234,16 @@ typedef Position = haxe.macro.Expr.Position;
 /**
 	An untyped shader expression, as parsed from the shader source.
 **/
-typedef Expr = { expr : ExprDef, pos : Position };
+typedef Expr = {
+	/**
+		The expression.
+	**/
+	var expr : ExprDef;
+	/**
+		The position in the source.
+	**/
+	var pos : Position;
+};
 
 /**
 	A binary operator.
@@ -195,6 +312,9 @@ enum VarQualifier {
 		The name of the variable in the generated code.
 	**/
 	Name( n : String );
+	/**
+		The parameter is shared by all the shaders declaring it with the same name, instead of being separate for each shader.
+	**/
 	Shared;
 	/**
 		The precision of the variable.
@@ -208,19 +328,37 @@ enum VarQualifier {
 		The variable is ignored in reflection (inspector).
 	**/
 	Ignore;
+	/**
+		The input changes every `v` instances (instanced rendering).
+	**/
 	PerInstance( v : Int );
 	/**
 		The documentation of the variable, for editors.
 	**/
 	Doc( s : String );
+	/**
+		The local variable is read from the shader of the given path.
+	**/
 	Borrow( source : String );
+	/**
+		The names of the samplers of the texture.
+	**/
 	Sampler( name : String );
+	/**
+		The local variable is assigned only once, at its declaration.
+	**/
 	Final;
 	/**
 		The variable is not interpolated between the vertex and the fragment shader.
 	**/
 	Flat;
+	/**
+		The local variable is not passed from the vertex to the fragment shader.
+	**/
 	NoVar;
+	/**
+		The parameter is a Haxe enum, stored as the index of its constructor.
+	**/
 	Enum( path : String, constructors : Array<String> );
 }
 
@@ -228,8 +366,17 @@ enum VarQualifier {
 	The precision of a shader variable.
 **/
 enum Prec {
+	/**
+		Low precision.
+	**/
 	Low;
+	/**
+		Medium precision.
+	**/
 	Medium;
+	/**
+		High precision.
+	**/
 	High;
 }
 
@@ -285,10 +432,25 @@ typedef FunDecl = {
 	A constant value.
 **/
 enum Const {
+	/**
+		`null`.
+	**/
 	CNull;
+	/**
+		A boolean.
+	**/
 	CBool( b : Bool );
+	/**
+		An integer.
+	**/
 	CInt( v : Int );
+	/**
+		A float.
+	**/
 	CFloat( v : Float );
+	/**
+		A string.
+	**/
 	CString( v : String );
 }
 
@@ -296,26 +458,89 @@ enum Const {
 	The untyped shader expressions, as parsed from the shader source.
 **/
 enum ExprDef {
+ 	/**
+ 		A constant.
+ 	**/
  	EConst( c : Const );
+	/**
+		An identifier.
+	**/
 	EIdent( i : String );
+	/**
+		An expression in parentheses.
+	**/
 	EParenthesis( e : Expr );
+	/**
+		A field access `e.f`.
+	**/
 	EField( e : Expr, f : String );
+	/**
+		A binary operation.
+	**/
 	EBinop( op : Binop, e1 : Expr, e2 : Expr );
+	/**
+		A unary operation.
+	**/
 	EUnop( op : Unop, e1 : Expr );
+	/**
+		A call.
+	**/
 	ECall( e : Expr, args : Array<Expr> );
+	/**
+		A block of expressions.
+	**/
 	EBlock( el : Array<Expr> );
+	/**
+		Variable declarations.
+	**/
 	EVars( v : Array<VarDecl> );
+	/**
+		A function declaration.
+	**/
 	EFunction( f : FunDecl );
+	/**
+		A condition.
+	**/
 	EIf( econd : Expr, eif : Expr, eelse : Null<Expr> );
+	/**
+		Discards the pixel.
+	**/
 	EDiscard;
+	/**
+		A `for` loop.
+	**/
 	EFor( v : String, loop : Expr, block : Expr );
+	/**
+		A return.
+	**/
 	EReturn( ?e : Expr );
+	/**
+		A break.
+	**/
 	EBreak;
+	/**
+		A continue.
+	**/
 	EContinue;
+	/**
+		An array access.
+	**/
 	EArray( e : Expr, eindex : Expr );
+	/**
+		An array declaration.
+	**/
 	EArrayDecl( el : Array<Expr> );
+	/**
+		A switch.
+	**/
 	ESwitch( e : Expr, cases : Array<{ values : Array<Expr>, expr:Expr }>, def : Null<Expr> );
+	/**
+		A `while` loop, or a `do ... while` loop if `normalWhile` is not set.
+	**/
 	EWhile( cond : Expr, loop : Expr, normalWhile : Bool );
+	/**
+		An expression with metadata.
+	**/
 	EMeta( name : String, args : Array<Expr>, e : Expr );
 }
 
@@ -323,27 +548,93 @@ enum ExprDef {
 	The typed shader expressions, produced by `hxsl.Checker`.
 **/
 enum TExprDef {
+	/**
+		A constant.
+	**/
 	TConst( c : Const );
+	/**
+		A variable.
+	**/
 	TVar( v : TVar );
+	/**
+		A built-in function or value.
+	**/
 	TGlobal( g : TGlobal );
+	/**
+		An expression in parentheses.
+	**/
 	TParenthesis( e : TExpr );
+	/**
+		A block of expressions.
+	**/
 	TBlock( el : Array<TExpr> );
+	/**
+		A binary operation.
+	**/
 	TBinop( op : Binop, e1 : TExpr, e2 : TExpr );
+	/**
+		A unary operation.
+	**/
 	TUnop( op : Unop, e1 : TExpr );
+	/**
+		A variable declaration.
+	**/
 	TVarDecl( v : TVar, ?init : TExpr );
+	/**
+		A call.
+	**/
 	TCall( e : TExpr, args : Array<TExpr> );
+	/**
+		A swizzle (`e.xyz`).
+	**/
 	TSwiz( e : TExpr, regs : Array<Component> );
+	/**
+		A condition.
+	**/
 	TIf( econd : TExpr, eif : TExpr, eelse : Null<TExpr> );
+	/**
+		Discards the pixel.
+	**/
 	TDiscard;
+	/**
+		A return.
+	**/
 	TReturn( ?e : TExpr );
+	/**
+		A `for` loop.
+	**/
 	TFor( v : TVar, it : TExpr, loop : TExpr );
+	/**
+		A continue.
+	**/
 	TContinue;
+	/**
+		A break.
+	**/
 	TBreak;
+	/**
+		An array access.
+	**/
 	TArray( e : TExpr, index : TExpr );
+	/**
+		An array declaration.
+	**/
 	TArrayDecl( el : Array<TExpr> );
+	/**
+		A switch.
+	**/
 	TSwitch( e : TExpr, cases : Array<{ values : Array<TExpr>, expr:TExpr }>, def : Null<TExpr> );
+	/**
+		A `while` loop, or a `do ... while` loop if `normalWhile` is not set.
+	**/
 	TWhile( e : TExpr, loop : TExpr, normalWhile : Bool );
+	/**
+		An expression with metadata.
+	**/
 	TMeta( m : String, args : Array<Const>, e : TExpr );
+	/**
+		A field access on a structure inside an array.
+	**/
 	TField( e : TExpr, name : String );
 	/**
 		Raw code inserted in the output of the given target (`"code"` inserts it for any target).
@@ -457,122 +748,222 @@ enum FunctionKind {
 	The built-in functions and values of the shader language.
 **/
 enum TGlobal {
+	/** `radians(x)`: converts degrees to radians. **/
 	Radians;
+	/** `degrees(x)`: converts radians to degrees. **/
 	Degrees;
+	/** `sin(x)`. **/
 	Sin;
+	/** `cos(x)`. **/
 	Cos;
+	/** `tan(x)`. **/
 	Tan;
+	/** `asin(x)`. **/
 	Asin;
+	/** `acos(x)`. **/
 	Acos;
+	/** `atan(x)` or `atan(y, x)`. **/
 	Atan;
+	/** `pow(x, y)`. **/
 	Pow;
+	/** `exp(x)`. **/
 	Exp;
+	/** `log(x)`: natural logarithm. **/
 	Log;
+	/** `exp2(x)`. **/
 	Exp2;
+	/** `log2(x)`. **/
 	Log2;
+	/** `sqrt(x)`. **/
 	Sqrt;
+	/** `inversesqrt(x)`: `1 / sqrt(x)`. **/
 	Inversesqrt;
+	/** `abs(x)`. **/
 	Abs;
+	/** `sign(x)`. **/
 	Sign;
+	/** `floor(x)`. **/
 	Floor;
+	/** `ceil(x)`. **/
 	Ceil;
+	/** `fract(x)`: the fractional part. **/
 	Fract;
+	/** `mod(x, y)`. **/
 	Mod;
+	/** `min(a, b)`. **/
 	Min;
+	/** `max(a, b)`. **/
 	Max;
+	/** `clamp(value, min, max)`. **/
 	Clamp;
+	/** `mix(x, y, a)`: linear interpolation. **/
 	Mix;
+	/** `invLerp(v, a, b)`: the position of `v` between `a` and `b`, clamped to `[0, 1]`. **/
 	InvLerp;
+	/** `step(edge, x)`. **/
 	Step;
+	/** `smoothstep(edge0, edge1, x)`. **/
 	Smoothstep;
+	/** `length(v)`. **/
 	Length;
+	/** `distance(a, b)`. **/
 	Distance;
+	/** `dot(a, b)`. **/
 	Dot;
+	/** `cross(a, b)`. **/
 	Cross;
+	/** `normalize(v)`. **/
 	Normalize;
 	//Faceforward;
+	/** `reflect(i, n)`. **/
 	LReflect;
 	//Refract;
 	//MatrixCompMult;
 	//Any;
 	//All;
+	/** `tex.get(uv)` or `texture(tex, uv)`: samples a texture. **/
 	Texture;
+	/** `tex.getLod(uv, lod)`: samples a mip level of a texture. **/
 	TextureLod;
+	/** `tex.fetch(pos)`: reads a texel at integer coordinates. **/
 	Texel;
+	/** `tex.size()`: the size of a texture. **/
 	TextureSize;
 	// ...other texture* operations
 	// constructors
+	/** `int(x)` or `x.toInt()`. **/
 	ToInt;
+	/** `float(x)` or `x.toFloat()`. **/
 	ToFloat;
+	/** `x.toBool()`. **/
 	ToBool;
+	/** `vec2(...)`. **/
 	Vec2;
+	/** `vec3(...)`. **/
 	Vec3;
+	/** `vec4(...)`. **/
 	Vec4;
+	/** `ivec2(...)`. **/
 	IVec2;
+	/** `ivec3(...)`. **/
 	IVec3;
+	/** `ivec4(...)`. **/
 	IVec4;
+	/** `bvec2(...)`. **/
 	BVec2;
+	/** `bvec3(...)`. **/
 	BVec3;
+	/** `bvec4(...)`. **/
 	BVec4;
+	/** `mat2(...)`. **/
 	Mat2;
+	/** `mat3(...)`. **/
 	Mat3;
+	/** `mat4(...)`. **/
 	Mat4;
 	// extra (not in GLSL ES)
+	/** `mat3x4(...)`. **/
 	Mat3x4;
+	/** `saturate(x)`: clamps to `[0, 1]`. **/
 	Saturate;
+	/** `pack(v)`: packs a float in `[0, 1]` into a color. **/
 	Pack;
+	/** `unpack(c)`: the float packed by `pack`. **/
 	Unpack;
+	/** `packNormal(n)`: packs a normal into a color. **/
 	PackNormal;
+	/** `unpackNormal(c)`: the normal from the XY of a normal map color. **/
 	UnpackNormal;
+	/** `screenToUv(p)`: converts screen coordinates (`[-1, 1]`, Y up) to texture coordinates. **/
 	ScreenToUv;
+	/** `uvToScreen(uv)`: converts texture coordinates to screen coordinates. **/
 	UvToScreen;
 	// extensions
+	/** `dFdx(x)`: the derivative along X. **/
 	DFdx;
+	/** `dFdy(x)`: the derivative along Y. **/
 	DFdy;
+	/** `fwidth(x)`: `abs(dFdx(x)) + abs(dFdy(x))`. **/
 	Fwidth;
 	// debug / internal
+	/** `channel.get(uv)`: reads a `TChannel`. **/
 	ChannelRead;
+	/** `channel.getLod(uv, lod)`: reads a mip level of a `TChannel`. **/
 	ChannelReadLod;
+	/** `channel.fetch(pos)`: reads a `TChannel` at integer coordinates. **/
 	ChannelFetch;
+	/** `channel.size()`: the size of the texture of a `TChannel`. **/
 	ChannelTextureSize;
+	/** `trace(...)`: prints its arguments when the shader is evaluated (debug). **/
 	Trace;
 	// instancing
+	/** `vertexID`: the index of the vertex. **/
 	VertexID;
+	/** `instanceID`: the index of the instance. **/
 	InstanceID;
 	// gl globals
+	/** `fragCoord`: the window coordinates of the pixel. **/
 	FragCoord;
+	/** `frontFacing`: tells if the face is front facing. **/
 	FrontFacing;
 	// dx12 barycentrics
+	/** `barycentrics`: the barycentric coordinates of the pixel in its triangle (DirectX 12). **/
 	Barycentrics;
+	/** `vertexAt(v, index)`: the value of an input at a vertex of the triangle (DirectX 12). **/
 	VertexAt;
 	// bit casting
+	/** `floatBitsToInt(x)`. **/
 	FloatBitsToInt;
+	/** `floatBitsToUint(x)`. **/
 	FloatBitsToUint;
+	/** `intBitsToFloat(x)`. **/
 	IntBitsToFloat;
+	/** `uintBitsToFloat(x)`. **/
 	UintBitsToFloat;
+	/** `roundEven(x)`. **/
 	RoundEven;
 	// compute
+	/** `setLayout(x, y, z)`: the size of a work group of a compute shader. **/
 	SetLayout;
+	/** `tex.store(pos, color)`: writes a texel of a read-write texture. **/
 	ImageStore;
+	/** `computeVar.globalInvocation`: the index of the invocation of a compute shader. **/
 	ComputeVar_GlobalInvocation;
+	/** `computeVar.localInvocation`: the index of the invocation in its work group. **/
 	ComputeVar_LocalInvocation;
+	/** `computeVar.workGroup`: the index of the work group. **/
 	ComputeVar_WorkGroup;
+	/** `computeVar.localInvocationIndex`: the flattened index of the invocation in its work group. **/
 	ComputeVar_LocalInvocationIndex;
 	//ComputeVar_NumWorkGroups - no DirectX support
 	//ComputeVar_WorkGroupSize - no DirectX support
+	/** `atomicAdd(buf, index, data)`: adds to an element of a buffer and returns its previous value. **/
 	AtomicAdd;
+	/** `groupMemoryBarrier()`: synchronizes the memory accesses of a work group. **/
 	GroupMemoryBarrier;
+	/** `unpackSnorm4x8(x)`: four signed normalized bytes to a vector. **/
 	UnpackSnorm4x8;
+	/** `unpackUnorm4x8(x)`: four unsigned normalized bytes to a vector. **/
 	UnpackUnorm4x8;
+	/** `transpose(m)`. **/
 	Transpose;
+	/** `tex.fetchLod(pos, lod)`: reads a texel of a mip level at integer coordinates. **/
 	TexelLod;
+	/** `resolveSampler(handle, tex)`: sets a texture from a bindless handle. **/
 	ResolveSampler;
+	/** `resolveBuffer(handle, buf)`: sets a buffer from a bindless handle. **/
 	ResolveBuffer;
+	/** `findLSB(x)`: the index of the least significant bit set. **/
 	FindLSB;
+	/** `findMSB(x)`: the index of the most significant bit set. **/
 	FindMSB;
+	/** `atomicAnd(buf, index, data)`: combines an element of a buffer with a bitwise and, and returns its previous value. **/
 	AtomicAnd;
+	/** `atomicOr(buf, index, data)`: combines an element of a buffer with a bitwise or, and returns its previous value. **/
 	AtomicOr;
+	/** `bitCount(x)`: the number of bits set. **/
 	BitCount;
+	/** `uint(x)` or `x.toUInt()`. **/
 	ToUInt;
 }
 
@@ -580,8 +971,17 @@ enum TGlobal {
 	How a raw code (`TSyntax`) argument is accessed.
 **/
 enum SyntaxArgAccess {
+	/**
+		Read only.
+	**/
 	Read;
+	/**
+		Written only.
+	**/
 	Write;
+	/**
+		Read and written.
+	**/
 	ReadWrite;
 }
 
@@ -589,17 +989,35 @@ enum SyntaxArgAccess {
 	An argument of a raw code expression (`TSyntax`).
 **/
 typedef SyntaxArg = {
-	e: TExpr,
-	access: SyntaxArgAccess,
+	/**
+		The argument.
+	**/
+	var e : TExpr;
+	/**
+		How the argument is accessed.
+	**/
+	var access : SyntaxArgAccess;
 }
 
 /**
 	A vector component, for swizzling.
 **/
 enum Component {
+	/**
+		The first component (`x` or `r`).
+	**/
 	X;
+	/**
+		The second component (`y` or `g`).
+	**/
 	Y;
+	/**
+		The third component (`z` or `b`).
+	**/
 	Z;
+	/**
+		The fourth component (`w` or `a`).
+	**/
 	W;
 }
 

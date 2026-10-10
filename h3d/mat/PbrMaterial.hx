@@ -54,11 +54,29 @@ enum abstract PbrMode(String) {
 	The blend mode of a `PbrMaterial` (see `h3d.mat.BlendMode`).
 **/
 enum abstract PbrBlend(String) {
+	/**
+		No blending: opaque.
+	**/
 	var None = "None";
+	/**
+		Alpha blending.
+	**/
 	var Alpha = "Alpha";
+	/**
+		Additive blending.
+	**/
 	var Add = "Add";
+	/**
+		Additive blending, multiplied by the alpha.
+	**/
 	var AlphaAdd = "AlphaAdd";
+	/**
+		Multiplies the destination color.
+	**/
 	var Multiply = "Multiply";
+	/**
+		Multiplies the destination color, weighted by the alpha.
+	**/
 	var AlphaMultiply = "AlphaMultiply";
 }
 
@@ -66,13 +84,37 @@ enum abstract PbrBlend(String) {
 	The depth test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
 **/
 enum abstract PbrDepthTest(String) {
+	/**
+		Passes if the depth is less than the stored depth.
+	**/
 	var Less = "Less";
+	/**
+		Passes if the depth is less than or equal to the stored depth.
+	**/
 	var LessEqual = "LessEqual";
+	/**
+		Passes if the depth is greater than the stored depth.
+	**/
 	var Greater = "Greater";
+	/**
+		Passes if the depth is greater than or equal to the stored depth.
+	**/
 	var GreaterEqual = "GreaterEqual";
+	/**
+		Always passes.
+	**/
 	var Always = "Always";
+	/**
+		Never passes.
+	**/
 	var Never = "Never";
+	/**
+		Passes if the depth is equal to the stored depth.
+	**/
 	var Equal = "Equal";
+	/**
+		Passes if the depth is not equal to the stored depth.
+	**/
 	var NotEqual= "NotEqual";
 }
 
@@ -80,8 +122,17 @@ enum abstract PbrDepthTest(String) {
 	The depth write of a `PbrMaterial`: `Default` writes depth only for opaque blend modes.
 **/
 enum abstract PbrDepthWrite(String) {
+	/**
+		Writes the depth only when the blend mode is `None`.
+	**/
 	var Default = "Default";
+	/**
+		Always writes the depth.
+	**/
 	var On = "On";
+	/**
+		Never writes the depth.
+	**/
 	var Off = "Off";
 }
 
@@ -89,13 +140,37 @@ enum abstract PbrDepthWrite(String) {
 	A stencil operation of a `PbrMaterial` (see `h3d.mat.Data.StencilOp`).
 **/
 enum abstract PbrStencilOp(String) {
+	/**
+		Keeps the stored value.
+	**/
 	var Keep = "Keep";
+	/**
+		Sets the value to `0`.
+	**/
 	var Zero = "Zero";
+	/**
+		Replaces the value with the reference value.
+	**/
 	var Replace = "Replace";
+	/**
+		Increments the value, clamped to the maximum.
+	**/
 	var Increment = "Increment";
+	/**
+		Increments the value, wrapping to `0`.
+	**/
 	var IncrementWrap = "IncrementWrap";
+	/**
+		Decrements the value, clamped to `0`.
+	**/
 	var Decrement = "Decrement";
+	/**
+		Decrements the value, wrapping to the maximum.
+	**/
 	var DecrementWrap = "DecrementWrap";
+	/**
+		Inverts the bits of the value.
+	**/
 	var Invert = "Invert";
 }
 
@@ -103,13 +178,37 @@ enum abstract PbrStencilOp(String) {
 	A stencil test of a `PbrMaterial` (see `h3d.mat.Data.Compare`).
 **/
 enum abstract PbrStencilCompare(String) {
+	/**
+		Always passes.
+	**/
 	var Always = "Always";
+	/**
+		Never passes.
+	**/
 	var Never = "Never";
+	/**
+		Passes if the reference value is equal to the stored value.
+	**/
 	var Equal = "Equal";
+	/**
+		Passes if the reference value is not equal to the stored value.
+	**/
 	var NotEqual = "NotEqual";
+	/**
+		Passes if the reference value is greater than the stored value.
+	**/
 	var Greater = "Greater";
+	/**
+		Passes if the reference value is greater than or equal to the stored value.
+	**/
 	var GreaterEqual = "GreaterEqual";
+	/**
+		Passes if the reference value is less than the stored value.
+	**/
 	var Less = "Less";
+	/**
+		Passes if the reference value is less than or equal to the stored value.
+	**/
 	var LessEqual = "LessEqual";
 }
 
@@ -117,9 +216,21 @@ enum abstract PbrStencilCompare(String) {
 	The face culling of a `PbrMaterial` (see `h3d.mat.Data.Face`).
 **/
 enum abstract PbrCullingMode(String) {
+	/**
+		No culling: both faces are drawn.
+	**/
 	var None = "None";
+	/**
+		Back faces are culled.
+	**/
 	var Back = "Back";
+	/**
+		Front faces are culled.
+	**/
 	var Front = "Front";
+	/**
+		Both faces are culled: nothing is drawn.
+	**/
 	var Both = "Both";
 }
 
@@ -237,9 +348,15 @@ class PbrProps {
 	**/
 	var ignoreCollide : Bool = false;
 
+	/**
+		Creates the default properties.
+	**/
 	function new() {
 	}
 
+	/**
+		Sets the properties from the saved object and returns this.
+	**/
 	function load( o : Dynamic ) : PbrProps {
 		for( f in Reflect.fields(o) ) {
 			if( !Reflect.hasField(this, f) ) continue;
@@ -251,6 +368,9 @@ class PbrProps {
 		return this;
 	}
 
+	/**
+		Returns the properties different from the defaults, to be saved.
+	**/
 	function save() : Dynamic {
 		var def = Type.createInstance(Type.getClass(this), []);
 		var o : Dynamic = {};

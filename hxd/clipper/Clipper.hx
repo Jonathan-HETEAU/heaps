@@ -828,8 +828,17 @@ private class ClipperBase
 	The kind of polygon tree nodes to output: any, open or closed paths.
 **/
 enum NodeType {
+	/**
+		All the nodes.
+	**/
 	Any;
+	/**
+		Only the open paths.
+	**/
 	Open;
+	/**
+		Only the closed paths.
+	**/
 	Closed;
 }
 
@@ -837,8 +846,17 @@ enum NodeType {
 	The polygons kept in the result: all of them, only the outer polygons, or only the holes.
 **/
 enum ResultKind {
+	/**
+		All the polygons.
+	**/
 	All;
+	/**
+		Only the outer polygons.
+	**/
 	NoHoles;
+	/**
+		Only the holes.
+	**/
 	HolesOnly;
 }
 

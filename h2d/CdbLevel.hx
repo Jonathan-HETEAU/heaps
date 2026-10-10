@@ -265,8 +265,17 @@ class LevelObjectInstance {
 	[CastleDB](http://castledb.org) integration; A part of `CdbLevel` decoder.
 **/
 enum LevelLayerData {
+	/**
+		A tile layer: the tile index plus one of each cell (`0` for empty), row by row.
+	**/
 	LTiles( data : Array<Int> );
+	/**
+		A ground layer: like `LTiles`, with the border tiles of the grounds generated around them.
+	**/
 	LGround( data : Array<Int> );
+	/**
+		An object layer: the objects placed freely.
+	**/
 	LObjects( objects : Array<LevelObjectInstance> );
 }
 

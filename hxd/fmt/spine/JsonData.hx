@@ -150,8 +150,14 @@ typedef JSkeleton = {
 	An attachment, in the Spine JSON format.
 **/
 typedef JAttachment = {
-	?type : String,
-	?color : String,
+	/**
+		The type of the attachment (`region` by default, or `skinnedmesh`).
+	**/
+	var ?type : String;
+	/**
+		The color.
+	**/
+	var ?color : String;
 };
 
 /**

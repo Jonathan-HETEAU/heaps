@@ -66,8 +66,17 @@ class ColorStop {
 	The source of the color of a stop: a user color, or the background or foreground color of Photoshop.
 **/
 enum ColorStopType {
+	/**
+		A color chosen by the user.
+	**/
 	User;
+	/**
+		The background color.
+	**/
 	Background;
+	/**
+		The foreground color.
+	**/
 	Foreground;
 }
 
@@ -98,7 +107,13 @@ class TransparencyStop  {
 	A color of a gradient: RGB (`0` to `255`) or HSB (hue in degrees, saturation and brightness in percent).
 **/
 enum Color {
+	/**
+		A RGB color, with components from `0` to `255`.
+	**/
 	RGB(r:Float, g:Float, b:Float);
+	/**
+		A HSB color: hue in degrees, saturation and brightness in percent.
+	**/
 	HSB(h:Float, s:Float, b:Float);
 }
 

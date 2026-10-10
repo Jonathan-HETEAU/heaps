@@ -19,7 +19,13 @@ private class Alloc {
 	How a flattened variable is read: at a fixed position, or at an offset computed at runtime (array access).
 **/
 enum ARead {
+	/**
+		At the position of the allocation.
+	**/
 	AIndex( a : Alloc );
+	/**
+		At the position of the allocation plus `delta`, computed at runtime; `stride` is the size of an element, in `vec4`.
+	**/
 	AOffset( a : Alloc, stride : Int, delta : TExpr );
 }
 

@@ -106,7 +106,12 @@ class Benchmark extends h2d.Graphics {
 	**/
 	public var displayTriangleCount = true;
 
-	#if target.threaded public var measureCpuThread: sys.thread.Thread = null; #end
+	#if target.threaded
+	/**
+		When set, only the measures made from this thread are recorded, and its name is displayed instead of `cpu`/`gpu` (threaded targets only).
+	**/
+	public var measureCpuThread: sys.thread.Thread = null;
+	#end
 
 	var tip : h2d.Text;
 	var tipCurrent : StatsObject;

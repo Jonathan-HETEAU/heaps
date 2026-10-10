@@ -4,17 +4,53 @@ package h3d.shader.pbr;
 	The G-buffer channel displayed by the `Debug` display mode of the PBR renderer.
 **/
 enum abstract DebugMode(Int) {
+	/**
+		All the channels at once, in a grid.
+	**/
 	var Full = 0;
+	/**
+		The albedo color.
+	**/
 	var Albedo = 1;
+	/**
+		The normals.
+	**/
 	var Normal = 2;
+	/**
+		The depth.
+	**/
 	var Depth = 3;
+	/**
+		The metalness.
+	**/
 	var Metalness = 4;
+	/**
+		The roughness.
+	**/
 	var Roughness = 5;
+	/**
+		The ambient occlusion.
+	**/
 	var AO = 6;
+	/**
+		The emissive value (red) and the custom channels (green and blue).
+	**/
 	var Emissive = 7;
+	/**
+		The shadow map.
+	**/
 	var Shadow = 8;
+	/**
+		The velocity, if available.
+	**/
 	var Velocity = 9;
+	/**
+		The translucency, if available.
+	**/
 	var Translucency = 10;
+	/**
+		The number of lights of each cluster, as a heat map, if clustered lighting is used.
+	**/
 	var Clusters = 11;
 }
 

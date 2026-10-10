@@ -4,15 +4,45 @@ package hxd;
 	A mouse cursor (see `hxd.System.setCursor` and `h2d.Interactive.cursor`).
 **/
 enum Cursor {
+	/**
+		The default arrow.
+	**/
 	Default;
+	/**
+		A hand, for clickable elements.
+	**/
 	Button;
+	/**
+		Arrows in all directions.
+	**/
 	Move;
+	/**
+		A text cursor (I-beam).
+	**/
 	TextInput;
+	/**
+		No cursor.
+	**/
 	Hide;
+	/**
+		A vertical resize cursor.
+	**/
 	ResizeNS;
+	/**
+		A horizontal resize cursor.
+	**/
 	ResizeWE;
+	/**
+		A diagonal resize cursor, from top left to bottom right.
+	**/
 	ResizeNWSE;
+	/**
+		A diagonal resize cursor, from top right to bottom left.
+	**/
 	ResizeNESW;
+	/**
+		A custom cursor made of bitmaps.
+	**/
 	Custom( custom : CustomCursor );
 	/**
 		When this cursor is selected, call the function itself, which can handle complex logic and is responsible to call hxd.System.setCursor

@@ -31,18 +31,36 @@ enum DisplayMode {
 	A monitor, as returned by `Window.getMonitors`.
 **/
 typedef Monitor = {
-	name : String,
-	width : Int,
-	height : Int
+	/**
+		The name of the monitor.
+	**/
+	var name : String;
+	/**
+		The width of the monitor, in pixels.
+	**/
+	var width : Int;
+	/**
+		The height of the monitor, in pixels.
+	**/
+	var height : Int;
 }
 
 /**
 	A display mode of a monitor: resolution and refresh rate.
 **/
 typedef DisplaySetting = {
-	width : Int,
-	height : Int,
-	framerate : Int
+	/**
+		The width, in pixels.
+	**/
+	var width : Int;
+	/**
+		The height, in pixels.
+	**/
+	var height : Int;
+	/**
+		The refresh rate, in Hz.
+	**/
+	var framerate : Int;
 }
 
 private class NativeDroppedFile extends hxd.DropFileEvent.DroppedFile {

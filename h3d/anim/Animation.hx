@@ -44,9 +44,18 @@ class AnimatedObject {
 	An event of an animation (such as a footstep), triggered when the animation reaches its frame (see `Animation.onEvent`).
 **/
 typedef Event = {
-	name : String,
-	frame : Int,
-	?originalEvent : Event
+	/**
+		The name of the event.
+	**/
+	var name : String;
+	/**
+		The frame of the event.
+	**/
+	var frame : Int;
+	/**
+		The event of the source animation that this one overrides, if it was modified by the animation properties.
+	**/
+	var ?originalEvent : Event;
 }
 
 /**

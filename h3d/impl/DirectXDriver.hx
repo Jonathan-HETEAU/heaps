@@ -44,7 +44,13 @@ private class CompiledShader {
 	A stage of the DirectX 11 pipeline.
 **/
 enum PipelineKind {
+	/**
+		The vertex shader stage.
+	**/
 	Vertex;
+	/**
+		The pixel shader stage.
+	**/
 	Pixel;
 }
 
@@ -338,6 +344,9 @@ class DirectXDriver extends h3d.impl.Driver {
 		return desc;
 	}
 
+	/**
+		Simulates the loss of the device, for tests.
+	**/
 	public function forceDeviceError() {
 		hasDeviceError = true;
 	}

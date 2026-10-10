@@ -5,8 +5,17 @@ import h3d.col.Point;
 	The axis of a `Capsule`.
 **/
 enum abstract Axis(Int) to Int {
+	/**
+		The X axis.
+	**/
 	var X;
+	/**
+		The Y axis.
+	**/
 	var Y;
+	/**
+		The Z axis.
+	**/
 	var Z;
 }
 

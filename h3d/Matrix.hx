@@ -5,11 +5,26 @@ import hxd.Math;
 	Color adjustments applied by `Matrix.adjustColor` (and `h2d.Drawable.adjustColor`). All fields are optional.
 **/
 typedef ColorAdjust = {
-	?saturation : Float,
-	?lightness : Float,
-	?hue : Float,
-	?contrast : Float,
-	?gain : { color : Int, alpha : Float },
+	/**
+		Changes the saturation (`0` keeps it, `-1` makes it grey), see `colorSaturate`.
+	**/
+	var ?saturation : Float;
+	/**
+		Adds to the color components, see `colorLightness`.
+	**/
+	var ?lightness : Float;
+	/**
+		Rotates the hue, in radians, see `colorHue`.
+	**/
+	var ?hue : Float;
+	/**
+		Changes the contrast (`0` keeps it), see `colorContrast`.
+	**/
+	var ?contrast : Float;
+	/**
+		Blends the color towards `color` (`0xRRGGBB`) by `alpha`, see `colorGain`.
+	**/
+	var ?gain : { color : Int, alpha : Float };
 };
 
 /**

@@ -66,11 +66,17 @@ class AppContext {
 			c.update();
 	}
 
+	/**
+		Clears the current engine and window, before creating a new application.
+	**/
 	public static function reset() @:privateAccess {
 		h3d.Engine.CURRENT = null;
 		hxd.Window.inst = null;
 	}
 
+	/**
+		Makes the engine of the application the current one.
+	**/
 	public static function set( app : hxd.App ) {
 		for( c in contexts )
 			if( c.app == app )

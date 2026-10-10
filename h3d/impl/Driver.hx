@@ -25,7 +25,42 @@ typedef GPUBuffer = js.html.webgl.Buffer;
 /**
 	The native texture of the current driver.
 **/
-typedef Texture = { t : js.html.webgl.Texture, width : Int, height : Int, internalFmt : Int, pixelFmt : Int, bits : Int, bind : Int #if multidriver, driver : Driver #end };
+typedef Texture = {
+	/**
+		The native texture.
+	**/
+	var t : js.html.webgl.Texture;
+	/**
+		The width, in pixels.
+	**/
+	var width : Int;
+	/**
+		The height, in pixels.
+	**/
+	var height : Int;
+	/**
+		The GL internal format.
+	**/
+	var internalFmt : Int;
+	/**
+		The GL pixel type.
+	**/
+	var pixelFmt : Int;
+	/**
+		The sampling parameters (filter, wrap, mip map) last applied, to skip unchanged ones (`-1` if none).
+	**/
+	var bits : Int;
+	/**
+		The GL binding target (2D, cube, array or 3D texture).
+	**/
+	var bind : Int;
+#if multidriver
+	/**
+		The driver owning the texture.
+	**/
+	var driver : Driver;
+#end
+};
 /**
 	The native query of the current driver.
 **/
@@ -42,11 +77,55 @@ typedef GPUBuffer = sdl.GL.Buffer;
 /**
 	The native texture of the current driver.
 **/
-typedef Texture = { t : sdl.GL.Texture, width : Int, height : Int, internalFmt : Int, pixelFmt : Int, bits : Int, bind : Int #if multidriver, driver : Driver #end };
+typedef Texture = {
+	/**
+		The native texture.
+	**/
+	var t : sdl.GL.Texture;
+	/**
+		The width, in pixels.
+	**/
+	var width : Int;
+	/**
+		The height, in pixels.
+	**/
+	var height : Int;
+	/**
+		The GL internal format.
+	**/
+	var internalFmt : Int;
+	/**
+		The GL pixel type.
+	**/
+	var pixelFmt : Int;
+	/**
+		The sampling parameters (filter, wrap, mip map) last applied, to skip unchanged ones (`-1` if none).
+	**/
+	var bits : Int;
+	/**
+		The GL binding target (2D, cube, array or 3D texture).
+	**/
+	var bind : Int;
+#if multidriver
+	/**
+		The driver owning the texture.
+	**/
+	var driver : Driver;
+#end
+};
 /**
 	The native query of the current driver.
 **/
-typedef Query = { q : sdl.GL.Query, kind : QueryKind };
+typedef Query = {
+	/**
+		The native query.
+	**/
+	var q : sdl.GL.Query;
+	/**
+		The kind of query.
+	**/
+	var kind : QueryKind;
+};
 /**
 	The driver class of the current platform.
 **/
@@ -59,11 +138,49 @@ typedef GPUBuffer = haxe.GLTypes.Buffer;
 /**
 	The native texture of the current driver.
 **/
-typedef Texture = { t : haxe.GLTypes.Texture, width : Int, height : Int, internalFmt : Int, pixelFmt : Int, bits : Int, bind : Int };
+typedef Texture = {
+	/**
+		The native texture.
+	**/
+	var t : haxe.GLTypes.Texture;
+	/**
+		The width, in pixels.
+	**/
+	var width : Int;
+	/**
+		The height, in pixels.
+	**/
+	var height : Int;
+	/**
+		The GL internal format.
+	**/
+	var internalFmt : Int;
+	/**
+		The GL pixel type.
+	**/
+	var pixelFmt : Int;
+	/**
+		The sampling parameters (filter, wrap, mip map) last applied, to skip unchanged ones (`-1` if none).
+	**/
+	var bits : Int;
+	/**
+		The GL binding target (2D, cube, array or 3D texture).
+	**/
+	var bind : Int;
+};
 /**
 	The native query of the current driver.
 **/
-typedef Query = { q : haxe.GLTypes.Query, kind : QueryKind };
+typedef Query = {
+	/**
+		The native query.
+	**/
+	var q : haxe.GLTypes.Query;
+	/**
+		The kind of query.
+	**/
+	var kind : QueryKind;
+};
 /**
 	The driver class of the current platform.
 **/
@@ -93,7 +210,32 @@ typedef GPUBuffer = dx.Resource;
 /**
 	The native texture of the current driver.
 **/
-typedef Texture = { res : dx.Resource, view : dx.Driver.ShaderResourceView, ?depthView : dx.Driver.DepthStencilView, ?readOnlyDepthView : dx.Driver.DepthStencilView, rt : Array<dx.Driver.RenderTargetView>, ?views : Array<dx.Driver.ShaderResourceView> };
+typedef Texture = {
+	/**
+		The native resource.
+	**/
+	var res : dx.Resource;
+	/**
+		The shader resource view.
+	**/
+	var view : dx.Driver.ShaderResourceView;
+	/**
+		The depth stencil view, for depth textures.
+	**/
+	var ?depthView : dx.Driver.DepthStencilView;
+	/**
+		The read only depth stencil view, for depth textures.
+	**/
+	var ?readOnlyDepthView : dx.Driver.DepthStencilView;
+	/**
+		The render target views, by layer and mip level.
+	**/
+	var rt : Array<dx.Driver.RenderTargetView>;
+	/**
+		The shader resource views starting at each mip level.
+	**/
+	var ?views : Array<dx.Driver.ShaderResourceView>;
+};
 /**
 	The native query of the current driver.
 **/

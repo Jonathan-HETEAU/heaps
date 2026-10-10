@@ -6,79 +6,143 @@ package hxd.tools;
 **/
 enum abstract RenderDocInputButton(Int) {
 	// '0' - '9' matches ASCII values
+	/** The 0 key. **/
 	var Key_0 = 0x30;
+	/** The 1 key. **/
 	var Key_1 = 0x31;
+	/** The 2 key. **/
 	var Key_2 = 0x32;
+	/** The 3 key. **/
 	var Key_3 = 0x33;
+	/** The 4 key. **/
 	var Key_4 = 0x34;
+	/** The 5 key. **/
 	var Key_5 = 0x35;
+	/** The 6 key. **/
 	var Key_6 = 0x36;
+	/** The 7 key. **/
 	var Key_7 = 0x37;
+	/** The 8 key. **/
 	var Key_8 = 0x38;
+	/** The 9 key. **/
 	var Key_9 = 0x39;
 
 	// 'A' - 'Z' matches ASCII values
+	/** The A key. **/
 	var Key_A = 0x41;
+	/** The B key. **/
 	var Key_B = 0x42;
+	/** The C key. **/
 	var Key_C = 0x43;
+	/** The D key. **/
 	var Key_D = 0x44;
+	/** The E key. **/
 	var Key_E = 0x45;
+	/** The F key. **/
 	var Key_F = 0x46;
+	/** The G key. **/
 	var Key_G = 0x47;
+	/** The H key. **/
 	var Key_H = 0x48;
+	/** The I key. **/
 	var Key_I = 0x49;
+	/** The J key. **/
 	var Key_J = 0x4A;
+	/** The K key. **/
 	var Key_K = 0x4B;
+	/** The L key. **/
 	var Key_L = 0x4C;
+	/** The M key. **/
 	var Key_M = 0x4D;
+	/** The N key. **/
 	var Key_N = 0x4E;
+	/** The O key. **/
 	var Key_O = 0x4F;
+	/** The P key. **/
 	var Key_P = 0x50;
+	/** The Q key. **/
 	var Key_Q = 0x51;
+	/** The R key. **/
 	var Key_R = 0x52;
+	/** The S key. **/
 	var Key_S = 0x53;
+	/** The T key. **/
 	var Key_T = 0x54;
+	/** The U key. **/
 	var Key_U = 0x55;
+	/** The V key. **/
 	var Key_V = 0x56;
+	/** The W key. **/
 	var Key_W = 0x57;
+	/** The X key. **/
 	var Key_X = 0x58;
+	/** The Y key. **/
 	var Key_Y = 0x59;
+	/** The Z key. **/
 	var Key_Z = 0x5A;
 
 	// leave the rest of the ASCII range free
 	// in case we want to use it later
+	/** The start of the non printable keys (not a key). **/
 	var Key_NonPrintable = 0x100;
 
+	/** The `/` key of the numeric keypad. **/
 	var Key_Divide;
+	/** The `*` key of the numeric keypad. **/
 	var Key_Multiply;
+	/** The `-` key of the numeric keypad. **/
 	var Key_Subtract;
+	/** The `+` key of the numeric keypad. **/
 	var Key_Plus;
 
+	/** The F1 key. **/
 	var Key_F1;
+	/** The F2 key. **/
 	var Key_F2;
+	/** The F3 key. **/
 	var Key_F3;
+	/** The F4 key. **/
 	var Key_F4;
+	/** The F5 key. **/
 	var Key_F5;
+	/** The F6 key. **/
 	var Key_F6;
+	/** The F7 key. **/
 	var Key_F7;
+	/** The F8 key. **/
 	var Key_F8;
+	/** The F9 key. **/
 	var Key_F9;
+	/** The F10 key. **/
 	var Key_F10;
+	/** The F11 key. **/
 	var Key_F11;
+	/** The F12 key. **/
 	var Key_F12;
 
+	/** The Home key. **/
 	var Key_Home;
+	/** The End key. **/
 	var Key_End;
+	/** The Insert key. **/
 	var Key_Insert;
+	/** The Delete key. **/
 	var Key_Delete;
+	/** The Page Up key. **/
 	var Key_PageUp;
+	/** The Page Down key. **/
 	var Key_PageDn;
 
+	/** The Backspace key. **/
 	var Key_Backspace;
+	/** The Tab key. **/
 	var Key_Tab;
+	/** The Print Screen key. **/
 	var Key_PrtScrn;
+	/** The Pause key. **/
 	var Key_Pause;
 
+	/** The number of key codes (not a key). **/
 	var Key_Max;
 }
 

@@ -243,6 +243,9 @@ class WorldModelGeometry {
 	Geometry optimizations available for `WorldModel.optimize`.
 **/
 enum OptAlgorithm {
+	/**
+		No optimization.
+	**/
 	None;
 	/**
 		Sort triangles by Z descending

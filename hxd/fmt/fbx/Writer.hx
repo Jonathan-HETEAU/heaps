@@ -7,10 +7,22 @@ import hxd.fmt.hmd.Data;
 	The axis conventions of an exported FBX file.
 **/
 typedef ExportParams = {
-	forward: String,
-	forwardSign: String,
-	up: String,
-	upSign: String,
+	/**
+		The index of the forward axis (`"0"` for X).
+	**/
+	var forward : String;
+	/**
+		The sign of the forward axis (`"1"` or `"-1"`).
+	**/
+	var forwardSign : String;
+	/**
+		The index of the up axis (`"2"` for Z).
+	**/
+	var up : String;
+	/**
+		The sign of the up axis (`"1"` or `"-1"`).
+	**/
+	var upSign : String;
 }
 
 

@@ -12,8 +12,17 @@ typedef FileSeekMode = sys.io.FileSeek;
 	The origin of a seek in a file.
 **/
 enum FileSeekMode {
+	/**
+		From the start of the file.
+	**/
 	SeekBegin;
+	/**
+		From the end of the file.
+	**/
 	SeekEnd;
+	/**
+		From the current position.
+	**/
 	SeedCurrent;
 }
 /**

@@ -19,7 +19,24 @@ typedef ConvertConfig = {
 /**
 	A conversion rule: the files matching `pt` are converted with `cmd`. `version` comes from `fs.convertVersion` and forces a new conversion when changed.
 **/
-typedef ConvertRule = { pt : ConvertPattern, cmd : ConvertCommand, priority : Int, version : Int };
+typedef ConvertRule = {
+	/**
+		The files matched by the rule.
+	**/
+	var pt : ConvertPattern;
+	/**
+		The conversion to run.
+	**/
+	var cmd : ConvertCommand;
+	/**
+		The priority of the rule: the rules are tried by decreasing priority.
+	**/
+	var priority : Int;
+	/**
+		The version of the output format, from `fs.convertVersion`: changing it regenerates the files.
+	**/
+	var version : Int;
+};
 
 /**
 	The files matched by a conversion rule, from the key of the `fs.convert` entry.
@@ -51,23 +68,56 @@ enum ConvertPattern {
 	The conversions of a rule, with their parameters, and the next command applied to the result.
 **/
 typedef ConvertCommand = {
-	conv : Array<Convert>,
-	?params : Dynamic,
-	?paramsStr : String,
-	?then : ConvertCommand
+	/**
+		The converters, the first one supporting the file is used.
+	**/
+	var conv : Array<Convert>;
+	/**
+		The parameters of the conversion.
+	**/
+	var ?params : Dynamic;
+	/**
+		The parameters formatted as a string, added to the output file name.
+	**/
+	var ?paramsStr : String;
+	/**
+		A conversion to run on the result.
+	**/
+	var ?then : ConvertCommand;
 }
 
 /**
 	A conversion stored in the cache (`.tmp/cache.dat`), used to skip the conversion when the source file did not change.
 **/
 typedef ConvertCacheItem = {
-	out : String,
-	ver : Null<Int>,
-	time : Int,
-	size : Int,
-	hash : String,
-	localParamsHash : Null<String>,
-	localContextJson : Null<String>,
+	/**
+		The path of the converted file.
+	**/
+	var out : String;
+	/**
+		The version of the converter that generated the file.
+	**/
+	var ver : Null<Int>;
+	/**
+		The modification time of the source file.
+	**/
+	var time : Int;
+	/**
+		The size of the source file.
+	**/
+	var size : Int;
+	/**
+		The SHA1 hash of the source file.
+	**/
+	var hash : String;
+	/**
+		The hash of the local parameters of the conversion, or `null`.
+	**/
+	var localParamsHash : Null<String>;
+	/**
+		The local context of the conversion, as JSON, or `null`.
+	**/
+	var localContextJson : Null<String>;
 }
 
 /**

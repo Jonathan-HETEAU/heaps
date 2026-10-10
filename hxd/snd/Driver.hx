@@ -68,6 +68,9 @@ class EffectDriver<T> {
 	The optional features of a sound driver.
 **/
 enum DriverFeature {
+	/**
+		The driver has a master volume (see `setMasterVolume`).
+	**/
 	MasterVolume;
 }
 

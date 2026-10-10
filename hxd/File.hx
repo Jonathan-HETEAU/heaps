@@ -5,20 +5,20 @@ package hxd;
 **/
 typedef BrowseOptions = {
 	/** The default path in which we browse the file, if supported **/
-	?defaultPath : String,
+	var ?defaultPath : String;
 	/** The dialog title, if supported **/
-	?title : String,
+	var ?title : String;
 	/** If supported, will return a relative full path instead of an absolute one **/
-	?relativePath : Bool,
+	var ?relativePath : Bool;
 	/** the file types that we are allowed to select **/
-	?fileTypes : Array<{ name : String, extensions : Array<String> }>,
+	var ?fileTypes : Array<{ name : String, extensions : Array<String> }>;
 	/** this will be called when saving a file with the target path, if supported **/
-	?saveFileName : String -> Void,
+	var ?saveFileName : String -> Void;
 	/** this will be called when saving a file, and allow you to write it again without displaying the browser, if supported **/
-	?writeFile : (haxe.io.Bytes -> Void) -> Void,
+	var ?writeFile : (haxe.io.Bytes -> Void) -> Void;
 #if (hl_ver >= version("2.0.0"))
 	/** if we should prompt the user for a folder instead of a file**/
-	?isFolder : Bool,
+	var ?isFolder : Bool;
 #end
 };
 

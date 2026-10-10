@@ -7,15 +7,15 @@ typedef FontBuildOptions = {
 	/**
 		Enables anti-aliasing (default `true`).
 	**/
-	?antiAliasing : Bool,
+	var ?antiAliasing : Bool;
 	/**
 		The characters to include in the font (default `hxd.Charset.DEFAULT_CHARS`).
 	**/
-	?chars : String,
+	var ?chars : String;
 	/**
 		Enables kerning (currently unused).
 	**/
-	?kerning : Bool,
+	var ?kerning : Bool;
 };
 
 /**

@@ -38,8 +38,14 @@ typedef ModelDataInput = {
 	The model settings stored in the `model.props` files.
 **/
 typedef ModelProps = {
-	lodConfig: Array<Float>,
-	dynamicBones: Array<Dynamic>
+	/**
+		The screen ratios of the levels of detail.
+	**/
+	var lodConfig : Array<Float>;
+	/**
+		The configuration of the dynamic bones.
+	**/
+	var dynamicBones : Array<Dynamic>;
 }
 
 /**

@@ -48,6 +48,8 @@ for t in js hl hldx; do haxe docs/api/xml-$t.hxml; done
 # a doc comment must be the same on every platform, or dox fails (types) or lists it twice (fields)
 CONFLICTS=$(python3 tools/docgen/doc-conflicts.py)
 echo "$CONFLICTS" | grep -q '^0 conflicts$' || { echo "$CONFLICTS"; echo 'Make these doc comments identical on all platforms'; exit 1; }
+# public API without documentation, as dox sees it (informative)
+python3 tools/docgen/xml-undocumented.py | tail -1
 # dox cannot merge types whose kind differs per platform (enum on js, typedef on hl): keep the js one.
 IN=$(mktemp -d)
 python3 tools/docgen/merge-fix.py docs/api $IN hxd.DisplayMode hxd.fmt.pak.FileSeekMode >/dev/null

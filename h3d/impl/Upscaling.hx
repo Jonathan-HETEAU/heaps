@@ -11,8 +11,17 @@ import heaps.fsr.Fsr;
 	The features of an upscaling backend.
 **/
 enum UpscalingFeature {
+	/**
+		The upscaling of a lower resolution render.
+	**/
 	Upscaler;
+	/**
+		The frame generation, which interpolates extra frames.
+	**/
 	FrameGen;
+	/**
+		The low latency mode.
+	**/
 	LowLatency;
 }
 
@@ -20,8 +29,17 @@ enum UpscalingFeature {
 	An upscaling technology.
 **/
 enum abstract UpscalingProvider(String) from String to String {
+	/**
+		The first available provider.
+	**/
 	var AUTO = "auto";
+	/**
+		NVIDIA DLSS (with DLSS frame generation and Reflex).
+	**/
 	var DLSS = "dlss";
+	/**
+		AMD FidelityFX Super Resolution.
+	**/
 	var FSR = "fsr";
 }
 
@@ -29,11 +47,29 @@ enum abstract UpscalingProvider(String) from String to String {
 	The quality mode of the upscaler: the lower the quality, the smaller the render resolution.
 **/
 enum UpscalingMode {
+	/**
+		No upscaling: rendered at full resolution.
+	**/
 	Off;
+	/**
+		Rendered at full resolution, with the upscaler used as anti-aliasing (DLAA).
+	**/
 	NativeAA;
+	/**
+		The highest quality upscaling.
+	**/
 	Quality;
+	/**
+		Balanced quality and performance.
+	**/
 	Balanced;
+	/**
+		Favors performance over quality.
+	**/
 	Performance;
+	/**
+		The lowest render resolution.
+	**/
 	UltraPerformance;
 }
 
@@ -41,9 +77,21 @@ enum UpscalingMode {
 	The frame generation mode.
 **/
 enum FrameGenMode {
+	/**
+		No frame generation.
+	**/
 	Off;
+	/**
+		Frame generation enabled.
+	**/
 	On;
+	/**
+		Frame generation enabled when the backend decides it is beneficial.
+	**/
 	Auto;
+	/**
+		The backend adapts the number of generated frames (see `dynamicSupported`).
+	**/
 	Dynamic;
 }
 
@@ -51,8 +99,17 @@ enum FrameGenMode {
 	How the UI is handled by the frame generation, so that it is not interpolated: `BackBuffer` (the whole back buffer is interpolated), `HudLess` (a copy of the frame without UI is marked with `Upscaling.markFrameGenHudless`), or `UITexture` (the UI is drawn into a separate texture, see `Upscaling.getFrameGenUITarget`).
 **/
 enum FrameGenUIMode {
+	/**
+		The whole back buffer is interpolated, UI included.
+	**/
 	BackBuffer;
+	/**
+		A copy of the frame without the UI is marked with `Upscaling.markFrameGenHudless`.
+	**/
 	HudLess;
+	/**
+		The UI is drawn into a separate texture, see `Upscaling.getFrameGenUITarget`.
+	**/
 	UITexture;
 }
 
@@ -60,8 +117,17 @@ enum FrameGenUIMode {
 	The low latency mode (such as NVIDIA Reflex).
 **/
 enum LowLatencyMode {
+	/**
+		No low latency mode.
+	**/
 	Off;
+	/**
+		Low latency mode enabled.
+	**/
 	On;
+	/**
+		Low latency mode enabled, with the GPU kept at higher clocks.
+	**/
 	OnWithBoost;
 }
 
@@ -69,8 +135,17 @@ enum LowLatencyMode {
 	The points of the frame reported to the low latency technology.
 **/
 enum LatencyMarker {
+	/**
+		The start of the game simulation of the frame.
+	**/
 	SimulationStart;
+	/**
+		The end of the game simulation of the frame.
+	**/
 	SimulationEnd;
+	/**
+		Requests a latency flash indicator, emitted at the next `SimulationEnd`.
+	**/
 	TriggerFlash;
 }
 

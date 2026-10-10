@@ -109,9 +109,21 @@ enum abstract TifType(Int) {
 	A TIFF tag value.
 **/
 enum TifValue {
+	/**
+		An integer.
+	**/
 	VInt( v : Int );
+	/**
+		A float.
+	**/
 	VFloat( v : Float );
+	/**
+		A string.
+	**/
 	VString( s : String );
+	/**
+		An array of values.
+	**/
 	VArray( a : Array<TifValue> );
 }
 

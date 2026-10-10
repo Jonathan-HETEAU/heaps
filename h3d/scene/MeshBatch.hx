@@ -41,7 +41,16 @@ enum MeshBatchFlag {
 /**
 	The indirect draw commands of one material, built on the CPU when using sub meshes.
 **/
-typedef CpuIndirectCallBuffer = { bytes : haxe.io.Bytes, count : Int };
+typedef CpuIndirectCallBuffer = {
+	/**
+		The indirect draw commands.
+	**/
+	var bytes : haxe.io.Bytes;
+	/**
+		The number of commands.
+	**/
+	var count : Int;
+};
 
 /**
 	h3d.scene.MeshBatch allows to draw multiple meshed in a single draw call.

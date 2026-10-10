@@ -24,13 +24,37 @@ typedef Index<T> = Int;
 	Optional properties of the elements of the file.
 **/
 enum Property<T> {
+	/**
+		The vertical field of view of a camera, in degrees.
+	**/
 	CameraFOVY( v : Float ) : Property<Float>;
+	/**
+		Not used anymore.
+	**/
 	Unused_HasMaterialFlags;
+	/**
+		The material has a specular texture and a normal map.
+	**/
 	HasExtraTextures;
+	/**
+		The skin of the geometry uses 4 bones by vertex instead of 3.
+	**/
 	FourBonesByVertex;
+	/**
+		The model has levels of detail.
+	**/
 	HasLod;
+	/**
+		The model has a collider.
+	**/
 	HasCollider;
+	/**
+		The model has several colliders.
+	**/
 	HasColliders;
+	/**
+		The file has colliders that are not convex hulls.
+	**/
 	HasCustomCollider;
 }
 
@@ -43,13 +67,37 @@ typedef Properties = Null<Array<Property<Dynamic>>>;
 	The type of a collider stored in the file.
 **/
 enum abstract ColliderType(Int) from Int to Int {
+	/**
+		Convex hulls.
+	**/
 	var ConvexHulls = 0;
+	/**
+		A triangle mesh.
+	**/
 	var Mesh = 1;
+	/**
+		A group of colliders.
+	**/
 	var Group = 2;
+	/**
+		A sphere.
+	**/
 	var Sphere = 3;
+	/**
+		A box.
+	**/
 	var Box = 4;
+	/**
+		A capsule.
+	**/
 	var Capsule = 5;
+	/**
+		A cylinder.
+	**/
 	var Cylinder = 6;
+	/**
+		No collision.
+	**/
 	var Empty = 255;
 }
 
@@ -239,9 +287,21 @@ class BlendShape {
 	How the collider of a model is built (see `Collider.resolveColliderType`).
 **/
 enum ResolveResult {
+	/**
+		No collider.
+	**/
 	Empty;
+	/**
+		The triangles of the model are used as collider.
+	**/
 	Mesh(model : Model);
+	/**
+		Convex hulls are generated from the model.
+	**/
 	ConvexHulls(model : Model);
+	/**
+		A group of shapes, from `CollideParams.shapes`.
+	**/
 	Shapes;
 }
 
@@ -927,13 +987,37 @@ class Model {
 	The animated components of an animated object.
 **/
 enum AnimationFlag {
+	/**
+		The position is animated.
+	**/
 	HasPosition;
+	/**
+		The rotation is animated.
+	**/
 	HasRotation;
+	/**
+		The scale is animated.
+	**/
 	HasScale;
+	/**
+		The texture coordinates offset is animated.
+	**/
 	HasUV;
+	/**
+		The alpha is animated.
+	**/
 	HasAlpha;
+	/**
+		The object has a single frame of data, used for the whole animation.
+	**/
 	SingleFrame;
+	/**
+		Custom properties are animated (see `AnimationObject.props`).
+	**/
 	HasProps;
+	/**
+		Reserved for future use.
+	**/
 	Reserved;
 }
 

@@ -4,11 +4,29 @@ package h3d.pass;
 	The faces of a cube shadow map.
 **/
 enum CubeFaceFlag {
+	/**
+		The face at index 0 of the cube texture (+X).
+	**/
 	Right;
+	/**
+		The face at index 1 of the cube texture (-X).
+	**/
 	Left;
+	/**
+		The face at index 2 of the cube texture (+Y).
+	**/
 	Back;
+	/**
+		The face at index 3 of the cube texture (-Y).
+	**/
 	Front;
+	/**
+		The face at index 4 of the cube texture (+Z).
+	**/
 	Top;
+	/**
+		The face at index 5 of the cube texture (-Z).
+	**/
 	Bottom;
 }
 

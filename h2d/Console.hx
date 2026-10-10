@@ -39,16 +39,16 @@ typedef ConsoleArgDesc = {
 	/**
 		A human-readable argument name.
 	**/
-	name : String,
+	var name : String;
 	/**
 		The type of the argument.
 	**/
-	t : ConsoleArg,
+	var t : ConsoleArg;
 	/**
 		When set, argument is considered optional and command callback will receive `null` if argument was omitted.
 		Inserting optional arguments between non-optional arguments leads to an undefined behavior.
 	**/
-	?opt : Bool,
+	var ?opt : Bool;
 }
 
 /**

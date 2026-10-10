@@ -4,12 +4,33 @@ package hxd.fmt.fbx;
 	A property value of a FBX node.
 **/
 enum FbxProp {
+	/**
+		An integer.
+	**/
 	PInt( v : Int );
+	/**
+		A float.
+	**/
 	PFloat( v : Float );
+	/**
+		A string.
+	**/
 	PString( v : String );
+	/**
+		An identifier (unquoted in the text format).
+	**/
 	PIdent( i : String );
+	/**
+		An array of integers.
+	**/
 	PInts( v : Array<Int> );
+	/**
+		An array of floats.
+	**/
 	PFloats( v : Array<Float> );
+	/**
+		Raw binary data.
+	**/
 	PBinary( v : haxe.io.Bytes );
 }
 

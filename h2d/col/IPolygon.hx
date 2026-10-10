@@ -5,8 +5,17 @@ import hxd.Math;
 	The type of the edges when offsetting polygon with `IPolygon.offset`.
 **/
 enum OffsetKind {
+	/**
+		Squared corners.
+	**/
 	Square;
+	/**
+		Mitered (sharp) corners.
+	**/
 	Miter;
+	/**
+		Rounded corners, with the maximum distance `arc` between the arc and its segments.
+	**/
 	Round( arc : Float );
 }
 

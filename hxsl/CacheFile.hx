@@ -51,7 +51,7 @@ class CacheFile extends Cache {
 	public var allowSave = #if usesys false #else true #end;
 
 	/**
-		Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise an error is thrown.
+		Creates the cache and loads the file. If `allowCompile` is set, the shaders missing from the file are compiled; otherwise `onMissingShader` is called.
 	**/
 	public function new( allowCompile, recompileRT = false, showProgress = false ) {
 		super();
@@ -753,11 +753,17 @@ class CacheFile extends Cache {
 		return name;
 	}
 
+	/**
+		Called when a shader is not in the cache and `allowCompile` is not set: returns the shader to use instead. By default, logs it and returns `link(null, Default)`.
+	**/
 	public dynamic function onMissingShader(shaders:hxsl.ShaderList) {
 		log("Missing shader " + [for( s in shaders ) shaderName(s)]);
 		return link(null, Default); // default fallback
 	}
 
+	/**
+		Called when a shader was compiled and added to the cache. Logs it by default.
+	**/
 	public dynamic function onNewShader(r:RuntimeShader) {
 		log("Compiled " + [for( i in r.spec.instances ) i.shader.data.name+(i.bits == 0 ? "" : ":" + StringTools.hex(i.bits))].join(" "));
 	}

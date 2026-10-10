@@ -32,27 +32,90 @@ private class GameController {
 	`names` gives a display name for each index.
 **/
 typedef PadConfig = {
-	analogX : Int,
-	analogY : Int,
-	ranalogX : Int,
-	ranalogY : Int,
-	A : Int,
-	B : Int,
-	X : Int,
-	Y : Int,
-	LB : Int,
-	RB : Int,
-	LT : Int,
-	RT : Int,
-	back : Int,
-	start : Int,
-	analogClick : Int,
-	ranalogClick : Int,
-	dpadUp : Int,
-	dpadDown : Int,
-	dpadLeft : Int,
-	dpadRight : Int,
-	names : Array<String>,
+	/**
+		The axis of the left stick, horizontal.
+	**/
+	var analogX : Int;
+	/**
+		The axis of the left stick, vertical.
+	**/
+	var analogY : Int;
+	/**
+		The axis of the right stick, horizontal.
+	**/
+	var ranalogX : Int;
+	/**
+		The axis of the right stick, vertical.
+	**/
+	var ranalogY : Int;
+	/**
+		The A button (cross on DualShock).
+	**/
+	var A : Int;
+	/**
+		The B button (circle on DualShock).
+	**/
+	var B : Int;
+	/**
+		The X button (square on DualShock).
+	**/
+	var X : Int;
+	/**
+		The Y button (triangle on DualShock).
+	**/
+	var Y : Int;
+	/**
+		The left bumper (L1).
+	**/
+	var LB : Int;
+	/**
+		The right bumper (R1).
+	**/
+	var RB : Int;
+	/**
+		The left trigger (L2).
+	**/
+	var LT : Int;
+	/**
+		The right trigger (R2).
+	**/
+	var RT : Int;
+	/**
+		The back button (select, share).
+	**/
+	var back : Int;
+	/**
+		The start button (options).
+	**/
+	var start : Int;
+	/**
+		The click of the left stick (L3).
+	**/
+	var analogClick : Int;
+	/**
+		The click of the right stick (R3).
+	**/
+	var ranalogClick : Int;
+	/**
+		The up button of the directional pad.
+	**/
+	var dpadUp : Int;
+	/**
+		The down button of the directional pad.
+	**/
+	var dpadDown : Int;
+	/**
+		The left button of the directional pad.
+	**/
+	var dpadLeft : Int;
+	/**
+		The right button of the directional pad.
+	**/
+	var dpadRight : Int;
+	/**
+		The display names, by index.
+	**/
+	var names : Array<String>;
 }
 
 /**

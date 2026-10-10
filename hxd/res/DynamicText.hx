@@ -12,7 +12,16 @@ typedef DynamicTextMeta = Map<String,DynamicTextMetaContent>;
 /**
 	The metadata of a text: `skip` is set by the `skip` attribute, `sub` is the metadata of a group's children.
 **/
-typedef DynamicTextMetaContent = { skip : Bool, sub : DynamicTextMeta };
+typedef DynamicTextMetaContent = {
+	/**
+		Set by the `skip` attribute.
+	**/
+	var skip : Bool;
+	/**
+		The metadata of a group's children.
+	**/
+	var sub : DynamicTextMeta;
+};
 
 /**
 	The argument type of the `Key` of a text without parameters.

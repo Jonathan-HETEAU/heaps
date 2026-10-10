@@ -23,11 +23,29 @@ abstract KFSize<T:Float>(Array<T>) {
 	The properties animated by a keyframes animation.
 **/
 enum abstract KFAnimProp(String) {
+	/**
+		The anchor point.
+	**/
 	var AnchorPoint = "ANCHOR_POINT";
+	/**
+		The X position.
+	**/
 	var XPosition = "X_POSITION";
+	/**
+		The Y position.
+	**/
 	var YPosition = "Y_POSITION";
+	/**
+		The scale.
+	**/
 	var Scale = "SCALE";
+	/**
+		The opacity.
+	**/
 	var Opacity = "OPACITY";
+	/**
+		The rotation.
+	**/
 	var Rotation = "ROTATION";
 }
 

@@ -4,11 +4,29 @@ package hxd;
 	The kind of platform the application runs on (see `System.platform`).
 **/
 enum Platform {
+	/**
+		iOS.
+	**/
 	IOS;
+	/**
+		Android.
+	**/
 	Android;
+	/**
+		A web browser.
+	**/
 	WebGL;
+	/**
+		A desktop computer.
+	**/
 	PC;
+	/**
+		A game console.
+	**/
 	Console;
+	/**
+		Adobe Flash Player (not supported anymore).
+	**/
 	FlashPlayer;
 }
 
@@ -16,8 +34,17 @@ enum Platform {
 	Boolean system properties, queried with `System.getValue`.
 **/
 enum SystemValue {
+	/**
+		The main input is a touch screen.
+	**/
 	IsTouch;
+	/**
+		The application runs in a window that can be resized or moved.
+	**/
 	IsWindowed;
+	/**
+		The application runs on a mobile device.
+	**/
 	IsMobile;
 }
 
@@ -25,10 +52,25 @@ enum SystemValue {
 	The detected keyboard layout (see `System.getKeyboardLayout`).
 **/
 enum KeyboardLayout {
+	/**
+		QWERTY layout.
+	**/
 	QWERTY;
+	/**
+		AZERTY layout (French).
+	**/
 	AZERTY;
+	/**
+		QWERTZ layout (German).
+	**/
 	QWERTZ;
+	/**
+		QZERTY layout (Italian).
+	**/
 	QZERTY;
+	/**
+		The layout could not be detected.
+	**/
 	Unknown;
 }
 

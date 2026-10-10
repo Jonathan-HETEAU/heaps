@@ -98,6 +98,9 @@ typedef RenderProps = {
 		The sky mode.
 	**/
 	var sky : SkyMode;
+	/**
+		The color of the sky, for the `CustomColor` sky mode.
+	**/
 	var ?skyColor : Int;
 	/**
 		The tone mapping operator.
@@ -111,11 +114,29 @@ typedef RenderProps = {
 		The ambient occlusion strength is `occlusion * occlusion`.
 	**/
 	var occlusion : Float;
+	/**
+		The `a` factor of the `Filmic` tone mapping curve `(x * (a * x + b)) / (x * (c * x + d) + e)`.
+	**/
 	var ?a : Float;
+	/**
+		The `b` factor of the `Filmic` tone mapping curve.
+	**/
 	var ?b : Float;
+	/**
+		The `c` factor of the `Filmic` tone mapping curve.
+	**/
 	var ?c : Float;
+	/**
+		The `d` factor of the `Filmic` tone mapping curve.
+	**/
 	var ?d : Float;
+	/**
+		The `e` factor of the `Filmic` tone mapping curve.
+	**/
 	var ?e : Float;
+	/**
+		Discards the pixels not lit by the direct lights (default `false`).
+	**/
 	var ?forceDirectDiscard : Bool;
 }
 
@@ -780,6 +801,9 @@ class Renderer extends h3d.scene.Renderer {
 			textures.translucency = allocTarget("translucency", true, 1., RGBA);
 	}
 
+	/**
+		Returns the depth texture of the renderer.
+	**/
 	public function getPbrDepth() {
 		return textures.depth;
 	}
