@@ -2,8 +2,14 @@ package hxd.fmt.bfnt;
 
 import haxe.xml.Access;
 
+/**
+	Parses the bitmap font description formats: BFNT, BMFont (text, XML or binary), Littera, FontBuilder (Divo), and Hiero.
+**/
 class FontParser {
 
+	/**
+		Parses the font description of the file at `path`. `resolveTile` returns the tile of the image referenced by the description.
+	**/
 	@:access(h2d.Font)
 	public static function parse(bytes : haxe.io.Bytes, path : String, resolveTile: String -> h2d.Tile ) : h2d.Font {
 

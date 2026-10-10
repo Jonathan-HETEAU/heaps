@@ -1,14 +1,23 @@
 package hxd.fmt.tiff;
 import hxd.fmt.tiff.Data;
 
+/**
+	Writes TIFF files.
+**/
 class Writer {
 
 	var f : haxe.io.Output;
 
+	/**
+		Creates a writer for the output.
+	**/
 	public function new(f) {
 		this.f = f;
 	}
 
+	/**
+		Writes the file.
+	**/
 	public function write( tif : TifFile ) {
 		f.writeString("II");
 		f.writeUInt16(42);
@@ -80,6 +89,9 @@ class Writer {
 	}
 
 
+	/**
+		Returns the TIFF content of `R32F` pixels.
+	**/
 	public static function ofPixels( pix : hxd.Pixels ) {
 		if( pix.format != R32F ) throw "Format not supported";
 		var tif : TifFile = {

@@ -2,6 +2,9 @@ package hxd.fmt.bfnt;
 
 import haxe.io.Output;
 
+/**
+	Writes the BFNT format: the compact binary bitmap font format of Heaps.
+**/
 @:access(h2d.Font)
 class Writer {
 
@@ -19,10 +22,16 @@ class Writer {
 
 	var out : Output;
 
+	/**
+		Creates a writer for the output.
+	**/
 	public function new( out : Output ) {
 		this.out = out;
 	}
 
+	/**
+		Writes the font.
+	**/
 	public function write( font : h2d.Font ) {
 		out.writeString("BFNT");
 		out.writeByte(0);

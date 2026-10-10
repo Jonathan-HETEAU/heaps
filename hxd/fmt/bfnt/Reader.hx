@@ -2,15 +2,24 @@ package hxd.fmt.bfnt;
 
 import haxe.io.Input;
 
+/**
+	Reads the BFNT format: the compact binary bitmap font format of Heaps.
+**/
 @:access(h2d.Font)
 class Reader {
 
 	var i : Input;
 
+	/**
+		Creates a reader for the input.
+	**/
 	public function new( i : Input ) {
 		this.i = i;
 	}
 
+	/**
+		Reads the font. `resolveTile` returns the tile of the image referenced by the font.
+	**/
 	public function read( resolveTile: String -> h2d.Tile ) : h2d.Font {
 
 		if (i.readString(4) != "BFNT" || i.readByte() != 0) throw "Not a BFNT file!";
@@ -44,6 +53,9 @@ class Reader {
 		return font;
 	}
 
+	/**
+		Reads the font from the bytes.
+	**/
 	public static inline function parse(bytes : haxe.io.Bytes, resolveTile : String -> h2d.Tile ) : h2d.Font {
 		return new Reader(new haxe.io.BytesInput(bytes)).read(resolveTile);
 	}

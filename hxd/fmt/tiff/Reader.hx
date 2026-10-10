@@ -8,14 +8,23 @@ import hxd.fmt.pak.FileSystem.FileInput;
 #end
 
 
+/**
+	Reads TIFF files (such as height maps).
+**/
 class Reader {
 
 	var f : FileInput;
 
+	/**
+		Creates a reader for the file input.
+	**/
 	public function new(f:FileInput) {
 		this.f = f;
 	}
 
+	/**
+		Reads the tags and the data strips of the file.
+	**/
 	public function read() {
 		var order = f.readString(2);
 		f.bigEndian = order == "MM";
@@ -90,6 +99,9 @@ class Reader {
 		}
 	}
 
+	/**
+		Decodes the image. Only uncompressed 32 bits single channel float images are supported (`R32F`).
+	**/
 	public static function decode( f : TifFile ) : hxd.Pixels {
 		var bpp = Utils.getInt(f, BitsPerSample);
 		var channels = Utils.getInt(f, SamplesPerPixel);

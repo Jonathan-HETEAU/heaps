@@ -1,16 +1,25 @@
 package hxd.fmt.pak;
 import hxd.fmt.pak.Data;
 
+/**
+	Writes a `.pak` archive.
+**/
 class Writer {
 
 	var o : haxe.io.Output;
 	var align : Int = 0;
 
+	/**
+		Creates a writer for the output, aligning the files data to `align` bytes if set.
+	**/
 	public function new(o, ?align) {
 		this.o = o;
 		this.align = align;
 	}
 
+	/**
+		Writes the header of a file.
+	**/
 	public function writeFile( f : File ) {
 		o.writeByte(f.name.length);
 		o.writeString(f.name);
@@ -41,6 +50,9 @@ class Writer {
 
 	}
 
+	/**
+		Writes the header and the data of the archive (the data is in `content`, or in `arrayContent` by file).
+	**/
 	public function write( pak : Data, content : haxe.io.Bytes, ?arrayContent : Array<haxe.io.Bytes> ) {
 
 		if( arrayContent != null ) {

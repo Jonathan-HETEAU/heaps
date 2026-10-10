@@ -1,14 +1,23 @@
 package hxd.fmt.pak;
 import hxd.fmt.pak.Data;
 
+/**
+	Reads the header of a `.pak` archive.
+**/
 class Reader {
 
 	var i : haxe.io.Input;
 
+	/**
+		Creates a reader for the input.
+	**/
 	public function new(i) {
 		this.i = i;
 	}
 
+	/**
+		Reads the header of the archive.
+	**/
 	public function readHeader() : Data {
 		if( i.readString(3) != "PAK" ) throw "Invalid PAK file";
 		var pak = new Data();

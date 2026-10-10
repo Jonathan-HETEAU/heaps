@@ -1,5 +1,8 @@
 package hxd.fmt.pak;
 
+/**
+	A 2D progress bar loading the `res.pak`, `res1.pak`... archives (with HTTP on JS), then calling `onDone`.
+**/
 class Loader extends h2d.Object {
 
 	var onDone : Void -> Void;
@@ -9,6 +12,9 @@ class Loader extends h2d.Object {
 	var s2d : h2d.Scene;
 	var bg : h2d.Graphics;
 
+	/**
+		Starts loading the archives into the current resource loader, displaying the progress in the scene.
+	**/
 	public function new(s2d:h2d.Scene, onDone) {
 		super(s2d);
 		this.s2d = s2d;

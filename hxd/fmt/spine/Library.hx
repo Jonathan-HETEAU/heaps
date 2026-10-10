@@ -2,15 +2,39 @@ package hxd.fmt.spine;
 import hxd.fmt.spine.JsonData;
 import hxd.fmt.spine.Data;
 
+/**
+	Loads a Spine skeleton from its JSON export: bones, slots, skins and animations. Inverse kinematics and slot animations are not supported.
+**/
 class Library {
 
+	/**
+		The bones, by name.
+	**/
 	public var bonesMap : Map<String,Bone>;
+	/**
+		The bones, parents first.
+	**/
 	public var bones : Array<Bone>;
+	/**
+		The slots, in draw order.
+	**/
 	public var slots : Array<Slot>;
+	/**
+		The default skin.
+	**/
 	public var defaultSkin : Skin;
+	/**
+		The skins, by name.
+	**/
 	public var skins : Map<String,Skin>;
+	/**
+		The animations, by name.
+	**/
 	public var animations : Map<String, Animation>;
 
+	/**
+		Creates an empty library.
+	**/
 	public function new() {
 		bones = [];
 		slots = [];
@@ -19,6 +43,9 @@ class Library {
 		animations = new Map();
 	}
 
+	/**
+		Loads the skeleton from the JSON text.
+	**/
 	public function loadText( j : String ) {
 		load(haxe.Json.parse(j));
 	}
@@ -27,6 +54,9 @@ class Library {
 		return v == null ? def : v;
 	}
 
+	/**
+		Loads the skeleton from the parsed JSON data.
+	**/
 	public function load( j : JsonData ) {
 
 		if( j.bones != null )

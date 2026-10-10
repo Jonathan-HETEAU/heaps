@@ -1,5 +1,8 @@
 package hxd.fmt.hbson;
 
+/**
+	Reads the HBSON format: a binary encoding of JSON values (see `hxd.fs.Convert.ConvertBinJSON`).
+**/
 class Reader {
 
 	static var GLOBAL_STR_MAP : Map<String,String> = [];
@@ -8,6 +11,9 @@ class Reader {
 	var stringTbl : Array<String>;
 	var globalStrings : Bool;
 
+	/**
+		Creates a reader for the data. If `globalStrings` is set, the strings are shared between all the readers to save memory.
+	**/
 	public function new( data : haxe.io.Bytes, globalStrings ) {
 		stringTbl = [];
 		input = new haxe.io.BytesInput(data,6);
@@ -35,6 +41,9 @@ class Reader {
 		return str;
 	}
 
+	/**
+		Reads a JSON value.
+	**/
 	public function read() : Dynamic {
 		var code = input.readByte();
 		switch( code ) {

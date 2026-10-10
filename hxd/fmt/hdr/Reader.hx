@@ -1,7 +1,13 @@
 package hxd.fmt.hdr;
 
+/**
+	Decodes Radiance HDR images (`.hdr`).
+**/
 class Reader {
 
+	/**
+		Decodes the image into 32 bits float RGBA pixels, gamma corrected unless `sRGB` is set.
+	**/
 	public static function decode( bytes : haxe.io.Bytes, sRGB : Bool ) : { width : Int, height : Int, bytes : haxe.io.Bytes, gamma : Bool } {
 		var f = new haxe.io.BytesInput(bytes);
 		var width = 0, height = 0;

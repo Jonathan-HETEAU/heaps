@@ -1,6 +1,10 @@
 package hxd.fmt.pak;
 import hxd.fmt.pak.Data;
 
+/**
+	Packs the resources directory into a `.pak` archive (after converting the files), loaded at runtime with `hxd.fmt.pak.FileSystem` (see `hxd.Res.initPak`).
+	Run as a command line tool: `-res <dir>`, `-out <prefix>`, `-exclude <exts>`, `-exclude-names <names>`, `-exclude-path <paths>`, `-include-path <paths>`, `-special-path <names>`, `-include-ignore-exclude`, `-align <n>`, `-diff`, `-check-ogg`, `-config <name>`, `-info <file.pak>`, `-x <file.pak>` (extract), `-info-depth <n>`.
+**/
 class Build {
 
 	var fs : hxd.fs.LocalFileSystem;
@@ -8,18 +12,57 @@ class Build {
 	var configuration : String;
 	var nextPath : String;
 
+	/**
+		The extensions of the files not packed.
+	**/
 	public var excludedExt : Array<String> = [];
+	/**
+		The names of the files and directories not packed.
+	**/
 	public var excludedNames : Array<String> = [];
+	/**
+		The paths not packed.
+	**/
 	public var excludePath : Array<String> = [];
+	/**
+		The paths packed. When not empty and `whitelist` is set, only these paths are packed.
+	**/
 	public var includePath : Array<String> = [];
-	public var specialPath : Array<String> = [".baked"]; // file & directory starting with "." are ignored
+	/**
+		The names starting with a dot that are packed anyway (the other files and directories starting with a dot are ignored).
+	**/
+	public var specialPath : Array<String> = [".baked"];
+	/**
+		The resources directory.
+	**/
 	public var resPath : String = "res";
+	/**
+		The path of the generated `.pak` file, without extension.
+	**/
 	public var outPrefix : String;
+	/**
+		If greater than `1`, the data of each file is aligned to this number of bytes.
+	**/
 	public var align : Int = 0;
+	/**
+		If set, only the files that changed since the existing `.pak` files are packed, into a new numbered `.pak` file.
+	**/
 	public var pakDiff = false;
+	/**
+		Unused.
+	**/
 	public var checkJPG = false;
+	/**
+		If set, the sounds are decoded to check that they have samples.
+	**/
 	public var checkOGG = false;
+	/**
+		If set, `includePath` lists the only paths packed; otherwise, the files of `includePath` are packed even if they are in `excludePath`.
+	**/
 	public var whitelist = true;
+	/**
+		The depth of the directories in the size report, or `-1` for the default.
+	**/
 	public var infoDepth = -1;
 
 	function new() {
@@ -133,6 +176,9 @@ class Build {
 		return root.checksum == old.checksum;
 	}
 
+	/**
+		Reorders the data of the files to follow the hierarchy of the archive, and returns it.
+	**/
 	public static function rebuild( pak : Data, bytes : Array<haxe.io.Bytes> ) {
 		var size = 0;
 		function calcRec(f:File) {
@@ -159,6 +205,9 @@ class Build {
 		return out;
 	}
 
+	/**
+		Prints the size of the directories of the archive, up to the given depth.
+	**/
 	public static function printSize( pak : Data, maxDepth = 0 ) {
 		function fmtSize(b:Float) {
 			if( b >= 1024*1024*1024 ) return Std.string(Math.round(b*10/(1024*1024*1024))/10)+"Gb";
@@ -185,6 +234,9 @@ class Build {
 		printRec(pak.root, 0, "");
 	}
 
+	/**
+		Called before the files are packed, to customize the build.
+	**/
 	public static dynamic function onInit( b : Build ) {}
 
 	function makePak() {
@@ -228,6 +280,9 @@ class Build {
 		printSize(pak, infoDepth < 0 ? 1 : infoDepth);
 	}
 
+	/**
+		Packs the resources of the directory `dir` into `out.pak`.
+	**/
 	public static function make( dir = "res", out = "res", ?pakDiff ) {
 		var b = new Build();
 		b.resPath = dir;

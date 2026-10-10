@@ -1,12 +1,17 @@
 package hxd.fmt.grd;
 import hxd.fmt.grd.Data;
 
-// http://www.tonton-pixel.com/Photoshop%20Additional%20File%20Formats/gradients-file-format.html
 
+/**
+	Reads a Photoshop gradients file (`.grd`, version 5).
+**/
 class Reader {
 	var i : haxe.io.Input;
 	var version : Int;
 
+	/**
+		Creates a reader for the input.
+	**/
 	public function new(i) {
 		this.i = i;
 		i.bigEndian = true;
@@ -74,6 +79,9 @@ class Reader {
 		return { type : type, value : value };
 	}
 
+	/**
+		Reads the gradients.
+	**/
 	public function read() : Data {
 		var d = new Data();
 		i.read(32);      // skip header

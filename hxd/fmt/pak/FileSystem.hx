@@ -3,14 +3,26 @@ import hxd.fs.FileEntry;
 #if (sys || nodejs)
 import sys.io.File;
 import sys.io.FileInput;
+/**
+	The origin of a seek in a file.
+**/
 typedef FileSeekMode = sys.io.FileSeek;
 #else
+/**
+	The origin of a seek in a file.
+**/
 enum FileSeekMode {
 	SeekBegin;
 	SeekEnd;
 	SeedCurrent;
 }
+/**
+	An input reading a `.pak` file from memory, on the platforms without file system.
+**/
 class FileInput extends haxe.io.BytesInput {
+	/**
+		Moves the read position.
+	**/
 	public function seek( pos : Int, seekMode : FileSeekMode ) {
 		switch( seekMode ) {
 		case SeekBegin:
@@ -22,17 +34,26 @@ class FileInput extends haxe.io.BytesInput {
 		}
 	}
 
+	/**
+		Returns the read position.
+	**/
 	public function tell() {
 		return this.position;
 	}
 }
 #end
 
+/**
+	Seeks in files bigger than 2 GB, when supported.
+**/
 class FileSeek {
 	#if (hl && hl_ver >= version("1.12.0"))
 	@:hlNative("std","file_seek2") static function seek2( f : sys.io.File.FileHandle, pos : Float, cur : Int ) : Bool { return false; }
 	#end
 
+	/**
+		Moves the read position of the file (a `Float` position, for files bigger than 2 GB on HashLink).
+	**/
 	public static function seek( f : FileInput, pos : Float, mode : FileSeekMode ) {
 		#if (hl && hl_ver >= version("1.12.0"))
 		if( !seek2(@:privateAccess f.__f,pos,mode.getIndex()) )
@@ -132,6 +153,9 @@ private class PakEntry extends FileEntry {
 
 }
 
+/**
+	A file system reading the resources from one or more `.pak` archives. The files of the archives loaded last replace the ones of the same path.
+**/
 class FileSystem implements hxd.fs.FileSystem {
 
 	var root : PakEntry;
@@ -142,9 +166,18 @@ class FileSystem implements hxd.fs.FileSystem {
 	var threadIdMutex : sys.thread.Mutex;
 	#end
 	var files : Array<{ path : String, inputs : Array<FileInput> }>;
+	/**
+		The number of bytes read, for statistics.
+	**/
 	public var totalReadBytes = 0;
+	/**
+		The number of reads, for statistics.
+	**/
 	public var totalReadCount = 0;
 
+	/**
+		Creates an empty file system.
+	**/
 	public function new() {
 		dict = new Map();
 		var f = new Data.File();
@@ -160,6 +193,9 @@ class FileSystem implements hxd.fs.FileSystem {
 		root = new PakEntry(this, null, f, -1);
 	}
 
+	/**
+		Adds the archive of the given path.
+	**/
 	public function loadPak( file : String ) {
 		var index = files.length;
 		files.push({ path : file, inputs : [] });
@@ -193,6 +229,9 @@ class FileSystem implements hxd.fs.FileSystem {
 			addRec(root, pak.root.name, pak.root, index, pak.headerSize);
 	}
 
+	/**
+		Closes the archives.
+	**/
 	public function dispose() {
 		for( f in files ) {
 			for( i in f.inputs )
@@ -250,20 +289,32 @@ class FileSystem implements hxd.fs.FileSystem {
 			f.dataPosition += delta;
 	}
 
+	/**
+		Returns the root directory.
+	**/
 	public function getRoot() : FileEntry {
 		return root;
 	}
 
+	/**
+		Returns the file entry at the path. Throws `hxd.res.NotFound` if it does not exist.
+	**/
 	public function get( path : String ) : FileEntry {
 		var f = dict.get(path);
 		if( f == null ) throw new hxd.res.NotFound(path);
 		return f;
 	}
 
+	/**
+		Tells if a file or directory exists at the path.
+	**/
 	public function exists( path : String ) {
 		return dict.exists(path);
 	}
 
+	/**
+		Returns the entries of the directory.
+	**/
 	public function dir( path : String ) : Array<FileEntry> {
 		var f = dict.get(path);
 		if( f == null ) throw new hxd.res.NotFound(path);
@@ -271,6 +322,9 @@ class FileSystem implements hxd.fs.FileSystem {
 		return [for( s in f.subs ) s];
 	}
 
+	/**
+		Not supported.
+	**/
 	public function delete( path : String ) : Bool {
 		throw "Not supported";
 	}

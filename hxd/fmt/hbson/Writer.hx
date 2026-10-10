@@ -1,11 +1,17 @@
 package hxd.fmt.hbson;
 
+/**
+	Writes the HBSON format: a binary encoding of JSON values, with short strings stored once.
+**/
 class Writer {
 
 	var out : haxe.io.Output;
 	var stringCount : Int;
 	var stringMap : Map<String,Int>;
 
+	/**
+		Creates a writer for the output, and writes the header.
+	**/
 	public function new( out : haxe.io.Output ) {
 		this.out = out;
 		stringCount = 0;
@@ -14,6 +20,9 @@ class Writer {
 		out.writeByte(0);
 	}
 
+	/**
+		Writes a JSON value.
+	**/
 	public function write( json : Dynamic ) {
 		writeRec(json);
 	}
