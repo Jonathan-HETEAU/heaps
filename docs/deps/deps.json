@@ -2636,8 +2636,8 @@
   "h2d.domkit.BaseComponents": {
    "file": "h2d/domkit/BaseComponents.hx",
    "package": "h2d.domkit",
-   "lines": 1357,
-   "doc_blocks": 32,
+   "lines": 1382,
+   "doc_blocks": 38,
    "types": [
     "typedef FlowBg",
     "class CustomParser",
@@ -2902,8 +2902,8 @@
   "h2d.domkit.Style": {
    "file": "h2d/domkit/Style.hx",
    "package": "h2d.domkit",
-   "lines": 811,
-   "doc_blocks": 20,
+   "lines": 822,
+   "doc_blocks": 23,
    "types": [
     "typedef SourceFile",
     "class Style"
@@ -19547,7 +19547,7 @@
   "hxd.res.FileTree": {
    "file": "hxd/res/FileTree.hx",
    "package": "hxd.res",
-   "lines": 418,
+   "lines": 419,
    "doc_blocks": 13,
    "types": [
     "typedef FileEntry",

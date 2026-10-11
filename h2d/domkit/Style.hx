@@ -4,9 +4,20 @@ package h2d.domkit;
 	A loaded CSS source file.
 **/
 typedef SourceFile = {
-	name: String,
-	txt: String,
-	#if (format >= version("3.8.0")) sourceMap: format.map.Data, #end
+	/**
+		The path of the CSS file.
+	**/
+	var name : String;
+	/**
+		The CSS text.
+	**/
+	var txt : String;
+	#if (format >= version("3.8.0"))
+	/**
+		The source map of a CSS file generated from another language (less...), to report the errors at the original position.
+	**/
+	var sourceMap : format.map.Data;
+	#end
 }
 
 /**

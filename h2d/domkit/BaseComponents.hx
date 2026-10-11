@@ -5,7 +5,32 @@ import domkit.CssValue;
 /**
 	The value of the `background` CSS property of a flow: a tile with its scale grid borders, and its color for transitions.
 **/
-typedef FlowBg = { tile : #if macro Bool #else h2d.Tile #end, borderL : Int, borderT : Int, borderR : Int, borderB : Int, ?color : Int }
+typedef FlowBg = {
+	/**
+		The background tile (a color tile for a color background).
+	**/
+	var tile : #if macro Bool #else h2d.Tile #end;
+	/**
+		The left border of the 9-slice scaling, in pixels.
+	**/
+	var borderL : Int;
+	/**
+		The top border of the 9-slice scaling, in pixels.
+	**/
+	var borderT : Int;
+	/**
+		The right border of the 9-slice scaling, in pixels.
+	**/
+	var borderR : Int;
+	/**
+		The bottom border of the 9-slice scaling, in pixels.
+	**/
+	var borderB : Int;
+	/**
+		The ARGB color of a color background, used by the transitions.
+	**/
+	var ?color : Int;
+}
 
 /**
 	The parser of the CSS values of the h2d components (tiles, fonts, filters, alignments...).

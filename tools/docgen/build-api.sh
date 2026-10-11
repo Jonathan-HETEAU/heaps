@@ -52,7 +52,7 @@ echo "$CONFLICTS" | grep -q '^0 conflicts$' || { echo "$CONFLICTS"; echo 'Make t
 python3 tools/docgen/xml-undocumented.py | tail -1
 # dox cannot merge types whose kind differs per platform (enum on js, typedef on hl): keep the js one.
 IN=$(mktemp -d)
-python3 tools/docgen/merge-fix.py docs/api $IN hxd.DisplayMode hxd.fmt.pak.FileSeekMode >/dev/null
+python3 tools/docgen/merge-fix.py docs/api $IN hxd.DisplayMode hxd.fmt.pak.FileSeekMode domkit.FastBytes >/dev/null
 rm -rf docs/api/html
 # dox caches by XML hash inside its output dir: always start from an empty one.
 (cd /opt/haxesrc/dox && hl run.hl -i $IN -o $ROOT/docs/api/html --title "Heaps API" -in "^(h2d|h3d|hxd|hxsl)(\.|$)" \

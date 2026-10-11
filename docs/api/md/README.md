@@ -2,12 +2,13 @@
 
 > Generated from the Haxe compiler XML (`docs/api/heaps_*.xml`) by `tools/docgen/xml2md.py`. Do not edit by hand.
 
-974 public types in 43 packages, merged across platforms: js, hl/sdl, hl/directx.
+990 public types in 44 packages, merged across platforms: js, hl/sdl, hl/directx.
 
 | Package | Types | Documented types |
 |---|---:|---:|
 | [`h2d`](h2d/README.md) | 62 | 62 |
 | [`h2d.col`](h2d/col/README.md) | 29 | 29 |
+| [`h2d.domkit`](h2d/domkit/README.md) | 15 | 15 |
 | [`h2d.filter`](h2d/filter/README.md) | 16 | 16 |
 | [`h2d.impl`](h2d/impl/README.md) | 4 | 4 |
 | [`h3d`](h3d/README.md) | 17 | 17 |
@@ -24,7 +25,7 @@
 | [`h3d.scene.pbr`](h3d/scene/pbr/README.md) | 21 | 21 |
 | [`h3d.shader`](h3d/shader/README.md) | 75 | 75 |
 | [`h3d.shader.pbr`](h3d/shader/pbr/README.md) | 34 | 34 |
-| [`hxd`](hxd/README.md) | 54 | 54 |
+| [`hxd`](hxd/README.md) | 55 | 55 |
 | [`hxd.clipper`](hxd/clipper/README.md) | 10 | 10 |
 | [`hxd.earcut`](hxd/earcut/README.md) | 2 | 2 |
 | [`hxd.fmt.bfnt`](hxd/fmt/bfnt/README.md) | 3 | 3 |

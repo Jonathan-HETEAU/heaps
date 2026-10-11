@@ -2,7 +2,7 @@
 
 [← API index](../README.md)
 
-Sub-packages: [`h2d.col`](col/README.md), [`h2d.filter`](filter/README.md), [`h2d.impl`](impl/README.md)
+Sub-packages: [`h2d.col`](col/README.md), [`h2d.domkit`](domkit/README.md), [`h2d.filter`](filter/README.md), [`h2d.impl`](impl/README.md)
 
 | Type | Kind | Summary |
 |---|---|---|

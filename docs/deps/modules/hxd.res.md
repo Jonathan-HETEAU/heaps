@@ -73,7 +73,7 @@
 
 ## hxd.res.FileTree
 
-- Fichier : `hxd/res/FileTree.hx` — 418 lignes — 13 blocs doc — contient du `#if`
+- Fichier : `hxd/res/FileTree.hx` — 419 lignes — 13 blocs doc — contient du `#if`
 - Types : `typedef FileEntry`, `typedef FileTreeData`, `class FileTree`
 - Dépend de : `hxd.fs.LocalFileSystem`, `hxd.res.Config`, `hxd.res.Embed`, `hxd.res.EmbedOptions`, `hxd.res.Loader`, `hxd.res.NotFound`, `hxd.res.Resource`
 - Utilisé par : `hxd.Res`, `hxd.fs.EmbedFileSystem`, `hxd.res.DynamicText`

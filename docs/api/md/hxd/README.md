@@ -53,6 +53,7 @@ Sub-packages: [`hxd.clipper`](clipper/README.md), [`hxd.earcut`](earcut/README.m
 | [`Platform`](Platform.md) | enum | The kind of platform the application runs on (see `System.platform`). |
 | [`Precision`](Precision.md) | enum abstract | The storage precision of a buffer input. |
 | [`Rand`](Rand.md) | class | `hxd.Rand` is a seeded random number generator, that allows to get always the same results starting from a given seed. |
+| [`Res`](Res.md) | class | The access point to the resources (the files of the `res` directory). |
 | [`Save`](Save.md) | class | Save provides simple interface to save and load serialized user data. |
 | [`SceneEvents`](SceneEvents.md) | class | Dispatches the window input events to the interactives of one or more scenes. |
 | [`System`](System.md) | class | Platform-specific services: main loop, cursor, clipboard, locale, and screen information. |

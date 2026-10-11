@@ -2,7 +2,7 @@
 
 > Généré par `tools/docgen/deps.py` (analyse statique, sans compilateur Haxe). Ne pas éditer à la main.
 
-- Modules (fichiers `.hx`) : **554** — lignes : **152775** — packages : **44**
+- Modules (fichiers `.hx`) : **554** — lignes : **152812** — packages : **44**
 - Dépendances module→module : **2779**
 - Cycles de modules (SCC > 1) : **18**
 
@@ -14,7 +14,7 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 |---|---:|---:|---:|---|---|
 | [`h2d`](modules/h2d.md) | 34 | 16689 | 930 | h2d.col, h2d.filter, h2d.impl, h3d, h3d.impl, h3d.mat, h3d.pass, h3d.prim, h3d.scene, h3d.scene.pbr, h3d.shader, hxd, hxd.earcut, hxd.fmt.kframes, hxd.impl, hxd.poly2tri, hxd.res, hxsl | 13 |
 | [`h2d.col`](modules/h2d.col.md) | 22 | 5692 | 386 | h2d.impl, h3d.col, hxd, hxd.clipper, hxd.earcut, hxd.impl | 11 |
-| [`h2d.domkit`](modules/h2d.domkit.md) | 4 | 2210 | 56 | h2d, h2d.col, h2d.filter, h3d, h3d.mat, h3d.scene, hxd, hxd.fs, hxd.res | 0 |
+| [`h2d.domkit`](modules/h2d.domkit.md) | 4 | 2246 | 65 | h2d, h2d.col, h2d.filter, h3d, h3d.mat, h3d.scene, hxd, hxd.fs, hxd.res | 0 |
 | [`h2d.filter`](modules/h2d.filter.md) | 16 | 1174 | 79 | h2d, h2d.col, h3d, h3d.mat, h3d.pass, h3d.shader, h3d.shader.pbr, hxd | 2 |
 | [`h2d.impl`](modules/h2d.impl.md) | 2 | 316 | 33 | h2d, h3d, h3d.mat | 4 |
 | [`h3d`](modules/h3d.md) | 11 | 4385 | 375 | h2d.col, h2d.impl, h3d.col, h3d.impl, h3d.mat, h3d.scene, hxd, hxd.impl, hxd.res, hxsl | 30 |
@@ -49,7 +49,7 @@ Légende des types d'arêtes : `import`, `using`, `extends`, `implements`, `use`
 | [`hxd.impl`](modules/hxd.impl.md) | 15 | 1507 | 102 | h3d, hxd | 19 |
 | [`hxd.net`](modules/hxd.net.md) | 3 | 634 | 36 | — | 1 |
 | [`hxd.poly2tri`](modules/hxd.poly2tri.md) | 13 | 2111 | 138 | hxd | 1 |
-| [`hxd.res`](modules/hxd.res.md) | 24 | 4726 | 207 | h2d, h3d, h3d.impl, h3d.mat, hxd, hxd.fmt.bfnt, hxd.fmt.grd, hxd.fmt.hdr, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.snd | 15 |
+| [`hxd.res`](modules/hxd.res.md) | 24 | 4727 | 207 | h2d, h3d, h3d.impl, h3d.mat, hxd, hxd.fmt.bfnt, hxd.fmt.grd, hxd.fmt.hdr, hxd.fmt.hmd, hxd.fs, hxd.impl, hxd.snd | 15 |
 | [`hxd.snd`](modules/hxd.snd.md) | 14 | 2482 | 163 | h3d, hxd, hxd.impl, hxd.res, hxd.snd.openal, hxd.snd.webaudio | 5 |
 | [`hxd.snd.effect`](modules/hxd.snd.effect.md) | 5 | 511 | 159 | h3d, hxd, hxd.snd | 2 |
 | [`hxd.snd.openal`](modules/hxd.snd.openal.md) | 7 | 1768 | 272 | h3d, hxd, hxd.snd, hxd.snd.effect, hxd.snd.webaudio | 1 |

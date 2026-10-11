@@ -2,6 +2,8 @@
 
 **class** · package [`h2d`](README.md) · source [`h2d/Object.hx`](../../../../h2d/Object.hx)
 
+Implements: `domkit.Model`
+
 Subclasses: [`h2d.Console`](Console.md), [`h2d.Drawable`](Drawable.md), [`h2d.Flow`](Flow.md), [`h2d.Interactive`](Interactive.md), [`h2d.Layers`](Layers.md), [`h2d.Mask`](Mask.md), [`h2d.ObjectFollower`](ObjectFollower.md), [`hxd.fmt.pak.Loader`](../hxd/fmt/pak/Loader.md)
 
 A base 2D class that all scene tree elements inherit from.
@@ -132,6 +134,14 @@ The blending mode of the object.
 
 If there is no `Object.filter` active, only applies to the current object (not inherited by children).
 Otherwise tells how the filter is blended with background.
+
+### dom
+
+```haxe
+var dom:domkit.Properties<Object>
+```
+
+The domkit properties of the object (with the `domkit` library), set when it is a domkit component.
 
 ## Methods
 

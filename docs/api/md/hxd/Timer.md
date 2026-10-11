@@ -75,7 +75,7 @@ The smoothed elapsed time (in seconds).
 static var tmod(get, set):Float
 ```
 
-The smoothed frame modifier, based on wantedFPS. Its value is the same as dt/wantedFPS
+The smoothed frame modifier, based on wantedFPS. Its value is the same as dt*wantedFPS
 Allows to express movements in terms of pixels-per-frame-at-wantedFPS instead of per second.
 
 ## Static methods

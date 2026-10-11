@@ -236,6 +236,7 @@ class FileTree {
 			dict.set("loader", "reserved identifier");
 			fields.push({
 				name : "loader",
+				doc : "The loader of the resources, set by `initEmbed`, `initLocal` or `initPak`.",
 				access : [APublic, AStatic],
 				kind : FProp("get","set",loaderType),
 				pos : pos,
