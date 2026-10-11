@@ -49,7 +49,7 @@ class Timer {
 	public static var dt : Float = 1 / wantedFPS;
 
 	/**
-		The smoothed frame modifier, based on wantedFPS. Its value is the same as dt/wantedFPS
+		The smoothed frame modifier, based on wantedFPS. Its value is the same as dt*wantedFPS
 		Allows to express movements in terms of pixels-per-frame-at-wantedFPS instead of per second.
 	**/
 	public static var tmod(get,set) : Float;

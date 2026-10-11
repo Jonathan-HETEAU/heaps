@@ -231,7 +231,7 @@ class App implements h3d.IDrawable {
 		Called each frame right before rendering.
 		First call is done after the application is set up (so `loadAssets` and `init` are called).
 
-		@param dt Time elapsed since last frame, normalized.
+		@param dt Time elapsed since last frame, in seconds (smoothed, see `hxd.Timer.dt`).
 	**/
 	@:dox(show)
 	function update( dt : Float ) {
