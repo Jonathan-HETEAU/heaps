@@ -132,7 +132,9 @@ class Interactive extends SampleApp {
 		obj.playAnimation(cache.loadAnimation(hxd.Res.Model)).speed = 0.1;
 
 		for( o in obj ) {
-			var m = o.toMesh();
+			// the model also holds its skeleton, which is not a mesh
+			var m = Std.downcast(o, h3d.scene.Mesh);
+			if( m == null ) continue;
 			var i = new h3d.scene.Interactive(m.getCollider(), s3d);
 			initInteract(i, m);
 		}

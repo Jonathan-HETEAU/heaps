@@ -93,7 +93,7 @@ Another limitation is that commands added via macro do not contain description.
 For example:
 ```haxe
 function addItem(id:Int, ?amount:Int) {
-    var item = findItemById(id)
+    var item = findItemById(id);
     if (amount == null) amount = 1;
     player.giveItem(item, amount);
     console.log('Added $amount x ${item.name} to player!');

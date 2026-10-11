@@ -396,15 +396,15 @@ class Library {
 
 	function deepCopyMaterial( src : h3d.mat.Material ) : h3d.mat.Material {
 		var m : h3d.mat.Material = Type.createEmptyInstance(Type.getClass(src));
-		@:bypassAccessor {
-			m.name = src.name;
-			m.model = src.model;
-			m.props = src.props;
-			m.blendMode = src.blendMode;
-			m.castShadows = src.castShadows;
-			m.receiveShadows = src.receiveShadows;
-			m.staticShadows = src.staticShadows;
-		}
+		// copy the values without calling the setters, which need the passes
+		// (one @:bypassAccessor per assignment: on a block, Haxe 4.3 does not apply it to every statement)
+		m.name = src.name;
+		m.model = src.model;
+		@:bypassAccessor m.props = src.props;
+		@:bypassAccessor m.blendMode = src.blendMode;
+		@:bypassAccessor m.castShadows = src.castShadows;
+		@:bypassAccessor m.receiveShadows = src.receiveShadows;
+		@:bypassAccessor m.staticShadows = src.staticShadows;
 		@:privateAccess {
 			var passes = src.getPasses();
 			for( p in passes )
